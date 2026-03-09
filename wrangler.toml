@@ -1,0 +1,5 @@
+name = "synlig-site"
+compatibility_date = "2026-02-25"
+
+[site]
+bucket = "./"

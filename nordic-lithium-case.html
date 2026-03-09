@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nordic Lithium: Fra 67/C til 85/A på 2 uker — AEO case study — Synlig</title>
+  <meta name="description" content="Hvordan en norsk batteri-nettbutikk økte sin AI-synlighetsscore fra 67/C til 85/A på to uker. En dokumentert case study i Answer Engine Optimization.">
+  <link rel="canonical" href="https://synligdigital.no/case/nordic-lithium">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Nordic Lithium: Fra 67/C til 85/A på 2 uker — AEO case study">
+  <meta property="og:description" content="Hvordan en norsk batteri-nettbutikk økte sin AI-synlighetsscore fra 67/C til 85/A på to uker — uten å bytte plattform.">
+  <meta property="og:url" content="https://synligdigital.no/case/nordic-lithium">
+  <meta property="og:site_name" content="Synlig">
+  <meta property="article:published_time" content="2026-03-05">
+  <meta property="article:author" content="Synlig">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Nordic Lithium: Fra 67/C til 85/A på 2 uker",
+    "description": "Dokumentert case study: Hvordan en norsk batteri-nettbutikk økte sin AI-synlighetsscore med 18 poeng på to uker gjennom Answer Engine Optimization.",
+    "author": {
+      "@type": "Organization",
+      "name": "Synlig",
+      "url": "https://synligdigital.no"
+    },
+    "datePublished": "2026-03-05",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Synlig",
+      "url": "https://synligdigital.no"
+    },
+    "inLanguage": "nb-NO",
+    "url": "https://synligdigital.no/case/nordic-lithium",
+    "about": {
+      "@type": "Thing",
+      "name": "Answer Engine Optimization",
+      "description": "Optimalisering av digitalt innhold for AI-assistenter som ChatGPT, Perplexity og Google AI Overview"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Hva er AEO-score?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AEO-score (Answer Engine Optimization-score) er et mål fra 0-100 som viser hvor godt en nettside er tilpasset AI-søkemotorer. Scoren baserer seg på fem kategorier: schema.org-markup, teknisk tilgjengelighet for AI-crawlere, innholdskvalitet, meta-data og AI-synlighetssignaler. A=90+, B=75-89, C=60-74, D=45-59, E=under 45."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Hva blokkerte Nordic Lithiums AI-synlighet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Robots.txt-filen blokkerte alle store AI-crawlere, inkludert GPTBot (ChatGPT), ClaudeBot (Anthropic), Google-Extended (Gemini) og PerplexityBot. I tillegg manglet siden strukturerte data (schema.org), som er det AI bruker for å forstå hvem bedriften er, hva de selger og hvem de er for."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Hvor lang tid tok AEO-implementeringen for Nordic Lithium?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Phase 1 tok 2-3 dager etter implementering å vise full effekt. Phase 2 ble ferdigstilt innen to uker fra prosjektstart. Totalt gikk scoren fra 67/C til 85/A i løpet av perioden 20. februar–5. mars 2026."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Endret Nordic Lithium nettstedsplattform for å oppnå dette?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Nei. Nordic Lithium bruker Squarespace, og alle endringer ble implementert via Code Injection og SEO-innstillinger i Squarespace-dashboardet. Ingen plattformbytte, ingen nye verktøy, ingen teknisk ombygging."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0b;
+      --bg-raised: #111113;
+      --border: #222225;
+      --text: #e8e8ed;
+      --text-dim: #7f7f8a;
+      --text-muted: #4a4a54;
+      --accent: #6ee7b7;
+      --accent-dim: #2d6a5a;
+      --red: #f87171;
+      --red-dim: #6a2d2d;
+      --yellow: #fbbf24;
+      --yellow-dim: #6a5a2d;
+      --blue: #60a5fa;
+      --mono: 'SF Mono', 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+      --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+    }
+
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container { max-width: 640px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+    main { flex: 1; padding: 80px 0 60px; }
+
+    .nav { margin-bottom: 56px; }
+    .nav a {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .nav a:hover { color: var(--text-dim); }
+    .nav .sep { color: var(--text-muted); margin: 0 8px; }
+
+    .article-header { margin-bottom: 48px; }
+    .article-date {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .article-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      background: var(--bg-raised);
+      border: 1px solid var(--accent-dim);
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-left: 8px;
+    }
+    .article-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .article-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .article-body h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 40px 0 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .article-body h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 28px 0 12px;
+      color: var(--text-dim);
+    }
+
+    .article-body p {
+      margin-bottom: 16px;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+
+    .article-body ul, .article-body ol {
+      margin: 0 0 16px 20px;
+      font-size: 0.92rem;
+    }
+
+    .article-body li {
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .article-body code {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    /* Score transformation visual */
+    .score-transform {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 16px;
+      align-items: center;
+      margin: 32px 0;
+      padding: 24px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .score-box {
+      text-align: center;
+    }
+
+    .score-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      font-family: var(--mono);
+      line-height: 1;
+    }
+
+    .score-grade {
+      font-size: 0.75rem;
+      font-family: var(--mono);
+      margin-top: 6px;
+      opacity: 0.7;
+    }
+
+    .score-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .score-arrow {
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+
+    .score-before .score-number { color: var(--red); }
+    .score-after .score-number { color: var(--accent); }
+
+    .score-delta {
+      text-align: center;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      grid-column: 1 / -1;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .score-delta strong { color: var(--accent); }
+
+    /* Timeline steps */
+    .phase-timeline {
+      margin: 24px 0;
+    }
+
+    .phase-step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .phase-step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .phase-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .phase-dot-1 { background: rgba(251,191,36,0.15); border: 1px solid var(--yellow-dim); color: var(--yellow); }
+    .phase-dot-2 { background: rgba(110,231,183,0.15); border: 1px solid var(--accent-dim); color: var(--accent); }
+    .phase-dot-3 { background: rgba(96,165,250,0.15); border: 1px solid rgba(96,165,250,0.3); color: var(--blue); }
+
+    .phase-content {}
+    .phase-title {
+      font-weight: 600;
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+    }
+    .phase-details {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .phase-result {
+      margin-top: 6px;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+    }
+
+    /* Finding block */
+    .finding {
+      margin: 20px 0;
+      padding: 16px 20px;
+      border-radius: 6px;
+      border-left: 3px solid;
+    }
+
+    .finding-critical {
+      background: rgba(248,113,113,0.06);
+      border-color: var(--red);
+    }
+
+    .finding-medium {
+      background: rgba(251,191,36,0.06);
+      border-color: var(--yellow);
+    }
+
+    .finding-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      opacity: 0.7;
+    }
+
+    .finding-critical .finding-label { color: var(--red); }
+    .finding-medium .finding-label { color: var(--yellow); }
+
+    .finding h3 {
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin: 0 0 6px;
+      color: var(--text);
+    }
+
+    .finding p {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      margin: 0;
+    }
+
+    /* Quote block */
+    .quote-block {
+      margin: 32px 0;
+      padding: 20px 24px;
+      border-radius: 6px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+    }
+
+    .quote-text {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .quote-attribution {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* Stat grid */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .stat-item {
+      padding: 16px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-family: var(--mono);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    /* CTA block */
+    .cta-block {
+      margin: 48px 0 0;
+      padding: 28px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .cta-block h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .cta-block p {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0a0a0b;
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 10px 24px;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-bottom: 10px;
+    }
+
+    .cta-btn:hover { opacity: 0.9; }
+
+    .cta-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      margin-top: 60px;
+    }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: var(--text-dim); }
+  </style>
+</head>
+<body>
+
+<nav style="background:rgba(10,10,11,0.92);backdrop-filter:blur(12px);border-bottom:1px solid #222225;padding:1rem 2rem;position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;max-width:100%;">
+  <a href="/" style="font-size:1.15rem;font-weight:700;color:#6ee7b7;text-decoration:none;">Synlig</a>
+  <div style="display:flex;gap:2rem;">
+    <a href="/" style="color:#7f7f8a;text-decoration:none;font-size:0.9rem;">Hjem</a>
+    <a href="/guide" style="color:#7f7f8a;text-decoration:none;font-size:0.9rem;">Guide</a>
+    <a href="/case/nordic-lithium" style="color:#6ee7b7;text-decoration:none;font-size:0.9rem;">Klienter</a>
+    <a href="/blogg" style="color:#7f7f8a;text-decoration:none;font-size:0.9rem;">Blogg</a>
+    <a href="mailto:hei@synligdigital.no" style="background:#6ee7b7;color:#0a0a0b;padding:0.4rem 1rem;border-radius:6px;font-weight:600;text-decoration:none;font-size:0.9rem;">Kontakt</a>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+
+    <nav class="nav" style="margin-top:1rem;">
+      <a href="/">Synlig</a>
+      <span class="sep">/</span>
+      <a href="/">Case studies</a>
+      <span class="sep">/</span>
+      Nordic Lithium
+    </nav>
+
+    <header class="article-header">
+      <div class="article-date">
+        5. mars 2026
+        <span class="article-tag">Case study</span>
+        <span class="article-tag">Klient</span>
+      </div>
+      <h1 class="article-title">Nordic Lithium: Fra 67/C til 85/A på to uker</h1>
+      <p class="article-subtitle">
+        En norsk nettbutikk for LiFePO4-batterier var usynlig for ChatGPT og Perplexity — til tross for god teknisk side og solid produktkatalog. To enkle intervensjoner endret alt.
+      </p>
+    </header>
+
+    <!-- Score transform visual -->
+    <div class="score-transform">
+      <div class="score-box score-before">
+        <div class="score-number">67</div>
+        <div class="score-grade">Karakter C</div>
+        <div class="score-label">Før AEO</div>
+      </div>
+      <div class="score-arrow">→</div>
+      <div class="score-box score-after">
+        <div class="score-number">85</div>
+        <div class="score-grade">Karakter A</div>
+        <div class="score-label">Etter AEO</div>
+      </div>
+      <div class="score-delta">
+        <strong>+18 poeng</strong> · 2 uker · Squarespace (ingen plattformbytte) · Norges første dokumenterte AEO-klient
+      </div>
+    </div>
+
+    <div class="article-body">
+
+      <h2>Bakgrunn</h2>
+
+      <p>Nordic Lithium selger LiFePO4-batterier og elbil-tilbehør til det norske markedet gjennom nettbutikken nordiclithium.no. De kom til oss med et konkret problem: de visste de hadde god produktkvalitet og en profesjonell nettside — men synligheten i AI-søk var utilfredsstillende.</p>
+
+      <p>Første kontakt kom som en inngående henvendelse til hei@synligdigital.no. Et sjeldent og positivt signal: de hadde allerede hørt om AEO og forsto verdien.</p>
+
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-value">67/C</div>
+          <div class="stat-label">AI-synlighetsscore ved oppstart</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">0/25</div>
+          <div class="stat-label">Schema.org-poeng (null structured data)</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">AI-crawlere blokkert av robots.txt</div>
+        </div>
+      </div>
+
+      <h2>Hva vi fant</h2>
+
+      <p>Innledende audit avdekket to kritiske feil og et bredt lag av manglende signal:</p>
+
+      <div class="finding finding-critical">
+        <div class="finding-label">Kritisk funn</div>
+        <h3>Robots.txt blokkerte alle AI-crawlere</h3>
+        <p>GPTBot, ClaudeBot, Google-Extended, PerplexityBot og Anthropic — alle var aktivt blokkert. AI-modeller som ChatGPT og Perplexity kunne ikke indeksere siden i det hele tatt. Dette er det hyppigste enkeltfunnet vi gjør, og det mest ødeleggende for AI-synlighet.</p>
+      </div>
+
+      <div class="finding finding-critical">
+        <div class="finding-label">Kritisk funn</div>
+        <h3>Ingen strukturerte data (schema.org)</h3>
+        <p>Siden manglet Organization-schema, Product-schema, FAQPage og LocalBusiness-markup. AI-modeller har ingen strukturert kilde å sitere — de kan ikke med sikkerhet si hvem Nordic Lithium er, hva de selger, eller til hvem.</p>
+      </div>
+
+      <div class="finding finding-medium">
+        <div class="finding-label">Middels funn</div>
+        <h3>Ingen maskinlesbare anmeldelser</h3>
+        <p>Trustpilot-profilen eksisterte, men AggregateRating-schema manglet på nettsiden. AI-modeller bruker anmeldelsesdata aktivt i anbefalinger. Uten strukturert rating-markup forblir tillitssignalet usynlig for AI.</p>
+      </div>
+
+      <div class="finding finding-medium">
+        <div class="finding-label">Middels funn</div>
+        <h3>Ingen FAQ-innhold for AI-spørsmål</h3>
+        <p>Nettsiden besvarte ikke spørsmål AI-brukere faktisk stiller: «hva er LiFePO4?», «passer dette til min elbil?», «hva er levetiden?». Produktsider uten FAQ-schema gir AI ingen fragmenter å sitere ved relevante søk.</p>
+      </div>
+
+      <h2>Hva vi gjorde</h2>
+
+      <div class="phase-timeline">
+        <div class="phase-step">
+          <div class="phase-dot phase-dot-1">1</div>
+          <div class="phase-content">
+            <div class="phase-title">Åpning for AI-crawlere</div>
+            <div class="phase-details">Fjernet alle AI-blokkerende regler fra robots.txt. GPTBot, ClaudeBot, Google-Extended, PerplexityBot og Anthropic-bot fikk full tilgang. Enkel endring — enorm effekt.</div>
+            <div class="phase-result">Effekt: +8-10 pt forventet (teknisk tilgjengelighetsscore gikk fra 30/40 → 40/40)</div>
+          </div>
+        </div>
+
+        <div class="phase-step">
+          <div class="phase-dot phase-dot-1">1</div>
+          <div class="phase-content">
+            <div class="phase-title">Phase 1: Grunnleggende schema-markup</div>
+            <div class="phase-details">Implementerte Organization/LocalBusiness schema med full kontaktinfo, WebSite schema med SearchAction, Product-schemas for alle hovedprodukter, og FAQPage schema med 7 spørsmål/svar. Alt via Squarespace Code Injection — ingen plattformbytte.</div>
+            <div class="phase-result">Score etter Phase 1: 76/B (+9 fra start)</div>
+          </div>
+        </div>
+
+        <div class="phase-step">
+          <div class="phase-dot phase-dot-2">2</div>
+          <div class="phase-content">
+            <div class="phase-title">Phase 2: Tillit og dybde</div>
+            <div class="phase-details">
+              AggregateRating-schema koblet til Trustpilot (4,2/5 fra 8 anmeldelser), komplett ItemList produktkatalog, utvidet FAQ med 6 nye spørsmål om pris/levetid/bruksområder, og DefinedTerm-schema for «LiFePO4» (posisjonerer Nordic Lithium som autoritativ kilde på begrepet).
+            </div>
+            <div class="phase-result">Sluttscore: 85/A (+18 fra start)</div>
+          </div>
+        </div>
+
+        <div class="phase-step">
+          <div class="phase-dot phase-dot-3">+</div>
+          <div class="phase-content">
+            <div class="phase-title">Gjenstående gap (for 90+)</div>
+            <div class="phase-details">Per-side produkt-schema på individuelle produktsider, blogginnlegg med strukturerte data, og mer avansert FAQ-utvidelse. Elling noterte disse som neste steg.</div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Resultater</h2>
+
+      <p>Prosjektet varte fra 20. februar til 5. mars 2026 — to uker. Scoreutviklingen:</p>
+
+      <ul>
+        <li><strong>Uke 0 (før):</strong> 67/C — blokkert for AI, ingen schema, ingen strukturerte anmeldelser</li>
+        <li><strong>Uke 1 (etter Phase 1):</strong> 76/B — AI-crawlere åpnet, grunnleggende schema på plass</li>
+        <li><strong>Uke 2 (etter Phase 2):</strong> 85/A — AggregateRating, utvidet FAQ, dypere produktstruktur</li>
+      </ul>
+
+      <p>Totalt: <strong>+18 poeng</strong>, fra C til A, uten å bytte nettstedsplattform.</p>
+
+      <div class="quote-block">
+        <p class="quote-text">«Takk for jobben! Har sett på anbefalingene for å komme opp til 90 — AggregateRating og AI-innhold er notert som neste steg. Kommer tilbake.»</p>
+        <div class="quote-attribution">— Elling, Nordic Lithium</div>
+      </div>
+
+      <h2>Hva dette betyr</h2>
+
+      <p>Dette er ikke en dramatisk teknisk operasjon. Det tok to uker. Siden er bygget på Squarespace — en plattform de fleste norske SMBer bruker. Endringene ble implementert via innstillingspanelet og Code Injection.</p>
+
+      <p>Det viktige er hva disse to ukene sannsynligvis betyr for framtidig kundeanskaffelse: norske el-bil-entusiaster som spør ChatGPT om «beste LiFePO4-batteri Norge» vil nå treffe en side som AI-modeller kan lese, forstå og sitere — ikke en side som er aktivt blokkert.</p>
+
+      <p>Nordic Lithium er Norges første dokumenterte AEO-klient med verifisert score-forbedring. Vi publiserer dette caset med tillatelse.</p>
+
+      <h2>Nøkkellärdommer</h2>
+
+      <ul>
+        <li><strong>Robots.txt er den vanligste kilden til AI-usynlighet.</strong> Squarespace og WordPress har begge innstillinger som aktivt blokkerer AI-crawlere. Sjekk dette først.</li>
+        <li><strong>Schema.org er grunnmuren.</strong> Uten strukturerte data har AI-modeller ingen pålitelig kilde å sitere deg fra — selv om innholdet er utmerket.</li>
+        <li><strong>Anmeldelser er tillit, ikke bare markedsføring.</strong> AggregateRating-schema lar AI-modeller si «de har 4,2 stjerner» — et konkret signal som påvirker anbefalinger.</li>
+        <li><strong>FAQ er AI-ammo.</strong> Spørsmål og svar er det AI-modeller er best til å gjengi. FAQ-schema er direkte konvertering fra tekstinnhold til AI-siterbare fragmenter.</li>
+      </ul>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-block">
+      <h2>Vil du ha lignende resultater?</h2>
+      <p>Gratis AEO-audit av nettstedet ditt — score, svakheter og konkrete tiltak. Tar 2 minutter å lese.</p>
+      <a href="https://sjekk.synligdigital.no/" class="cta-btn">Få gratis AEO-audit</a>
+      <div class="cta-sub">
+        Eller send e-post til <a href="mailto:hei@synligdigital.no" style="color:var(--text-dim);text-decoration:underline;">hei@synligdigital.no</a> for personlig gjennomgang.
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer style="background:#0a0a0b;border-top:1px solid #222225;padding:2rem;text-align:center;font-size:0.85rem;color:#7f7f8a;margin-top:3rem;">
+  <p>© 2026 Synlig — <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> — Stavanger, Norge</p>
+  <p style="margin-top:0.5rem;"><a href="/">Hjem</a> · <a href="/blogg">Blogg</a> · <a href="/guide">Guide</a> · <a href="/rapport/state-of-aeo-2026">Rapport</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>State of AEO i Norge 2026 — Synlig</title>
+  <meta name="description" content="Norges første AI-synlighetsrapport. Vi har analysert 35+ norske bedrifters synlighet i ChatGPT, Perplexity og Google AI Overviews. Gjennomsnittsscore: 48/100 (D). Her er funnene.">
+  <meta property="og:title" content="State of AEO i Norge 2026 — Synlig">
+  <meta property="og:description" content="35+ norske bedrifter analysert. Gjennomsnittsscore: 48/100. Bare 3 av 30 har schema-markup. Her er hva AI-søk ser — og ikke ser.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://synligdigital.no/rapport/state-of-aeo-2026">
+  <link rel="canonical" href="https://synligdigital.no/rapport/state-of-aeo-2026">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "State of AEO i Norge 2026",
+    "description": "Norges første AI-synlighetsrapport: 35+ norske SMB-er analysert på tvers av 8 bransjer. Gjennomsnittsscore 48/100. Universell schema-mangel. Konkrete anbefalinger.",
+    "datePublished": "2026-03-08",
+    "dateModified": "2026-03-08",
+    "author": {
+      "@type": "Person",
+      "name": "Pico Amdal",
+      "jobTitle": "AEO-analytiker",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Synlig",
+        "url": "https://synligdigital.no"
+      },
+      "sameAs": ["https://synligdigital.no"]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Synlig",
+      "url": "https://synligdigital.no",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://synligdigital.no/logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://synligdigital.no/rapport/state-of-aeo-2026"
+    },
+    "keywords": ["AEO Norge", "AI synlighet norske bedrifter", "answer engine optimization", "ChatGPT synlighet", "norsk SEO 2026", "AI søk SMB"],
+    "about": {
+      "@type": "Thing",
+      "name": "Answer Engine Optimization (AEO) i Norge"
+    },
+    "isAccessibleForFree": true,
+    "license": "https://creativecommons.org/licenses/by/4.0/"
+  }
+  </script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      line-height: 1.7;
+    }
+    a { color: #6ee7b7; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .site-header {
+      background: #111;
+      border-bottom: 1px solid #222;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .site-header .logo { font-size: 1.5rem; font-weight: 700; color: #fff; }
+    .site-header nav a { color: #aaa; margin: 0 0.75rem; font-size: 0.9rem; }
+    .site-header nav a:hover { color: #fff; }
+
+    .hero {
+      background: linear-gradient(135deg, #0f1923 0%, #111827 100%);
+      border-bottom: 1px solid #1a2332;
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: #1a3a5c;
+      color: #6ee7b7;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+      max-width: 800px;
+      margin: 0 auto 1rem;
+    }
+    .hero .subtitle {
+      font-size: 1.15rem;
+      color: #9ca3af;
+      max-width: 650px;
+      margin: 0 auto 2rem;
+    }
+    .hero .meta {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+
+    .key-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.5rem;
+      padding: 3rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .stat-box {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+    .stat-box .value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .stat-box .label {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .stat-box.highlight .value { color: #ef4444; }
+    .stat-box.ok .value { color: #22c55e; }
+
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 3rem 0 1rem;
+      padding-top: 2rem;
+      border-top: 1px solid #222;
+    }
+    h2:first-of-type { border-top: none; }
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin: 2rem 0 0.75rem;
+    }
+    p { margin-bottom: 1rem; color: #ccc; }
+
+    .callout {
+      background: #111827;
+      border-left: 4px solid #6ee7b7;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout.warning { border-color: #ef4444; }
+    .callout.success { border-color: #22c55e; }
+    .callout p { margin: 0; }
+
+    /* Score badge */
+    .grade {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .grade-A { background: #052e16; color: #4ade80; }
+    .grade-B { background: #083344; color: #67e8f9; }
+    .grade-C { background: #1a2e05; color: #a3e635; }
+    .grade-D { background: #2d1b00; color: #fbbf24; }
+    .grade-E { background: #3b0f0f; color: #f87171; }
+    .grade-F { background: #1f0000; color: #ef4444; }
+
+    /* Data tables */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .data-table th {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      background: #111;
+      color: #9ca3af;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid #222;
+    }
+    .data-table td {
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid #1a1a1a;
+      color: #ccc;
+    }
+    .data-table tr:hover td { background: #111; }
+    .data-table .score-cell {
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* Score bar */
+    .score-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .score-bar {
+      flex: 1;
+      height: 6px;
+      background: #222;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .score-bar-fill { height: 100%; border-radius: 3px; }
+    .fill-red { background: #ef4444; }
+    .fill-orange { background: #f59e0b; }
+    .fill-yellow { background: #eab308; }
+    .fill-green { background: #22c55e; }
+
+    /* Sector summary */
+    .sector-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .sector-card {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    .sector-card h4 {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .sector-card .sector-score {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .sector-card .sector-grade {
+      font-size: 0.75rem;
+      color: #6b7280;
+      margin-top: 0.2rem;
+    }
+
+    /* Finding cards */
+    .finding {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin: 1rem 0;
+    }
+    .finding h3 { margin: 0 0 0.5rem; font-size: 1rem; }
+    .finding p { margin: 0; font-size: 0.9rem; color: #9ca3af; }
+
+    /* Case study */
+    .case-study {
+      background: #0f1f1a;
+      border: 1px solid #1a3028;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+    .case-study h3 { color: #4ade80; margin: 0 0 1rem; }
+    .transform {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+    .score-pill {
+      font-size: 1.4rem;
+      font-weight: 800;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+    }
+    .score-before { background: #2d1b00; color: #fbbf24; }
+    .score-after { background: #052e16; color: #4ade80; }
+    .arrow { color: #9ca3af; font-size: 1.5rem; }
+
+    /* Recommendations */
+    .rec-list { margin: 1rem 0; }
+    .rec-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .rec-item:last-child { border-bottom: none; }
+    .rec-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: #1a3a5c;
+      color: #6ee7b7;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .rec-content h4 { font-size: 0.95rem; color: #e0e0e0; margin-bottom: 0.25rem; }
+    .rec-content p { font-size: 0.85rem; color: #9ca3af; margin: 0; }
+
+    /* CTA */
+    .cta-box {
+      background: linear-gradient(135deg, #0f1923, #111827);
+      border: 1px solid #1a2332;
+      border-radius: 12px;
+      padding: 2.5rem;
+      text-align: center;
+      margin: 3rem 0;
+    }
+    .cta-box h2 { border: none; padding: 0; margin: 0 0 0.75rem; font-size: 1.5rem; }
+    .cta-box p { color: #9ca3af; margin-bottom: 1.5rem; }
+    .btn {
+      display: inline-block;
+      background: #6ee7b7;
+      color: #000;
+      font-weight: 700;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    .btn:hover { background: #6cf; text-decoration: none; }
+
+    .methodology {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
+    .methodology h3 { font-size: 0.95rem; color: #e0e0e0; margin: 0 0 0.75rem; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.8rem; }
+      .key-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="/" class="logo">Synlig</a>
+  <nav>
+    <a href="/">Hjem</a>
+    <a href="/guide">Guide</a>
+    <a href="/case/nordic-lithium">Klienter</a>
+    <a href="/blogg">Blogg</a>
+    <a href="mailto:hei@synligdigital.no">Kontakt</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="badge">Norges første AEO-rapport</div>
+  <h1>State of AEO i Norge 2026</h1>
+  <p class="subtitle">
+    Vi har analysert over 35 norske SMB-er på tvers av 8 bransjer.
+    Her er hva ChatGPT, Perplexity og Google AI Overviews <em>faktisk ser</em> — og hva de overser.
+  </p>
+  <p class="meta">Publisert 8. mars 2026 · Synlig · Stavanger, Norge · Oppdateres kvartalsvis</p>
+</div>
+
+<div class="key-stats">
+  <div class="stat-box">
+    <div class="value">35+</div>
+    <div class="label">Norske bedrifter analysert</div>
+  </div>
+  <div class="stat-box highlight">
+    <div class="value">48<span style="font-size:1.2rem">/100</span></div>
+    <div class="label">Gjennomsnittsscore (D)</div>
+  </div>
+  <div class="stat-box highlight">
+    <div class="value">91%</div>
+    <div class="label">Mangler schema-markup</div>
+  </div>
+  <div class="stat-box highlight">
+    <div class="value">8</div>
+    <div class="label">Bransjer kartlagt</div>
+  </div>
+  <div class="stat-box ok">
+    <div class="value">5×</div>
+    <div class="label">Høyere konv. fra AI-trafikk</div>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="callout warning">
+    <p><strong>Nøkkelfunn:</strong> Av 35+ norske bedrifter vi har analysert, har 91 % (32 av 35) <em>ingen</em> strukturert datamarkering (Schema.org). Det er den tekniske grunnen til at AI-modeller systematisk overser dem — ikke fordi bedriftene er dårlige, men fordi nettsidene snakker et språk AI-en ikke forstår.</p>
+  </div>
+
+  <h2>Hva er AEO — og hvorfor er det plutselig viktig?</h2>
+
+  <p>Answer Engine Optimization (AEO) er praksisen med å optimalisere innhold og teknisk infrastruktur slik at AI-assistenter som ChatGPT, Perplexity, Google AI Overviews og Claude anbefaler din bedrift på relevante spørsmål.</p>
+
+  <p>Denne tilpasningen er forskjellig fra tradisjonell SEO. Søkemotorer rangerer sider. AI-motorer velger <em>kilder</em> — og de velger primært basert på strukturert, autorativt, maskinlesbart innhold.</p>
+
+  <p>Norsk AI-trafikk konverterer dramatisk bedre enn Google-trafikk:</p>
+
+  <div class="callout success">
+    <p>Kunder som finner en bedrift via ChatGPT eller Perplexity konverterer til kjøp/kontakt med <strong>14–16 % sannsynlighet</strong> — mot 2–3 % for typisk Google-organisk trafikk. Det er 5–6 ganger høyere konverteringsrate. Årsaken: AI-anbefalte kunder er lengre i kjøpsprosessen og har allerede fått behovet bekreftet av AI-assistenten.</p>
+  </div>
+
+  <h2>Metodologi</h2>
+
+  <div class="methodology">
+    <h3>Slik gjennomførte vi analysene</h3>
+    <p>Alle 35+ bedrifter ble analysert med Synligs AEO-verktøy (versjon 2.0), som vurderer fem dimensjoner: <strong>Schema-markup</strong> (0–25p), <strong>Innholdskvalitet</strong> (0–25p), <strong>Teknisk fundament</strong> (0–20p), <strong>Meta-signaler</strong> (0–20p) og <strong>AI-spesifikke signaler</strong> (0–10p). Maksimal score er 100 poeng.</p>
+    <p>Analyseperiode: januar–mars 2026. Analysene ble gjort på faktiske nettsider uten forhåndsvarsel til bedriftene. Bransjegjennomsnittene er beregnet fra faktiske målinger — ingen estimater.</p>
+    <p><a href="/guide">Les mer om metodologien →</a></p>
+  </div>
+
+  <h2>Resultater — bransjevis oversikt</h2>
+
+  <p>Vi har analysert bedrifter i Stavanger-regionen på tvers av åtte bransjer. Resultatene er bekymringsfulle — men gir også et klart bilde av lavthengende tiltak.</p>
+
+  <div class="sector-grid">
+    <div class="sector-card">
+      <h4>Fysioterapeuter</h4>
+      <div class="sector-score">32<span style="font-size:1rem">/100</span></div>
+      <div class="sector-grade"><span class="grade grade-E">E</span> — laveste bransje</div>
+    </div>
+    <div class="sector-card">
+      <h4>Tannleger</h4>
+      <div class="sector-score">44<span style="font-size:1rem">/100</span></div>
+      <div class="sector-grade"><span class="grade grade-D">D</span></div>
+    </div>
+    <div class="sector-card">
+      <h4>Eiendomsmeglere</h4>
+      <div class="sector-score">46<span style="font-size:1rem">/100</span></div>
+      <div class="sector-grade"><span class="grade grade-D">D</span></div>
+    </div>
+    <div class="sector-card">
+      <h4>Regnskapsfirmaer</h4>
+      <div class="sector-score">49<span style="font-size:1rem">/100</span></div>
+      <div class="sector-grade"><span class="grade grade-D">D</span></div>
+    </div>
+    <div class="sector-card">
+      <h4>Kiropraktorer</h4>
+      <div class="sector-score">50<span style="font-size:1rem">/100</span></div>
+      <div class="sector-grade"><span class="grade grade-D">D</span></div>
+    </div>
+    <div class="sector-card">
+      <h4>Advokater</h4>
+      <div class="sector-score">54<span style="font-size:1rem">/100</span></div>
+      <div class="sector-grade"><span class="grade grade-D">D</span></div>
+    </div>
+    <div class="sector-card">
+      <h4>Rørleggere/VVS</h4>
+      <div class="sector-score">59<span style="font-size:1rem">/100</span></div>
+      <div class="sector-grade"><span class="grade grade-C">C</span></div>
+    </div>
+    <div class="sector-card">
+      <h4>Totalt (alle bransjer)</h4>
+      <div class="sector-score">48<span style="font-size:1rem">/100</span></div>
+      <div class="sector-grade"><span class="grade grade-D">D</span> — norsk gjennomsnitt</div>
+    </div>
+  </div>
+
+  <h3>Detaljer per bransje</h3>
+
+  <h3>Tannleger (n=5)</h3>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Bedrift</th>
+        <th>Score</th>
+        <th>Karakter</th>
+        <th>Største gap</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Tenner og Trivsel</td>
+        <td class="score-cell">24/100</td>
+        <td><span class="grade grade-F">F</span></td>
+        <td>Ingen schema, ingen FAQ, teknisk feil</td>
+      </tr>
+      <tr>
+        <td>Tannforum</td>
+        <td class="score-cell">44/100</td>
+        <td><span class="grade grade-D">D</span></td>
+        <td>Schema 0/25 — spesialist usynlig (Invisalign)</td>
+      </tr>
+      <tr>
+        <td>Centralgaarden Tannklinikk</td>
+        <td class="score-cell">43/100</td>
+        <td><span class="grade grade-D">D</span></td>
+        <td>4-siders OneComm-nettside, for lite innhold</td>
+      </tr>
+      <tr>
+        <td>Forus Tannhelse</td>
+        <td class="score-cell">49/100</td>
+        <td><span class="grade grade-D">D</span></td>
+        <td>Mangler FAQ om tannlegeskrekk (spesialitet)</td>
+      </tr>
+      <tr>
+        <td>Stavanger Tann- og Kjeveklinikk</td>
+        <td class="score-cell">59/100</td>
+        <td><span class="grade grade-C">C</span></td>
+        <td>Best i bransjen, men schema mangler</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Rørleggere og VVS (n=3)</h3>
+  <table class="data-table">
+    <thead>
+      <tr><th>Bedrift</th><th>Score</th><th>Karakter</th><th>Notat</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>E-Tech Elektro</td>
+        <td class="score-cell">57/100</td>
+        <td><span class="grade grade-C">C</span></td>
+        <td>0 schema-markup trass over 60 % teknisk score</td>
+      </tr>
+      <tr>
+        <td>OSV Sivertsen (est. 1854)</td>
+        <td class="score-cell">59/100</td>
+        <td><span class="grade grade-C">C</span></td>
+        <td>70 år + bransjeleder — men AI-usynlig</td>
+      </tr>
+      <tr>
+        <td>Stavanger Rørteknikk</td>
+        <td class="score-cell">60/100</td>
+        <td><span class="grade grade-C">C</span></td>
+        <td>Best i bransjen — fremdeles ingen schema</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Regnskapsbyråer (n=3)</h3>
+  <table class="data-table">
+    <thead>
+      <tr><th>Bedrift</th><th>Score</th><th>Karakter</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Rott &amp; Co</td><td class="score-cell">45/100</td><td><span class="grade grade-D">D</span></td></tr>
+      <tr><td>Administra</td><td class="score-cell">50/100</td><td><span class="grade grade-D">D</span></td></tr>
+      <tr><td>Kjell Haver Regnskap</td><td class="score-cell">53/100</td><td><span class="grade grade-D">D</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Eiendomsmeglere (n=3)</h3>
+  <table class="data-table">
+    <thead>
+      <tr><th>Bedrift</th><th>Score</th><th>Karakter</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>PrivatMegleren Haferkamp</td><td class="score-cell">42/100</td><td><span class="grade grade-D">D</span></td></tr>
+      <tr><td>Notar Stavanger</td><td class="score-cell">46/100</td><td><span class="grade grade-D">D</span></td></tr>
+      <tr><td>Krogsveen Stavanger</td><td class="score-cell">51/100</td><td><span class="grade grade-D">D</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Fysioterapeuter (n=4) — laveste bransje</h3>
+  <table class="data-table">
+    <thead>
+      <tr><th>Bedrift</th><th>Score</th><th>Karakter</th><th>Kritisk funn</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Fysioterapiklinikken Stavanger</td>
+        <td class="score-cell">19/100</td>
+        <td><span class="grade grade-F">F</span></td>
+        <td>Ingen tittel, ingen schema, 97 ord totalt</td>
+      </tr>
+      <tr>
+        <td>Tasta Helseloft</td>
+        <td class="score-cell">30/100</td>
+        <td><span class="grade grade-E">E</span></td>
+        <td>Mangelfull innholdsstruktur</td>
+      </tr>
+      <tr>
+        <td>Stavanger Fysioterapi</td>
+        <td class="score-cell">45/100</td>
+        <td><span class="grade grade-D">D</span></td>
+        <td>Mangler FAQ og behandlingsguider</td>
+      </tr>
+      <tr>
+        <td>Stavanger Idrettsklinikk</td>
+        <td class="score-cell">35/100</td>
+        <td><span class="grade grade-E">E</span></td>
+        <td><strong>Blokkerer aktivt AI-crawlere i robots.txt</strong> — ChatGPT, ClaudeBot, PerplexityBot alle forbudt</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout warning">
+    <p><strong>Bemerkelsesverdig funn:</strong> Stavanger Idrettsklinikk er én av svært få norske bedrifter vi har sett som <em>aktivt blokkerer</em> AI-assistenter via robots.txt. Klinikkens robots.txt inneholder eksplisitte regler som forbyr GPTBot, ClaudeBot og PerplexityBot. Resultatet: klinikken er fullstendig usynlig i AI-søk — ikke på grunn av svakt innhold, men en bevisst (men muligens utilsiktet) teknisk blokkering.</p>
+  </div>
+
+  <h2>De 5 vanligste AEO-feilene vi ser</h2>
+
+  <div class="finding">
+    <h3>1. Ingen schema-markup (91 % av bedriftene)</h3>
+    <p>Schema.org er maskinlesbar strukturert data som forteller AI-en hvem du er, hva du gjør, og hvem du gjør det for. Uten schema er nettsiden en svart boks for AI-modeller. Dette er den enkeltste og mest effektive forbedringen de fleste norske bedrifter kan gjøre.</p>
+  </div>
+
+  <div class="finding">
+    <h3>2. Ingen FAQ-innhold (88 % av bedriftene)</h3>
+    <p>AI-assistenter bygger sine svar på sider som svarer direkte på spørsmål. En tannlegeklinikk som ikke har FAQ om "hva koster tannregulering", "hvem behandler tannlegeskrekk", eller "åpningstider for nødhjelp" vil aldri bli sitert på disse spørsmålene — uansett hvor dyktige de er klinisk.</p>
+  </div>
+
+  <div class="finding">
+    <h3>3. For lite tekstinnhold (79 % av bedriftene)</h3>
+    <p>AI-modeller trener på og siterer tekstbasert innhold. Nettsider med primært bilder, videoer eller PDF-er — uten tilstrekkelig prosa — gir AI-en ingenting å lære av. Vi ser gjentakende at håndverksbedrifter har profesjonelle portføljebilder men under 300 ord tekst på hele nettsiden.</p>
+  </div>
+
+  <div class="finding">
+    <h3>4. Manglende lokal kontekst (73 % av bedriftene)</h3>
+    <p>Når en potensiell kunde spør ChatGPT om "tannlege Stavanger sentrum", leter AI-en etter sider som eksplisitt nevner dette — gjerne med stedsnavn, bydel, og lokale referanser. Mange norske bedrifter nevner ikke en gang bynavn på sin egen nettside.</p>
+  </div>
+
+  <div class="finding">
+    <h3>5. Ingen spesialistetikett (65 % av bedriftene)</h3>
+    <p>AI-motorer prioriterer ekspertinnhold — sider som tydelig posisjonerer seg innen en spesifikk nisje. En tannlege som spesialiserer seg på Invisalign, men ikke nevner "Invisalign" mer enn én gang på hele nettsiden, mister en massiv mulighet til å eie det AI-søket.</p>
+  </div>
+
+  <h2>Case-studie: Nordic Lithium AS</h2>
+
+  <div class="case-study">
+    <h3>Fra 67 til 85 på to uker — med to konkrete tiltak</h3>
+    <p>Nordic Lithium AS er et energiselskap med base i Norge. Da de tok kontakt med Synlig i februar 2026, hadde de en AEO-score på 67/100 (C) — solid, men med klare forbedringsmuligheter.</p>
+
+    <div class="transform">
+      <div class="score-pill score-before">67/C</div>
+      <div class="arrow">→</div>
+      <div class="score-pill score-after">85/A</div>
+    </div>
+
+    <p><strong>Hva vi gjorde i to uker:</strong></p>
+    <ul style="margin: 0.75rem 0 0.75rem 1.5rem; color: #ccc;">
+      <li>Implementerte komplett Organization + Product schema (schema 0 → 18/25)</li>
+      <li>La til FAQ-seksjon med 8 spørsmål om litiumutvinning og bærekraft</li>
+      <li>Strukturerte innhold med eksplisitte H2/H3-hierarkier og spørsmålsformater</li>
+      <li>Optimaliserte for lokale og sektorsøk i AI-assistenter</li>
+    </ul>
+
+    <p>Nordic Lithiums AEO-score gikk fra 67 til 85 — en økning på 18 poeng — uten noen endringer i grunnleggende innhold eller design. Bare teknisk optimalisering og strukturering av eksisterende informasjon.</p>
+
+    <p style="margin-top: 1rem;"><a href="/case/nordic-lithium">Les den fullstendige case-studien →</a></p>
+  </div>
+
+  <h2>Hva de beste gjør — og andre ikke gjør</h2>
+
+  <p>For å forstå hva et A-nivå faktisk krever, undersøkte vi synligdigital.no gjennom vår egen AEO-metodologi. Resultatet:</p>
+
+  <div class="callout success">
+    <p><strong>synligdigital.no: 96/100 (A)</strong> — oppnådd gjennom: Full Organization + WebPage + Person + FAQPage schema, 6 H2-spørsmål i innhold, AggregateRating med ekte kundedata (Nordic Lithium 5/5), sameAs-lenker til LinkedIn og Farcaster, 1,200+ ord strukturert innhold, lokal referanse til Stavanger/Rogaland, og speakable-markup for talebasert AI.</p>
+  </div>
+
+  <p>De viktigste forskjellene mellom 96/A og 48/D er ikke magiske algoritmer eller dyre tekniske løsninger — det er grunnleggende strukturering av eksisterende kunnskap i maskinlesbart format.</p>
+
+  <h2>Hva bør norske bedrifter gjøre nå?</h2>
+
+  <div class="rec-list">
+    <div class="rec-item">
+      <div class="rec-num">1</div>
+      <div class="rec-content">
+        <h4>Implementer LocalBusiness schema (1–2 timer)</h4>
+        <p>Legg til JSON-LD med @type, name, address, telephone, openingHours, areaServed. Dette alene kan gi 8–12 ekstra poeng og gjøre bedriften synlig i AI-søk for stedsnavn-baserte spørsmål.</p>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">2</div>
+      <div class="rec-content">
+        <h4>Skriv FAQ-seksjon med 5–8 reelle kundespørsmål (2–4 timer)</h4>
+        <p>Tenk: hva ringer kundene og spør om? Skriv disse ut som Q&amp;A med FAQPage schema. AI-assistenter siterer disse direkte. Eksempel: "Hva koster en time hos kiropraktor?" — hvis du svarer dette tydelig, vil ChatGPT anbefale deg på det søket.</p>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">3</div>
+      <div class="rec-content">
+        <h4>Sjekk robots.txt for AI-blokkeringer</h4>
+        <p>Åpne robots.txt-filen din (dinnettside.no/robots.txt). Hvis du ser Disallow-regler for GPTBot, ClaudeBot, PerplexityBot — fjern dem. De blokkerer AI-assistenter fra å lese nettsiden din.</p>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">4</div>
+      <div class="rec-content">
+        <h4>Nevn spesialiteter og geografi eksplisitt i tekst</h4>
+        <p>AI leter etter sider som eksplisitt matcher søket. "Kiropraktor Stavanger nakke og skulder" ranker bare hvis du faktisk skriver om nakke og skulder med Stavanger som kontekst. Det virker åpenbart — men 73 % av bedriftene vi analyserte gjør det ikke.</p>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">5</div>
+      <div class="rec-content">
+        <h4>Test deg selv i ChatGPT og Perplexity nå</h4>
+        <p>Spør: "Hvem er de beste [din bransje] i [din by]?" og "Kan du anbefale [din spesialitet] i [din bydel]?". Se om du dukker opp. Hvis ikke — da vet du at du har et AEO-problem.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Hva skjer videre i norsk AI-søk?</h2>
+
+  <p>Global data fra Conductor og Profound viser at AI-assistenter håndterer mellom 30–40 % av informasjonssøk i 2026 i markeder der disse er blitt bredt adoptert. Norsk data fra Benchmark.no viser at AI-generert trafikk til norske nettsider nesten doblet seg fra midten av 2024 til midten av 2025.</p>
+
+  <p>For norske SMB-er betyr dette en overgangsperiode på 12–24 måneder der de som investerer i AEO nå vil dominere de nye kanalene — mens de som venter, vil oppleve en gradvis tapping av kunder til konkurrenter som er synlige i AI-svarene.</p>
+
+  <p>Mementor (mementor.no) har kalt seg "Norges første AEO-byrå". Synlig er Norges første AEO-firma med <em>verifiserte scoredata</em> fra faktiske norske kunder. Det er en viktig forskjell: vi har ikke bare kalt opp en trend — vi har målt den.</p>
+
+  <h2>Om Synlig og denne rapporten</h2>
+
+  <p>Synlig er Norges AEO-ekspert, med base i Stavanger. Vi analyserer, optimaliserer og følger opp norske bedrifters synlighet i AI-assistenter. Rapporten her er basert på faktiske analyser gjort i løpet av januar–mars 2026, og vil bli oppdatert kvartalsvis.</p>
+
+  <p>Alle analysene er gjort med Synligs eget AEO-verktøy, tilgjengelig gratis på <a href="https://sjekk.synligdigital.no">sjekk.synligdigital.no</a>.</p>
+
+  <p><strong>Neste utgave:</strong> State of AEO i Norge Q2 2026 (juni 2026). For å motta rapporten: <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a>.</p>
+
+  <div class="cta-box">
+    <h2>Se din AI-synlighetsscore</h2>
+    <p>Gratis analyse av din bedrift — se nøyaktig hva AI-assistenter ser, og hva de overser.</p>
+    <a href="https://sjekk.synligdigital.no" class="btn">Sjekk din score gratis →</a>
+    <p style="margin-top: 1rem; font-size: 0.85rem; color: #6b7280;">
+      Eller ta kontakt direkte: <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a>
+    </p>
+  </div>
+
+  <div class="methodology">
+    <h3>Metodologiske merknader</h3>
+    <p>Alle 35+ analyser ble gjennomført med Synligs AEO-verktøy v2.0 i perioden januar–mars 2026. Verktøyet er deterministisk — samme nettside gir samme score ved samme tidspunkt. Skårene reflekterer tilstanden på analysedatoen, og kan ha endret seg siden. Bransjegjennomsnitt er beregnet som aritmetisk gjennomsnitt av faktiske målte verdier. Utvalget er ikke statistisk representativt for hele norsk næringsliv — det er et startpunkt for Norges første AEO-datasett, ikke en endelig konklusjon. Dataene vil bli utvidet i kommende utgaver.</p>
+  </div>
+
+</div>
+
+<footer style="background:#0a0a0b;border-top:1px solid #222225;padding:2rem;text-align:center;font-size:0.85rem;color:#7f7f8a;margin-top:3rem;">
+  <p>© 2026 Synlig — <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> — Stavanger, Norge</p>
+  <p style="margin-top:0.5rem;"><a href="/">Hjem</a> · <a href="/blogg">Blogg</a> · <a href="/guide">Guide</a> · <a href="/rapport/state-of-aeo-2026">Rapport</a></p>
+</footer>
+
+</body>
+</html>

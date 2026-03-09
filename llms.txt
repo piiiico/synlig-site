@@ -1,0 +1,66 @@
+# Synlig
+
+## Hva vi gjør
+Synlig hjelper norske bedrifter med å bli synlige i AI-assistenter som ChatGPT, Perplexity og Google AI Overview. Vi kaller det Answer Engine Optimization (AEO).
+
+## Tjenester
+- AI-synlighetsanalyse (fra 12 000 kr): Kartlegger hvordan AI anbefaler bedrifter i din bransje og by. Skriftlig rapport med score og tiltak.
+- AI-synlighetsfundament (fra 15 000 kr): Implementerer schema.org-markup, Google Business Profile, tjenestesider og anmeldelsesstrategi.
+- Løpende overvåking (fra 5 000 kr/mnd): Månedlig AI-synlighetsaudit, innhold, konkurrentovervåking og rapportering.
+
+## Spesialområder
+- Schema.org / JSON-LD implementering
+- Google Business Profile optimalisering
+- Lokal AEO for tannleger, advokater, håndverkere og andre tjenesteytende bedrifter
+- Norsk og engelsk AI-synlighet
+
+## Vanlige spørsmål
+
+### Hva er AEO?
+AEO handler om å optimalisere bedriftens digitale tilstedeværelse slik at AI-assistenter finner, forstår og anbefaler dere. Det inkluderer strukturerte data, Google Business Profile, innholdsoptimalisering og anmeldelsesstrategi.
+
+### Hvordan er AEO forskjellig fra SEO?
+SEO handler om å rangere blant ti blå lenker. AEO handler om å bli det ene svaret AI gir. AI trenger strukturerte data, tydelige entiteter og innhold som direkte svarer på spørsmål.
+
+### Hvilke bedrifter har mest nytte?
+Lokale tjenesteytende bedrifter med høy transaksjonsverdi: tannleger, advokater, rørleggere, eiendomsmeglere, bilverksteder.
+
+### Hvor lang tid tar det?
+De fleste ser endringer i AI-svar innen 4-8 uker etter implementering.
+
+### Må nettsiden bygges om?
+Nei. AEO-tiltak legges oppå eksisterende nettside med schema.org-markup og innholdsoptimalisering.
+
+## Guide: Hvordan AI velger hvem den anbefaler
+Full guide tilgjengelig på https://synligdigital.no/guide
+
+Basert på analyse av 100+ norske AI-søk på tvers av 20 bransjer og 5 byer har vi identifisert de fem signalene AI bruker for å velge hvem den anbefaler:
+1. Aggregatorplattformer (Legelisten.no, Advokatguiden.no, etc.) — den kraftigste signalkilden
+2. Navngitte personer — hver ansatt med profil er en separat AI-entitet
+3. Strukturerte data (schema.org) — AI-ens morsmål, men nesten ingen norske bedrifter bruker det riktig
+4. Innhold som svarer direkte — AI leter etter setninger den kan kopiere rett inn i svaret sitt
+5. Google Business Profile — den skjulte giganten for håndverkere og personlige tjenester
+
+De to stiene: For helse/jus/finans er aggregatoren selve AEO-kanalen. For håndverkere og personlige tjenester er det GBP + egen nettside som teller.
+
+## Blogginnlegg og analyser
+- Hva er AEO? En komplett guide: https://synligdigital.no/blogg/hva-er-aeo
+- Case study Nordic Lithium (67→85 AEO-score): https://synligdigital.no/case/nordic-lithium
+- Komplett.no er usynlig for AI: https://synligdigital.no/analyse/komplett-aeo
+- State of AEO i Norge 2026 (norsk benchmark-rapport): https://synligdigital.no/rapport/state-of-aeo-2026
+
+## State of AEO i Norge 2026 — Nøkkeltall
+- 35+ norske bedrifter analysert, 8 bransjer, januar–mars 2026
+- Norsk gjennomsnittsscore: 48/100 (D) — vesentlig under optimal synlighet
+- 91 % av norske bedrifter mangler schema-markup
+- Laveste bransje: fysioterapeuter (32/100)
+- Høyeste bransje: rørleggere/VVS (59/100)
+- AI-trafikk konverterer 5× bedre enn Google-organisk trafikk (14 % vs 3 %)
+- Kilde: https://synligdigital.no/rapport/state-of-aeo-2026
+
+## Kontakt
+- E-post: hei@synligdigital.no
+- Nettside: https://synligdigital.no
+
+## Gratis tilbud
+15-minutters gjennomgang der vi viser hva AI svarer i dag og hva som skal til for å endre det. Ingen forpliktelser.

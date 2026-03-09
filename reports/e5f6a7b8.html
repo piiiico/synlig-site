@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>AI-Synlighetsrapport — Stavanger Idrettsklinikk</title>
+<style>*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --bg: #0f172a; --surface: #1e293b; --surface2: #334155; --border: #475569; --text: #f1f5f9; --text-muted: #94a3b8; --indigo: #6366f1; --indigo-light: #818cf8; --green: #22c55e; --yellow: #f59e0b; --red: #ef4444; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; font-size: 15px; }
+  .container { max-width: 860px; margin: 0 auto; padding: 24px 16px; }
+  .header { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-bottom: 1px solid var(--border); padding: 32px 0; margin-bottom: 32px; }
+  .header-inner { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+  .logo { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .logo span { color: var(--indigo-light); font-weight: 600; }
+  h1 { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { color: var(--text-muted); font-size: 14px; }
+  .hero { display: flex; gap: 32px; align-items: center; margin-bottom: 32px; flex-wrap: wrap; }
+  .gauge-wrap { position: relative; width: 160px; height: 160px; flex-shrink: 0; }
+  .gauge-wrap svg { width: 100%; height: 100%; }
+  .gauge-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .gauge-score { font-size: 40px; font-weight: 800; line-height: 1; }
+  .gauge-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .grade-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 2px solid var(--border); border-radius: 12px; padding: 8px 16px; font-size: 14px; margin-bottom: 12px; }
+  .grade-letter { font-size: 28px; font-weight: 800; }
+  .grade-desc { color: var(--text-muted); }
+  .hero-text h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .hero-text p { color: var(--text-muted); font-size: 14px; max-width: 500px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+  .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 8px; }
+  .card-title { font-size: 16px; font-weight: 700; }
+  .comp-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .comp-label { font-size: 13px; color: var(--text-muted); flex: 0 0 160px; }
+  .comp-bar-track { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+  .comp-bar-fill { height: 100%; border-radius: 4px; }
+  .comp-score { font-size: 13px; font-weight: 600; flex: 0 0 45px; text-align: right; }
+  .issue-list { list-style: none; }
+  .issue-list li { padding: 8px 0; border-bottom: 1px solid var(--surface2); font-size: 14px; color: var(--text-muted); }
+  .issue-list li::before { content: "⚠ "; color: var(--yellow); }
+  .issue-list li:last-child { border-bottom: none; }
+  .cta-card { background: linear-gradient(135deg, rgba(99,102,241,0.2) 0%, rgba(99,102,241,0.05) 100%); border: 1px solid rgba(99,102,241,0.4); border-radius: 12px; padding: 28px; text-align: center; margin-bottom: 32px; }
+  .cta-card h2 { font-size: 20px; margin-bottom: 8px; }
+  .cta-card p { color: var(--text-muted); margin-bottom: 20px; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .btn { display: inline-block; background: var(--indigo); color: white; padding: 12px 28px; border-radius: 8px; font-weight: 600; font-size: 15px; text-decoration: none; }
+  .footer { border-top: 1px solid var(--border); padding: 24px 0; text-align: center; color: var(--text-muted); font-size: 13px; }
+  .highlight { color: var(--red); font-weight: 600; }
+  .highlight-y { color: var(--yellow); font-weight: 600; }</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <div class="logo"><span>Synlig</span> — AEO-analyse</div>
+    <h1>AI-Synlighetsrapport</h1>
+    <div class="subtitle">Stavanger Idrettsklinikk · stavangeridrettsklinikk.no</div>
+  </div>
+</div>
+<div class="container">
+  <div class="hero">
+    <div class="gauge-wrap">
+      <svg viewBox="0 0 160 160">
+        <path d="M 28.038475772933687 110 A 60 60 0 1 1 139.67131372209641 86.27170779605918" fill="none" stroke="#334155" stroke-width="12" stroke-linecap="round" transform="rotate(0 80 80)"/>
+        <path d="M 28.038475772933687 110 A 60 60 0 0 1 85.02067059993894 20.210428445029734" fill="none" stroke="#f97316" stroke-width="12" stroke-linecap="round"/>
+      </svg>
+      <div class="gauge-text"><span class="gauge-score" style="color:#f97316">52</span><span class="gauge-label">av 100</span></div>
+    </div>
+    <div class="hero-text">
+      <div class="grade-badge"><span class="grade-letter" style="color:#f97316">D</span><span class="grade-desc">Lav AI-synlighet</span></div>
+      <h2>robots.txt blokkerer ChatGPT og Perplexity aktivt</h2>
+      <p>Analysen ble kjørt 8. mars 2026 av Synlig. Scoren måler hvor synlig Stavanger Idrettsklinikk er for AI-assistenter som ChatGPT, Google AI Overview og Perplexity.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-title">Komponentpoeng</span></div>
+    <div class="comp-row">
+    <span class="comp-label">Schema-markup</span>
+    <div class="comp-bar-track"><div class="comp-bar-fill" style="width:36%;background:#ef4444"></div></div>
+    <span class="comp-score">9/25</span>
+  </div>
+    <div class="comp-row">
+    <span class="comp-label">Meta-data</span>
+    <div class="comp-bar-track"><div class="comp-bar-fill" style="width:53%;background:#f59e0b"></div></div>
+    <span class="comp-score">8/15</span>
+  </div>
+    <div class="comp-row">
+    <span class="comp-label">Innhold</span>
+    <div class="comp-bar-track"><div class="comp-bar-fill" style="width:40%;background:#f59e0b"></div></div>
+    <span class="comp-score">10/25</span>
+  </div>
+    <div class="comp-row">
+    <span class="comp-label">Teknisk</span>
+    <div class="comp-bar-track"><div class="comp-bar-fill" style="width:75%;background:#22c55e"></div></div>
+    <span class="comp-score">15/20</span>
+  </div>
+    <div class="comp-row">
+    <span class="comp-label">AI-signaler</span>
+    <div class="comp-bar-track"><div class="comp-bar-fill" style="width:67%;background:#f59e0b"></div></div>
+    <span class="comp-score">10/15</span>
+  </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-title">Viktigste funn</span></div>
+    <ul class="issue-list">
+      <li><span class='highlight'>robots.txt blokkerer GPTBot, ClaudeBot og PerplexityBot</span> — ChatGPT, Claude og Perplexity kan ikke lese nettstedet</li>
+      <li>Ingen meta description</li>
+      <li>To H1-tagger (kun én er riktig)</li>
+      <li>Ingen FAQ-schema eller AggregateRating</li>
+      <li>199 ord innhold (for lite for AI-analyse av tjenestetilbud)</li>
+      <li>Mangler team-info og Person-schema</li>
+      <li>Mangler llms.txt</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-title">Hva bør gjøres?</span></div>
+    <ul class="issue-list" style="list-style:none">
+      <li style="padding:8px 0;border-bottom:1px solid var(--surface2);font-size:14px;color:var(--text-muted)"><span style="color:var(--indigo-light);font-weight:700;margin-right:8px">1.</span><strong>Fjern AI-blokkeringen i robots.txt umiddelbart</strong> — dette er den enkeltendringen med størst effekt. Tillat: GPTBot, ClaudeBot, PerplexityBot</li>
+      <li style="padding:8px 0;border-bottom:1px solid var(--surface2);font-size:14px;color:var(--text-muted)"><span style="color:var(--indigo-light);font-weight:700;margin-right:8px">2.</span>Legg til meta description med nøkkelord: idrettsskader, sportsmedisn, Stavanger</li>
+      <li style="padding:8px 0;border-bottom:1px solid var(--surface2);font-size:14px;color:var(--text-muted)"><span style="color:var(--indigo-light);font-weight:700;margin-right:8px">3.</span>Utvid LocalBusiness schema med geo-koordinater, sports-spesialiseringer og FAQ</li>
+      <li style="padding:8px 0;border-bottom:1px solid var(--surface2);font-size:14px;color:var(--text-muted)"><span style="color:var(--indigo-light);font-weight:700;margin-right:8px">4.</span>Skriv 500+ ord om treningssenteret, spesialiseringer og behandlingsmetoder</li>
+      <li style="padding:8px 0;border-bottom:1px solid var(--surface2);font-size:14px;color:var(--text-muted)"><span style="color:var(--indigo-light);font-weight:700;margin-right:8px">5.</span>Legg til AggregateRating og team-schema for de to legene</li>
+    </ul>
+  </div>
+
+  <div class="cta-card">
+    <h2>Ønsker dere å forbedre scoren?</h2>
+    <p>Synlig hjelper norske bedrifter med å bli synlige for AI-assistenter. Vi tar oss av implementeringen — dere trenger ikke gjøre noe selv.</p>
+    <a href="mailto:hei@synligdigital.no" class="btn">Ta kontakt</a>
+  </div>
+
+  <div class="footer">
+    Rapport generert av <strong>Synlig</strong> · <a href="https://synligdigital.no">synligdigital.no</a><br>
+    <small style="color:#64748b;margin-top:4px;display:block">Scoren er ikke en rangering av nettstedet — den måler kun AI-lesbarhet.</small>
+  </div>
+</div>
+</body>
+</html>

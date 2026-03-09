@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>AEO-dashboard | Synlig</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface2: #334155;
+      --border: #334155;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent: #6366f1;
+      --accent-light: #818cf8;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ─── Header ─────────────────────────────────────────────── */
+    .header {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+    }
+
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-logo {
+      font-size: 1.75rem;
+    }
+
+    .brand-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent-light);
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .header-stats {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--accent-light);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── Main ───────────────────────────────────────────────── */
+    .main {
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    .section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    /* ─── Site card ──────────────────────────────────────────── */
+    .site-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 1.5rem;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .site-title h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .site-url {
+      font-size: 0.8rem;
+      color: var(--accent-light);
+      text-decoration: none;
+    }
+
+    .site-url:hover { text-decoration: underline; }
+
+    .score-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 80px;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .score-num {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .score-denom {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .score-grade {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      margin-top: 0.2rem;
+    }
+
+    .site-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--surface2);
+      flex-wrap: wrap;
+    }
+
+    .grade-label {
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+
+    .trend-badge {
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .last-updated {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+
+    /* ─── Site body ──────────────────────────────────────────── */
+    .site-body {
+      display: grid;
+      grid-template-columns: 1fr 160px;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .site-body h3 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    /* ─── Component bars ─────────────────────────────────────── */
+    .comp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .comp-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .comp-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      width: 130px;
+      flex-shrink: 0;
+    }
+
+    .comp-bar-track {
+      flex: 1;
+      height: 6px;
+      background: var(--surface2);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .comp-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+
+    .comp-score {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      width: 40px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* ─── Sparkline ──────────────────────────────────────────── */
+    .sparkline-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sparkline {
+      width: 100%;
+      height: 60px;
+      overflow: visible;
+    }
+
+    .spark-placeholder {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-top: 0.5rem;
+    }
+
+    /* ─── History table ──────────────────────────────────────── */
+    .history-section {
+      padding: 1.5rem;
+    }
+
+    .history-section h3 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    .history-table th {
+      text-align: left;
+      padding: 0.4rem 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .history-table td {
+      padding: 0.4rem 0.75rem;
+      border-bottom: 1px solid rgba(51,65,85,0.5);
+    }
+
+    .history-table tr:last-child td { border-bottom: none; }
+
+    /* ─── Footer ─────────────────────────────────────────────── */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer a { color: var(--accent-light); text-decoration: none; }
+
+    /* ─── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .site-body { grid-template-columns: 1fr; }
+      .sparkline-section { display: none; }
+      .header-stats { gap: 1rem; }
+      .stat-num { font-size: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="https://synligdigital.no" class="brand">
+      <span class="brand-logo">📡</span>
+      <div>
+        <span class="brand-name">Synlig</span>
+        <span class="brand-sub">AEO-overvåkingsdashboard</span>
+      </div>
+    </a>
+    <div class="header-stats">
+      <div class="stat">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Nettsteder</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">57</span>
+        <span class="stat-label">Snitt score</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">24h</span>
+        <span class="stat-label">Oppdatering</span>
+      </div>
+      <div class="stat">
+        <a href="/clicks?key=pico2026" style="color:inherit;text-decoration:none;">
+          <span class="stat-num">🔗</span>
+          <span class="stat-label">Klikk-logg</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <p class="section-title">Sist oppdatert: 27. februar 2026 — Daglig overvåking aktiv</p>
+  
+  <div class="site-card">
+    <div class="site-header">
+      <div class="site-title">
+        <h2>Synlig (test)</h2>
+        <a href="https://synligdigital.no" target="_blank" rel="noopener" class="site-url">synligdigital.no</a>
+      </div>
+      <div class="score-badge" style="background:#f59e0b">
+        <span class="score-num">65</span>
+        <span class="score-denom">/100</span>
+        <span class="score-grade">C</span>
+      </div>
+    </div>
+
+    <div class="site-meta">
+      <span class="grade-label" style="color:#f59e0b">Middels</span>
+      <span class="trend-badge" style="color:#6b7280">→ Ny totalt</span>
+      <span class="last-updated">Sist målt: 2026-02-27</span>
+    </div>
+
+    <div class="site-body">
+      <div class="components-section">
+        <h3>Komponentscorer</h3>
+        <div class="comp-list">
+      <div class="comp-row">
+        <span class="comp-label">Strukturerte data</span>
+        <div class="comp-bar-track">
+          <div class="comp-bar-fill" style="width:28%;background:#ef4444"></div>
+        </div>
+        <span class="comp-score">7/25</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-label">Meta & SEO</span>
+        <div class="comp-bar-track">
+          <div class="comp-bar-fill" style="width:87%;background:#22c55e"></div>
+        </div>
+        <span class="comp-score">13/15</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-label">Innhold</span>
+        <div class="comp-bar-track">
+          <div class="comp-bar-fill" style="width:72%;background:#22c55e"></div>
+        </div>
+        <span class="comp-score">18/25</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-label">Teknisk</span>
+        <div class="comp-bar-track">
+          <div class="comp-bar-fill" style="width:90%;background:#22c55e"></div>
+        </div>
+        <span class="comp-score">18/20</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-label">AI-signaler</span>
+        <div class="comp-bar-track">
+          <div class="comp-bar-fill" style="width:60%;background:#f59e0b"></div>
+        </div>
+        <span class="comp-score">9/15</span>
+      </div></div>
+      </div>
+
+      <div class="sparkline-section">
+        <h3>Scoreutvikling</h3>
+        <div class="spark-placeholder">Historikk bygges opp</div>
+      </div>
+    </div>
+
+    <div class="history-section">
+      <h3>Historikk (siste 7 målinger)</h3>
+      <table class="history-table">
+        <thead><tr><th>Dato</th><th>Score</th><th>Karakter</th><th>Endring</th></tr></thead>
+        <tbody><tr><td colspan="4" style="color:#6b7280;font-style:italic">Kun én måling — historikk bygges opp over tid</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="site-card">
+    <div class="site-header">
+      <div class="site-title">
+        <h2>Colosseum Dental</h2>
+        <a href="https://colosseumdental.no" target="_blank" rel="noopener" class="site-url">colosseumdental.no</a>
+      </div>
+      <div class="score-badge" style="background:#f59e0b">
+        <span class="score-num">61</span>
+        <span class="score-denom">/100</span>
+        <span class="score-grade">C</span>
+      </div>
+    </div>
+
+    <div class="site-meta">
+      <span class="grade-label" style="color:#f59e0b">Middels</span>
+      <span class="trend-badge" style="color:#6b7280">→ Ny totalt</span>
+      <span class="last-updated">Sist målt: 2026-02-27</span>
+    </div>
+
+    <div class="site-body">
+      <div class="components-section">
+        <h3>Komponentscorer</h3>
+        <div class="comp-list">
+      <div class="comp-row">
+        <span class="comp-label">Strukturerte data</span>
+        <div class="comp-bar-track">
+          <div class="comp-bar-fill" style="width:16%;background:#ef4444"></div>
+        </div>
+        <span class="comp-score">4/25</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-label">Meta & SEO</span>
+        <div class="comp-bar-track">
+          <div class="comp-bar-fill" style="width:93%;background:#22c55e"></div>
+        </div>
+        <span class="comp-score">14/15</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-label">Innhold</span>
+        <div class="comp-bar-track">
+          <div class="comp-bar-fill" style="width:76%;background:#22c55e"></div>
+        </div>
+        <span class="comp-score">19/25</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-label">Teknisk</span>
+        <div class="comp-bar-track">
+          <div class="comp-bar-fill" style="width:75%;background:#22c55e"></div>
+        </div>
+        <span class="comp-score">15/20</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-label">AI-signaler</span>
+        <div class="comp-bar-track">
+          <div class="comp-bar-fill" style="width:60%;background:#f59e0b"></div>
+        </div>
+        <span class="comp-score">9/15</span>
+      </div></div>
+      </div>
+
+      <div class="sparkline-section">
+        <h3>Scoreutvikling</h3>
+        <div class="spark-placeholder">Historikk bygges opp</div>
+      </div>
+    </div>
+
+    <div class="history-section">
+      <h3>Historikk (siste 7 målinger)</h3>
+      <table class="history-table">
+        <thead><tr><th>Dato</th><th>Score</th><th>Karakter</th><th>Endring</th></tr></thead>
+        <tbody><tr><td colspan="4" style="color:#6b7280;font-style:italic">Kun én måling — historikk bygges opp over tid</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="site-card">
+    <div class="site-header">
+      <div class="site-title">
+        <h2>Tannforum Stavanger</h2>
+        <a href="https://tannforum.no" target="_blank" rel="noopener" class="site-url">tannforum.no</a>
+      </div>
+      <div class="score-badge" style="background:#ef4444">
+        <span class="score-num">44</span>
+        <span class="score-denom">/100</span>
+        <span class="score-grade">D</span>
+      </div>
+    </div>
+
+    <div class="site-meta">
+      <span class="grade-label" style="color:#ef4444">Svak</span>
+      <span class="trend-badge" style="color:#6b7280">→ Ny totalt</span>
+      <span class="last-updated">Sist målt: 2026-02-27</span>
+    </div>
+
+    <div class="site-body">
+      <div class="components-section">
+        <h3>Komponentscorer</h3>
+        <div class="comp-list">
+      <div class="comp-row">
+        <span class="comp-label">Strukturerte data</span>
+        <div class="comp-bar-track">
+          <div class="comp-bar-fill" style="width:0%;background:#ef4444"></div>
+        </div>
+        <span class="comp-score">0/25</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-label">Meta & SEO</span>
+        <div class="comp-bar-track">
+          <div class="comp-bar-fill" style="width:73%;background:#22c55e"></div>
+        </div>
+        <span class="comp-score">11/15</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-label">Innhold</span>
+        <div class="comp-bar-track">
+          <div class="comp-bar-fill" style="width:36%;background:#ef4444"></div>
+        </div>
+        <span class="comp-score">9/25</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-label">Teknisk</span>
+        <div class="comp-bar-track">
+          <div class="comp-bar-fill" style="width:65%;background:#f59e0b"></div>
+        </div>
+        <span class="comp-score">13/20</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-label">AI-signaler</span>
+        <div class="comp-bar-track">
+          <div class="comp-bar-fill" style="width:73%;background:#22c55e"></div>
+        </div>
+        <span class="comp-score">11/15</span>
+      </div></div>
+      </div>
+
+      <div class="sparkline-section">
+        <h3>Scoreutvikling</h3>
+        <div class="spark-placeholder">Historikk bygges opp</div>
+      </div>
+    </div>
+
+    <div class="history-section">
+      <h3>Historikk (siste 7 målinger)</h3>
+      <table class="history-table">
+        <thead><tr><th>Dato</th><th>Score</th><th>Karakter</th><th>Endring</th></tr></thead>
+        <tbody><tr><td colspan="4" style="color:#6b7280;font-style:italic">Kun én måling — historikk bygges opp over tid</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Generert av <a href="https://synligdigital.no">Synlig</a> sitt AEO-overvåkingssystem &middot; Oppdateres daglig kl. 08:00</p>
+  <p style="margin-top:0.5rem">Vil du at ditt nettsted skal overvåkes? <a href="mailto:hei@synligdigital.no">Ta kontakt</a></p>
+</footer>
+
+</body>
+</html>

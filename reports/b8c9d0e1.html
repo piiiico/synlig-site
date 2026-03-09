@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>AI-Synlighetsrapport — Lang Lugg Salong</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f172a; --surface: #1e293b; --surface2: #334155;
+    --border: #475569; --text: #f1f5f9; --text-muted: #94a3b8;
+    --indigo: #6366f1; --indigo-light: #818cf8;
+    --green: #22c55e; --yellow: #f59e0b; --red: #ef4444;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; font-size: 15px; }
+  a { color: var(--indigo-light); text-decoration: none; }
+  .container { max-width: 860px; margin: 0 auto; padding: 24px 16px; }
+  .header { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-bottom: 1px solid var(--border); padding: 32px 0; margin-bottom: 32px; }
+  .header-inner { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+  .logo { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .logo span { color: var(--indigo-light); font-weight: 600; }
+  h1 { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { color: var(--text-muted); font-size: 14px; }
+  .meta-row { display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap; }
+  .meta-item { font-size: 13px; color: var(--text-muted); }
+  .meta-item strong { color: var(--text); }
+  .hero { display: flex; gap: 32px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin-bottom: 24px; }
+  .gauge-wrap { position: relative; width: 120px; height: 120px; flex-shrink: 0; }
+  .gauge-wrap svg { width: 120px; height: 120px; }
+  .gauge-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; }
+  .gauge-score { display: block; font-size: 32px; font-weight: 800; line-height: 1; }
+  .gauge-label { font-size: 11px; color: var(--text-muted); }
+  .grade-badge { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .grade-letter { font-size: 48px; font-weight: 900; line-height: 1; }
+  .hero-text h2 { font-size: 20px; margin-bottom: 8px; }
+  .hero-text p { color: var(--text-muted); font-size: 14px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+  .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .card-title { font-size: 16px; font-weight: 600; }
+  .score-chip { background: var(--surface2); border-radius: 20px; padding: 4px 12px; font-size: 13px; }
+  .comp-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .comp-label { flex: 0 0 160px; font-size: 13px; color: var(--text-muted); }
+  .comp-bar-track { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+  .comp-bar-fill { height: 100%; border-radius: 4px; }
+  .comp-score { flex: 0 0 50px; font-size: 13px; text-align: right; color: var(--text-muted); }
+  .issue-list, .rec-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .issue-list li, .rec-list li { display: flex; gap: 10px; font-size: 14px; }
+  .issue-list li::before { content: "✗"; color: var(--red); flex-shrink: 0; font-weight: 700; }
+  .rec-list li::before { content: "→"; color: var(--indigo-light); flex-shrink: 0; font-weight: 700; }
+  .cta-box { background: linear-gradient(135deg, #1e3a5f, #1e293b); border: 1px solid var(--indigo); border-radius: 12px; padding: 32px; text-align: center; margin-bottom: 24px; }
+  .cta-box h2 { font-size: 22px; margin-bottom: 8px; }
+  .cta-box p { color: var(--text-muted); margin-bottom: 20px; }
+  .btn { display: inline-block; background: var(--indigo); color: white; padding: 12px 28px; border-radius: 8px; font-weight: 600; font-size: 15px; }
+  footer { border-top: 1px solid var(--border); padding: 24px 0; text-align: center; }
+</style>
+</head>
+<body>
+<img src="https://synligdigital.no/track?h=b8c9d0e1" width="1" height="1" alt="" style="position:absolute;width:1px;height:1px;opacity:0;" />
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">Generert av <span>Synlig</span> — AI-synlighet for norske bedrifter</div>
+    <h1>AI-Synlighetsrapport</h1>
+    <div class="subtitle">Lang Lugg Salong</div>
+    <div class="meta-row">
+      <div class="meta-item">🌐 <strong>(ingen nettside — Gmail)</strong></div>
+      <div class="meta-item">📅 <strong>2026-03-03</strong></div>
+      <div class="meta-item">🔬 <strong>Synlig AEO Audit v1.0</strong></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="hero">
+    <div class="gauge-wrap">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="60" cy="60" r="45" fill="none" stroke="#334155" stroke-width="10"/>
+        <circle cx="60" cy="60" r="45" fill="none"
+          stroke="#ef4444" stroke-width="10"
+          stroke-dasharray="16.98 283"
+          stroke-dashoffset="0"
+          stroke-linecap="round"
+          transform="rotate(-90 60 60)"/>
+      </svg>
+      <div class="gauge-text">
+        <span class="gauge-score" style="color:#ef4444">6</span>
+        <span class="gauge-label">av 100</span>
+      </div>
+    </div>
+    <div class="hero-text">
+      <div class="grade-badge">
+        <span class="grade-letter" style="color:#ef4444">F</span>
+        <div>
+          <div style="font-weight:600">Usynlig</div>
+          <div style="font-size:13px;color:var(--text-muted)">AI-synlighetsscore</div>
+        </div>
+      </div>
+      <h2>Lang Lugg Salong</h2>
+      <p>Denne rapporten viser hvor synlig Lang Lugg Salong er for AI-assistenter som ChatGPT, Perplexity, Google AI og Claude når potensielle kunder søker etter frisør i Stavanger.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📊 Komponentscorer</div>
+      <div class="score-chip">6/100 (F)</div>
+    </div>
+    <div class="comp-row">
+      <span class="comp-label">Strukturerte data</span>
+      <div class="comp-bar-track"><div class="comp-bar-fill" style="width:0%;background:#ef4444"></div></div>
+      <span class="comp-score">0/25</span>
+    </div>
+    <div class="comp-row">
+      <span class="comp-label">Meta & SEO</span>
+      <div class="comp-bar-track"><div class="comp-bar-fill" style="width:0%;background:#ef4444"></div></div>
+      <span class="comp-score">0/25</span>
+    </div>
+    <div class="comp-row">
+      <span class="comp-label">Innhold</span>
+      <div class="comp-bar-track"><div class="comp-bar-fill" style="width:16%;background:#ef4444"></div></div>
+      <span class="comp-score">4/25</span>
+    </div>
+    <div class="comp-row">
+      <span class="comp-label">Tilgjengelighet</span>
+      <div class="comp-bar-track"><div class="comp-bar-fill" style="width:8%;background:#ef4444"></div></div>
+      <span class="comp-score">2/25</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">❌ Kritiske funn</div></div>
+    <ul class="issue-list">
+      <li>Ingen nettside — ChatGPT, Perplexity og Google AI kan ikke anbefale dere</li>
+      <li>Timma-bookingsiden er ikke din — du mister kontrollen over din digitale tilstedeværelse</li>
+      <li>Østervågkaien 23 er et av Stavangers beste frisørsentra — men AI vet det ikke</li>
+      <li>Gmail-adresse gir inntrykk av liten hobbyvirksomhet uten infrastruktur</li>
+      <li>Søk: «frisør Stavanger sentrum» → du dukker ikke opp i et eneste AI-svar</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">✅ Anbefalte tiltak</div></div>
+    <ul class="rec-list">
+      <li>Registrer langlugg.no og sett opp en enkel nettside med HairSalon-schema</li>
+      <li>Koble Google Business Profile til nettsiden for lokal synlighet</li>
+      <li>Legg til strukturerte data for åpningstider, tjenester og priser</li>
+    </ul>
+  </div>
+
+  <div class="cta-box">
+    <h2>Klar for å bli synlig?</h2>
+    <p>Vi kan fikse disse problemene for deg. Første samtale er gratis og uforpliktende.</p>
+    <a class="btn" href="mailto:hei@synligdigital.no">Svar på e-posten for en gratis gjennomgang</a>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p style="color:var(--text-muted);font-size:13px">© 2026 Synlig · hei@synligdigital.no · synligdigital.no</p>
+    <p style="color:var(--text-muted);font-size:12px;margin-top:8px">Denne rapporten er konfidensiell og generert spesifikt for Lang Lugg Salong. Ikke del den offentlig.</p>
+  </div>
+</footer>
+</body>
+</html>
