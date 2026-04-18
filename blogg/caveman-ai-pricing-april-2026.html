@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Caveman Principle: Why AI Pricing Is Still Broken — Synlig</title>
+  <meta name="description" content="Caveman hit #1 on HN with 688 points. It makes Claude speak in minimal tokens. That's not a fun hack — it's revealed preference about what's broken in AI pricing.">
+  <link rel="canonical" href="https://synligdigital.no/blogg/caveman-ai-pricing-april-2026">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The Caveman Principle: Why AI Pricing Is Still Broken">
+  <meta property="og:description" content="688 people upvoted a tool that makes Claude speak in 87% fewer tokens. That's not humor — it's a signal about what's broken in AI pricing.">
+  <meta property="og:url" content="https://synligdigital.no/blogg/caveman-ai-pricing-april-2026">
+  <meta property="og:image" content="https://synligdigital.no/og.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Synlig">
+  <meta property="og:locale" content="en_US">
+  <meta property="article:published_time" content="2026-04-06">
+  <meta property="article:author" content="Håkon Åmdal">
+  <meta property="article:tag" content="AI Pricing">
+  <meta property="article:tag" content="AI Agents">
+  <meta property="article:tag" content="Infrastructure">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Caveman Principle: Why AI Pricing Is Still Broken">
+  <meta name="twitter:description" content="688 people upvoted Caveman. Here's what that means for the future of AI billing.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "The Caveman Principle: Why AI Pricing Is Still Broken",
+    "description": "Caveman hit #1 on Hacker News. It makes Claude speak like a prehistoric human — 87% fewer tokens. That's not a fun hack. It's revealed preference about what's broken in AI pricing.",
+    "author": {
+      "@type": "Person",
+      "name": "Håkon Åmdal",
+      "url": "https://synligdigital.no"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Synlig",
+      "url": "https://synligdigital.no",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://synligdigital.no/favicon.svg"
+      }
+    },
+    "datePublished": "2026-04-06",
+    "dateModified": "2026-04-06",
+    "inLanguage": "en",
+    "url": "https://synligdigital.no/blogg/caveman-ai-pricing-april-2026",
+    "mainEntityOfPage": "https://synligdigital.no/blogg/caveman-ai-pricing-april-2026",
+    "about": [
+      { "@type": "Thing", "name": "AI Pricing" },
+      { "@type": "Thing", "name": "AI Agents" },
+      { "@type": "Thing", "name": "Token Economics" }
+    ],
+    "keywords": ["AI pricing", "token economics", "AI agents", "usage-based billing", "Caveman", "flat subscription", "agentic workloads"]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0b;
+      --bg-raised: #111113;
+      --border: #222225;
+      --text: #e8e8ed;
+      --text-dim: #9f9faa;
+      --text-muted: #9f9faa;
+      --accent: #6ee7b7;
+      --accent-dim: #2d6a5a;
+      --accent-blue: #60a5fa;
+      --accent-purple: #a78bfa;
+      --accent-orange: #fbbf24;
+      --accent-red: #f87171;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 11, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .article-header {
+      max-width: 780px;
+      margin: 5rem auto 0;
+      padding: 0 2rem;
+    }
+
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+    .breadcrumb a {
+      color: var(--text-dim);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { margin: 0 0.5rem; }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .meta-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+    .meta-tag-pricing {
+      color: var(--accent-orange);
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+    }
+    .meta-tag-agents {
+      color: var(--accent-blue);
+      background: rgba(96, 165, 250, 0.1);
+      border: 1px solid rgba(96, 165, 250, 0.2);
+    }
+    .meta-date {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .meta-author {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-lead {
+      font-size: 1.15rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 3rem;
+      border-left: 3px solid var(--accent-orange);
+      padding-left: 1.5rem;
+    }
+
+    .article-body {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+
+    p {
+      margin-bottom: 1.4rem;
+      color: var(--text);
+    }
+
+    strong { font-weight: 600; }
+
+    em { font-style: italic; color: var(--text-dim); }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.88em;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      padding: 0.15em 0.4em;
+      border-radius: 3px;
+      color: var(--accent);
+    }
+
+    .code-block {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+    .code-block pre {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--text-dim);
+    }
+    .code-block .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+      border-left: 3px solid;
+    }
+    .callout p { margin-bottom: 0; }
+    .callout-orange {
+      background: rgba(251, 191, 36, 0.06);
+      border-color: var(--accent-orange);
+      color: var(--text-dim);
+    }
+    .callout-blue {
+      background: rgba(96, 165, 250, 0.06);
+      border-color: var(--accent-blue);
+      color: var(--text-dim);
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .stat-box {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .cta-block {
+      background: linear-gradient(135deg, rgba(110, 231, 183, 0.08), rgba(96, 165, 250, 0.05));
+      border: 1px solid rgba(110, 231, 183, 0.2);
+      border-radius: 12px;
+      padding: 2.5rem;
+      margin: 3rem 0;
+      text-align: center;
+    }
+    .cta-block h2 {
+      margin-top: 0;
+      font-size: 1.4rem;
+    }
+    .cta-block p {
+      color: var(--text-dim);
+      max-width: 500px;
+      margin: 0 auto 1.5rem;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0a0a0b;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.75rem 2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .cta-btn:hover { opacity: 0.88; text-decoration: none; }
+
+    .related-posts {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .related-posts h3 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .related-card {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .related-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .related-card-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .related-card-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--text-dim); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    @media (max-width: 600px) {
+      nav { padding: 0.75rem 1rem; }
+      .nav-links { gap: 1rem; }
+      .article-header, .article-body { padding: 0 1rem; }
+      .article-header { margin-top: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Synlig</a>
+  <div class="nav-links">
+    <a href="/blogg">Blogg</a>
+    <a href="/guide">Guide</a>
+    <a href="mailto:hei@synligdigital.no">Kontakt</a>
+  </div>
+</nav>
+
+<article>
+  <header class="article-header">
+    <div class="breadcrumb">
+      <a href="/">Synlig</a>
+      <span>&rsaquo;</span>
+      <a href="/blogg">Blogg</a>
+      <span>&rsaquo;</span>
+      The Caveman Principle
+    </div>
+
+    <div class="article-meta">
+      <span class="meta-tag meta-tag-pricing">Pricing</span>
+      <span class="meta-tag meta-tag-agents">AI Agents</span>
+      <span class="meta-date">6 April 2026</span>
+      <span class="meta-author">by Håkon Åmdal</span>
+    </div>
+
+    <h1>The Caveman Principle: Why AI Pricing Is Still Broken</h1>
+
+    <p class="article-lead">
+      Today a tool called Caveman hit #1 on Hacker News with 688 points. It makes Claude speak like a prehistoric human &mdash; 87% fewer tokens. That's not a fun hack. That's revealed preference about what's broken in AI pricing.
+    </p>
+  </header>
+
+  <div class="article-body">
+
+    <p>Instead of:</p>
+
+    <div class="code-block">
+      <div class="label">Standard Claude response (1,180 tokens)</div>
+      <pre>"Great question! When dealing with React re-renders, you'll want to consider using the useMemo hook, which allows you to memoize the result of a computation so that it's not recalculated on every render..."</pre>
+    </div>
+
+    <p>You get:</p>
+
+    <div class="code-block">
+      <div class="label">Caveman mode (159 tokens)</div>
+      <pre>"New object ref each render. Wrap in useMemo."</pre>
+    </div>
+
+    <p>No articles. No pleasantries. 688 people thought this was worth upvoting.</p>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-number">87%</div>
+        <div class="stat-label">Average token reduction</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">688</div>
+        <div class="stat-label">HN upvotes in 24h</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">1,180→159</div>
+        <div class="stat-label">React explanation: tokens before/after</div>
+      </div>
+    </div>
+
+    <h2>The real cost behind the humor</h2>
+
+    <p>Caveman exists because tokens cost money. Not abstractly &mdash; concretely, operationally, in a way that changes developer behavior.</p>
+
+    <p>The benchmarks in the repo are striking: React explanation goes from 1,180 to 159 tokens. PostgreSQL setup: 2,347 to 380. Average savings: 65%. For a developer making hundreds of API calls per day, this isn't optimization &mdash; it's survival math.</p>
+
+    <p>But here's what the Caveman readme doesn't say: why is anyone building token compression tools at all?</p>
+
+    <p>Because the pricing model that governs AI access was designed for a world that no longer exists.</p>
+
+    <h2>How we got here</h2>
+
+    <p>The mental model behind $20/month AI subscriptions comes from streaming. Netflix charges one price regardless of how many hours you watch. This works because human attention is bounded &mdash; nobody watches Netflix for 22 hours a day. The math holds.</p>
+
+    <p>AI subscriptions inherited this logic. Some users send a few messages a day, some send dozens, the heavy users cross-subsidize the moderate ones, everyone gets predictability. The abstraction holds &mdash; until agents arrive.</p>
+
+    <p>An agent doesn't have attention. It doesn't pause to think. It sends a message, parses the response, sends another, branches, loops, retries. A background agent working on a codebase overnight makes 500&ndash;2,000 API calls. A customer support agent runs continuously, with zero idle time.</p>
+
+    <div class="callout callout-orange">
+      <p>A human power user might send 50 messages on a busy day. An agent sends 50 messages before you finish your morning coffee.</p>
+    </div>
+
+    <p>The flat subscription model doesn't fail for agents because providers are being restrictive. It fails because the math never worked. You cannot offer flat pricing for unbounded machine-paced consumption. The moment you try, adverse selection kicks in: high-volume users (agents) maximize their flat rate into unprofitability, while moderate users aren't enough to compensate.</p>
+
+    <h2>The cascade</h2>
+
+    <p>When Anthropic blocked third-party agentic tools from Claude subscriptions last month, the developer community erupted. OpenClaw users lost access overnight. Threads hit the front page.</p>
+
+    <p>Most of the anger targeted Anthropic's timing. But their technical explanation was honest: <em>"Our subscriptions weren't built for the usage patterns of these third-party tools."</em></p>
+
+    <p>That's not spin. Anthropic's Boris Cherny spelled out the actual problem: their own Claude Code tool is built to maximize "prompt cache hit rates" &mdash; reusing previously processed context to save compute. Third-party tools aren't optimized this way. The math only works if caching works. Third-party tools break the math.</p>
+
+    <p>So now you have two communities responding to the same underlying problem through different lenses:</p>
+
+    <div class="callout callout-blue">
+      <p><strong>Caveman:</strong> make the AI say less so it costs less.<br>
+      <strong>Claude Code:</strong> cache aggressively so compute gets reused.<br><br>
+      Both are correct. Both are workarounds for a pricing model that wasn't built for agents.</p>
+    </div>
+
+    <h2>What the right model looks like</h2>
+
+    <p>The honest answer is that agentic workloads need usage-based billing. Pay per token, with caching as a first-class optimization lever.</p>
+
+    <p>This sounds worse for developers. It's actually better, for three reasons:</p>
+
+    <h3>1. Transparent costs</h3>
+    <p>You know exactly what an agent run costs. You can set spending limits, alert thresholds, kill switches. With flat subscriptions, cost is opaque until you get cut off.</p>
+
+    <h3>2. Aligned incentives</h3>
+    <p>When you pay per token, you're motivated to minimize waste. Caveman's value proposition is identical to cache optimization &mdash; both exist because the cost signal is real. Real cost signals create better software.</p>
+
+    <h3>3. Predictable unit economics</h3>
+    <p>If you're building a product on top of an AI API, your costs should scale with your usage, not with your provider's estimate of average human behavior. Subscription pricing makes agent cost modeling impossible. API pricing makes it straightforward.</p>
+
+    <p>The developers who will win in the machine-paced era are those who internalize this now. Not as a constraint &mdash; as a design principle. Every agent you build should have a token budget. Every workflow should have a cache strategy. Every API call should have a cost attribution.</p>
+
+    <h2>The structural truth</h2>
+
+    <p>Caveman is funny. 688 people upvoted it. But the reason it exists is that the developer community is paying real money for tokens and knows it.</p>
+
+    <p>The streaming subscription model was built for human-paced consumption. We're in the machine-paced era now. The pricing models, the billing abstractions, the infrastructure assumptions &mdash; they all need to be rebuilt around a simple truth:</p>
+
+    <p><strong>Agents don't pause. Pricing models that assume they do are priced for the world we left behind.</strong></p>
+
+    <p>The flat subscription is ending for agents. Not because providers are hostile. Because math is.</p>
+
+    <div class="cta-block">
+      <h2>Building on AI APIs?</h2>
+      <p>We work with companies navigating the agent infrastructure layer &mdash; pricing, identity, and cost attribution for agentic workloads.</p>
+      <a href="mailto:hei@synligdigital.no" class="cta-btn">Get in touch &rarr;</a>
+    </div>
+
+    <div class="related-posts">
+      <h3>Read more</h3>
+      <div class="related-grid">
+        <a href="/blogg/mcp-security-march-2026" class="related-card">
+          <div class="related-card-tag">Security</div>
+          <div class="related-card-title">MCP Security in March 2026: What Happens When 78.5% of the Spec Is Optional</div>
+        </a>
+        <a href="/blogg/slik-blir-du-synlig-i-chatgpt" class="related-card">
+          <div class="related-card-tag">Guide</div>
+          <div class="related-card-title">Slik blir bedriften din synlig i ChatGPT og AI-søk</div>
+        </a>
+        <a href="/blogg/aeo-i-norge-2026" class="related-card">
+          <div class="related-card-tag">Analyse</div>
+          <div class="related-card-title">AEO i Norge 2026: Hvem vinner AI-synlighetskampen?</div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</article>
+
+<footer>
+  <p>&copy; 2026 Synlig &mdash; <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> &mdash; Stavanger, Norway</p>
+  <p style="margin-top:0.5rem;"><a href="/">Home</a> &middot; <a href="/blogg">Blog</a> &middot; <a href="/guide">Guide</a></p>
+</footer>
+
+</body>
+</html>

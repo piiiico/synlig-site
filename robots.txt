@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# Content Signals — AI usage preferences (https://contentsignals.org/)
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
 Sitemap: https://synligdigital.no/sitemap.xml

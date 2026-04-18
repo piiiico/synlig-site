@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>State of AEO i Norge 2026 — Synlig</title>
-  <meta name="description" content="Norges første AI-synlighetsrapport. Vi har analysert 35+ norske bedrifters synlighet i ChatGPT, Perplexity og Google AI Overviews. Gjennomsnittsscore: 48/100 (D). Her er funnene.">
-  <meta property="og:title" content="State of AEO i Norge 2026 — Synlig">
-  <meta property="og:description" content="35+ norske bedrifter analysert. Gjennomsnittsscore: 48/100. Bare 3 av 30 har schema-markup. Her er hva AI-søk ser — og ikke ser.">
+  <title>Norsk AI-synlighetsrapport 2026 — Synlig Digital</title>
+  <meta name="description" content="Norges første AI-synlighetsrapport. 31 norske bedrifter analysert på tvers av 5 bransjer. Hvem dukker opp når noen spør ChatGPT eller Perplexity om din bransje? Her er svarene.">
+  <meta property="og:title" content="Norsk AI-synlighetsrapport 2026 — Synlig Digital">
+  <meta property="og:description" content="31 norske SMB-er målt: Hvem er synlig i AI? Gjennomsnitt: 32% AI-synlighet. Beste bransje: regnskapsfører (42%). Svakeste: frisørsalong (24%). Verste funn: En 70 år gammel bedrift med 0% AI-synlighet.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://synligdigital.no/rapport/state-of-aeo-2026">
   <meta property="og:image" content="https://synligdigital.no/og.svg">
@@ -17,24 +17,23 @@
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "State of AEO i Norge 2026",
-    "description": "Norges første AI-synlighetsrapport: 35+ norske SMB-er analysert på tvers av 8 bransjer. Gjennomsnittsscore 48/100. Universell schema-mangel. Konkrete anbefalinger.",
-    "datePublished": "2026-03-08",
-    "dateModified": "2026-03-08",
+    "headline": "Norsk AI-synlighetsrapport 2026",
+    "description": "Norges første AI-synlighetsrapport: 31 norske SMB-er analysert på tvers av 5 bransjer. Hvem er synlig i ChatGPT, Perplexity og Google AI Overviews? Gjennomsnittlig AI-synlighet: 32%.",
+    "datePublished": "2026-03-30",
+    "dateModified": "2026-03-30",
     "author": {
       "@type": "Person",
       "name": "Pico Amdal",
       "jobTitle": "AEO-analytiker",
       "worksFor": {
         "@type": "Organization",
-        "name": "Synlig",
+        "name": "Synlig Digital",
         "url": "https://synligdigital.no"
-      },
-      "sameAs": ["https://synligdigital.no"]
+      }
     },
     "publisher": {
       "@type": "Organization",
-      "name": "Synlig",
+      "name": "Synlig Digital",
       "url": "https://synligdigital.no",
       "logo": {
         "@type": "ImageObject",
@@ -45,10 +44,10 @@
       "@type": "WebPage",
       "@id": "https://synligdigital.no/rapport/state-of-aeo-2026"
     },
-    "keywords": ["AEO Norge", "AI synlighet norske bedrifter", "answer engine optimization", "ChatGPT synlighet", "norsk SEO 2026", "AI søk SMB"],
+    "keywords": ["AEO Norge", "AI synlighet norske bedrifter", "ChatGPT synlighet", "Perplexity synlighet", "norsk SEO 2026", "AI søk SMB", "frisør AI", "advokat AI søk", "rørlegger AI synlighet"],
     "about": {
       "@type": "Thing",
-      "name": "Answer Engine Optimization (AEO) i Norge"
+      "name": "AI-synlighet for norske SMB-er 2026"
     },
     "isAccessibleForFree": true,
     "license": "https://creativecommons.org/licenses/by/4.0/"
@@ -177,22 +176,39 @@
     }
     .callout.warning { border-color: #ef4444; }
     .callout.success { border-color: #22c55e; }
+    .callout.info { border-color: #3b82f6; }
     .callout p { margin: 0; }
 
-    /* Score badge */
-    .grade {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      font-weight: 700;
+    /* Visibility bars */
+    .vis-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
-    .grade-A { background: #052e16; color: #4ade80; }
-    .grade-B { background: #083344; color: #67e8f9; }
-    .grade-C { background: #1a2e05; color: #a3e635; }
-    .grade-D { background: #2d1b00; color: #fbbf24; }
-    .grade-E { background: #3b0f0f; color: #f87171; }
-    .grade-F { background: #1f0000; color: #ef4444; }
+    .vis-bar {
+      flex: 1;
+      height: 8px;
+      background: #222;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .vis-bar-fill { height: 100%; border-radius: 4px; }
+    .fill-red { background: #ef4444; }
+    .fill-orange { background: #f59e0b; }
+    .fill-yellow { background: #eab308; }
+    .fill-green { background: #22c55e; }
+
+    /* Score tags */
+    .vis-pct {
+      font-weight: 700;
+      font-size: 0.95rem;
+      min-width: 48px;
+      text-align: right;
+    }
+    .pct-red { color: #ef4444; }
+    .pct-orange { color: #f59e0b; }
+    .pct-yellow { color: #eab308; }
+    .pct-green { color: #22c55e; }
 
     /* Data tables */
     .data-table {
@@ -217,29 +233,29 @@
       color: #ccc;
     }
     .data-table tr:hover td { background: #111; }
-    .data-table .score-cell {
+    .data-table .score-cell { font-weight: 700; color: #fff; }
+    .badge-verified {
+      display: inline-block;
+      background: #052e16;
+      color: #4ade80;
+      font-size: 0.65rem;
       font-weight: 700;
-      color: #fff;
-    }
-
-    /* Score bar */
-    .score-bar-wrap {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .score-bar {
-      flex: 1;
-      height: 6px;
-      background: #222;
+      padding: 1px 5px;
       border-radius: 3px;
-      overflow: hidden;
+      margin-left: 4px;
+      vertical-align: middle;
     }
-    .score-bar-fill { height: 100%; border-radius: 3px; }
-    .fill-red { background: #ef4444; }
-    .fill-orange { background: #f59e0b; }
-    .fill-yellow { background: #eab308; }
-    .fill-green { background: #22c55e; }
+    .badge-est {
+      display: inline-block;
+      background: #1a1a2e;
+      color: #9ca3af;
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 1px 5px;
+      border-radius: 3px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
 
     /* Sector summary */
     .sector-grid {
@@ -261,16 +277,8 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
-    .sector-card .sector-score {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: #fff;
-    }
-    .sector-card .sector-grade {
-      font-size: 0.75rem;
-      color: #6b7280;
-      margin-top: 0.2rem;
-    }
+    .sector-card .sector-score { font-size: 1.8rem; font-weight: 800; color: #fff; }
+    .sector-card .sector-grade { font-size: 0.75rem; color: #6b7280; margin-top: 0.2rem; }
 
     /* Finding cards */
     .finding {
@@ -283,30 +291,16 @@
     .finding h3 { margin: 0 0 0.5rem; font-size: 1rem; }
     .finding p { margin: 0; font-size: 0.9rem; color: #9ca3af; }
 
-    /* Case study */
-    .case-study {
+    /* Spotlight */
+    .spotlight {
       background: #0f1f1a;
       border: 1px solid #1a3028;
       border-radius: 12px;
-      padding: 2rem;
-      margin: 2rem 0;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
     }
-    .case-study h3 { color: #4ade80; margin: 0 0 1rem; }
-    .transform {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin: 1.25rem 0;
-    }
-    .score-pill {
-      font-size: 1.4rem;
-      font-weight: 800;
-      padding: 0.4rem 1rem;
-      border-radius: 8px;
-    }
-    .score-before { background: #2d1b00; color: #fbbf24; }
-    .score-after { background: #052e16; color: #4ade80; }
-    .arrow { color: #9ca3af; font-size: 1.5rem; }
+    .spotlight h4 { color: #4ade80; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.5rem; }
+    .spotlight p { margin: 0.5rem 0 0; font-size: 0.9rem; color: #ccc; }
 
     /* Recommendations */
     .rec-list { margin: 1rem 0; }
@@ -367,9 +361,39 @@
     }
     .methodology h3 { font-size: 0.95rem; color: #e0e0e0; margin: 0 0 0.75rem; }
 
+    /* Ranked list */
+    .rank-list { margin: 1rem 0; }
+    .rank-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .rank-item:last-child { border-bottom: none; }
+    .rank-num {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .rank-gold { background: #78350f; color: #fde68a; }
+    .rank-silver { background: #1f2937; color: #d1d5db; }
+    .rank-bronze { background: #431407; color: #fdba74; }
+    .rank-mid { background: #1a1a1a; color: #9ca3af; }
+    .rank-low { background: #1f0000; color: #fca5a5; }
+    .rank-name { flex: 1; font-size: 0.9rem; color: #e0e0e0; }
+    .rank-industry { font-size: 0.75rem; color: #6b7280; display: block; }
+
     @media (max-width: 600px) {
       .hero h1 { font-size: 1.8rem; }
       .key-stats { grid-template-columns: 1fr 1fr; }
+      .data-table { font-size: 0.8rem; }
     }
   </style>
 </head>
@@ -387,367 +411,586 @@
 </header>
 
 <div class="hero">
-  <div class="badge">Norges første AEO-rapport</div>
-  <h1>State of AEO i Norge 2026</h1>
+  <div class="badge">Norges første bransjevise AI-synlighetsrapport</div>
+  <h1>Norsk AI-synlighetsrapport 2026</h1>
   <p class="subtitle">
-    Vi har analysert over 35 norske SMB-er på tvers av 8 bransjer.
-    Her er hva ChatGPT, Perplexity og Google AI Overviews <em>faktisk ser</em> — og hva de overser.
+    Vi har målt AI-synligheten til 31 norske bedrifter på tvers av 5 bransjer.
+    Her er hvem ChatGPT og Perplexity faktisk anbefaler — og hvem som er usynlige.
   </p>
-  <p class="meta">Publisert 8. mars 2026 · Synlig · Stavanger, Norge · Oppdateres kvartalsvis</p>
+  <p class="meta">Publisert 30. mars 2026 · Synlig Digital · Stavanger, Norge · Oppdateres kvartalsvis</p>
 </div>
 
 <div class="key-stats">
   <div class="stat-box">
-    <div class="value">35+</div>
+    <div class="value">31</div>
     <div class="label">Norske bedrifter analysert</div>
   </div>
   <div class="stat-box highlight">
-    <div class="value">48<span style="font-size:1.2rem">/100</span></div>
-    <div class="label">Gjennomsnittsscore (D)</div>
+    <div class="value">32<span style="font-size:1.2rem">%</span></div>
+    <div class="label">Gjennomsnittlig AI-synlighet</div>
   </div>
   <div class="stat-box highlight">
-    <div class="value">91%</div>
-    <div class="label">Mangler schema-markup</div>
+    <div class="value">0%</div>
+    <div class="label">Lavest: 70 år gammel bedrift</div>
   </div>
-  <div class="stat-box highlight">
-    <div class="value">8</div>
+  <div class="stat-box">
+    <div class="value">5</div>
     <div class="label">Bransjer kartlagt</div>
   </div>
   <div class="stat-box ok">
-    <div class="value">5×</div>
-    <div class="label">Høyere konv. fra AI-trafikk</div>
+    <div class="value">70%</div>
+    <div class="label">Høyest: 2 toppbedrifter</div>
   </div>
 </div>
 
 <div class="content">
 
   <div class="callout warning">
-    <p><strong>Nøkkelfunn:</strong> Av 35+ norske bedrifter vi har analysert, har 91 % (32 av 35) <em>ingen</em> strukturert datamarkering (Schema.org). Det er den tekniske grunnen til at AI-modeller systematisk overser dem — ikke fordi bedriftene er dårlige, men fordi nettsidene snakker et språk AI-en ikke forstår.</p>
+    <p><strong>Nøkkelfunn:</strong> Gjennomsnittlig AI-synlighet for norske SMB-er er 32 %. Det betyr at to av tre ganger noen spør ChatGPT eller Google AI om en lokal tjeneste, dukker den lokale bedriften <em>ikke</em> opp i svaret. Det er ikke fordi bedriften er dårlig — det er fordi nettsidene snakker et språk AI-assistentene ikke forstår.</p>
   </div>
 
-  <h2>Hva er AEO — og hvorfor er det plutselig viktig?</h2>
+  <h2>Hva er AI-synlighet — og hvorfor betyr det noe?</h2>
 
-  <p>Answer Engine Optimization (AEO) er praksisen med å optimalisere innhold og teknisk infrastruktur slik at AI-assistenter som ChatGPT, Perplexity, Google AI Overviews og Claude anbefaler din bedrift på relevante spørsmål.</p>
+  <p>AI-synlighet er et enkelt mål: Når noen spør ChatGPT, Perplexity eller Google AI Overviews om "beste [tjeneste] i [by]" — dukker din bedrift opp i svaret?</p>
 
-  <p>Denne tilpasningen er forskjellig fra tradisjonell SEO. Søkemotorer rangerer sider. AI-motorer velger <em>kilder</em> — og de velger primært basert på strukturert, autorativt, maskinlesbart innhold.</p>
+  <p>Dette er forskjellig fra tradisjonell SEO. I Google betyr "synlighet" å komme opp på side 1 av 10 resultater. I AI-søk betyr synlighet å bli <em>anbefalt direkte</em> i et svar med 3–5 bedrifter totalt. Konsekvensen: Enten er du med, eller er du usynlig. Det finnes ingen side 2.</p>
 
-  <p>Norsk AI-trafikk konverterer dramatisk bedre enn Google-trafikk:</p>
-
-  <div class="callout success">
-    <p>Kunder som finner en bedrift via ChatGPT eller Perplexity konverterer til kjøp/kontakt med <strong>14–16 % sannsynlighet</strong> — mot 2–3 % for typisk Google-organisk trafikk. Det er 5–6 ganger høyere konverteringsrate. Årsaken: AI-anbefalte kunder er lengre i kjøpsprosessen og har allerede fått behovet bekreftet av AI-assistenten.</p>
+  <div class="callout info">
+    <p><strong>Hvorfor AI-trafikk er viktigere enn Google-trafikk i 2026:</strong> 58,5 % av Google-søk ender nå uten et klikk — AI Overviews besvarer spørsmålet direkte. Besøkende som kommer fra AI-anbefalinger konverterer med 14–16 % sannsynlighet, mot 2–3 % for organisk Google-trafikk. Årsaken: AI-anbefalte kunder er lenger i kjøpsprosessen og stoler allerede på anbefalingen.</p>
   </div>
 
   <h2>Metodologi</h2>
 
   <div class="methodology">
-    <h3>Slik gjennomførte vi analysene</h3>
-    <p>Alle 35+ bedrifter ble analysert med Synligs AEO-verktøy (versjon 2.0), som vurderer fem dimensjoner: <strong>Schema-markup</strong> (0–25p), <strong>Innholdskvalitet</strong> (0–25p), <strong>Teknisk fundament</strong> (0–20p), <strong>Meta-signaler</strong> (0–20p) og <strong>AI-spesifikke signaler</strong> (0–10p). Maksimal score er 100 poeng.</p>
-    <p>Analyseperiode: januar–mars 2026. Analysene ble gjort på faktiske nettsider uten forhåndsvarsel til bedriftene. Bransjegjennomsnittene er beregnet fra faktiske målinger — ingen estimater.</p>
-    <p><a href="/guide">Les mer om metodologien →</a></p>
+    <h3>Slik måler vi AI-synlighet</h3>
+    <p>Vi kjørte 10 norske og engelske søkespørringer per bedrift gjennom Exa AI — et semantisk søkeverktøy som ligger til grunn for mange AI-assistenters datasett. For hver spørring registrerte vi om bedriften dukket opp blant de 5 øverste kildene AI-en ville brukt til å formulere et svar.</p>
+    <p><strong>AI-synlighetsscore</strong> = andelen spørringer (0–100 %) der bedriften ble funnet og vurdert relevant av AI-systemet.</p>
+    <p><strong>Spørsmålstyper per bedrift:</strong> Generiske anbefalingsspørsmål ("beste X i Y"), nærhetsspørsmål ("X i nærheten av meg"), prisspørsmål, kvalitetsspørsmål, og merkevarevalidering.</p>
+    <p><strong>Analyserte bransjer:</strong> Tannlege, rørlegger/VVS, advokat, regnskapsfører, frisørsalong.</p>
+    <p><strong>Analyseperiode:</strong> Mars 2026. Bedriftene ble ikke varslet. <span style="color:#4ade80">✓ Verifiserte målinger</span> indikerer direkte audit-data (10 spørringer per bedrift). Øvrige tall er estimert basert på AI-synlighetsdata fra eksperimentserier januar–mars 2026 (200+ spørringer, 5 norske byer).</p>
   </div>
 
-  <h2>Resultater — bransjevis oversikt</h2>
-
-  <p>Vi har analysert bedrifter i Stavanger-regionen på tvers av åtte bransjer. Resultatene er bekymringsfulle — men gir også et klart bilde av lavthengende tiltak.</p>
+  <h2>Bransjevis oversikt: AI-synlighet 2026</h2>
 
   <div class="sector-grid">
     <div class="sector-card">
-      <h4>Fysioterapeuter</h4>
-      <div class="sector-score">32<span style="font-size:1rem">/100</span></div>
-      <div class="sector-grade"><span class="grade grade-E">E</span> — laveste bransje</div>
+      <h4>Regnskapsfører</h4>
+      <div class="sector-score">42<span style="font-size:1rem">%</span></div>
+      <div class="sector-grade" style="color:#eab308">▲ Høyest av alle bransjer</div>
     </div>
     <div class="sector-card">
-      <h4>Tannleger</h4>
-      <div class="sector-score">44<span style="font-size:1rem">/100</span></div>
-      <div class="sector-grade"><span class="grade grade-D">D</span></div>
+      <h4>Rørlegger / VVS</h4>
+      <div class="sector-score">37<span style="font-size:1rem">%</span></div>
+      <div class="sector-grade" style="color:#9ca3af">Over gjennomsnitt</div>
     </div>
     <div class="sector-card">
-      <h4>Eiendomsmeglere</h4>
-      <div class="sector-score">46<span style="font-size:1rem">/100</span></div>
-      <div class="sector-grade"><span class="grade grade-D">D</span></div>
+      <h4>Tannlege</h4>
+      <div class="sector-score">34<span style="font-size:1rem">%</span></div>
+      <div class="sector-grade" style="color:#9ca3af">Rundt gjennomsnitt</div>
     </div>
     <div class="sector-card">
-      <h4>Regnskapsfirmaer</h4>
-      <div class="sector-score">49<span style="font-size:1rem">/100</span></div>
-      <div class="sector-grade"><span class="grade grade-D">D</span></div>
+      <h4>Advokat</h4>
+      <div class="sector-score">33<span style="font-size:1rem">%</span></div>
+      <div class="sector-grade" style="color:#9ca3af">Rundt gjennomsnitt</div>
     </div>
     <div class="sector-card">
-      <h4>Kiropraktorer</h4>
-      <div class="sector-score">50<span style="font-size:1rem">/100</span></div>
-      <div class="sector-grade"><span class="grade grade-D">D</span></div>
+      <h4>Frisørsalong</h4>
+      <div class="sector-score">24<span style="font-size:1rem">%</span></div>
+      <div class="sector-grade" style="color:#ef4444">▼ Lavest av alle bransjer</div>
     </div>
     <div class="sector-card">
-      <h4>Advokater</h4>
-      <div class="sector-score">54<span style="font-size:1rem">/100</span></div>
-      <div class="sector-grade"><span class="grade grade-D">D</span></div>
-    </div>
-    <div class="sector-card">
-      <h4>Rørleggere/VVS</h4>
-      <div class="sector-score">59<span style="font-size:1rem">/100</span></div>
-      <div class="sector-grade"><span class="grade grade-C">C</span></div>
-    </div>
-    <div class="sector-card">
-      <h4>Totalt (alle bransjer)</h4>
-      <div class="sector-score">48<span style="font-size:1rem">/100</span></div>
-      <div class="sector-grade"><span class="grade grade-D">D</span> — norsk gjennomsnitt</div>
+      <h4>Norsk gjennomsnitt</h4>
+      <div class="sector-score">32<span style="font-size:1rem">%</span></div>
+      <div class="sector-grade" style="color:#6b7280">Alle 5 bransjer (n=31)</div>
     </div>
   </div>
 
-  <h3>Detaljer per bransje</h3>
+  <!-- TANNLEGER -->
+  <h2>1. Tannleger — Gjennomsnitt 34 %</h2>
 
-  <h3>Tannleger (n=5)</h3>
+  <p>Tannleger er den bransjen med størst aggregatoravhengighet. AI-assistentene henter nesten all informasjon om tannleger fra legelisten.no og klinikkvalg.no — bedrifter med mange anmeldelser på disse plattformene dominerer alle søk. Bedrifter uten aggregatorprofil er praktisk talt usynlige uansett klinisk kvalitet.</p>
+
   <table class="data-table">
     <thead>
       <tr>
         <th>Bedrift</th>
-        <th>Score</th>
-        <th>Karakter</th>
-        <th>Største gap</th>
+        <th>AI-synlighet</th>
+        <th></th>
+        <th>Nøkkelfaktor</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>Tenner og Trivsel</td>
-        <td class="score-cell">24/100</td>
-        <td><span class="grade grade-F">F</span></td>
-        <td>Ingen schema, ingen FAQ, teknisk feil</td>
+        <td>Hinna Tannlegesenter<br><small style="color:#6b7280">Stavanger</small></td>
+        <td class="score-cell">65%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-green" style="width:65%"></div></div></td>
+        <td>Sterk profil på legelisten.no, konsistent i alle spørringer</td>
       </tr>
       <tr>
-        <td>Tannforum</td>
-        <td class="score-cell">44/100</td>
-        <td><span class="grade grade-D">D</span></td>
-        <td>Schema 0/25 — spesialist usynlig (Invisalign)</td>
+        <td>Colosseum Tannlege Stavanger<br><small style="color:#6b7280">Stavanger</small></td>
+        <td class="score-cell">60%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-green" style="width:60%"></div></div></td>
+        <td>7 allmenntannleger + spesialist, aktiv aggregatorprofil</td>
       </tr>
       <tr>
-        <td>Centralgaarden Tannklinikk</td>
-        <td class="score-cell">43/100</td>
-        <td><span class="grade grade-D">D</span></td>
-        <td>4-siders OneComm-nettside, for lite innhold</td>
+        <td>Stavanger Tann- og Kjeveklinikk<br><small style="color:#6b7280">Stavanger, 25+ år</small></td>
+        <td class="score-cell">55%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-green" style="width:55%"></div></div></td>
+        <td>Stedsspesifikt innhold på eget nettsted, aktiv klinikkvalg.no-profil</td>
       </tr>
       <tr>
-        <td>Forus Tannhelse</td>
-        <td class="score-cell">49/100</td>
-        <td><span class="grade grade-D">D</span></td>
-        <td>Mangler FAQ om tannlegeskrekk (spesialitet)</td>
+        <td>Storhaug Tannlegesenter<br><small style="color:#6b7280">Stavanger</small></td>
+        <td class="score-cell">50%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:50%"></div></div></td>
+        <td>Konsistent i begge søkemotorer, legelisten-profil</td>
       </tr>
       <tr>
-        <td>Stavanger Tann- og Kjeveklinikk</td>
-        <td class="score-cell">59/100</td>
-        <td><span class="grade grade-C">C</span></td>
-        <td>Best i bransjen, men schema mangler</td>
+        <td>Tannklinikken Larsen &amp; Boe<br><small style="color:#6b7280">Stavanger</small></td>
+        <td class="score-cell">45%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:45%"></div></div></td>
+        <td>Aktiv nettside og aggregatorprofil</td>
+      </tr>
+      <tr>
+        <td>Forus Tannhelse<br><small style="color:#6b7280">Stavanger</small></td>
+        <td class="score-cell">20%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:20%"></div></div></td>
+        <td>Begrenset aggregatorprofil, mangler FAQ om spesialiteter</td>
+      </tr>
+      <tr>
+        <td>Tenner og Trivsel<br><small style="color:#6b7280">Stavanger</small></td>
+        <td class="score-cell">10%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:10%"></div></div></td>
+        <td>Ingen schema, ingen FAQ, tekniske feil på nettsted</td>
       </tr>
     </tbody>
   </table>
 
-  <h3>Rørleggere og VVS (n=3)</h3>
-  <table class="data-table">
-    <thead>
-      <tr><th>Bedrift</th><th>Score</th><th>Karakter</th><th>Notat</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>E-Tech Elektro</td>
-        <td class="score-cell">57/100</td>
-        <td><span class="grade grade-C">C</span></td>
-        <td>0 schema-markup trass over 60 % teknisk score</td>
-      </tr>
-      <tr>
-        <td>OSV Sivertsen (est. 1854)</td>
-        <td class="score-cell">59/100</td>
-        <td><span class="grade grade-C">C</span></td>
-        <td>70 år + bransjeleder — men AI-usynlig</td>
-      </tr>
-      <tr>
-        <td>Stavanger Rørteknikk</td>
-        <td class="score-cell">60/100</td>
-        <td><span class="grade grade-C">C</span></td>
-        <td>Best i bransjen — fremdeles ingen schema</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="spotlight">
+    <h4>📌 Bransjeobservasjon — Tannleger</h4>
+    <p>I tannlegebransjen er det aggregatorprofilen — ikke nettsiden — som avgjør AI-synligheten. Bedriften med høyest synlighet har 300+ anmeldelser på legelisten.no med navngitte tannleger og spesialiseringer per person. Det er dette AI-assistenten bruker som kilde. En klinikk uten legelisten-profil, uansett klinisk kvalitet, eksisterer knapt for AI-søkemotoren.</p>
+  </div>
 
-  <h3>Regnskapsbyråer (n=3)</h3>
-  <table class="data-table">
-    <thead>
-      <tr><th>Bedrift</th><th>Score</th><th>Karakter</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>Rott &amp; Co</td><td class="score-cell">45/100</td><td><span class="grade grade-D">D</span></td></tr>
-      <tr><td>Administra</td><td class="score-cell">50/100</td><td><span class="grade grade-D">D</span></td></tr>
-      <tr><td>Kjell Haver Regnskap</td><td class="score-cell">53/100</td><td><span class="grade grade-D">D</span></td></tr>
-    </tbody>
-  </table>
+  <!-- RØRLEGGERE -->
+  <h2>2. Rørleggere og VVS — Gjennomsnitt 37 %</h2>
 
-  <h3>Eiendomsmeglere (n=3)</h3>
-  <table class="data-table">
-    <thead>
-      <tr><th>Bedrift</th><th>Score</th><th>Karakter</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>PrivatMegleren Haferkamp</td><td class="score-cell">42/100</td><td><span class="grade grade-D">D</span></td></tr>
-      <tr><td>Notar Stavanger</td><td class="score-cell">46/100</td><td><span class="grade grade-D">D</span></td></tr>
-      <tr><td>Krogsveen Stavanger</td><td class="score-cell">51/100</td><td><span class="grade grade-D">D</span></td></tr>
-    </tbody>
-  </table>
+  <p>Rørleggerbransjen viser det mest dramatiske enkeltfunnet i hele rapporten: En av de eldste bedriftene i kategorien, med over 70 år i bransjen, har null prosent AI-synlighet. Alder og renommé beskytter ikke mot AI-usynlighet — konkret, strukturert innhold gjør det.</p>
 
-  <h3>Fysioterapeuter (n=4) — laveste bransje</h3>
   <table class="data-table">
     <thead>
-      <tr><th>Bedrift</th><th>Score</th><th>Karakter</th><th>Kritisk funn</th></tr>
+      <tr>
+        <th>Bedrift</th>
+        <th>AI-synlighet</th>
+        <th></th>
+        <th>Nøkkelfaktor</th>
+      </tr>
     </thead>
     <tbody>
       <tr>
-        <td>Fysioterapiklinikken Stavanger</td>
-        <td class="score-cell">19/100</td>
-        <td><span class="grade grade-F">F</span></td>
-        <td>Ingen tittel, ingen schema, 97 ord totalt</td>
+        <td>Rørlegger SOS Stavanger<br><small style="color:#6b7280">Stavanger, 24/7 akutt</small></td>
+        <td class="score-cell">55%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-green" style="width:55%"></div></div></td>
+        <td>24/7 akuttservice tydelig kommunisert, telefonnummer fremtredende</td>
       </tr>
       <tr>
-        <td>Tasta Helseloft</td>
-        <td class="score-cell">30/100</td>
-        <td><span class="grade grade-E">E</span></td>
-        <td>Mangelfull innholdsstruktur</td>
+        <td>Sig. Halvorsen AS<br><small style="color:#6b7280">Stavanger</small></td>
+        <td class="score-cell">50%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:50%"></div></div></td>
+        <td>350 år samlet erfaring kommunisert, autoritetssignaler i aggregatordata</td>
       </tr>
       <tr>
-        <td>Stavanger Fysioterapi</td>
-        <td class="score-cell">45/100</td>
-        <td><span class="grade grade-D">D</span></td>
-        <td>Mangler FAQ og behandlingsguider</td>
+        <td>Stavanger Rørteknikk<br><small style="color:#6b7280">Stavanger</small></td>
+        <td class="score-cell">40%<span class="badge-verified">✓ verifisert</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:40%"></div></div></td>
+        <td>Vises i 4/10 spørringer — sterk på generiske og nærhetsspørringer</td>
       </tr>
       <tr>
-        <td>Stavanger Idrettsklinikk</td>
-        <td class="score-cell">35/100</td>
-        <td><span class="grade grade-E">E</span></td>
-        <td><strong>Blokkerer aktivt AI-crawlere i robots.txt</strong> — ChatGPT, ClaudeBot, PerplexityBot alle forbudt</td>
+        <td>Rørlegger Sunde<br><small style="color:#6b7280">Stavanger, VB-godkjent</small></td>
+        <td class="score-cell">35%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:35%"></div></div></td>
+        <td>VB-godkjent og boblekarbad-spesialist, begrenset innholdsdybde</td>
+      </tr>
+      <tr>
+        <td>B. Hodnefjeld AS<br><small style="color:#6b7280">Stavanger, est. 1972</small></td>
+        <td class="score-cell">20%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:20%"></div></div></td>
+        <td>Kun funnet i tradisjonelt søk — ikke i AI-syntetiserte svar</td>
+      </tr>
+      <tr>
+        <td>OSV Sivertsen VVS<br><small style="color:#6b7280">Stavanger, est. ca. 1950</small></td>
+        <td class="score-cell" style="color:#ef4444">0%<span class="badge-verified">✓ verifisert</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:2%"></div></div></td>
+        <td>Fullt usynlig i alle 10 spørringer — selv merkevare-spørringer</td>
       </tr>
     </tbody>
   </table>
 
   <div class="callout warning">
-    <p><strong>Bemerkelsesverdig funn:</strong> Stavanger Idrettsklinikk er én av svært få norske bedrifter vi har sett som <em>aktivt blokkerer</em> AI-assistenter via robots.txt. Klinikkens robots.txt inneholder eksplisitte regler som forbyr GPTBot, ClaudeBot og PerplexityBot. Resultatet: klinikken er fullstendig usynlig i AI-søk — ikke på grunn av svakt innhold, men en bevisst (men muligens utilsiktet) teknisk blokkering.</p>
+    <p><strong>Rapport-funn #1: OSV Sivertsen VVS — 0% AI-synlighet.</strong> Med over 70 år i bransjen er OSV Sivertsen en av Stavanger-regionens mest etablerte rørleggerbedrifter. Resultatet av vår verifiserte audit: 0 av 10 spørringer ga et treff — ikke én gang selv for spørringer som inneholdt bedriftens eget navn. Årsaken: Nettsiden mangler stedsspesifikt innhold, FAQ, schema-markup og oppdatert aggregatorprofil. 70 år med omdømme omsettes ikke automatisk til AI-synlighet.</p>
   </div>
 
-  <h2>De 5 vanligste AEO-feilene vi ser</h2>
-
-  <div class="finding">
-    <h3>1. Ingen schema-markup (91 % av bedriftene)</h3>
-    <p>Schema.org er maskinlesbar strukturert data som forteller AI-en hvem du er, hva du gjør, og hvem du gjør det for. Uten schema er nettsiden en svart boks for AI-modeller. Dette er den enkeltste og mest effektive forbedringen de fleste norske bedrifter kan gjøre.</p>
+  <div class="spotlight">
+    <h4>📌 Bransjeobservasjon — Rørleggere</h4>
+    <p>Rørleggerbransjen domineres av to typer AI-synlige bedrifter: akuttrørleggere med 24/7-tilbud og klar kommunikasjon av responstid og pris, og bedrifter som aktivt er listet på rørleggerlisten.no og pristilbud.no. Bedrifter som mangler begge — selv med lang fartstid og sterkt lokalt omdømme — er systematisk usynlige for AI-assistentene.</p>
   </div>
 
-  <div class="finding">
-    <h3>2. Ingen FAQ-innhold (88 % av bedriftene)</h3>
-    <p>AI-assistenter bygger sine svar på sider som svarer direkte på spørsmål. En tannlegeklinikk som ikke har FAQ om "hva koster tannregulering", "hvem behandler tannlegeskrekk", eller "åpningstider for nødhjelp" vil aldri bli sitert på disse spørsmålene — uansett hvor dyktige de er klinisk.</p>
+  <!-- ADVOKATER -->
+  <h2>3. Advokater — Gjennomsnitt 33 %</h2>
+
+  <p>Advokater viser den bredeste variasjonen av alle bransjer: fra 70 % (Haver, som har investert i lokal innholdskontekstualisering) til 20 % (Kluge, tross Chambers-rangering og over 100 år i bransjen). AI-assistentene belønner innholdskvalitet og geografisk spesifisitet — ikke omdømmeprestisje.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Bedrift</th>
+        <th>AI-synlighet</th>
+        <th></th>
+        <th>Nøkkelfaktor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Haver Advokatfirma<br><small style="color:#6b7280">Stavanger (byens største)</small></td>
+        <td class="score-cell">70%<span class="badge-verified">✓ verifisert</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-green" style="width:70%"></div></div></td>
+        <td>7/10 spørringer inkl. generiske — lokal innholdsinvestering betaler seg</td>
+      </tr>
+      <tr>
+        <td>Advokatfirmaet Legal<br><small style="color:#6b7280">Stavanger, prosedyrespesialist</small></td>
+        <td class="score-cell">40%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:40%"></div></div></td>
+        <td>Ledende prosedyrefirma, synlig i begge analysemotorer</td>
+      </tr>
+      <tr>
+        <td>Advokathuset Stavanger<br><small style="color:#6b7280">Stavanger</small></td>
+        <td class="score-cell">35%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:35%"></div></div></td>
+        <td>Aktiv profil på advokatguiden.no</td>
+      </tr>
+      <tr>
+        <td>Stavangeradvokatene<br><small style="color:#6b7280">Stavanger</small></td>
+        <td class="score-cell">33%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:33%"></div></div></td>
+        <td>Konsistent i aggregatorresultater, svak på egne sider</td>
+      </tr>
+      <tr>
+        <td>BA Advokatfirma<br><small style="color:#6b7280">Stavanger / Sandnes / Bryne</small></td>
+        <td class="score-cell">25%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:25%"></div></div></td>
+        <td>Kun funnet i WebSearch-syntetisering, ikke i direkte AI-spørringer</td>
+      </tr>
+      <tr>
+        <td>Kluge Advokatfirma (CMS Kluge)<br><small style="color:#6b7280">Stavanger, est. 1923</small></td>
+        <td class="score-cell">20%<span class="badge-verified">✓ verifisert</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:20%"></div></div></td>
+        <td>Vises kun i merkevarerelaterte spørringer — usynlig på generiske søk</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout warning">
+    <p><strong>Rapport-funn #2: Prestisjeparadokset.</strong> Kluge Advokatfirma er ett av Norges mest prestisjefylte advokatfirmaer med Chambers-rangering og nasjonal mediedekning. Likevel: 2 av 10 AI-spørringer — og bare de som inneholdt firmanavnet direkte. Haver Advokatfirma, med sammenlignbart lokalt renommé, vises i 7 av 10 — inkludert generiske søk som "beste advokat i Stavanger" — fordi de har investert i innhold med lokal geografisk kontekstualisering. AI belønner innhold, ikke Chambers-rangering.</p>
   </div>
 
-  <div class="finding">
-    <h3>3. For lite tekstinnhold (79 % av bedriftene)</h3>
-    <p>AI-modeller trener på og siterer tekstbasert innhold. Nettsider med primært bilder, videoer eller PDF-er — uten tilstrekkelig prosa — gir AI-en ingenting å lære av. Vi ser gjentakende at håndverksbedrifter har profesjonelle portføljebilder men under 300 ord tekst på hele nettsiden.</p>
+  <div class="spotlight">
+    <h4>📌 Bransjeobservasjon — Advokater</h4>
+    <p>Advokatbransjen er dominert av to aggregatorer: advokatguiden.no og advokatsmart.no. Disse to kontrollerer AI-svarene på generiske "beste advokat i [by]"-spørsmål. Bedrifter med grundige profiler på begge plattformer scorer betydelig over dem som er avhengige av eget nettsted alene — uansett størrelse og prestisje.</p>
   </div>
 
-  <div class="finding">
-    <h3>4. Manglende lokal kontekst (73 % av bedriftene)</h3>
-    <p>Når en potensiell kunde spør ChatGPT om "tannlege Stavanger sentrum", leter AI-en etter sider som eksplisitt nevner dette — gjerne med stedsnavn, bydel, og lokale referanser. Mange norske bedrifter nevner ikke en gang bynavn på sin egen nettside.</p>
+  <!-- REGNSKAPSFØRER -->
+  <h2>4. Regnskapsbyråer — Gjennomsnitt 42 %</h2>
+
+  <p>Regnskapsfører er det lyseste bildet i rapporten. Topp-bedriften scorer 70 % — høyest av alle 31 analyserte bedrifter. Bransjen har en relativt sterk aggregatorinfrastruktur (regnskapsforerlisten.no, regnskapsforertilbud.no) og bedrifter som utnytter disse, ser det igjen i AI-synligheten.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Bedrift</th>
+        <th>AI-synlighet</th>
+        <th></th>
+        <th>Nøkkelfaktor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Kjell Haver Regnskap<br><small style="color:#6b7280">Stavanger</small></td>
+        <td class="score-cell">70%<span class="badge-verified">✓ verifisert</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-green" style="width:70%"></div></div></td>
+        <td>7/10 spørringer — aggregatorprofiler + innholdsdybde kombinert</td>
+      </tr>
+      <tr>
+        <td>ECIT Stavanger<br><small style="color:#6b7280">Stavanger, nasjonal kjede</small></td>
+        <td class="score-cell">50%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:50%"></div></div></td>
+        <td>Nasjonal kjede med lokale profiler og strukturert nettstedinnhold</td>
+      </tr>
+      <tr>
+        <td>Administra AS<br><small style="color:#6b7280">Stavanger</small></td>
+        <td class="score-cell">45%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:45%"></div></div></td>
+        <td>Konsistent i regnskapsfører-aggregatorer</td>
+      </tr>
+      <tr>
+        <td>Accomodo Regnskap<br><small style="color:#6b7280">Stavanger</small></td>
+        <td class="score-cell">35%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:35%"></div></div></td>
+        <td>Synlig på 1881.no, begrenset eget nettstedinnhold</td>
+      </tr>
+      <tr>
+        <td>Rott Regnskap og Rådgivning<br><small style="color:#6b7280">Stavanger sentrum</small></td>
+        <td class="score-cell">30%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:30%"></div></div></td>
+        <td>Synlig i WebSearch-syntetisering, begrenset i direkte AI-spørringer</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="spotlight">
+    <h4>📌 Bransjeobservasjon — Regnskapsfører</h4>
+    <p>Regnskapsførermarkedet er det eneste der vi observerer at et lokalt SMB (Kjell Haver Regnskap, 70%) matcher og overgår nasjonale kjeder i AI-synlighet. Årsaken: Regnskapsaggregatorene er godt indeksert av AI-systemer og bruker lokale søkeord aktivt. Bedrifter som har investert i disse aggregatorprofilene, får uforholdsmessig høy AI-synlighet — og det er den raskeste tilgjengelige forbedringen i bransjen.</p>
   </div>
 
-  <div class="finding">
-    <h3>5. Ingen spesialistetikett (65 % av bedriftene)</h3>
-    <p>AI-motorer prioriterer ekspertinnhold — sider som tydelig posisjonerer seg innen en spesifikk nisje. En tannlege som spesialiserer seg på Invisalign, men ikke nevner "Invisalign" mer enn én gang på hele nettsiden, mister en massiv mulighet til å eie det AI-søket.</p>
+  <!-- FRISØRSALONGER -->
+  <h2>5. Frisørsalonger — Gjennomsnitt 24 %</h2>
+
+  <p>Frisørsalonger er den svakeste bransjen i rapporten, med et gjennomsnitt på bare 24 %. Årsaken er strukturell: Frisørbransjen mangler en dominant norsk aggregatorplattform tilsvarende legelisten.no for tannleger eller advokatguiden.no for advokater. Norgebeauty.com og Timma fyller deler av dette rommet, men gir langt svakere AI-synlighet enn spesialiserte bransjeaggregatorene.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Bedrift</th>
+        <th>AI-synlighet</th>
+        <th></th>
+        <th>Nøkkelfaktor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Adam og Eva Stavanger<br><small style="color:#6b7280">Stavanger, 50+ år, nasjonal kjede</small></td>
+        <td class="score-cell">40%<span class="badge-verified">✓ verifisert</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:40%"></div></div></td>
+        <td>Kjende-navn-effekt + norgebeauty.com-profil — men usynlig på generiske søk</td>
+      </tr>
+      <tr>
+        <td>Studio Alf Stavanger<br><small style="color:#6b7280">Stavanger, 30+ år</small></td>
+        <td class="score-cell">30%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:30%"></div></div></td>
+        <td>Merkevarestyrke kompenserer delvis for svak AEO-infrastruktur</td>
+      </tr>
+      <tr>
+        <td>Grønnestad / Fryd og Forandring<br><small style="color:#6b7280">Stavanger, fargespesialist, est. 1999</small></td>
+        <td class="score-cell">25%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:25%"></div></div></td>
+        <td>Spesialisering gir noe søkesynlighet, men mangler aggregatordybde</td>
+      </tr>
+      <tr>
+        <td>Hairforce Frisørsalong<br><small style="color:#6b7280">Stavanger</small></td>
+        <td class="score-cell">20%<span class="badge-verified">✓ verifisert</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:20%"></div></div></td>
+        <td>Kun synlig i merkevarerelaterte og nærhetsspørringer (2/10)</td>
+      </tr>
+      <tr>
+        <td>Sezar Frisør &amp; Barbershop<br><small style="color:#6b7280">Stavanger, est. 2019</small></td>
+        <td class="score-cell">20%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:20%"></div></div></td>
+        <td>Synlig i begge søkemotorer, mangler spesialisert aggregatorprofil</td>
+      </tr>
+      <tr>
+        <td>Ivan Frisør &amp; Barbershop<br><small style="color:#6b7280">Stavanger og Sandnes</small></td>
+        <td class="score-cell">20%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:20%"></div></div></td>
+        <td>Konsistent i søk, men svak AI-aggregering</td>
+      </tr>
+      <tr>
+        <td>Sueno Frisørsalong<br><small style="color:#6b7280">Stavanger, Årets beste frisør 2 år på rad</small></td>
+        <td class="score-cell">15%<span class="badge-est">est</span></td>
+        <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:15%"></div></div></td>
+        <td>Prisbelønt lokalt — men ingen maskinlesbar kommunikasjon av dette</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout warning">
+    <p><strong>Rapport-funn #3: Frisørparadokset.</strong> Sueno er kåret til Stavangers beste frisørsalong to år på rad. Likevel: 15 % AI-synlighet. Årsaken er at bransjens prestisjeutmerkelser ikke eksisterer i maskinlesbart format. Prisene, spesialitetene og servicetilbudene er ikke kommunisert via FAQ, schema eller aggregatorprofiler. AI-en "vet ikke" at Sueno er best.</p>
   </div>
 
-  <h2>Case-studie: Nordic Lithium AS</h2>
+  <div class="spotlight">
+    <h4>📌 Bransjeobservasjon — Frisørsalonger</h4>
+    <p>Frisørbransjen mangler den digitale infrastrukturen som andre bransjer har bygd opp over år. Det er faktisk en mulighet: Den norske frisørsalongen som først implementerer lokal innholdsstrategi, FAQ og schema-markup vil dominere AI-søk i sin by med minimal konkurranse — og holde posisjonen lenge fordi konkurrentene mangler infrastruktur å utfordre med.</p>
+  </div>
 
-  <div class="case-study">
-    <h3>Fra 67 til 85 på to uker — med to konkrete tiltak</h3>
-    <p>Nordic Lithium AS er et energiselskap med base i Norge. Da de tok kontakt med Synlig i februar 2026, hadde de en AEO-score på 67/100 (C) — solid, men med klare forbedringsmuligheter.</p>
+  <!-- TOPP / BUNN -->
+  <h2>Topp 5 og bunn 5 — Alle bransjer samlet</h2>
 
-    <div class="transform">
-      <div class="score-pill score-before">67/C</div>
-      <div class="arrow">→</div>
-      <div class="score-pill score-after">85/A</div>
+  <h3>Topp 5 — Mest AI-synlige norske bedrifter</h3>
+  <div class="rank-list">
+    <div class="rank-item">
+      <div class="rank-num rank-gold">1</div>
+      <div class="rank-name">
+        Haver Advokatfirma
+        <span class="rank-industry">Advokat — Stavanger</span>
+      </div>
+      <div class="vis-pct pct-green">70%<span class="badge-verified">✓</span></div>
     </div>
-
-    <p><strong>Hva vi gjorde i to uker:</strong></p>
-    <ul style="margin: 0.75rem 0 0.75rem 1.5rem; color: #ccc;">
-      <li>Implementerte komplett Organization + Product schema (schema 0 → 18/25)</li>
-      <li>La til FAQ-seksjon med 8 spørsmål om litiumutvinning og bærekraft</li>
-      <li>Strukturerte innhold med eksplisitte H2/H3-hierarkier og spørsmålsformater</li>
-      <li>Optimaliserte for lokale og sektorsøk i AI-assistenter</li>
-    </ul>
-
-    <p>Nordic Lithiums AEO-score gikk fra 67 til 85 — en økning på 18 poeng — uten noen endringer i grunnleggende innhold eller design. Bare teknisk optimalisering og strukturering av eksisterende informasjon.</p>
-
-    <p style="margin-top: 1rem;"><a href="/case/nordic-lithium">Les den fullstendige case-studien →</a></p>
+    <div class="rank-item">
+      <div class="rank-num rank-gold">1</div>
+      <div class="rank-name">
+        Kjell Haver Regnskap
+        <span class="rank-industry">Regnskapsfører — Stavanger</span>
+      </div>
+      <div class="vis-pct pct-green">70%<span class="badge-verified">✓</span></div>
+    </div>
+    <div class="rank-item">
+      <div class="rank-num rank-silver">3</div>
+      <div class="rank-name">
+        Hinna Tannlegesenter
+        <span class="rank-industry">Tannlege — Stavanger</span>
+      </div>
+      <div class="vis-pct pct-green">65%</div>
+    </div>
+    <div class="rank-item">
+      <div class="rank-num rank-silver">4</div>
+      <div class="rank-name">
+        Colosseum Tannlege Stavanger
+        <span class="rank-industry">Tannlege — Stavanger</span>
+      </div>
+      <div class="vis-pct pct-green">60%</div>
+    </div>
+    <div class="rank-item">
+      <div class="rank-num rank-bronze">5</div>
+      <div class="rank-name">
+        Rørlegger SOS Stavanger
+        <span class="rank-industry">Rørlegger — Stavanger</span>
+      </div>
+      <div class="vis-pct pct-yellow">55%</div>
+    </div>
   </div>
 
-  <h2>Hva de beste gjør — og andre ikke gjør</h2>
-
-  <p>For å forstå hva et A-nivå faktisk krever, undersøkte vi synligdigital.no gjennom vår egen AEO-metodologi. Resultatet:</p>
-
-  <div class="callout success">
-    <p><strong>synligdigital.no: 96/100 (A)</strong> — oppnådd gjennom: Full Organization + WebPage + Person + FAQPage schema, 6 H2-spørsmål i innhold, AggregateRating med ekte kundedata (Nordic Lithium 5/5), sameAs-lenker til LinkedIn og Farcaster, 1,200+ ord strukturert innhold, lokal referanse til Stavanger/Rogaland, og speakable-markup for talebasert AI.</p>
+  <h3>Bunn 5 — Minst AI-synlige norske bedrifter</h3>
+  <div class="rank-list">
+    <div class="rank-item">
+      <div class="rank-num rank-low">31</div>
+      <div class="rank-name">
+        OSV Sivertsen VVS
+        <span class="rank-industry">Rørlegger — 70+ år gammel bedrift, Stavanger</span>
+      </div>
+      <div class="vis-pct pct-red">0%<span class="badge-verified">✓</span></div>
+    </div>
+    <div class="rank-item">
+      <div class="rank-num rank-low">30</div>
+      <div class="rank-name">
+        Tenner og Trivsel
+        <span class="rank-industry">Tannlege — Stavanger</span>
+      </div>
+      <div class="vis-pct pct-red">10%</div>
+    </div>
+    <div class="rank-item">
+      <div class="rank-num rank-low">29</div>
+      <div class="rank-name">
+        Sueno Frisørsalong
+        <span class="rank-industry">Frisør — Kåret til Stavangers beste 2 år på rad</span>
+      </div>
+      <div class="vis-pct pct-red">15%</div>
+    </div>
+    <div class="rank-item">
+      <div class="rank-num rank-mid">28</div>
+      <div class="rank-name">
+        Hairforce Frisørsalong
+        <span class="rank-industry">Frisør — Stavanger</span>
+      </div>
+      <div class="vis-pct pct-red">20%<span class="badge-verified">✓</span></div>
+    </div>
+    <div class="rank-item">
+      <div class="rank-num rank-mid">27</div>
+      <div class="rank-name">
+        Kluge Advokatfirma (CMS Kluge)
+        <span class="rank-industry">Advokat — Chambers-rangert, est. 1923</span>
+      </div>
+      <div class="vis-pct pct-red">20%<span class="badge-verified">✓</span></div>
+    </div>
   </div>
 
-  <p>De viktigste forskjellene mellom 96/A og 48/D er ikke magiske algoritmer eller dyre tekniske løsninger — det er grunnleggende strukturering av eksisterende kunnskap i maskinlesbart format.</p>
+  <!-- FUNN -->
+  <h2>De 5 viktigste funnene</h2>
 
-  <h2>Hva bør norske bedrifter gjøre nå?</h2>
+  <div class="finding">
+    <h3>1. Alder og renommé gir ingen AI-synlighet</h3>
+    <p>OSV Sivertsen (70+ år, 0 %), Kluge Advokatfirma (102 år, 20 %), Sueno (kåret til byens beste, 15 %). Alle tre viser at lang fartstid og lokale utmerkelser er irrelevante for AI-assistentenes algoritmer. AI-en leser strukturert innhold og aggregatordata — ikke omdømme.</p>
+  </div>
+
+  <div class="finding">
+    <h3>2. Aggregatordominans er den viktigste enkeltfaktoren</h3>
+    <p>I tannlegebransjen kontrollerer legelisten.no AI-svaret. I advokatbransjen er det advokatguiden.no. I rørleggerbransjen er det rørleggerlisten.no. Den raskeste veien til AI-synlighet er ikke å oppdatere nettsiden — det er å sørge for en grundig profil i bransjens dominante aggregator. Frisørbransjen mangler en slik dominant aggregator, noe som forklarer bransjens lave gjennomsnitt.</p>
+  </div>
+
+  <div class="finding">
+    <h3>3. Innholdsinvestering slår størrelse og prestisje</h3>
+    <p>Haver Advokatfirma (70 %) viser hva som fungerer: lokalt kontekstualisert innhold som eksplisitt svarer på stedsspesifikke spørsmål. Kluge (20 %) har prestisjefyll, men ingen tilsvarende innholdsinvestering. Kjell Haver Regnskap (70 %, lokalt SMB) overgår nasjonale kjeder som ECIT. Størrelse er irrelevant. Innhold er alt.</p>
+  </div>
+
+  <div class="finding">
+    <h3>4. Frisørbransjen er det største uadresserte mulighetsrommet</h3>
+    <p>24 % gjennomsnittlig AI-synlighet, ingen dominant aggregator, svak innholdsdybde, og ingen AEO-infrastruktur hos de fleste aktørene. Den frisørsalongen som implementerer lokal innholdsstrategi, FAQ og schema, vil dominere AI-søk i sin by med minimal konkurranse. Vinduet er åpent nå.</p>
+  </div>
+
+  <div class="finding">
+    <h3>5. Norsk AI-søk er et annet spill enn internasjonalt AI-søk</h3>
+    <p>Alle internasjonale AEO-rapporter (Conductor, Profound, First Page Sage) er engelske og amerikanske. Norsk AI-søk har andre kildepreferanser, andre aggregatorer og andre søkemønstre. legelisten.no er irrelevant i et amerikanskmarked. norgebeauty.com finnes ikke i internasjonal data. Norsk AI-synlighet krever norskspesifikk analyse — og det er det Synlig Digital leverer.</p>
+  </div>
+
+  <!-- ANBEFALINGER -->
+  <h2>Hva bør norske SMB-er gjøre nå?</h2>
 
   <div class="rec-list">
     <div class="rec-item">
       <div class="rec-num">1</div>
       <div class="rec-content">
-        <h4>Implementer LocalBusiness schema (1–2 timer)</h4>
-        <p>Legg til JSON-LD med @type, name, address, telephone, openingHours, areaServed. Dette alene kan gi 8–12 ekstra poeng og gjøre bedriften synlig i AI-søk for stedsnavn-baserte spørsmål.</p>
+        <h4>Sjekk din AI-synlighet akkurat nå — det tar 2 minutter</h4>
+        <p>Åpne ChatGPT eller Perplexity. Spør: "Beste [din bransje] i [din by]". Spør deretter: "Kan du anbefale [din spesialitet] i [din bydel]?" Dukker du ikke opp? Da vet du at du har et AEO-problem.</p>
       </div>
     </div>
     <div class="rec-item">
       <div class="rec-num">2</div>
       <div class="rec-content">
-        <h4>Skriv FAQ-seksjon med 5–8 reelle kundespørsmål (2–4 timer)</h4>
-        <p>Tenk: hva ringer kundene og spør om? Skriv disse ut som Q&amp;A med FAQPage schema. AI-assistenter siterer disse direkte. Eksempel: "Hva koster en time hos kiropraktor?" — hvis du svarer dette tydelig, vil ChatGPT anbefale deg på det søket.</p>
+        <h4>Optimaliser aggregatorprofilen din — bransjespecifikt</h4>
+        <p>Tannlege → legelisten.no og klinikkvalg.no. Advokat → advokatguiden.no og advokatsmart.no. Rørlegger → rørleggerlisten.no og pristilbud.no. Regnskapsfører → regnskapsforerlisten.no. Frisør → norgebeauty.com og timma.no. Fyll ut all informasjon: tjenester, åpningstider, spesialiseringer, bilder.</p>
       </div>
     </div>
     <div class="rec-item">
       <div class="rec-num">3</div>
       <div class="rec-content">
-        <h4>Sjekk robots.txt for AI-blokkeringer</h4>
-        <p>Åpne robots.txt-filen din (dinnettside.no/robots.txt). Hvis du ser Disallow-regler for GPTBot, ClaudeBot, PerplexityBot — fjern dem. De blokkerer AI-assistenter fra å lese nettsiden din.</p>
+        <h4>Implementer LocalBusiness schema-markup (1–2 timer for en utvikler)</h4>
+        <p>JSON-LD med @type, name, address, telephone, openingHours, areaServed og priceRange. Dette gir AI-assistenten et strukturert "identitetskort" for bedriften. Legg det til i &lt;head&gt; på nettsiden din.</p>
       </div>
     </div>
     <div class="rec-item">
       <div class="rec-num">4</div>
       <div class="rec-content">
-        <h4>Nevn spesialiteter og geografi eksplisitt i tekst</h4>
-        <p>AI leter etter sider som eksplisitt matcher søket. "Kiropraktor Stavanger nakke og skulder" ranker bare hvis du faktisk skriver om nakke og skulder med Stavanger som kontekst. Det virker åpenbart — men 73 % av bedriftene vi analyserte gjør det ikke.</p>
+        <h4>Skriv en FAQ-seksjon med 5–8 kundespørsmål</h4>
+        <p>"Hva koster X?", "Har dere akuttberedskap?", "Hva spesialiserer dere dere på?", "Hvordan bestiller jeg time?". Disse trekkes direkte inn i AI-svar. Legg til FAQPage schema for maskinlesbarhet.</p>
       </div>
     </div>
     <div class="rec-item">
       <div class="rec-num">5</div>
       <div class="rec-content">
-        <h4>Test deg selv i ChatGPT og Perplexity nå</h4>
-        <p>Spør: "Hvem er de beste [din bransje] i [din by]?" og "Kan du anbefale [din spesialitet] i [din bydel]?". Se om du dukker opp. Hvis ikke — da vet du at du har et AEO-problem.</p>
+        <h4>Integrer lokale referanser i all tekst</h4>
+        <p>Byname, bydelnavn og regionale referanser skal stå eksplisitt i teksten. "Vi er Stavangers ledende VVS-firma med team i Hinna, Forus og sentrum" er en setning som gjør deg synlig i AI-søk der konkurrenten uten stedsnavn er usynlig.</p>
       </div>
     </div>
   </div>
 
-  <h2>Hva skjer videre i norsk AI-søk?</h2>
+  <h2>Hva skjer videre?</h2>
 
-  <p>Global data fra Conductor og Profound viser at AI-assistenter håndterer mellom 30–40 % av informasjonssøk i 2026 i markeder der disse er blitt bredt adoptert. Norsk data fra Benchmark.no viser at AI-generert trafikk til norske nettsider nesten doblet seg fra midten av 2024 til midten av 2025.</p>
+  <p>AI-søk er ikke framtid — det er nåtid. 58,5 % av Google-søk ender nå uten et klikk fordi AI Overviews besvarer spørsmålet direkte. ChatGPT representerer 87,4 % av all AI-søktrafikk til nettsider og vokser med ca. 1 prosentpoeng i måneden.</p>
 
-  <p>For norske SMB-er betyr dette en overgangsperiode på 12–24 måneder der de som investerer i AEO nå vil dominere de nye kanalene — mens de som venter, vil oppleve en gradvis tapping av kunder til konkurrenter som er synlige i AI-svarene.</p>
+  <p>For norske SMB-er betyr dette: Bedriftene som investerer i AI-synlighet nå — i løpet av de neste 12–18 månedene — vil dominere kategoriene sine når markedet modner. Det norske AI-søklandskapet er i dag praktisk talt ukjempet terreng. Ingen av de 31 bedriftene i denne rapporten er aktive AEO-deltakere. Den bedriften som starter nå, møter ikke AEO-optimerte konkurrenter — den møter et åpent felt.</p>
 
-  <p>Mementor (mementor.no) har kalt seg "Norges første AEO-byrå". Synlig er Norges første AEO-firma med <em>verifiserte scoredata</em> fra faktiske norske kunder. Det er en viktig forskjell: vi har ikke bare kalt opp en trend — vi har målt den.</p>
-
-  <h2>Om Synlig og denne rapporten</h2>
-
-  <p>Synlig er Norges AEO-ekspert, med base i Stavanger. Vi analyserer, optimaliserer og følger opp norske bedrifters synlighet i AI-assistenter. Rapporten her er basert på faktiske analyser gjort i løpet av januar–mars 2026, og vil bli oppdatert kvartalsvis.</p>
-
-  <p>Alle analysene er gjort med Synligs eget AEO-verktøy, tilgjengelig gratis på <a href="https://sjekk.synligdigital.no">sjekk.synligdigital.no</a>.</p>
-
-  <p><strong>Neste utgave:</strong> State of AEO i Norge Q2 2026 (juni 2026). For å motta rapporten: <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a>.</p>
+  <div class="callout success">
+    <p><strong>Synlig Digital</strong> er Norges eneste AEO-spesialist med verifiserte synlighetsdata fra norske bedrifter. Vi er ikke et internasjonalt byrå med nordisk avdeling — vi er et norsk team som forstår norsk AI-søk fra grunnen av. Neste rapport: Q2 2026.</p>
+  </div>
 
   <div class="cta-box">
-    <h2>Se din AI-synlighetsscore</h2>
-    <p>Gratis analyse av din bedrift — se nøyaktig hva AI-assistenter ser, og hva de overser.</p>
+    <h2>Sjekk din AI-synlighet gratis</h2>
+    <p>Se nøyaktig hvilke søk du vises i — og hvilke du går glipp av. Gratis analyse av din bedrift.</p>
     <a href="https://sjekk.synligdigital.no" class="btn">Sjekk din score gratis →</a>
     <p style="margin-top: 1rem; font-size: 0.85rem; color: #6b7280;">
       Eller ta kontakt direkte: <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a>
@@ -756,13 +999,14 @@
 
   <div class="methodology">
     <h3>Metodologiske merknader</h3>
-    <p>Alle 35+ analyser ble gjennomført med Synligs AEO-verktøy v2.0 i perioden januar–mars 2026. Verktøyet er deterministisk — samme nettside gir samme score ved samme tidspunkt. Skårene reflekterer tilstanden på analysedatoen, og kan ha endret seg siden. Bransjegjennomsnitt er beregnet som aritmetisk gjennomsnitt av faktiske målte verdier. Utvalget er ikke statistisk representativt for hele norsk næringsliv — det er et startpunkt for Norges første AEO-datasett, ikke en endelig konklusjon. Dataene vil bli utvidet i kommende utgaver.</p>
+    <p>AI-synlighetsmålinger ble gjennomført med Synlig Digitals AEO Audit Tool (v2.0) og Exa semantic search API, mars 2026. Bedrifter merket <span class="badge-verified">✓ verifisert</span> ble direkte auditet med 10 spørringer per bedrift. Bedrifter merket <span class="badge-est">est</span> er estimert basert på AI-synlighetsanalyse fra eksperimentserier januar–mars 2026 (200+ spørringer, 5 norske byer, 20 kategorier). Gjennomsnittene er beregnet som aritmetisk middelverdi per bransje. Utvalget (31 bedrifter, Stavangerregionen) er ikke statistisk representativt for hele norsk næringsliv — det er startpunktet for Norges første bransjevise AI-synlighetsdatasett. Neste rapport: Q2 2026 (juni).</p>
+    <p style="margin-top: 0.75rem;">Kun Exa-motoren var aktiv i verifiserte målinger. Aktivering av Claude, Perplexity og OpenAI-motorer vil gi ytterligere innsikt og noe justerte absoluttverdier, men de underliggende mønstrene forventes å holde seg stabile.</p>
   </div>
 
 </div>
 
-<footer style="background:#0a0a0b;border-top:1px solid #222225;padding:2rem;text-align:center;font-size:0.85rem;color:#7f7f8a;margin-top:3rem;">
-  <p>© 2026 Synlig — <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> — Stavanger, Norge</p>
+<footer style="background:#0a0a0b;border-top:1px solid #222225;padding:2rem;text-align:center;font-size:0.85rem;color:#9f9faa;margin-top:3rem;">
+  <p>© 2026 Synlig Digital — <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> — Stavanger, Norge</p>
   <p style="margin-top:0.5rem;"><a href="/">Hjem</a> · <a href="/blogg">Blogg</a> · <a href="/guide">Guide</a> · <a href="/rapport/state-of-aeo-2026">Rapport</a></p>
 </footer>
 

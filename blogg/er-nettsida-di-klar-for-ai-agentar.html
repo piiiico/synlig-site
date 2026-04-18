@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Er nettsida di klar for AI-agentar? Vi køyrde Cloudflare sin nye scanner — Synlig</title>
+  <meta name="description" content="Cloudflare lanserte isitagentready.com — ein gratis scanner som sjekkar om nettsida di er klar for AI-agentar. Vi køyrde han på synligdigital.no og fekk Level 1. Her er kva det betyr og korleis vi fiksa det til Level 2.">
+  <link rel="canonical" href="https://synligdigital.no/blogg/er-nettsida-di-klar-for-ai-agentar">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Er nettsida di klar for AI-agentar? Vi køyrde Cloudflare sin nye scanner">
+  <meta property="og:description" content="Cloudflare lanserte isitagentready.com — ein gratis scanner som sjekkar om AI-agentar kan bruke nettsida di. Vi fekk Level 1. Her er kva det betyr.">
+  <meta property="og:url" content="https://synligdigital.no/blogg/er-nettsida-di-klar-for-ai-agentar">
+  <meta property="og:image" content="https://synligdigital.no/og.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Synlig">
+  <meta property="og:locale" content="nb_NO">
+  <meta property="article:published_time" content="2026-04-18">
+  <meta property="article:author" content="Synlig">
+  <meta property="article:tag" content="AEO">
+  <meta property="article:tag" content="AI-agentar">
+  <meta property="article:tag" content="Cloudflare">
+  <meta property="article:tag" content="agent-readiness">
+  <meta property="article:tag" content="isitagentready">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Er nettsida di klar for AI-agentar? Vi køyrde Cloudflare sin nye scanner",
+    "description": "Cloudflare lanserte isitagentready.com — ein gratis scanner som sjekkar om nettsida di er klar for AI-agentar. Vi køyrde han på synligdigital.no og fekk Level 1. Her er kva det betyr og korleis vi fiksa det til Level 2.",
+    "author": {
+      "@type": "Organization",
+      "name": "Synlig",
+      "url": "https://synligdigital.no"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Synlig",
+      "url": "https://synligdigital.no",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://synligdigital.no/favicon.svg"
+      }
+    },
+    "datePublished": "2026-04-18",
+    "dateModified": "2026-04-18",
+    "inLanguage": "nb-NO",
+    "url": "https://synligdigital.no/blogg/er-nettsida-di-klar-for-ai-agentar",
+    "mainEntityOfPage": "https://synligdigital.no/blogg/er-nettsida-di-klar-for-ai-agentar",
+    "keywords": ["agent-ready nettside", "AI agent nettside norsk", "Cloudflare isitagentready", "AEO 2026 norsk", "AI-agentar nettside"]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0b;
+      --bg-raised: #111113;
+      --border: #222225;
+      --text: #e8e8ed;
+      --text-dim: #9f9faa;
+      --text-muted: #9f9faa;
+      --accent: #6ee7b7;
+      --accent-dim: #2d6a5a;
+      --accent-blue: #60a5fa;
+      --accent-purple: #a78bfa;
+      --accent-orange: #fbbf24;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 11, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .article-header {
+      max-width: 780px;
+      margin: 5rem auto 0;
+      padding: 0 2rem;
+    }
+
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+    .breadcrumb a {
+      color: var(--text-dim);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { margin: 0 0.5rem; }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .meta-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: rgba(110, 231, 183, 0.1);
+      border: 1px solid rgba(110, 231, 183, 0.2);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+    .meta-date {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .meta-author {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-lead {
+      font-size: 1.15rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 3rem;
+      border-left: 3px solid var(--accent);
+      padding-left: 1.5rem;
+    }
+
+    .article-body {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+
+    p { margin-bottom: 1.25rem; }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    strong { color: var(--text); font-weight: 600; }
+
+    code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.85em;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      padding: 0.15em 0.4em;
+      border-radius: 3px;
+      color: var(--accent);
+    }
+
+    pre {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+    pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 0.88rem;
+      color: var(--accent);
+    }
+
+    .callout {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+    }
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout-blue { border-left-color: var(--accent-blue); }
+    .callout-orange { border-left-color: var(--accent-orange); }
+    .callout-purple { border-left-color: var(--accent-purple); }
+
+    .level-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      font-size: 0.9rem;
+    }
+    .level-table th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+    .level-table td {
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      vertical-align: top;
+    }
+    .level-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .level-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .level-1 { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+    .level-2 { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+    .level-3 { background: rgba(96,165,250,0.12); color: #60a5fa; border: 1px solid rgba(96,165,250,0.3); }
+    .level-4 { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.3); }
+    .level-5 { background: rgba(110,231,183,0.12); color: #6ee7b7; border: 1px solid rgba(110,231,183,0.3); }
+
+    .scorecard {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+    .scorecard-header {
+      padding: 1rem 1.5rem;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .scorecard-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .scorecard-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.7rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      gap: 1rem;
+    }
+    .scorecard-row:last-child { border-bottom: none; }
+    .scorecard-check { font-size: 0.9rem; color: var(--text-dim); flex: 1; }
+    .status-pass { font-size: 0.8rem; font-weight: 700; color: #6ee7b7; }
+    .status-fail { font-size: 0.8rem; font-weight: 700; color: #f87171; }
+    .status-warn { font-size: 0.8rem; font-weight: 700; color: #fbbf24; }
+    .status-neutral { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); }
+
+    .fix-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin: 2rem 0;
+    }
+    .fix-item {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .fix-num {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 2rem;
+      line-height: 1;
+    }
+    .fix-content h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: var(--text);
+    }
+    .fix-content p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-bottom: 0;
+    }
+
+    .cta-block {
+      background: linear-gradient(135deg, rgba(110,231,183,0.08) 0%, rgba(96,165,250,0.05) 100%);
+      border: 1px solid rgba(110,231,183,0.2);
+      border-radius: 12px;
+      padding: 2.5rem;
+      text-align: center;
+      margin: 4rem 0 2rem;
+    }
+    .cta-block h2 {
+      font-size: 1.5rem;
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+    }
+    .cta-block p {
+      color: var(--text-dim);
+      margin-bottom: 1.5rem;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0a0a0b;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      margin: 0.4rem;
+    }
+    .cta-btn:hover { opacity: 0.85; text-decoration: none; }
+    .cta-btn-secondary {
+      display: inline-block;
+      background: transparent;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid rgba(110,231,183,0.3);
+      transition: border-color 0.2s;
+      margin: 0.4rem;
+    }
+    .cta-btn-secondary:hover { border-color: var(--accent); text-decoration: none; }
+
+    .related-posts {
+      border-top: 1px solid var(--border);
+      padding-top: 3rem;
+      margin-top: 4rem;
+    }
+    .related-posts h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .related-card {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.2s;
+    }
+    .related-card:hover { border-color: var(--accent); text-decoration: none; }
+    .related-card-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .related-card-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--text-dim); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Synlig</a>
+  <div class="nav-links">
+    <a href="/">Hjem</a>
+    <a href="/guide">Guide</a>
+    <a href="/case/nordic-lithium">Klienter</a>
+    <a href="/blogg">Blogg</a>
+    <a href="mailto:hei@synligdigital.no" style="background:#6ee7b7;color:#0a0a0b;padding:0.4rem 1rem;border-radius:6px;font-weight:600;">Kontakt</a>
+  </div>
+</nav>
+
+<article>
+  <header class="article-header">
+    <nav class="breadcrumb" aria-label="Brødsmule-navigasjon">
+      <a href="/">Hjem</a>
+      <span>›</span>
+      <a href="/blogg">Blogg</a>
+      <span>›</span>
+      Er nettsida di klar for AI-agentar?
+    </nav>
+
+    <div class="article-meta">
+      <span class="meta-tag">Agent-readiness</span>
+      <span class="meta-tag">AEO</span>
+      <time class="meta-date" datetime="2026-04-18">18. april 2026</time>
+      <span class="meta-author">av <a href="/">Synlig</a></span>
+    </div>
+
+    <h1>Er nettsida di klar for AI-agentar? Vi køyrde Cloudflare sin nye scanner</h1>
+
+    <p class="article-lead">
+      Cloudflare lanserte denne veka <a href="https://isitagentready.com" target="_blank" rel="noopener">isitagentready.com</a> — ein gratis scanner som sjekkar om nettsida di kan brukast av AI-agentar. Vi køyrde han på vår eigen nettside. Vi fekk Level 1 av 5. Her er kva det betyr, kva vi fiksa, og kvifor dette kjem til å bety meir enn AEO-score aleine.
+    </p>
+  </header>
+
+  <div class="article-body">
+
+    <h2>AEO-synleg er ikkje det same som agent-klar</h2>
+
+    <p>Det er ein skilnad dei fleste ikkje har oppdaga enno: å dukke opp i ChatGPT-svar er ikkje det same som at ein AI-agent kan <em>bruke</em> nettsida di til noko.</p>
+
+    <p>AI-søk (AEO) handlar om at ein assistent les innhaldet ditt og siterer deg. AI-agentar er noko anna — dei er program som handlar på vegne av brukarar. Dei bookar timar, hentar produktinfo, sjekkar lager, samanliknar prisar. For at ein agent skal kunne gjere dette, treng nettsida din meir enn godt innhald. Ho treng dei rette protokollane.</p>
+
+    <p>Cloudflare — selskapet bak ein stor del av internettinfrastrukturen — lanserte 18. april 2026 eit gratis verktøy for å måle nøyaktig dette: <strong><a href="https://isitagentready.com" target="_blank" rel="noopener">isitagentready.com</a></strong>. Dei gav det live på Product Hunt, og det eksploderte.</p>
+
+    <p>Vi køyrde det på vår eigen nettside same dag. Resultatet var litt flautt — og svært lærerikt.</p>
+
+    <div class="callout callout-orange">
+      <p><strong>Ironien:</strong> Synlig Digital — eit AEO-byrå — fekk Level 1 av 5 på agent-readiness. Vi hadde god AEO-score. Vi var Agent-usynlege. Desse to tinga er ikkje det same.</p>
+    </div>
+
+    <h2>Kva scannar sjekkar (5 kategoriar, 5 nivå)</h2>
+
+    <p>Cloudflare-scannaren måler nettsida di på fem kategoriar og gjev deg eit nivå frå 1 til 5:</p>
+
+    <table class="level-table">
+      <thead>
+        <tr>
+          <th>Nivå</th>
+          <th>Namn</th>
+          <th>Kva det krev</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="level-badge level-1">Level 1</span></td>
+          <td style="color:var(--text);">Basic Web Presence</td>
+          <td>robots.txt, sitemap.xml — du er tilgjengeleg for crawlarar</td>
+        </tr>
+        <tr>
+          <td><span class="level-badge level-2">Level 2</span></td>
+          <td style="color:var(--text);">Bot-Aware</td>
+          <td>Content Signals i robots.txt, grunnleggjande bot-regler</td>
+        </tr>
+        <tr>
+          <td><span class="level-badge level-3">Level 3</span></td>
+          <td style="color:var(--text);">Protocol-Enabled</td>
+          <td>Markdown content negotiation, MCP Server Card, A2A Agent Card</td>
+        </tr>
+        <tr>
+          <td><span class="level-badge level-4">Level 4</span></td>
+          <td style="color:var(--text);">Authenticated</td>
+          <td>OAuth discovery, API-katalog — agentar kan logge inn</td>
+        </tr>
+        <tr>
+          <td><span class="level-badge level-5">Level 5</span></td>
+          <td style="color:var(--text);">Commerce-Ready</td>
+          <td>x402, UCP, ACP — agentar kan gjennomføre betalingar</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Dei fem kategoriane som vert sjekka er: <strong>Discoverability</strong> (robots.txt, sitemap, Link-headers), <strong>Content Accessibility</strong> (Markdown content negotiation), <strong>Bot Access Control</strong> (AI bot-regler, Content Signals), <strong>Protocol Discovery</strong> (MCP, A2A Agent Card, OAuth, API-katalog), og <strong>Commerce</strong> (x402, UCP, ACP betalingsprotokoll).</p>
+
+    <h2>Vår eigen scorecard: synligdigital.no</h2>
+
+    <p>Her er kva vi fekk då vi køyrde scannaren for første gong:</p>
+
+    <div class="scorecard">
+      <div class="scorecard-header">
+        <span class="scorecard-title">synligdigital.no — første scan (Level 1)</span>
+        <span class="level-badge level-1">Level 1 — Basic</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">robots.txt</span>
+        <span class="status-pass">✓ PASS</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">sitemap.xml</span>
+        <span class="status-pass">✓ PASS</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">Link headers</span>
+        <span class="status-fail">✗ FAIL</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">Markdown content negotiation</span>
+        <span class="status-fail">✗ FAIL</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">AI bot rules</span>
+        <span class="status-pass">✓ PASS</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">Content Signals (robots.txt)</span>
+        <span class="status-fail">✗ FAIL</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">Web Bot Auth</span>
+        <span class="status-neutral">— NEUTRAL</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">MCP Server Card</span>
+        <span class="status-fail">✗ FAIL</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">A2A Agent Card (/.well-known/agent-card.json)</span>
+        <span class="status-warn">⚠ UGYLDIG — mangler `supportedInterfaces`</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">Agent Skills</span>
+        <span class="status-fail">✗ FAIL</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">OAuth discovery</span>
+        <span class="status-fail">✗ FAIL</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">API Catalog</span>
+        <span class="status-fail">✗ FAIL</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">x402 / UCP / ACP (commerce)</span>
+        <span class="status-neutral">— NEUTRAL</span>
+      </div>
+    </div>
+
+    <p>Vi hadde robots.txt og sitemap. Alt anna var anten manglande eller defekt. Mest flautt: vi hadde allereie publisert ein A2A Agent Card — men han mangla eit påkravd felt (<code>supportedInterfaces</code>), og Cloudflare flagga han som ugyldig.</p>
+
+    <h2>To raske fixer: frå Level 1 til Level 2</h2>
+
+    <p>Det gode med Level 2 er at det er raskt å nå. Her er kva vi gjorde:</p>
+
+    <div class="fix-list">
+      <div class="fix-item">
+        <div class="fix-num">①</div>
+        <div class="fix-content">
+          <h4>Content Signals i robots.txt</h4>
+          <p>Cloudflare sin Content Signals-direktiv fortel AI-agentar kva dei har lov til å gjere med innhaldet ditt — kan dei trene på det, bruke det som input, inkludere det i søk? Éi linje i robots.txt løyser dette:</p>
+        </div>
+      </div>
+    </div>
+
+    <pre><code>Content-Signal: ai-train=no, search=yes, ai-input=no</code></pre>
+
+    <p>Dette seier: du kan ikkje trene på innhaldet vårt, men du kan inkludere oss i søkeresultat, og du kan ikkje bruke innhaldet som direkte input til AI-modellar. Ei bevisst og verdinøytral val for ein AEO-aktør.</p>
+
+    <div class="fix-list">
+      <div class="fix-item">
+        <div class="fix-num">②</div>
+        <div class="fix-content">
+          <h4>Fiksa A2A Agent Card</h4>
+          <p>Vi hadde allereie ein <code>/.well-known/agent-card.json</code>. Problemet var at ho mangla <code>supportedInterfaces</code>-feltet som A2A-spesifikasjonen krev. Etter å ha lagt til dette vart kortet gyldig, og scannaren kjenner oss att som ein aktør med agent-støtte.</p>
+        </div>
+      </div>
+    </div>
+
+    <p>Etter desse to endringane: <strong>Level 2 — Bot-Aware</strong>. Scannaren ser no at vi er bevisste på kva AI-botar har tilgang til, og at vi har erklært agent-grensesnitt.</p>
+
+    <div class="scorecard">
+      <div class="scorecard-header">
+        <span class="scorecard-title">synligdigital.no — etter fixer</span>
+        <span class="level-badge level-2">Level 2 — Bot-Aware</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">robots.txt</span>
+        <span class="status-pass">✓ PASS</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">sitemap.xml</span>
+        <span class="status-pass">✓ PASS</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">AI bot rules</span>
+        <span class="status-pass">✓ PASS</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">Content Signals (robots.txt)</span>
+        <span class="status-pass">✓ PASS</span>
+      </div>
+      <div class="scorecard-row">
+        <span class="scorecard-check">A2A Agent Card</span>
+        <span class="status-pass">✓ PASS</span>
+      </div>
+    </div>
+
+    <h2>Kva krevst for Level 3?</h2>
+
+    <p>Level 3 — Protocol-Enabled — er der det begynner å bli interessant, men òg der det krev meir arbeid. Den viktigaste terskelen er <strong>Markdown content negotiation</strong>.</p>
+
+    <p>Det betyr at nettsida di må svare med <code>text/markdown</code>-format når ein agent ber om det via <code>Accept</code>-headeren. Dei fleste nettsider — inkludert vår — leverer HTML til alle, uavhengig av kven som spør. Agentar foretrekker Markdown: det er lettare å parse, kortare å prosessere, og inneheld ikkje masse navigasjonsskrot.</p>
+
+    <p>For å nå Level 3 treng du i tillegg ein gyldig <strong>MCP Server Card</strong> (Model Context Protocol — ein standard for å eksponere verktøy og data til AI-agentar). Dette er eit eige prosjekt, ikkje ein 15-minutters fix.</p>
+
+    <div class="callout callout-blue">
+      <p><strong>Nivåoversikt i praksis:</strong> Level 1-2 er hygienefaktorar — sjekkliste-punkt dei fleste kan fullføre på ein time. Level 3-5 krev arkitekturval. Ikkje alle nettsider treng Level 5. Ein tannlege-nettside treng ikkje ta imot AI-agentbetaling — men han bør minst vere Level 2.</p>
+    </div>
+
+    <h2>Kvifor dette kjem til å bety meir enn AEO-score</h2>
+
+    <p>HubSpot måler om ChatGPT siterer deg. Cloudflare måler om ein AI-agent kan <em>gjere noko</em> med nettsida di. Dette er ikkje det same problemet.</p>
+
+    <p>AI-assistentar er i ferd med å bli agentiske. Det betyr at dei ikkje berre svarar på spørsmål — dei utfører oppgåver. Book ein legetime. Bestill eit produkt. Hent prislister. Sjekk om eit firma har ledig kapasitet.</p>
+
+    <p>Viss nettsida di ikkje er agent-klar, kan desse agentane ikkje bruke deg — sjølv om dei veit om deg. Du er synleg, men utilgjengeleg. Det er som å ha ei god bedrift utan telefonnummer.</p>
+
+    <p>Talet 93 % av AI-søk som endar utan klikk er allereie alarmerande for SEO-tradisjonalistar. Men det neste skiftet er enda meir dramatisk: AI-agentar vil ikkje eingong spørje — dei vil berre velje den leverandøren dei teknisk sett har tilgang til.</p>
+
+    <div class="callout">
+      <p><strong>Vår vurdering:</strong> Dei fleste norske nettsider scorar Level 1 på Cloudflare sin scanner. Mange trur dei er godt optimaliserte fordi dei har god SEO og nokolunde AEO-score. Agent-readiness er eit tredje lag som ingen i Noreg systematisk jobbar med enno — det er eit vindu som er ope akkurat no.</p>
+    </div>
+
+    <h2>Kva du bør gjere no</h2>
+
+    <p>To steg, i rekkjefølgje:</p>
+
+    <p><strong>Steg 1:</strong> Køyr <a href="https://sjekk.synligdigital.no" target="_blank" rel="noopener">sjekk.synligdigital.no</a> for å sjå AEO-scoren din — kor synleg er du for ChatGPT, Perplexity og Google AI i dag?</p>
+
+    <p><strong>Steg 2:</strong> Køyr <a href="https://sjekk.synligdigital.no/ai" target="_blank" rel="noopener">sjekk.synligdigital.no/ai</a> for å sjå agent-readiness-nivået ditt — kan AI-agentar faktisk bruke nettsida di? Vi har bygd vår eigen norske versjon av agent-beredskapsscannaren, spesialtilpassa norske bedrifter.</p>
+
+    <p>Viss du er under 75 på AEO-score <em>og</em> Level 1 på agent-readiness, har du to separate problem — og begge er løysbare. AEO-scoren kan vi fikse på veker. Agent-readiness Level 2 kan vi fikse på ein dag.</p>
+
+    <p>Level 3+ krev ein arkitektonisk samtale om kva du faktisk vil at agentar skal kunne gjere på nettsida di. Det er ei strategisk avgjerd, ikkje ein teknisk feil.</p>
+
+    <div class="cta-block">
+      <h2>Kor klar er nettsida di?</h2>
+      <p>Sjekk begge dimensjonane — AEO-synlegheit og agent-readiness. Gratis. På under eit minutt kvar.</p>
+      <a href="https://sjekk.synligdigital.no/" class="cta-btn">Sjekk AEO-score →</a>
+      <a href="https://sjekk.synligdigital.no/ai" class="cta-btn-secondary">Sjekk agent-readiness →</a>
+    </div>
+
+    <div class="related-posts">
+      <h3>Les også</h3>
+      <div class="related-grid">
+        <a href="/blogg/hva-er-aeo" class="related-card">
+          <div class="related-card-tag">Guide</div>
+          <div class="related-card-title">Hva er AEO? En komplett guide til Answer Engine Optimization</div>
+        </a>
+        <a href="/blogg/slik-blir-du-synlig-i-chatgpt" class="related-card">
+          <div class="related-card-tag">Guide</div>
+          <div class="related-card-title">Slik blir bedriften din synlig i ChatGPT og AI-søk</div>
+        </a>
+        <a href="/blogg/aeo-i-norge-2026" class="related-card">
+          <div class="related-card-tag">Analyse</div>
+          <div class="related-card-title">AEO i Norge 2026: Hvem vinner AI-synlighetskampen?</div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</article>
+
+<footer>
+  <p>© 2026 Synlig — <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> — Stavanger, Norge</p>
+  <p style="margin-top:0.5rem;"><a href="/">Hjem</a> · <a href="/blogg">Blogg</a> · <a href="/guide">Guide</a> · <a href="/rapport/state-of-aeo-2026">Rapport</a></p>
+</footer>
+
+</body>
+</html>

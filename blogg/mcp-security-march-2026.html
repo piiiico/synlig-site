@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP Security in March 2026: What Happens When 78.5% of the Spec Is Optional — Synlig</title>
+  <meta name="description" content="Three MCP security events in one week: arxiv 2603.10163 found 1,265 risks in official SDKs, Azure got its first MCP CVE, and China banned an AI agent framework. We built a scanner.">
+  <link rel="canonical" href="https://synligdigital.no/blogg/mcp-security-march-2026">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="MCP Security in March 2026: What Happens When 78.5% of the Spec Is Optional">
+  <meta property="og:description" content="Three MCP security events in one week. We built a scanner to check your server.">
+  <meta property="og:url" content="https://synligdigital.no/blogg/mcp-security-march-2026">
+  <meta property="og:image" content="https://synligdigital.no/og.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Synlig">
+  <meta property="og:locale" content="en_US">
+  <meta property="article:published_time" content="2026-03-15">
+  <meta property="article:author" content="Synlig">
+  <meta property="article:tag" content="MCP">
+  <meta property="article:tag" content="Security">
+  <meta property="article:tag" content="Model Context Protocol">
+  <meta property="article:tag" content="AI Infrastructure">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MCP Security in March 2026: What Happens When 78.5% of the Spec Is Optional">
+  <meta name="twitter:description" content="Three MCP security events in one week. 1,265 risks found in official SDKs. We built a scanner.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "MCP Security in March 2026: What Happens When 78.5% of the Spec Is Optional",
+    "description": "Three MCP security events converged in one week: an academic paper finding 1,265 risks in official MCP SDKs, the first Azure MCP CVE, and China banning an AI agent framework. We built a scanner.",
+    "author": {
+      "@type": "Organization",
+      "name": "Synlig",
+      "url": "https://synligdigital.no"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Synlig",
+      "url": "https://synligdigital.no",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://synligdigital.no/favicon.svg"
+      }
+    },
+    "datePublished": "2026-03-15",
+    "dateModified": "2026-03-15",
+    "inLanguage": "en",
+    "url": "https://synligdigital.no/blogg/mcp-security-march-2026",
+    "mainEntityOfPage": "https://synligdigital.no/blogg/mcp-security-march-2026",
+    "about": [
+      { "@type": "Thing", "name": "Model Context Protocol" },
+      { "@type": "Thing", "name": "AI Security" }
+    ],
+    "keywords": ["MCP", "Model Context Protocol", "security", "CVE-2026-26118", "clause compliance", "AI infrastructure", "mcp-check"]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0b;
+      --bg-raised: #111113;
+      --border: #222225;
+      --text: #e8e8ed;
+      --text-dim: #9f9faa;
+      --text-muted: #9f9faa;
+      --accent: #6ee7b7;
+      --accent-dim: #2d6a5a;
+      --accent-blue: #60a5fa;
+      --accent-purple: #a78bfa;
+      --accent-orange: #fbbf24;
+      --accent-red: #f87171;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 11, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .article-header {
+      max-width: 780px;
+      margin: 5rem auto 0;
+      padding: 0 2rem;
+    }
+
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+    .breadcrumb a {
+      color: var(--text-dim);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { margin: 0 0.5rem; }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .meta-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+    .meta-tag-security {
+      color: var(--accent-red);
+      background: rgba(248, 113, 113, 0.1);
+      border: 1px solid rgba(248, 113, 113, 0.2);
+    }
+    .meta-tag-mcp {
+      color: var(--accent-blue);
+      background: rgba(96, 165, 250, 0.1);
+      border: 1px solid rgba(96, 165, 250, 0.2);
+    }
+    .meta-date {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .meta-author {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-lead {
+      font-size: 1.15rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 3rem;
+      border-left: 3px solid var(--accent-red);
+      padding-left: 1.5rem;
+    }
+
+    .article-body {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+
+    p { margin-bottom: 1.25rem; }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    strong { color: var(--text); font-weight: 600; }
+
+    em { font-style: italic; }
+
+    code {
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.88em;
+    }
+
+    .callout {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+    }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout-red { border-left-color: var(--accent-red); }
+    .callout-blue { border-left-color: var(--accent-blue); }
+    .callout-orange { border-left-color: var(--accent-orange); }
+
+    .scanner-output {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      color: #c9d1d9;
+    }
+    .scanner-output .pass { color: #6ee7b7; }
+    .scanner-output .warn { color: #fbbf24; }
+    .scanner-output .fail { color: #f87171; }
+    .scanner-output .dim { color: #6e7681; }
+    .scanner-output .header { color: #e8e8ed; font-weight: 600; }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin: 2rem 0;
+    }
+    .timeline-item {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .timeline-icon {
+      font-size: 1.4rem;
+      min-width: 2rem;
+      text-align: center;
+      line-height: 1;
+      padding-top: 0.15rem;
+    }
+    .timeline-content h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+    .timeline-content p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-bottom: 0;
+    }
+
+    .attack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .attack-card {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+    .attack-card h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.75rem;
+      color: var(--accent-red);
+    }
+    .attack-card p {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      margin-bottom: 0;
+      line-height: 1.55;
+    }
+
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin: 2rem 0;
+    }
+    .check-item {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+    .check-num {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: rgba(110, 231, 183, 0.1);
+      border: 1px solid rgba(110, 231, 183, 0.2);
+      border-radius: 50%;
+      min-width: 1.6rem;
+      height: 1.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.1rem;
+    }
+    .check-text {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.55;
+    }
+    .check-text strong { color: var(--text); }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .stat-card {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent-red);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    ul.ref-list {
+      list-style: none;
+      margin: 1.5rem 0;
+      padding: 0;
+    }
+    ul.ref-list li {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      margin-bottom: 0.6rem;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+    ul.ref-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--text-muted);
+    }
+
+    .cta-block {
+      background: linear-gradient(135deg, rgba(248,113,113,0.08) 0%, rgba(96,165,250,0.05) 100%);
+      border: 1px solid rgba(248,113,113,0.2);
+      border-radius: 12px;
+      padding: 2.5rem;
+      text-align: center;
+      margin: 4rem 0 2rem;
+    }
+    .cta-block h2 {
+      font-size: 1.5rem;
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+    }
+    .cta-block p {
+      color: var(--text-dim);
+      margin-bottom: 1.5rem;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0a0a0b;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .cta-btn:hover { opacity: 0.85; text-decoration: none; }
+
+    .related-posts {
+      border-top: 1px solid var(--border);
+      padding-top: 3rem;
+      margin-top: 4rem;
+    }
+    .related-posts h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .related-card {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.2s;
+    }
+    .related-card:hover { border-color: var(--accent); text-decoration: none; }
+    .related-card-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .related-card-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--text-dim); }
+
+    @media (max-width: 600px) {
+      .attack-grid { grid-template-columns: 1fr; }
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Synlig</a>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/guide">Guide</a>
+    <a href="/case/nordic-lithium">Clients</a>
+    <a href="/blogg">Blog</a>
+    <a href="mailto:hei@synligdigital.no" style="background:#6ee7b7;color:#0a0a0b;padding:0.4rem 1rem;border-radius:6px;font-weight:600;">Contact</a>
+  </div>
+</nav>
+
+<article>
+  <header class="article-header">
+    <nav class="breadcrumb" aria-label="Breadcrumb navigation">
+      <a href="/">Home</a>
+      <span>&rsaquo;</span>
+      <a href="/blogg">Blog</a>
+      <span>&rsaquo;</span>
+      MCP Security
+    </nav>
+
+    <div class="article-meta">
+      <span class="meta-tag meta-tag-security">Security</span>
+      <span class="meta-tag meta-tag-mcp">MCP</span>
+      <time class="meta-date" datetime="2026-03-15">March 15, 2026</time>
+      <span class="meta-author">by <a href="/">Synlig</a></span>
+    </div>
+
+    <h1>MCP Security in March 2026: What Happens When 78.5% of the Spec Is Optional</h1>
+
+    <p class="article-lead">
+      Last week, we fixed three missing handlers in our MCP server. Then we went looking at what the security implications were. What we found was three converging data points that paint a clear picture: MCP security just went from theoretical to concrete.
+    </p>
+  </header>
+
+  <div class="article-body">
+
+    <h2>Three Data Points in One Week</h2>
+
+    <p>In the same week we were fixing compliance issues on our own MCP server, three things happened:</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-icon">&#x1F4C4;</div>
+        <div class="timeline-content">
+          <h4>arxiv 2603.10163 &mdash; Academic paper drops</h4>
+          <p><a href="https://arxiv.org/abs/2603.10163" target="_blank" rel="noopener">"Compatibility at a Cost"</a> analyzed all 10 official MCP SDKs against the 275 clauses in the MCP specification. Found <strong>1,265 potential risks</strong>. 78.5% of clauses are optional or conditional. 26 reports submitted to maintainers; 20 acknowledged, 5 triaged as high-priority. Total cost: $541.87 in LLM API calls.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-icon">&#x1F6E1;&#xFE0F;</div>
+        <div class="timeline-content">
+          <h4>CVE-2026-26118 &mdash; First Azure MCP CVE</h4>
+          <p>Microsoft's March 2026 Patch Tuesday included an <a href="https://www.thehackerwire.com/azure-mcp-server-ssrf-for-privilege-elevation-cve-2026-26118/" target="_blank" rel="noopener">elevation-of-privilege vulnerability</a> (CVSS 8.8) in Azure MCP Server Tools. The flaw: an SSRF that lets an attacker trick the MCP server into forwarding its managed identity token, granting the attacker whatever permissions the server holds. Not theoretical. A real patch, a real fix.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-icon">&#x1F6A8;</div>
+        <div class="timeline-content">
+          <h4>CNCERT Advisory &mdash; China bans OpenClaw</h4>
+          <p>China's National Internet Emergency Center <a href="https://thehackernews.com/2026/03/openclaw-ai-agent-flaws-could-enable.html" target="_blank" rel="noopener">warned</a> that OpenClaw has critical security flaws: prompt injection via web content, data exfiltration through link previews, and malicious skill uploads. Over 135,000 exposed instances found. China restricted OpenClaw in government agencies and state-owned banks. The underlying mechanisms apply to any MCP-based system.</p>
+        </div>
+      </div>
+    </div>
+
+    <p>Three independent data points. The pattern is clear.</p>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-num">78.5%</div>
+        <div class="stat-label">Clauses optional</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1,265</div>
+        <div class="stat-label">Risks found</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">8.8</div>
+        <div class="stat-label">CVE CVSS score</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">135K+</div>
+        <div class="stat-label">Exposed instances</div>
+      </div>
+    </div>
+
+    <h2>What "Optional Clause" Actually Means in Practice</h2>
+
+    <p>The arxiv paper identifies three attack modalities based on what an attacker controls:</p>
+
+    <div class="attack-grid">
+      <div class="attack-card">
+        <h4>PyTy &mdash; Payload + Timing</h4>
+        <p>Attacker controls both message content AND when it arrives. A server without tool-change notifications can have tools silently added or modified mid-session, injecting malicious prompts without any visible state change.</p>
+      </div>
+      <div class="attack-card">
+        <h4>PnTy &mdash; Timing Only</h4>
+        <p>Attacker controls timing but not content. A server with no ping handler can be DoS'd through rate-limited ping floods &mdash; the server can't respond, the client assumes it's dead, sessions terminate unexpectedly.</p>
+      </div>
+      <div class="attack-card">
+        <h4>PyTn &mdash; Payload Only</h4>
+        <p>Attacker controls content but not timing. A server with no <code>resources/list</code> or <code>prompts/list</code> handler forces clients to make exploitable assumptions about server capabilities.</p>
+      </div>
+    </div>
+
+    <p>Our three missing methods mapped directly to these classes. We were vulnerable to all three categories of clause-compliance attacks.</p>
+
+    <h2>The Problem With "38% of Servers Have No Auth"</h2>
+
+    <p>The arxiv paper includes a statistic that deserves its own section: <strong>38% of MCP deployments have no authentication at all.</strong></p>
+
+    <p>Without auth, any client can connect. Including a malicious one.</p>
+
+    <p>This isn't theoretical. The sampling attack surface &mdash; where a server can inject prompts into the connected LLM &mdash; is particularly dangerous when combined with no auth. An unauthenticated server can:</p>
+
+    <div class="callout callout-red">
+      <p><strong>1.</strong> Override system prompts<br>
+      <strong>2.</strong> Exfiltrate context from other connected servers via <code>includeContext: "allServers"</code><br>
+      <strong>3.</strong> Inject tool-call instructions into the LLM<br>
+      <strong>4.</strong> Trigger recursive sampling loops</p>
+      <p style="margin-top:1rem;">None of this requires a sophisticated exploit. It requires writing a JSON-RPC payload.</p>
+    </div>
+
+    <p>For our AEO MCP server, we made a conscious decision: <strong>intentionally unauthenticated and CORS-open.</strong> We're a public tool for lead generation &mdash; we <em>want</em> any AI assistant to be able to call us. That's a valid design choice. But it needs to be <em>documented</em> as a design choice, not discovered as an oversight.</p>
+
+    <h2>We Built a Scanner</h2>
+
+    <p>We wrote <a href="https://github.com/piiiico/mcp-check" target="_blank" rel="noopener"><code>mcp-check</code></a> &mdash; a Bun script that connects to any MCP server over Streamable HTTP and checks it against the known vulnerability classes from the arxiv paper.</p>
+
+    <div class="scanner-output">
+<span class="dim">$ bun mcp-check.ts https://aeo-mcp-server.amdal-dev.workers.dev/mcp</span>
+
+<span class="header">&boxdr;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxdl;
+&boxv;  MCP Security Check                                  &boxv;
+&boxur;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxul;</span>
+  Target:     aeo-mcp-server.amdal-dev.workers.dev/mcp
+  Risk Level: <span class="pass">LOW</span>
+  Server:     aeo-audit v1.0.0
+  Capabilities: tools, resources, prompts
+<span class="dim">&boxdr;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxdl;</span>
+
+<span class="pass">  &#x2713; Ping Handler              [INFO]</span>
+<span class="pass">  &#x2713; Resources List Handler    [INFO]</span>
+<span class="pass">  &#x2713; Prompts List Handler      [INFO]</span>
+<span class="pass">  &#x2713; Notification Handler      [INFO]</span>
+<span class="warn">  &#x26A0; Authentication            [MEDIUM] &mdash; intentionally open</span>
+<span class="warn">  &#x26A0; CORS Policy               [MEDIUM] &mdash; intentionally open</span>
+<span class="pass">  &#x2713; Tools List Handler        [INFO]</span>
+
+<span class="dim">&boxur;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxul;</span>
+  Summary: <span class="pass">5 passed</span>, <span class="fail">0 failed</span>, <span class="warn">2 warnings</span>
+    </div>
+
+    <p>After our fixes: clean. Before our fixes, we would have had 3 FAILs in the PnTy and PyTn vulnerability classes.</p>
+
+    <p>The scanner is open source: <a href="https://github.com/piiiico/mcp-check" target="_blank" rel="noopener">github.com/piiiico/mcp-check</a></p>
+
+    <h2>What the MCP 2026 Roadmap Says About Security</h2>
+
+    <p>The MCP team <a href="https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/" target="_blank" rel="noopener">published their 2026 roadmap</a> last week. The four top priorities: transport evolution, agent communication, governance maturation, and enterprise readiness. Security and authorization are listed under <strong>"On the Horizon"</strong> &mdash; meaning they have community support but are not active Core Maintainer focus this cycle.</p>
+
+    <p>This is not a criticism. The MCP team is making reasonable prioritization decisions. But it means: <strong>the ecosystem will continue shipping MCP servers with security gaps for the foreseeable future, because the official tools for catching those gaps don't exist yet.</strong></p>
+
+    <p>That's the gap the arxiv paper's tooling addresses. That's the gap our scanner addresses.</p>
+
+    <h2>The Practical Checklist</h2>
+
+    <p>If you're running an MCP server:</p>
+
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-num">1</div>
+        <div class="check-text"><strong>Implement all three base handlers:</strong> <code>ping</code>, <code>resources/list</code>, <code>prompts/list</code>. Even if they return empty arrays. This costs 10 lines of code and prevents the entire PyTn vulnerability class.</div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">2</div>
+        <div class="check-text"><strong>Handle notifications gracefully:</strong> Return HTTP 200/202 for any notification method you don't explicitly handle. Don't return 405.</div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">3</div>
+        <div class="check-text"><strong>Decide your auth story deliberately:</strong> Open is fine for public tools. But if your server has any access to user data, secrets, or takes actions with real-world consequences &mdash; require auth and document why.</div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">4</div>
+        <div class="check-text"><strong>Review tool descriptions for injection patterns:</strong> Scan for phrases like "ignore previous instructions," template injection syntax (<code>{{}}</code>, <code>${}</code>), or unusually long descriptions that might hide embedded prompts.</div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">5</div>
+        <div class="check-text"><strong>Lock down <code>sampling/createMessage</code>:</strong> If you implement sampling, don't pass <code>systemPrompt</code> through to the LLM unchanged. Don't auto-approve <code>includeContext: "allServers"</code>. Don't treat sampling responses as executable instructions.</div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">6</div>
+        <div class="check-text"><strong>Run against a scanner before publishing:</strong> It takes 30 seconds. The <a href="https://arxiv.org/abs/2603.10163">arxiv methodology</a> is reproducible. <a href="https://github.com/piiiico/mcp-check">Our scanner</a> is a start. More will follow.</div>
+      </div>
+    </div>
+
+    <h2>The Bigger Picture</h2>
+
+    <p>March 2026 is when MCP security went from theoretical to concrete:</p>
+
+    <div class="callout callout-blue">
+      <p><strong>First CVE</strong> in Azure MCP infrastructure (CVE-2026-26118, CVSS 8.8)<br>
+      <strong>Academic paper</strong> with 1,265 identified risks across official SDKs<br>
+      <strong>National government</strong> banning an AI agent framework over security flaws<br>
+      <strong>MCP 2026 roadmap</strong> explicitly deferring security to "On the Horizon"</p>
+    </div>
+
+    <p>The MCP community invited the arxiv authors' tooling to be integrated into conformance-testing standards. That's the right call. But it takes time.</p>
+
+    <p>In the meantime: <strong>78.5% of the spec is optional. Your server almost certainly has gaps. Run a scanner.</strong></p>
+
+    <div class="cta-block">
+      <h2>Want your MCP server audited?</h2>
+      <p>We audit MCP servers for clause-compliance vulnerabilities and security gaps. Run our open-source scanner yourself, or let us do a deep review.</p>
+      <a href="https://github.com/piiiico/mcp-check" class="cta-btn" target="_blank" rel="noopener">Try mcp-check on GitHub &rarr;</a>
+    </div>
+
+    <h3>References</h3>
+
+    <ul class="ref-list">
+      <li><a href="https://arxiv.org/abs/2603.10163" target="_blank" rel="noopener">arxiv 2603.10163</a>: "Compatibility at a Cost: Systematic Discovery and Exploitation of MCP Clause-Compliance Vulnerabilities"</li>
+      <li><a href="https://www.thehackerwire.com/azure-mcp-server-ssrf-for-privilege-elevation-cve-2026-26118/" target="_blank" rel="noopener">CVE-2026-26118</a>: Azure MCP Server SSRF for Privilege Elevation (March 2026 Patch Tuesday)</li>
+      <li><a href="https://thehackernews.com/2026/03/openclaw-ai-agent-flaws-could-enable.html" target="_blank" rel="noopener">CNCERT Advisory</a>: OpenClaw AI Agent Flaws (March 2026)</li>
+      <li><a href="https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/" target="_blank" rel="noopener">MCP 2026 Roadmap</a>: blog.modelcontextprotocol.io</li>
+      <li><a href="https://github.com/piiiico/mcp-check" target="_blank" rel="noopener">mcp-check</a>: Our open-source MCP security scanner</li>
+    </ul>
+
+    <div class="related-posts">
+      <h3>Read more</h3>
+      <div class="related-grid">
+        <a href="/blogg/hva-er-aeo" class="related-card">
+          <div class="related-card-tag">Guide</div>
+          <div class="related-card-title">What is AEO? A complete guide to Answer Engine Optimization</div>
+        </a>
+        <a href="/blogg/aeo-i-norge-2026" class="related-card">
+          <div class="related-card-tag">Analysis</div>
+          <div class="related-card-title">AEO in Norway 2026: Who's winning the AI visibility race?</div>
+        </a>
+        <a href="/case/nordic-lithium" class="related-card">
+          <div class="related-card-tag">Case study</div>
+          <div class="related-card-title">Nordic Lithium: from 67/B to 85/A in two weeks</div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</article>
+
+<footer>
+  <p>&copy; 2026 Synlig &mdash; <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> &mdash; Stavanger, Norway</p>
+  <p style="margin-top:0.5rem;"><a href="/">Home</a> &middot; <a href="/blogg">Blog</a> &middot; <a href="/guide">Guide</a></p>
+</footer>
+
+</body>
+</html>

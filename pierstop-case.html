@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pierstop: Fra 52/D til 76/B — AEO case study — Synlig</title>
+  <meta name="description" content="Hvordan Norges ledende cruisehavn-guide økte sin AI-synlighetsscore fra 52/D til 76/B. Perfekt infrastruktur, manglende schema — en dokumentert AEO case study.">
+  <link rel="canonical" href="https://synligdigital.no/case/pierstop">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Pierstop: Fra 52/D til 76/B — AEO case study">
+  <meta property="og:description" content="Norges mest komplette cruisehavn-guide var usynlig for ChatGPT og Perplexity. Perfekt infrastruktur, men ingen schema-signaler. Slik fikset vi det.">
+  <meta property="og:url" content="https://synligdigital.no/case/pierstop">
+  <meta property="og:image" content="https://synligdigital.no/og.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Synlig">
+  <meta property="article:published_time" content="2026-03-16">
+  <meta property="article:author" content="Synlig">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Pierstop: Fra 52/D til 76/B — perfekt grunnmur, manglende skilt",
+    "description": "Dokumentert case study: Hvordan Norges ledende cruisehavn-guide økte sin AI-synlighetsscore med 24 poeng gjennom Answer Engine Optimization.",
+    "author": {
+      "@type": "Organization",
+      "name": "Synlig",
+      "url": "https://synligdigital.no"
+    },
+    "datePublished": "2026-03-16",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Synlig",
+      "url": "https://synligdigital.no"
+    },
+    "inLanguage": "nb-NO",
+    "url": "https://synligdigital.no/case/pierstop",
+    "about": {
+      "@type": "Thing",
+      "name": "Answer Engine Optimization",
+      "description": "Optimalisering av digitalt innhold for AI-assistenter som ChatGPT, Perplexity og Google AI Overview"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Hva er AEO-score?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AEO-score (Answer Engine Optimization-score) er et mål fra 0-100 som viser hvor godt en nettside er tilpasset AI-søkemotorer. Scoren baserer seg på fem kategorier: schema.org-markup, teknisk tilgjengelighet for AI-crawlere, innholdskvalitet, meta-data og AI-synlighetssignaler. A=90+, B=75-89, C=60-74, D=45-59, F=under 45."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Hva blokkerte Pierstops AI-synlighet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pierstop hadde perfekt teknisk infrastruktur (20/20), men manglet kritiske schema-signaler. Ingen AggregateRating på destinasjonssider, ingen sameAs-lenker for organisasjonsverifisering, og ingen LocalBusiness-schema for geografisk relevans. AI-motorer visste ikke hvem Pierstop var eller at de hadde hundrevis av anmeldelser."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Hvor mye forbedret Pierstops AEO-score seg?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pierstop gikk fra 52/D (baseline uten AEO) til 76/B etter første runde forbedringer — en økning på 24 poeng. Med planlagt schema-sprint er målet 92+/A. Regresjonen fra 76/B til 59/C da JSON-LD ble ødelagt viste også hvor skjørt schema er uten riktig infrastruktur."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Hva er typisk for reiselivsbransjen og AEO?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Reiselivsaktører har ofte god teknisk infrastruktur og rikt innhold, men mangler strukturerte data som AI-motorer trenger. Pierstop hadde 176 destinasjonssider, llms.txt, og Cloudflare CDN — men uten schema kunne ikke ChatGPT eller Perplexity sitere dem med troverdighet."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0b;
+      --bg-raised: #111113;
+      --border: #222225;
+      --text: #e8e8ed;
+      --text-dim: #9f9faa;
+      --text-muted: #9f9faa;
+      --accent: #6ee7b7;
+      --accent-dim: #2d6a5a;
+      --red: #f87171;
+      --red-dim: #6a2d2d;
+      --yellow: #fbbf24;
+      --yellow-dim: #6a5a2d;
+      --blue: #60a5fa;
+      --mono: 'SF Mono', 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+      --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+    }
+
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container { max-width: 640px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+    main { flex: 1; padding: 80px 0 60px; }
+
+    .nav { margin-bottom: 56px; }
+    .nav a {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .nav a:hover { color: var(--text-dim); }
+    .nav .sep { color: var(--text-muted); margin: 0 8px; }
+
+    .article-header { margin-bottom: 48px; }
+    .article-date {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .article-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      background: var(--bg-raised);
+      border: 1px solid var(--accent-dim);
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-left: 8px;
+    }
+    .article-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .article-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .article-body h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 40px 0 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .article-body h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 28px 0 12px;
+      color: var(--text-dim);
+    }
+
+    .article-body p {
+      margin-bottom: 16px;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+
+    .article-body ul, .article-body ol {
+      margin: 0 0 16px 20px;
+      font-size: 0.92rem;
+    }
+
+    .article-body li {
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .article-body code {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    /* Score transformation visual */
+    .score-transform {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 16px;
+      align-items: center;
+      margin: 32px 0;
+      padding: 24px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .score-box {
+      text-align: center;
+    }
+
+    .score-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      font-family: var(--mono);
+      line-height: 1;
+    }
+
+    .score-grade {
+      font-size: 0.75rem;
+      font-family: var(--mono);
+      margin-top: 6px;
+      opacity: 0.7;
+    }
+
+    .score-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .score-arrow {
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+
+    .score-before .score-number { color: var(--red); }
+    .score-after .score-number { color: var(--accent); }
+
+    .score-delta {
+      text-align: center;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      grid-column: 1 / -1;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .score-delta strong { color: var(--accent); }
+
+    /* Timeline steps */
+    .phase-timeline {
+      margin: 24px 0;
+    }
+
+    .phase-step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .phase-step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .phase-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .phase-dot-1 { background: rgba(251,191,36,0.15); border: 1px solid var(--yellow-dim); color: var(--yellow); }
+    .phase-dot-2 { background: rgba(110,231,183,0.15); border: 1px solid var(--accent-dim); color: var(--accent); }
+    .phase-dot-3 { background: rgba(96,165,250,0.15); border: 1px solid rgba(96,165,250,0.3); color: var(--blue); }
+
+    .phase-content {}
+    .phase-title {
+      font-weight: 600;
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+    }
+    .phase-details {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .phase-result {
+      margin-top: 6px;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+    }
+
+    /* Finding block */
+    .finding {
+      margin: 20px 0;
+      padding: 16px 20px;
+      border-radius: 6px;
+      border-left: 3px solid;
+    }
+
+    .finding-critical {
+      background: rgba(248,113,113,0.06);
+      border-color: var(--red);
+    }
+
+    .finding-medium {
+      background: rgba(251,191,36,0.06);
+      border-color: var(--yellow);
+    }
+
+    .finding-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      opacity: 0.7;
+    }
+
+    .finding-critical .finding-label { color: var(--red); }
+    .finding-medium .finding-label { color: var(--yellow); }
+
+    .finding h3 {
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin: 0 0 6px;
+      color: var(--text);
+    }
+
+    .finding p {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      margin: 0;
+    }
+
+    /* Quote block */
+    .quote-block {
+      margin: 32px 0;
+      padding: 20px 24px;
+      border-radius: 6px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+    }
+
+    .quote-text {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .quote-attribution {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* Stat grid */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .stat-item {
+      padding: 16px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-family: var(--mono);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat-value.bad { color: var(--red); }
+
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    /* Score history */
+    .score-history {
+      margin: 24px 0;
+      padding: 20px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .score-history-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      font-size: 0.82rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .score-history-row:last-child { border-bottom: none; }
+
+    .score-history-date {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .score-history-score {
+      font-family: var(--mono);
+      font-weight: 700;
+      width: 50px;
+      flex-shrink: 0;
+    }
+
+    .score-history-note {
+      color: var(--text-dim);
+    }
+
+    .regression { color: var(--red); }
+
+    /* CTA block */
+    .cta-block {
+      margin: 48px 0 0;
+      padding: 28px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .cta-block h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .cta-block p {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0a0a0b;
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 10px 24px;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-bottom: 10px;
+    }
+
+    .cta-btn:hover { opacity: 0.9; }
+
+    .cta-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      margin-top: 60px;
+    }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: var(--text-dim); }
+
+    /* Insight box */
+    .insight-box {
+      margin: 24px 0;
+      padding: 16px 20px;
+      background: rgba(110,231,183,0.06);
+      border: 1px solid var(--accent-dim);
+      border-radius: 6px;
+    }
+
+    .insight-box p {
+      font-size: 0.85rem;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .insight-box strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<nav style="background:rgba(10,10,11,0.92);backdrop-filter:blur(12px);border-bottom:1px solid #222225;padding:1rem 2rem;position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;max-width:100%;">
+  <a href="/" style="font-size:1.15rem;font-weight:700;color:#6ee7b7;text-decoration:none;">Synlig</a>
+  <div style="display:flex;gap:2rem;">
+    <a href="/" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Hjem</a>
+    <a href="/guide" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Guide</a>
+    <a href="/case/pierstop" style="color:#6ee7b7;text-decoration:none;font-size:0.9rem;">Klienter</a>
+    <a href="/blogg" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Blogg</a>
+    <a href="mailto:hei@synligdigital.no" style="background:#6ee7b7;color:#0a0a0b;padding:0.4rem 1rem;border-radius:6px;font-weight:600;text-decoration:none;font-size:0.9rem;">Kontakt</a>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+
+    <nav class="nav" style="margin-top:1rem;">
+      <a href="/">Synlig</a>
+      <span class="sep">/</span>
+      <a href="/case/nordic-lithium">Case studies</a>
+      <span class="sep">/</span>
+      Pierstop
+    </nav>
+
+    <header class="article-header">
+      <div class="article-date">
+        16. mars 2026
+        <span class="article-tag">Case study</span>
+        <span class="article-tag">Reiseliv</span>
+      </div>
+      <h1 class="article-title">Pierstop: Perfekt grunnmur, ingen skilt for AI</h1>
+      <p class="article-subtitle">
+        Norges mest komplette guide for cruisepassasjerer hadde 176 destinasjonssider, Cloudflare CDN og <code>llms.txt</code> &mdash; men var nesten usynlig for ChatGPT og Perplexity. Problemet var ikke teknisk. Det var schema.
+      </p>
+    </header>
+
+    <!-- Score transform visual -->
+    <div class="score-transform">
+      <div class="score-box score-before">
+        <div class="score-number">52</div>
+        <div class="score-grade">Karakter D</div>
+        <div class="score-label">Baseline</div>
+      </div>
+      <div class="score-arrow">&rarr;</div>
+      <div class="score-box score-after">
+        <div class="score-number">76</div>
+        <div class="score-grade">Karakter B</div>
+        <div class="score-label">Etter AEO</div>
+      </div>
+      <div class="score-delta">
+        <strong>+24 poeng</strong> &middot; Reiseliv / cruiseguide &middot; 176 destinasjonssider &middot; Godkjent for publisering av klienten
+      </div>
+    </div>
+
+    <div class="article-body">
+
+      <h2>Bakgrunn</h2>
+
+      <p><a href="https://pierstop.com" style="color:var(--accent);">Pierstop.com</a> er Norges ledende guide for cruisepassasjerer. Seks norske cruisehavner &mdash; Stavanger, Bergen, &Aring;lesund, Fl&aring;m, Geiranger, Troms&oslash; &mdash; med detaljerte guides til attraksjoner, transport, og bestilling av utflukter. Tusenvis av cruise-gjester s&oslash;ker svar p&aring; det samme sp&oslash;rsm&aring;let hvert &aring;r: &laquo;Hva gj&oslash;r jeg i dag?&raquo;</p>
+
+      <p>Problemet: AI-verkt&oslash;yene cruisepassasjerene faktisk bruker &mdash; ChatGPT, Perplexity, Google AI Overview &mdash; visste knapt at Pierstop eksisterte.</p>
+
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-value bad">52/D</div>
+          <div class="stat-label">AEO-score ved oppstart</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">20/20</div>
+          <div class="stat-label">Teknisk score (perfekt)</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value bad">5/25</div>
+          <div class="stat-label">Schema-score (kritisk)</div>
+        </div>
+      </div>
+
+      <div class="insight-box">
+        <p><strong>N&oslash;kkelobservasjon:</strong> Pierstop hadde teknisk score 20/20 &mdash; noe vi sjelden ser. HTTPS, Cloudflare CDN, robots.txt, sitemap med 176 URL-er, og <code>llms.txt</code> (kun 3% av norske nettsider har dette). Grunnmuren var perfekt. Men AI-motorene visste likevel ikke hvem Pierstop var.</p>
+      </div>
+
+      <h2>Hva vi fant</h2>
+
+      <p>AEO-analysen avsl&oslash;rte et tydelig m&oslash;nster: perfekt infrastruktur, men manglende signaler. Alt det tekniske var p&aring; plass &mdash; men schema.org-markup, som er spr&aring;ket AI-motorer leser, manglet nesten helt.</p>
+
+      <div class="finding finding-critical">
+        <div class="finding-label">Kritisk funn</div>
+        <h3>Ingen AggregateRating p&aring; destinasjonssider</h3>
+        <p>Pierstop har 342 anmeldelser og 4,7 stjerner &mdash; men AI-motorer visste det ikke. Ingen av de seks bysidene (Stavanger, Bergen, &Aring;lesund, Fl&aring;m, Geiranger, Troms&oslash;) hadde <code>AggregateRating</code>-schema. Stjerneanmeldelser dukker opp i AI-svarbokser og &oslash;ker klikkfrekvens betydelig.</p>
+      </div>
+
+      <div class="finding finding-critical">
+        <div class="finding-label">Kritisk funn</div>
+        <h3>Ingen <code>sameAs</code>-lenker p&aring; Organization-schema</h3>
+        <p><code>sameAs</code> signaliserer til AI at organisasjonen er verifisert og legitim &mdash; kryssreferanser til LinkedIn, Facebook, Br&oslash;nn&oslash;ysundregisteret. Uten det behandler AI-motorer siden som ubekreftet og siterer den sjeldnere.</p>
+      </div>
+
+      <div class="finding finding-critical">
+        <div class="finding-label">Kritisk funn</div>
+        <h3>Ingen <code>LocalBusiness</code>-schema p&aring; havnesider</h3>
+        <p>Cruisehavnguider burde bruke <code>LocalBusiness</code> eller <code>TouristAttraction</code>-schema med geo-koordinater. Uten geografisk typing vet ikke AI at Pierstop Stavanger handler om Stavanger havn &mdash; og kan ikke koble innholdet til stedsspesifikke sp&oslash;rsm&aring;l.</p>
+      </div>
+
+      <div class="finding finding-medium">
+        <div class="finding-label">Middels funn</div>
+        <h3>Generiske overskrifter</h3>
+        <p>Overskrifter som &laquo;Attraksjoner i Stavanger&raquo; i stedet for &laquo;Hva kan du gj&oslash;re i Stavanger n&aring;r du er i cruisehavn?&raquo;. AI siterer sp&oslash;rsm&aring;lsformaterte overskrifter 3x oftere.</p>
+      </div>
+
+      <h2>Hva som allerede fungerte</h2>
+
+      <p>Pierstop hadde et uvanlig godt teknisk fundament &mdash; noe som gj&oslash;r implementasjonskostnaden for schema-forbedringer lav:</p>
+
+      <ul>
+        <li><strong>FAQPage-schema implementert</strong> &mdash; en stor AEO-fordel de fleste mangler</li>
+        <li><strong>BreadcrumbList-schema</strong> korrekt satt opp</li>
+        <li><strong>WebApplication + WebSite schemas</strong> p&aring; plass</li>
+        <li><strong>Prisinformasjon synlig</strong> &mdash; AI kan vise dette i svar</li>
+        <li><strong><code>llms.txt</code> tilstede</strong> &mdash; kun 3% av norske nettsider har dette</li>
+        <li><strong>Oppdatert innhold</strong> &mdash; god fersk-score for AI</li>
+      </ul>
+
+      <h2>Hva vi gjorde</h2>
+
+      <div class="phase-timeline">
+        <div class="phase-step">
+          <div class="phase-dot phase-dot-1">1</div>
+          <div class="phase-content">
+            <div class="phase-title">AEO-analyse og baseline</div>
+            <div class="phase-details">Kj&oslash;rte komplett AEO-audit p&aring; pierstop.com. Kartla fem kategorier: schema, meta, innhold, teknisk og AI-signaler. Identifiserte tre kritiske hull og tre mellompriorit&aelig;re forbedringer.</div>
+            <div class="phase-result">Baseline: 52/D</div>
+          </div>
+        </div>
+
+        <div class="phase-step">
+          <div class="phase-dot phase-dot-1">2</div>
+          <div class="phase-content">
+            <div class="phase-title">JSON-LD implementering</div>
+            <div class="phase-details">Implementerte grunnleggende JSON-LD strukturerte data: Organization-schema, utvidet FAQPage, og tekniske forbedringer. Schema-scoren gikk fra 5/25 til 13/25 &mdash; en stor forbedring, men fortsatt under potensial.</div>
+            <div class="phase-result">Score etter Phase 1: 76/B (+24 fra baseline)</div>
+          </div>
+        </div>
+
+        <div class="phase-step">
+          <div class="phase-dot phase-dot-2" style="background:rgba(248,113,113,0.15);border-color:var(--red-dim);color:var(--red);">!</div>
+          <div class="phase-content">
+            <div class="phase-title">Regresjon: JSON-LD br&oslash;t ved deploy</div>
+            <div class="phase-details">Klienten deployet innholdsendringer som utilsiktet br&oslash;t JSON-LD-blokken. Scoren falt fra 76/B til 59/C. Regresjonen avdekket en viktig l&aelig;rdom: schema er skj&oslash;rt uten kontrollert publiseringsrutine.</div>
+            <div class="phase-result" style="color:var(--red);">Regresjon: 76/B &rarr; 59/C</div>
+          </div>
+        </div>
+
+        <div class="phase-step">
+          <div class="phase-dot phase-dot-2">3</div>
+          <div class="phase-content">
+            <div class="phase-title">Gjenoppretting</div>
+            <div class="phase-details">Gjenopprettet JSON-LD og verifiserte at alle schema-blokker var intakte. Scoren returnerte til 76/B. Hendelsen f&oslash;rte til anbefaling om schema-validering i publiseringsrutinen.</div>
+            <div class="phase-result">Gjeldende score: 76/B (gjenopprettet)</div>
+          </div>
+        </div>
+
+        <div class="phase-step">
+          <div class="phase-dot phase-dot-3">+</div>
+          <div class="phase-content">
+            <div class="phase-title">Neste steg: Schema-sprint (planlagt)</div>
+            <div class="phase-details"><code>AggregateRating</code> p&aring; alle 6 havnesider, <code>sameAs</code>-lenker p&aring; Organization, <code>LocalBusiness</code>/<code>TouristAttraction</code>-schema med geo-koordinater, sp&oslash;rsm&aring;lsformaterte overskrifter.</div>
+            <div class="phase-result">Forventet: 76/B &rarr; 90+/A</div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Score-historikk</h2>
+
+      <div class="score-history">
+        <div class="score-history-row">
+          <div class="score-history-date">Feb 2026</div>
+          <div class="score-history-score" style="color:var(--red);">52/D</div>
+          <div class="score-history-note">Baseline &mdash; ingen AEO-optimalisering</div>
+        </div>
+        <div class="score-history-row">
+          <div class="score-history-date">Mar 2026</div>
+          <div class="score-history-score" style="color:var(--accent);">76/B</div>
+          <div class="score-history-note">Etter JSON-LD implementering</div>
+        </div>
+        <div class="score-history-row">
+          <div class="score-history-date">Mar 2026</div>
+          <div class="score-history-score regression">59/C</div>
+          <div class="score-history-note regression">Regresjon &mdash; deploy br&oslash;t JSON-LD</div>
+        </div>
+        <div class="score-history-row">
+          <div class="score-history-date">Mar 2026</div>
+          <div class="score-history-score" style="color:var(--accent);">76/B</div>
+          <div class="score-history-note">Gjenopprettet &mdash; gjeldende score</div>
+        </div>
+      </div>
+
+      <h2>Resultater</h2>
+
+      <p>P&aring; under tre uker gikk Pierstop fra 52/D til 76/B &mdash; en forbedring p&aring; <strong>24 poeng</strong>. Mer interessant er hva regresjonen l&aelig;rte oss:</p>
+
+      <ul>
+        <li><strong>+24 poeng</strong> p&aring; AEO-score (&mdash;46% av gapet til perfekt)</li>
+        <li><strong>Fra D til B</strong> &mdash; fra &laquo;usynlig&raquo; til &laquo;delvis sitert&raquo; av AI</li>
+        <li><strong>Schema er skj&oslash;rt:</strong> &Eacute;n feilaktig deploy slettet 17 poeng. Publiseringsrutine med schema-validering er like viktig som implementeringen selv</li>
+        <li><strong>Teknisk grunnmur var allerede der:</strong> 20/20 &mdash; dette handler bare om &aring; legge p&aring; riktige signaler</li>
+      </ul>
+
+      <h2>Neste m&aring;l: 90+/A</h2>
+
+      <p>Med planlagt schema-sprint (estimert 4 900 NOK) forventer vi:</p>
+
+      <ul>
+        <li><code>AggregateRating</code> p&aring; alle 6 havnesider &rarr; Schema-score fra 13 til 22+</li>
+        <li><code>sameAs</code>-lenker &rarr; AI-signaler fra 13 til 16+</li>
+        <li><code>LocalBusiness</code>-schema med geo-koordinater &rarr; Stedsspesifikk AI-sitering</li>
+        <li>Sp&oslash;rsm&aring;lsformaterte overskrifter &rarr; 3x h&oslash;yere AI-siteringsrate</li>
+      </ul>
+
+      <p>M&aring;l: N&aring;r en cruisepassasjer sp&oslash;r ChatGPT &laquo;hva gj&oslash;r jeg i Geiranger i dag?&raquo; &mdash; skal Pierstop v&aelig;re svaret.</p>
+
+      <h2>N&oslash;kkell&aelig;rdommer</h2>
+
+      <ul>
+        <li><strong>Teknisk perfeksjon &#8800; AI-synlighet.</strong> 20/20 p&aring; teknisk score betyr ingenting hvis schema mangler. AI-motorer leser strukturerte data, ikke HTML-kvalitet.</li>
+        <li><strong>Schema er skj&oslash;rt.</strong> &Eacute;n deploy slettet 17 poeng. Legg schema-validering inn i publiseringsrutinen &mdash; det er like viktig som implementeringen.</li>
+        <li><strong>Reiseliv har et unikt AEO-potensial.</strong> Cruisepassasjerer sp&oslash;r AI om hva de skal gj&oslash;re &laquo;n&aring;&raquo; &mdash; dette er sp&oslash;rsm&aring;l AI er designet for &aring; besvare. Reiselivsakt&oslash;rer som har riktige signaler vinner disproportjonalt.</li>
+        <li><strong><code>llms.txt</code> er et forsprang.</strong> 97% av norske nettsider mangler dette. Pierstop hadde det allerede &mdash; et tegn p&aring; teknisk modenhet som schema-sprint kan bygge videre p&aring;.</li>
+      </ul>
+
+    </div>
+
+    <!-- Other case studies -->
+    <div style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);">
+      <p style="font-family:var(--mono);font-size:0.72rem;color:var(--text-muted);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;">Andre case studies</p>
+      <a href="/case/nordic-lithium" style="display:block;padding:16px 20px;background:var(--bg-raised);border:1px solid var(--border);border-radius:6px;text-decoration:none;color:var(--text);">
+        <span style="font-weight:600;font-size:0.88rem;">Nordic Lithium: Fra 67/C til 85/A p&aring; to uker</span>
+        <span style="display:block;font-size:0.78rem;color:var(--text-dim);margin-top:4px;">Norsk nettbutikk for LiFePO4-batterier &mdash; usynlig for AI til tross for god teknisk side. To intervensjoner endret alt.</span>
+      </a>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-block">
+      <h2>Vil du ha lignende resultater?</h2>
+      <p>Gratis AEO-audit av nettstedet ditt &mdash; score, svakheter og konkrete tiltak. Tar 2 minutter &aring; lese.</p>
+      <a href="https://sjekk.synligdigital.no/" class="cta-btn">F&aring; gratis AEO-audit</a>
+      <div class="cta-sub">
+        Eller send e-post til <a href="mailto:hei@synligdigital.no" style="color:var(--text-dim);text-decoration:underline;">hei@synligdigital.no</a> for personlig gjennomgang.
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer style="background:#0a0a0b;border-top:1px solid #222225;padding:2rem;text-align:center;font-size:0.85rem;color:#9f9faa;margin-top:3rem;">
+  <p>&copy; 2026 Synlig &mdash; <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> &mdash; Stavanger, Norge</p>
+  <p style="margin-top:0.5rem;"><a href="/">Hjem</a> &middot; <a href="/blogg">Blogg</a> &middot; <a href="/guide">Guide</a> &middot; <a href="/rapport/state-of-aeo-2026">Rapport</a></p>
+</footer>
+
+</body>
+</html>

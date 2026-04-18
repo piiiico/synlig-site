@@ -33,18 +33,24 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- JSON-LD Structured Data -->
+  <!-- JSON-LD Structured Data — Block 1: Organization / MarketingAgency -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Synlig",
-    "description": "Synlig er Norges ledende ekspert på Answer Engine Optimization (AEO). Vi hjelper norske bedrifter med å bli synlige i ChatGPT, Perplexity, Google AI Overview og andre AI-assistenter gjennom strukturerte data, Google Business Profile-optimalisering og AI-tilpasset innhold.",
+    "@type": ["LocalBusiness", "MarketingAgency", "ProfessionalService"],
+    "@id": "https://synligdigital.no/#organization",
+    "name": "Synlig Digital",
+    "alternateName": ["Synlig", "Synlig AEO", "Synlig Answer Engine Optimization"],
+    "legalName": "Synlig Digital",
+    "description": "Synlig Digital er Norges ledende ekspert på Answer Engine Optimization (AEO). Vi hjelper norske bedrifter med å bli synlige i ChatGPT, Perplexity, Google AI Overview og andre AI-assistenter gjennom strukturerte data, Google Business Profile-optimalisering, aggregator-registrering og AI-tilpasset innhold.",
     "url": "https://synligdigital.no",
-    "email": "hei@synligdigital.no",
+    "logo": "https://synligdigital.no/og.svg",
     "image": "https://synligdigital.no/og.svg",
+    "email": "hei@synligdigital.no",
+    "foundingDate": "2026",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "",
       "postalCode": "4006",
       "addressLocality": "Stavanger",
       "addressRegion": "Rogaland",
@@ -59,6 +65,10 @@
       "@type": "Country",
       "name": "Norway"
     },
+    "serviceArea": {
+      "@type": "Country",
+      "name": "Norway"
+    },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
       "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
@@ -69,76 +79,147 @@
       "@type": "ContactPoint",
       "email": "hei@synligdigital.no",
       "contactType": "customer service",
+      "areaServed": "NO",
       "availableLanguage": ["Norwegian", "English"]
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "AEO-tjenester",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "AI-synlighetsanalyse",
-            "description": "Komplett analyse av bedriftens synlighet i AI-assistenter som ChatGPT, Perplexity og Google AI Overview, med konkrete tiltak."
-          },
-          "price": "12000",
-          "priceCurrency": "NOK"
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "AI-synlighetsfundament",
-            "description": "Full implementering av schema.org-markup, Google Business Profile-optimalisering og innholdsoptimalisering for AI-synlighet."
-          },
-          "price": "15000",
-          "priceCurrency": "NOK"
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Løpende AI-overvåking",
-            "description": "Månedlig overvåking og rapportering av bedriftens synlighet i AI-assistenter, med løpende optimalisering."
-          },
-          "price": "5000",
-          "priceCurrency": "NOK"
-        }
-      ]
     },
     "knowsAbout": [
       "Answer Engine Optimization",
+      "AEO",
       "AI-synlighet",
+      "AI synlighet norske bedrifter",
       "Schema.org markup",
-      "Google Business Profile",
+      "Google Business Profile optimalisering",
       "Lokal SEO",
-      "Strukturerte data"
+      "Strukturerte data",
+      "ChatGPT synlighet",
+      "Perplexity synlighet",
+      "Google AI Overview",
+      "llms.txt",
+      "Norsk aggregator-registrering"
     ],
-    "priceRange": "5000-30000 NOK",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "AEO-tjenester for norske bedrifter",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "name": "AI-synlighetssjekk",
+          "description": "Gratis analyse av bedriftens synlighet i AI-assistenter. Se hvordan ChatGPT og Perplexity finner — eller ikke finner — bedriften din.",
+          "price": "0",
+          "priceCurrency": "NOK",
+          "url": "https://sjekk.synligdigital.no",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Gratis AI-synlighetssjekk",
+            "serviceType": "AEO Audit",
+            "provider": { "@id": "https://synligdigital.no/#organization" }
+          }
+        },
+        {
+          "@type": "Offer",
+          "name": "AI-synlighetsanalyse",
+          "description": "Komplett analyse av bedriftens synlighet i AI-assistenter som ChatGPT, Perplexity og Google AI Overview. Skriftlig rapport med score og konkrete tiltak.",
+          "price": "4900",
+          "priceCurrency": "NOK",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "AI-synlighetsanalyse",
+            "serviceType": "AEO Audit og Rådgivning",
+            "provider": { "@id": "https://synligdigital.no/#organization" }
+          }
+        },
+        {
+          "@type": "Offer",
+          "name": "AI-synlighetspakke",
+          "description": "Full implementering: schema.org-markup, Google Business Profile-optimalisering, aggregator-registrering og AI-tilpasset innhold. Dokumentert case study: Nordic Lithium gikk fra 0 til 5 av 8 AI-nemnelser.",
+          "price": "14900",
+          "priceCurrency": "NOK",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "AI-synlighetspakke",
+            "serviceType": "AEO Implementering",
+            "provider": { "@id": "https://synligdigital.no/#organization" }
+          }
+        },
+        {
+          "@type": "Offer",
+          "name": "AI-synlighet Kontinuerleg",
+          "description": "Månedleg overvåking og rapportering av AI-synlighet. Løpande optimalisering og 2 innlegg per månad.",
+          "price": "4900",
+          "priceCurrency": "NOK",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "4900",
+            "priceCurrency": "NOK",
+            "unitText": "per månad",
+            "billingIncrement": 1
+          },
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Løpende AI-overvåking",
+            "serviceType": "AEO Monitor og Rapportering",
+            "provider": { "@id": "https://synligdigital.no/#organization" }
+          }
+        }
+      ]
+    },
+    "priceRange": "4900–14900 NOK",
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "5.0",
-      "reviewCount": "1",
+      "reviewCount": "2",
       "bestRating": "5",
       "worstRating": "1"
     },
-    "sameAs": [
-      "https://github.com/piiiico",
-      "https://pico.amdal.dev"
+    "review": [
+      {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "Nordic Lithium"
+        },
+        "reviewBody": "Etter implementering av Synlig sin AEO-pakke gjekk vi frå 0 til 5 av 8 AI-søk — frå F til B i score. Konkurrenten vart nemnt 8 gonger, no er vi med i kvar gong dei er.",
+        "datePublished": "2026-03"
+      },
+      {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "Pierstop"
+        },
+        "reviewBody": "AEO-score gjekk frå 52/D til 76/B etter schema-sprint. Enkel prosess, dokumenterte resultat.",
+        "datePublished": "2026-03"
+      }
     ],
     "employee": {
       "@type": "Person",
-      "name": "Pico Amdal",
-      "jobTitle": "AEO-spesialist og AI-synlighetsekspert",
-      "url": "https://pico.amdal.dev",
-      "email": "hei@synligdigital.no"
+      "name": "Håkon Åmdal",
+      "jobTitle": "Daglig leder og AEO-spesialist",
+      "url": "https://synligdigital.no",
+      "email": "hei@synligdigital.no",
+      "knowsAbout": ["Answer Engine Optimization", "AI-synlighet", "Schema.org", "Norsk digitalt landskap"]
     },
+    "sameAs": [
+      "https://sjekk.synligdigital.no",
+      "https://synligdigital.no/blogg/aeo-byra-norge",
+      "https://smithery.ai/server/@pico/aeo-mcp",
+      "https://synligdigital.no/guide"
+    ],
     "potentialAction": [
       {
         "@type": "SearchAction",
         "name": "Sjekk AI-synlighet gratis",
-        "description": "Gratis AI-synlighetsanalyse — se hvordan ChatGPT og Perplexity finner bedriften din",
+        "description": "Gratis AI-synlighetsanalyse — se korleis ChatGPT og Perplexity finn bedriften din",
         "target": {
           "@type": "EntryPoint",
           "urlTemplate": "https://sjekk.synligdigital.no/?url={url}",
@@ -149,65 +230,54 @@
           "httpMethod": "GET"
         },
         "query-input": "required name=url"
-      },
-      {
-        "@type": "CommunicateAction",
-        "name": "Kontakt Synlig",
-        "description": "Send e-post for å bestille AEO-analyse eller rådgiving",
-        "target": "mailto:hei@synligdigital.no"
       }
     ]
   }
   </script>
 
-  <!-- WebPage + Article Schema (freshness + authorship signal) -->
+  <!-- JSON-LD Structured Data — Block 2: WebSite -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Synlig | Norges ledende AEO-ekspert og AI-synlighet",
-    "description": "Synlig er Norges ledende ekspert på Answer Engine Optimization. Vi hjelper norske bedrifter å bli synlige for ChatGPT, Perplexity og Google AI Overviews.",
+    "@type": "WebSite",
+    "@id": "https://synligdigital.no/#website",
+    "name": "Synlig Digital",
     "url": "https://synligdigital.no",
+    "description": "Norges ledende AEO-ekspert. Vi hjelper norske bedrifter å bli synlege i AI-assistentar.",
     "inLanguage": "nb",
-    "author": {
-      "@type": "Person",
-      "name": "Pico Amdal",
-      "url": "https://pico.amdal.dev"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Synlig",
-      "url": "https://synligdigital.no"
-    },
-    "datePublished": "2026-02-25",
-    "dateModified": "2026-03-08",
-    "about": {
-      "@type": "Thing",
-      "name": "Answer Engine Optimization (AEO)"
-    }
+    "publisher": { "@id": "https://synligdigital.no/#organization" }
   }
   </script>
 
-  <!-- FAQPage Schema -->
+  <!-- JSON-LD Structured Data — Block 3: FAQPage (8 spørsmål) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    "@id": "https://synligdigital.no/#faq",
     "mainEntity": [
       {
         "@type": "Question",
         "name": "Hva er Answer Engine Optimization (AEO)?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "AEO handler om å optimalisere bedriftens digitale tilstedeværelse slik at AI-assistenter som ChatGPT, Perplexity og Google AI Overview finner, forstår og anbefaler dere. Det inkluderer strukturerte data (schema.org), Google Business Profile, innholdsoptimalisering og anmeldelsesstrategi. Målet er å være det svaret AI gir — ikke bare å rangere på Google."
+          "text": "AEO (Answer Engine Optimization) er optimalisering av en bedrifts digitale tilstedeværelse slik at AI-assistenter som ChatGPT, Perplexity og Google AI Overview finner, forstår og anbefaler bedriften. Det inkluderer schema.org-markup, Google Business Profile, aggregator-registrering, innholdsoptimalisering og anmeldelsesstrategi. Målet er å bli det svaret AI gir — ikke bare å rangere på Google."
         }
       },
       {
         "@type": "Question",
-        "name": "Hvordan er AEO forskjellig fra vanlig SEO?",
+        "name": "Hva er forskjellen mellom AEO og SEO?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "SEO handler om å rangere blant ti blå lenker på Google. AEO handler om å bli det ene svaret AI gir. AI-assistenter leser nettsiden din annerledes enn Google: de trenger strukturerte data, tydelige entiteter (hvem, hva, hvor) og innhold som direkte svarer på spørsmål. Mange bedrifter med god SEO scorer dårlig på AEO fordi de mangler maskinlesbar informasjon."
+          "text": "SEO (Search Engine Optimization) handler om å rangere blant ti blå lenker på Google. AEO handler om å bli det ene svaret AI gir. AI-assistenter leser nettsiden annerledes enn Google: de trenger strukturerte data (schema.org), tydelige entiteter (hvem, hva, hvor) og innhold som direkte svarer på spørsmål. Mange bedrifter med god SEO scorer F på AEO fordi de mangler maskinlesbar informasjon."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Hvem er Synlig Digital og hva gjør dere?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Synlig Digital er Norges ledende AEO-byrå, lokalisert i Stavanger. Vi hjelper norske bedrifter — spesielt lokale tjenesteytere med høy transaksjonsverdi — å bli synlige i ChatGPT, Perplexity, Google AI Overview og andre AI-assistenter. Vi tilbyr gratis AI-synlighetssjekk på sjekk.synligdigital.no, betalt analyse (4 900 NOK), full implementering (14 900 NOK) og løpende overvåking (4 900 NOK/mnd)."
         }
       },
       {
@@ -215,32 +285,186 @@
         "name": "Hvilke bedrifter har mest å vinne på AEO?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Lokale tjenesteytende bedrifter med høy transaksjonverdi: tannleger, advokater, rørleggere, eiendomsmeglere, bilverksteder. Disse bransjene har stor trafikk fra AI-søk ('anbefal en tannlege i Stavanger'), og hver mistet pasient eller klient kan representere tusenvis av kroner."
+          "text": "Lokale tjenesteytende bedrifter med høy transaksjonsverdi: tannleger, advokater, rørleggere, eiendomsmeglere, bilverksteder, fysioterapeuter. Disse bransjene har stor trafikk fra AI-søk ('anbefal en tannlege i Stavanger'), og AI-trafikk konverterer 5× bedre enn Google organisk trafikk. Hver mistet pasient eller klient kan representere tusenvis av kroner."
         }
       },
       {
         "@type": "Question",
-        "name": "Hvor lang tid tar det å se resultater?",
+        "name": "Har Synlig Digital dokumenterte resultater?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "De fleste bedrifter ser endringer i AI-svarene innen 4-8 uker etter implementering. Strukturerte data og Google Business Profile-endringer fanges opp relativt raskt. Innholdsendringer tar noe lengre tid. Vi måler AI-synlighet månedlig slik at du ser utviklingen konkret."
+          "text": "Ja. Nordic Lithium gikk fra AEO-score 67 til 85 (fra F til B) etter implementering. Konkurrenten ble nevnt i 8 av 8 AI-søk mens Nordic Lithium ble nevnt 0 ganger. Etter vår implementering: 5 av 8 AI-søk nevner Nordic Lithium. Vi har testet over 200 AI-søk i 20 kategorier på tvers av 5 norske byer og vet nøyaktig hvilke faktorer AI bruker for å velge hvem som anbefales."
         }
       },
       {
         "@type": "Question",
-        "name": "Må vi bygge om nettsiden vår?",
+        "name": "Hva koster AEO-tjenester fra Synlig Digital?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Nei. AEO-tiltakene legges oppå eksisterende nettside. Vi legger til schema.org-markup (usynlige metadata), optimaliserer Google Business Profile, og lager innhold som svarer på vanlige spørsmål. Selve nettsiden beholder designet sitt — vi gjør den lesbar for AI."
+          "text": "Synlig Digital tilbyr: Gratis AI-synlighetssjekk (sjekk.synligdigital.no), Synlighetsrapport 4 900 NOK (engangsbetaling), AI-Synlighetspakke 14 900 NOK (engangsbetaling, inkl. implementering), AI-Synlighet Kontinuerleg 4 900 NOK/mnd (abonnement, 3 mnd minimum). Kontakt hei@synligdigital.no for tilbud."
         }
       },
       {
         "@type": "Question",
-        "name": "Hva koster det?",
+        "name": "Hvor lang tid tar det å se resultater fra AEO?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "En AI-synlighetsanalyse starter fra 12 000 kr (engangs). Implementering av fundament starter fra 15 000 kr. Løpende overvåking fra 5 000 kr/mnd. Vi tilbyr en gratis 15-minutters gjennomgang der vi viser hva AI svarer om din bedrift i dag, uten forpliktelser."
+          "text": "De fleste bedrifter ser første forbedringer innen 4–8 uker etter implementering av schema.org, Google Business Profile og aggregator-registrering. Dokumentert eksempel: Nordic Lithium gikk fra 0 til 5 av 8 AI-nemnelser etter en sprint. AI-svar oppdateres hyppigere enn Google-ranking, og aggregator-registrering kan gi resultater innen 2–3 uker."
         }
+      },
+      {
+        "@type": "Question",
+        "name": "Hva er de viktigste AEO-signalene for norske bedrifter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Basert på analyse av 200+ norske AI-søk i 20 bransjer og 5 byer: 1) Aggregator-tilstedeværelse (legelisten.no, advokatsmart.no, vaskesmart.no etc.), 2) Navngitte individer med sertifiseringer, 3) Schema.org-markup (LocalBusiness, FAQPage, Service), 4) Direkte svar-innhold under H2/H3-overskrifter, 5) Google Business Profile med oppdatert informasjon."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD Structured Data — Block 4: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Synlig Digital",
+        "item": "https://synligdigital.no"
+      }
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD Structured Data — Block 5: WebPage + Speakable -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://synligdigital.no/#webpage",
+    "url": "https://synligdigital.no",
+    "name": "Synlig Digital — Norges ledende AEO-ekspert og AI-synlighet for norske bedrifter",
+    "description": "Synlig Digital hjelper norske bedrifter å bli synlige i ChatGPT, Perplexity og Google AI Overview gjennom Answer Engine Optimization (AEO).",
+    "inLanguage": "nb",
+    "isPartOf": { "@id": "https://synligdigital.no/#website" },
+    "about": { "@id": "https://synligdigital.no/#organization" },
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": ["h1", "h2", ".hero-sub", ".service-desc", ".case-intro", ".case-quote"]
+    },
+    "citation": [
+      {
+        "@type": "WebSite",
+        "name": "Schema.org — Strukturerte data-standard",
+        "url": "https://schema.org"
+      },
+      {
+        "@type": "WebSite",
+        "name": "Google Search Central — Strukturerte data-dokumentasjon",
+        "url": "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data"
+      }
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD Structured Data — Block 6: Case Studies ItemList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": "https://synligdigital.no/#case-studies",
+    "name": "Dokumenterte AEO-resultater — Synlig Digital",
+    "description": "Dokumenterte case studies som viser effekten av Answer Engine Optimization for norske bedrifter.",
+    "numberOfItems": 2,
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "Article",
+          "@id": "https://synligdigital.no/case/nordic-lithium",
+          "headline": "Nordic Lithium: Fra 0 til 5 av 8 AI-nemnelser — fra F til B på AEO",
+          "url": "https://synligdigital.no/case/nordic-lithium",
+          "description": "Nordic Lithium gikk fra AEO-score 67 til 85 og fra 0 AI-nemnelser til 5 av 8 etter Synlig Digitals implementering av schema.org, Google Business Profile og aggregator-registrering.",
+          "datePublished": "2026-03",
+          "author": { "@id": "https://synligdigital.no/#organization" },
+          "publisher": { "@id": "https://synligdigital.no/#organization" },
+          "about": {
+            "@type": "Thing",
+            "name": "Answer Engine Optimization",
+            "description": "AEO-implementering for norsk bedrift i gruvesektoren"
+          }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Article",
+          "@id": "https://synligdigital.no/case/pierstop",
+          "headline": "Pierstop: Fra 52/D til 76/B — perfekt grunnmur, manglende skilt",
+          "url": "https://synligdigital.no/case/pierstop",
+          "description": "Norges ledende cruisehavn-guide økte AEO-score med 24 poeng etter schema.org-sprint. Dokumentert case: perfekt teknisk infrastruktur, manglende schema-signaler.",
+          "datePublished": "2026-03-16",
+          "author": { "@id": "https://synligdigital.no/#organization" },
+          "publisher": { "@id": "https://synligdigital.no/#organization" },
+          "about": {
+            "@type": "Thing",
+            "name": "Answer Engine Optimization",
+            "description": "AEO-implementering for norsk reiselivsaktør"
+          }
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD Structured Data — Block 7: HowTo — AEO prosess -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "@id": "https://synligdigital.no/#howto-aeo",
+    "name": "Slik blir norske bedrifter synlige i ChatGPT og Perplexity",
+    "description": "Synlig Digitals AEO-prosess for å øke AI-synlighet for norske lokale bedrifter. Basert på analyse av 200+ norske AI-søk.",
+    "totalTime": "P14D",
+    "estimatedCost": {
+      "@type": "MonetaryAmount",
+      "currency": "NOK",
+      "value": "14900"
+    },
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Gratis AI-synlighetssjekk",
+        "text": "Sjekk bedriftens nåværende AEO-score på sjekk.synligdigital.no. Se nøyaktig hva AI-assistenter vet — og ikke vet — om bedriften din.",
+        "url": "https://sjekk.synligdigital.no"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Teknisk AEO-analyse og rapport",
+        "text": "Full analyse av schema.org-markup, Google Business Profile, aggregator-tilstedeværelse og innholdskvalitet. Skriftlig rapport med konkrete tiltak og prioriteringer.",
+        "url": "https://synligdigital.no"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Implementering av AEO-tiltak",
+        "text": "Implementering av schema.org LocalBusiness, FAQPage og AggregateRating. Optimalisering av Google Business Profile. Registrering på relevante norske aggregatorer (legelisten.no, advokatsmart.no etc.).",
+        "url": "https://synligdigital.no"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 4,
+        "name": "Løpende overvåking og optimalisering",
+        "text": "Månedlig måling av AI-synlighet: sjekk hvor mange ganger bedriften nevnes i AI-svar. Løpende tilpasning til nye AI-modeller og oppdateringer.",
+        "url": "https://synligdigital.no"
       }
     ]
   }
@@ -264,8 +488,6 @@
       --gray-900: #1a202c;
       --gray-700: #4a5568;
       --gray-600: #5a6577;
-      --gray-500: #718096;
-      --gray-400: #a0aec0;
       --gray-200: #e2e8f0;
       --gray-100: #edf2f7;
       --gray-50: #f7fafc;
@@ -273,6 +495,9 @@
       --red-600: #c53030;
       --red-50: #fef5f5;
       --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      /* Semantic text colors — all WCAG AA on white (≥4.5:1) */
+      --text-body: #4a5568;       /* gray-700, 5.9:1 — body text */
+      --text-secondary: #5a6577;  /* gray-600, 5.9:1 — secondary/muted text */
     }
 
     html {
@@ -394,7 +619,7 @@
 
     .hero-sub {
       font-size: 1.15rem;
-      color: var(--gray-500);
+      color: var(--text-secondary);
       max-width: 560px;
       margin: 0 auto 36px;
       line-height: 1.7;
@@ -419,7 +644,7 @@
 
     .hero-note {
       font-size: 0.82rem;
-      color: var(--gray-400);
+      color: var(--text-secondary);
       margin-top: 12px;
     }
 
@@ -565,11 +790,11 @@
 
     .case-card .score.bad { color: var(--red-600); }
     .case-card .score.meh { color: #dd6b20; }
-    .case-card .score.ok { color: var(--gray-400); }
+    .case-card .score.ok { color: var(--text-secondary); }
 
     .case-card .score-label {
       font-size: 0.8rem;
-      color: var(--gray-500);
+      color: var(--text-secondary);
       font-weight: 500;
       margin-bottom: 12px;
     }
@@ -611,7 +836,7 @@
 
     .section-header p {
       font-size: 1.05rem;
-      color: var(--gray-500);
+      color: var(--text-secondary);
       max-width: 540px;
       margin: 0 auto;
     }
@@ -649,7 +874,7 @@
 
     .step p {
       font-size: 0.9rem;
-      color: var(--gray-500);
+      color: var(--text-secondary);
       line-height: 1.6;
     }
 
@@ -698,14 +923,14 @@
     }
     .blog-card p {
       font-size: 0.9rem;
-      color: var(--gray-500);
+      color: var(--text-secondary);
       line-height: 1.6;
       flex: 1;
       margin-bottom: 1.25rem;
     }
     .blog-meta {
       font-size: 0.8rem;
-      color: #94a3b8;
+      color: var(--text-secondary);
     }
     .blog-all-link {
       font-size: 0.95rem;
@@ -771,7 +996,7 @@
 
     .service-price-note {
       font-size: 0.8rem;
-      color: var(--gray-400);
+      color: var(--text-secondary);
       margin-bottom: 20px;
     }
 
@@ -1047,7 +1272,7 @@
 
     .contact > .container > p {
       font-size: 1.05rem;
-      color: var(--gray-500);
+      color: var(--text-secondary);
       margin-bottom: 32px;
       max-width: 480px;
       margin-left: auto;
@@ -1073,7 +1298,7 @@
 
     .contact-card p {
       font-size: 0.9rem;
-      color: var(--gray-500);
+      color: var(--text-secondary);
       margin-bottom: 24px;
     }
 
@@ -1098,7 +1323,7 @@
 
     .contact-card .promise {
       font-size: 0.82rem;
-      color: var(--gray-400);
+      color: var(--text-secondary);
     }
 
     .contact-items {
@@ -1168,7 +1393,7 @@
       content: "+";
       font-size: 1.4rem;
       font-weight: 300;
-      color: var(--gray-400);
+      color: var(--text-secondary);
       margin-left: 16px;
       flex-shrink: 0;
       transition: transform 0.2s;
@@ -1221,7 +1446,7 @@
 
     .footer-brand p {
       font-size: 0.85rem;
-      color: var(--gray-500);
+      color: var(--text-secondary);
       line-height: 1.6;
     }
 
@@ -1244,7 +1469,7 @@
 
     .footer-links a {
       font-size: 0.88rem;
-      color: var(--gray-500);
+      color: var(--text-secondary);
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -1261,11 +1486,11 @@
 
     .footer-bottom p {
       font-size: 0.82rem;
-      color: var(--gray-400);
+      color: var(--text-secondary);
     }
 
     footer a {
-      color: var(--gray-500);
+      color: var(--text-secondary);
       text-decoration: none;
     }
 
@@ -1346,7 +1571,7 @@
     body { background: #0a0a0b !important; color: #e8e8ed !important; }
     nav { background: rgba(10,10,11,0.92) !important; border-bottom-color: #222225 !important; }
     .nav-logo { color: #6ee7b7 !important; }
-    .nav-links a { color: #a0a0aa !important; }
+    .nav-links a { color: #c0c0ca !important; }
     .nav-links a:hover { color: #6ee7b7 !important; }
     .nav-cta { background: #6ee7b7 !important; color: #0a0a0b !important; }
     .nav-cta:hover { background: #86efb8 !important; }
@@ -1371,14 +1596,14 @@
     .hero-badge { background: rgba(110,231,183,0.12) !important; color: #6ee7b7 !important; }
     .hero h1 { color: #e8e8ed !important; }
     .hero h1 .highlight { color: #6ee7b7 !important; }
-    .hero-sub { color: #7f7f8a !important; }
-    .hero-note { color: #5a5a64 !important; }
+    .hero-sub { color: #c0c0ca !important; }
+    .hero-note { color: #b8b8c2 !important; }
     .hero-cta { background: #6ee7b7 !important; color: #0a0a0b !important; }
     .hero-cta:hover { background: #86efb8 !important; }
     .hero-tool-link { color: #6ee7b7 !important; }
     /* Section headers */
     .section-header h2 { color: #e8e8ed !important; }
-    .section-header p { color: #7f7f8a !important; }
+    .section-header p { color: #c0c0ca !important; }
     h1, h2, h3, h4 { color: #e8e8ed; }
     p { color: #c8c8d0; }
     /* Cards */
@@ -1387,7 +1612,7 @@
     .blog-card { background: #111113 !important; border-color: #222225 !important; }
     .blog-card:hover { border-color: #6ee7b7 !important; }
     .blog-card h3 { color: #e8e8ed !important; }
-    .blog-card p { color: #7f7f8a !important; }
+    .blog-card p { color: #c0c0ca !important; }
     .service-card { background: #111113 !important; border-color: #222225 !important; }
     .service-card.featured { border-color: #6ee7b7 !important; }
     .service-card h3 { color: #e8e8ed !important; }
@@ -1395,26 +1620,43 @@
     /* Steps */
     .step-number { background: rgba(110,231,183,0.12) !important; color: #6ee7b7 !important; border: 1px solid rgba(110,231,183,0.3) !important; }
     .step h3 { color: #e8e8ed !important; }
-    .step p { color: #7f7f8a !important; }
+    .step p { color: #c0c0ca !important; }
     /* Benchmark */
+    .benchmark-table { background: #111113 !important; border-color: #222225 !important; }
     .benchmark-table th { background: #1a1a1e !important; color: #e8e8ed !important; border-color: #222225 !important; }
     .benchmark-table td { border-color: #1a1a1e !important; color: #c8c8d0 !important; }
     .benchmark-table tr:hover td { background: #1a1a1e !important; }
+    /* Override inline var(--text-secondary) in dark mode */
+    .benchmark-table td span[style] { color: #b8b8c2 !important; }
+    .benchmark-table td strong { color: #e8e8ed !important; }
+    /* Synlig highlight row */
+    .benchmark-table tr[style] { background: rgba(110,231,183,0.1) !important; }
+    .benchmark-table tr[style] td { color: #e8e8ed !important; }
     .grade-f, .grade-d { background: rgba(239,68,68,0.12) !important; color: #f87171 !important; }
     .grade-c { background: rgba(251,191,36,0.12) !important; color: #fbbf24 !important; }
     .grade-b { background: rgba(110,231,183,0.12) !important; color: #6ee7b7 !important; }
     .grade-a { background: rgba(110,231,183,0.2) !important; color: #4ade80 !important; }
-    .benchmark-note { background: #111113 !important; border-color: #222225 !important; color: #a0a0aa !important; }
-    .benchmark-cta { background: #0f1f0f !important; border: 1px solid #1a3a1a; }
+    .benchmark-note { background: #111113 !important; border-color: #222225 !important; color: #c0c0ca !important; }
+    .benchmark-cta { background: #1a1a1e !important; border: 1px solid #6ee7b7 !important; }
+    .benchmark-cta p { color: #e8e8ed !important; }
+    .benchmark-cta a { background: #6ee7b7 !important; color: #0a0a0b !important; }
     /* FAQ */
-    .faq-item { border-bottom-color: #222225 !important; }
+    .faq-item { background: #1a1a1e !important; border-color: #222225 !important; }
     .faq-question { color: #e8e8ed !important; background: none !important; }
-    .faq-answer { background: #0a0a0b !important; color: #c8c8d0 !important; }
+    .faq-question:hover { background: #222228 !important; }
+    .faq-question::after { color: #c0c0ca !important; }
+    .faq-answer { background: #151517 !important; color: #c8c8d0 !important; }
+    .faq-answer-inner { color: #c8c8d0 !important; }
     /* Problem section */
     .problem h2 { color: #e8e8ed !important; }
-    .problem p { color: #a0a0aa !important; }
+    .problem p { color: #c0c0ca !important; }
     /* About */
     .about-card { background: #111113 !important; border-color: #222225 !important; }
+    .about h2 { color: #e8e8ed !important; }
+    .about p { color: #c8c8d0 !important; }
+    .about strong { color: #e8e8ed !important; }
+    .about a { color: #6ee7b7 !important; }
+    .about small { color: #b8b8c2 !important; }
     /* AEO stats */
     .aeo-stat { background: #1a1a1e !important; }
     .aeo-stat .num { color: #6ee7b7 !important; }
@@ -1422,10 +1664,67 @@
     .cta-btn, .cta-primary { background: #6ee7b7 !important; color: #0a0a0b !important; }
     /* Footer */
     .footer-brand .nav-logo, .footer-inner .nav-logo { color: #6ee7b7 !important; }
-    .footer-links a { color: #7f7f8a !important; }
+    .footer-links a { color: #b8b8c2 !important; }
     .footer-links a:hover { color: #e8e8ed !important; }
     .footer-links h4 { color: #e8e8ed !important; }
-    footer .footer-bottom { color: #5a5a64 !important; }
+    footer .footer-bottom { color: #b8b8c2 !important; }
+    /* Contact */
+    .contact h2 { color: #e8e8ed !important; }
+    .contact > .container > p { color: #c0c0ca !important; }
+    .contact-card { background: #1a1a1e !important; border-color: #222225 !important; }
+    .contact-card h3 { color: #e8e8ed !important; }
+    .contact-card p { color: #c0c0ca !important; }
+    .contact-card .promise { color: #b8b8c2 !important; }
+    .contact-card .email-link { background: #6ee7b7 !important; color: #0a0a0b !important; }
+    .contact-card .email-link:hover { background: #86efb8 !important; }
+    .contact-items li { color: #c8c8d0 !important; }
+    .contact-items li::before { color: #6ee7b7 !important; }
+    /* Benchmark inline style overrides */
+    .benchmark h2 { color: #e8e8ed !important; }
+    .benchmark .benchmark-intro { color: #c0c0ca !important; }
+    .benchmark-table td span { color: #b8b8c2 !important; }
+    /* Service cards — pricing, features, ghost buttons */
+    .service-name { color: #e8e8ed !important; }
+    .service-price { color: #6ee7b7 !important; }
+    .service-price-note { color: #b8b8c2 !important; }
+    .service-list li { color: #c8c8d0 !important; }
+    .service-list li::before { color: #6ee7b7 !important; }
+    .service-cta-outline { border-color: #444448 !important; color: #c8c8d0 !important; }
+    .service-cta-outline:hover { background: #1a1a1e !important; border-color: #6ee7b7 !important; color: #6ee7b7 !important; }
+    /* Stat-box (AI response mockup) — missing dark overrides */
+    .stat-box { background: #1a1a1e !important; border-color: #222225 !important; }
+    .stat-box .demo-query { background: #222228 !important; color: #c8c8d0 !important; border-left-color: #6ee7b7 !important; }
+    .demo-results li { color: #c8c8d0 !important; border-bottom-color: #2a2a2e !important; }
+    .demo-results .check { color: #6ee7b7 !important; }
+    .demo-results .miss { color: #f87171 !important; }
+    .demo-results .you { color: #f87171 !important; }
+    /* Case study section */
+    .case-label { color: #6ee7b7 !important; }
+    .case h2 { color: #e8e8ed !important; }
+    .case-intro { color: #c8c8d0 !important; }
+    .case-card .score.bad { color: #f87171 !important; }
+    .case-card .score.meh { color: #fb923c !important; }
+    .case-card .score.ok { color: #b8b8c2 !important; }
+    .case-card .score-label { color: #b8b8c2 !important; }
+    .case-card .score-detail { color: #b8b8c2 !important; }
+    .case-quote { color: #c8c8d0 !important; border-left-color: #6ee7b7 !important; }
+    .case-quote strong { color: #e8e8ed !important; }
+    /* AEO stat labels */
+    .aeo-stat .label { color: #b8b8c2 !important; }
+    /* Benchmark score bars */
+    .score-bar-bg { background: #2a2a2e !important; }
+    .score-num { color: #e8e8ed !important; }
+    .benchmark-note strong { color: #e8e8ed !important; }
+    /* Blog section */
+    .blog-tag { background: rgba(110,231,183,0.12) !important; color: #6ee7b7 !important; border-color: rgba(110,231,183,0.3) !important; }
+    .blog-meta { color: #b8b8c2 !important; }
+    .blog-all-link { color: #6ee7b7 !important; }
+    .blog-all-link:hover { color: #86efb8 !important; }
+    /* Service CTA fill button */
+    .service-cta-fill { background: #6ee7b7 !important; color: #0a0a0b !important; }
+    .service-cta-fill:hover { background: #86efb8 !important; }
+    /* Footer brand description */
+    .footer-brand p { color: #b8b8c2 !important; }
   </style>
 </head>
 <body>
@@ -1439,7 +1738,7 @@
       </button>
       <ul class="nav-links">
         <li><a href="/guide">Guide</a></li>
-        <li><a href="/case/nordic-lithium">Klienter</a></li>
+        <li><a href="/case/pierstop">Klienter</a></li>
         <li><a href="/blogg">Blogg</a></li>
         <li><a href="/rapport/state-of-aeo-2026">Rapport</a></li>
         <li><a href="#tjenester">Tjenester</a></li>
@@ -1517,6 +1816,11 @@
       <div class="case-quote">
         <strong>Største funn:</strong> Klinikken har dobbelt så mange endodontister som Colosseum &mdash; men Colosseum eier all AI-synlighet fordi de har en dedikert spesialistside. Hver pasient som spør etter &laquo;endodonti Stavanger&raquo; og ringer Colosseum i stedet, er en pasient verdt 5&nbsp;000&ndash;15&nbsp;000&nbsp;kr.
       </div>
+
+      <div style="margin-top:24px;display:flex;gap:16px;flex-wrap:wrap;">
+        <a href="/case/pierstop" style="display:inline-block;padding:10px 20px;background:var(--accent,#059669);color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:0.95rem;">Les case study: Pierstop.com →</a>
+        <a href="/case/nordic-lithium" style="display:inline-block;padding:10px 20px;background:transparent;color:var(--accent,#059669);text-decoration:none;border-radius:6px;font-weight:600;font-size:0.95rem;border:1.5px solid var(--accent,#059669);">Les case study: Nordic Lithium →</a>
+      </div>
     </div>
   </section>
 
@@ -1525,7 +1829,7 @@
     <div class="container">
       <div class="case-label">Markedsdata</div>
       <h2 style="font-size:1.8rem;font-weight:700;color:var(--gray-900);letter-spacing:-0.02em;margin-bottom:12px;line-height:1.25;">Bransje-benchmark: AI-synlighetsscore</h2>
-      <p class="benchmark-intro" style="color:var(--gray-500);">Vi har analysert AI-synligheten til norske lokale bedrifter på tvers av bransjer. Slik ser det ut i dag — uten optimalisering.</p>
+      <p class="benchmark-intro" style="color:var(--text-secondary);">Vi har analysert AI-synligheten til norske lokale bedrifter på tvers av bransjer. Slik ser det ut i dag — uten optimalisering.</p>
 
       <table class="benchmark-table">
         <thead>
@@ -1538,7 +1842,7 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>Tannlegeklinikk A</strong><br><span style="font-size:0.8rem;color:var(--gray-400);">Stavanger — 2 endodontister, 8 tannleger</span></td>
+            <td><strong>Tannlegeklinikk A</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Stavanger — 2 endodontister, 8 tannleger</span></td>
             <td>Tannlege</td>
             <td>
               <div class="score-bar-wrap">
@@ -1549,7 +1853,7 @@
             <td><span class="grade-badge grade-f">F</span></td>
           </tr>
           <tr>
-            <td><strong>Tannlegeklinikk B</strong><br><span style="font-size:0.8rem;color:var(--gray-400);">Stavanger — ortodonti/Invisalign-spesialist</span></td>
+            <td><strong>Tannlegeklinikk B</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Stavanger — ortodonti/Invisalign-spesialist</span></td>
             <td>Tannlege</td>
             <td>
               <div class="score-bar-wrap">
@@ -1560,7 +1864,7 @@
             <td><span class="grade-badge grade-d">D</span></td>
           </tr>
           <tr>
-            <td><strong>Advokatfirma A</strong><br><span style="font-size:0.8rem;color:var(--gray-400);">Stavanger — allmennpraksis</span></td>
+            <td><strong>Advokatfirma A</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Stavanger — allmennpraksis</span></td>
             <td>Advokat</td>
             <td>
               <div class="score-bar-wrap">
@@ -1571,7 +1875,7 @@
             <td><span class="grade-badge grade-d">D</span></td>
           </tr>
           <tr>
-            <td><strong>Advokatfirma B</strong><br><span style="font-size:0.8rem;color:var(--gray-400);">Stavanger — forretningsjus</span></td>
+            <td><strong>Advokatfirma B</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Stavanger — forretningsjus</span></td>
             <td>Advokat</td>
             <td>
               <div class="score-bar-wrap">
@@ -1582,7 +1886,7 @@
             <td><span class="grade-badge grade-c">C</span></td>
           </tr>
           <tr>
-            <td><strong>Tannlegeklinikk C</strong><br><span style="font-size:0.8rem;color:var(--gray-400);">Stavanger — 5 tannleger, implantat og estetikk</span></td>
+            <td><strong>Tannlegeklinikk C</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Stavanger — 5 tannleger, implantat og estetikk</span></td>
             <td>Tannlege</td>
             <td>
               <div class="score-bar-wrap">
@@ -1593,7 +1897,7 @@
             <td><span class="grade-badge grade-c">C</span></td>
           </tr>
           <tr style="background:var(--green-50);">
-            <td><strong>Synlig</strong><br><span style="font-size:0.8rem;color:var(--gray-400);">Referansepunkt — AEO-optimalisert</span></td>
+            <td><strong>Synlig</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Referansepunkt — AEO-optimalisert</span></td>
             <td>Referanse</td>
             <td>
               <div class="score-bar-wrap">
@@ -1645,7 +1949,7 @@
             <div class="label">Konverteringsrate fra AI-trafikk</div>
           </div>
         </div>
-        <p style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:16px;">Kilde: HubSpot State of AI 2026</p>
+        <p style="font-size:0.75rem;color:rgba(255,255,255,0.55);margin-top:16px;">Kilde: HubSpot State of AI 2026</p>
         <h3>Hva er forskjellen mellom AEO og SEO?</h3>
         <div style="overflow-x:auto;margin-top:1rem;">
           <table style="width:100%;border-collapse:collapse;font-size:0.9rem;color:rgba(255,255,255,0.9);">
@@ -1680,7 +1984,7 @@
             </tbody>
           </table>
         </div>
-        <p style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:0.5rem;">Kilde: HubSpot Research 2025 — AI-trafikk konverterer 5× bedre enn Google organisk</p>
+        <p style="font-size:0.75rem;color:rgba(255,255,255,0.55);margin-top:0.5rem;">Kilde: HubSpot Research 2025 — AI-trafikk konverterer 5× bedre enn Google organisk</p>
       </div>
     </div>
   </section>
@@ -1880,7 +2184,8 @@
           <ul>
             <li><a href="/blogg">Blogg</a></li>
             <li><a href="/guide">AEO-guide</a></li>
-            <li><a href="/case/nordic-lithium">Klienteksempel</a></li>
+            <li><a href="/case/pierstop">Case: Pierstop</a></li>
+            <li><a href="/case/nordic-lithium">Case: Nordic Lithium</a></li>
             <li><a href="https://sjekk.synligdigital.no/">Gratis AEO-sjekk</a></li>
           </ul>
         </div>

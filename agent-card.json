@@ -44,5 +44,12 @@
     "url": "https://synligdigital.no",
     "email": "hei@synligdigital.no"
   },
-  "supportsAuthenticatedExtendedCard": false
+  "supportsAuthenticatedExtendedCard": false,
+  "supportedInterfaces": [
+    {
+      "type": "HTTPS",
+      "url": "https://sjekk.synligdigital.no/",
+      "description": "Free AEO audit endpoint. GET ?url=<website> returns JSON with score (0-100), grade (A-F), and prioritized recommendations."
+    }
+  ]
 }

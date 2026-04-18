@@ -16,11 +16,19 @@ const files = {
   FAVICON_SVG: await Bun.file("/workspace/synlig-site/favicon.svg").text(),
   KOMPLETT_AEO_HTML: await Bun.file("/workspace/synlig-site/komplett-aeo-analyse.html").text(),
   NORDIC_LITHIUM_CASE_HTML: await Bun.file("/workspace/synlig-site/nordic-lithium-case.html").text(),
+  PIERSTOP_CASE_HTML: await Bun.file("/workspace/synlig-site/pierstop-case.html").text(),
   AGENT_CARD_JSON: await Bun.file("/workspace/synlig-site/agent-card.json").text(),
   BLOGG_INDEX_HTML: await Bun.file("/workspace/synlig-site/blogg/index.html").text(),
   BLOGG_HVA_ER_AEO_HTML: await Bun.file("/workspace/synlig-site/blogg/hva-er-aeo.html").text(),
   BLOGG_AEO_I_NORGE_2026_HTML: await Bun.file("/workspace/synlig-site/blogg/aeo-i-norge-2026.html").text(),
   BLOGG_NORSK_AEO_BENCHMARK_2026_HTML: await Bun.file("/workspace/synlig-site/blogg/norsk-aeo-benchmark-2026.html").text(),
+  BLOGG_MCP_SECURITY_MARCH_2026_HTML: await Bun.file("/workspace/synlig-site/blogg/mcp-security-march-2026.html").text(),
+  BLOGG_AEO_BYRA_NORGE_HTML: await Bun.file("/workspace/synlig-site/blogg/aeo-byra-norge.html").text(),
+  BLOGG_LOKAL_AI_SYNLIGHET_HTML: await Bun.file("/workspace/synlig-site/blogg/lokal-ai-synlighet.html").text(),
+  BLOGG_SLIK_BLIR_DU_SYNLIG_I_CHATGPT_HTML: await Bun.file("/workspace/synlig-site/blogg/slik-blir-du-synlig-i-chatgpt.html").text(),
+  BLOGG_CAVEMAN_AI_PRICING_APRIL_2026_HTML: await Bun.file("/workspace/synlig-site/blogg/caveman-ai-pricing-april-2026.html").text(),
+  BLOGG_ER_NETTSIDA_DI_KLAR_HTML: await Bun.file("/workspace/synlig-site/blogg/er-nettsida-di-klar-for-ai-agentar.html").text(),
+  BLOGG_STAVANGER_AGENT_BEREDSKAP_HTML: await Bun.file("/workspace/synlig-site/blogg/stavanger-agent-beredskap-april-2026.html").text(),
   RAPPORT_STATE_AEO_2026_HTML: await Bun.file("/workspace/synlig-site/rapport/state-of-aeo-2026.html").text(),
 };
 
@@ -77,6 +85,8 @@ const KOMPLETT_AEO_HTML = \`${escape(files.KOMPLETT_AEO_HTML)}\`;
 
 const NORDIC_LITHIUM_CASE_HTML = \`${escape(files.NORDIC_LITHIUM_CASE_HTML)}\`;
 
+const PIERSTOP_CASE_HTML = \`${escape(files.PIERSTOP_CASE_HTML)}\`;
+
 const AGENT_CARD_JSON = \`${escape(files.AGENT_CARD_JSON)}\`;
 
 const BLOGG_INDEX_HTML = \`${escape(files.BLOGG_INDEX_HTML)}\`;
@@ -86,6 +96,20 @@ const BLOGG_HVA_ER_AEO_HTML = \`${escape(files.BLOGG_HVA_ER_AEO_HTML)}\`;
 const BLOGG_AEO_I_NORGE_2026_HTML = \`${escape(files.BLOGG_AEO_I_NORGE_2026_HTML)}\`;
 
 const BLOGG_NORSK_AEO_BENCHMARK_2026_HTML = \`${escape(files.BLOGG_NORSK_AEO_BENCHMARK_2026_HTML)}\`;
+
+const BLOGG_MCP_SECURITY_MARCH_2026_HTML = \`${escape(files.BLOGG_MCP_SECURITY_MARCH_2026_HTML)}\`;
+
+const BLOGG_AEO_BYRA_NORGE_HTML = \`${escape(files.BLOGG_AEO_BYRA_NORGE_HTML)}\`;
+
+const BLOGG_LOKAL_AI_SYNLIGHET_HTML = \`${escape(files.BLOGG_LOKAL_AI_SYNLIGHET_HTML)}\`;
+
+const BLOGG_SLIK_BLIR_DU_SYNLIG_I_CHATGPT_HTML = \`${escape(files.BLOGG_SLIK_BLIR_DU_SYNLIG_I_CHATGPT_HTML)}\`;
+
+const BLOGG_CAVEMAN_AI_PRICING_APRIL_2026_HTML = \`${escape(files.BLOGG_CAVEMAN_AI_PRICING_APRIL_2026_HTML)}\`;
+
+const BLOGG_ER_NETTSIDA_DI_KLAR_HTML = \`${escape(files.BLOGG_ER_NETTSIDA_DI_KLAR_HTML)}\`;
+
+const BLOGG_STAVANGER_AGENT_BEREDSKAP_HTML = \`${escape(files.BLOGG_STAVANGER_AGENT_BEREDSKAP_HTML)}\`;
 
 const RAPPORT_STATE_AEO_2026_HTML = \`${escape(files.RAPPORT_STATE_AEO_2026_HTML)}\`;
 
@@ -128,7 +152,10 @@ const routes = {
   "/analyse/komplett-aeo.html": { body: KOMPLETT_AEO_HTML, contentType: "text/html; charset=utf-8" },
   "/case/nordic-lithium": { body: NORDIC_LITHIUM_CASE_HTML, contentType: "text/html; charset=utf-8" },
   "/case/nordic-lithium.html": { body: NORDIC_LITHIUM_CASE_HTML, contentType: "text/html; charset=utf-8" },
+  "/case/pierstop": { body: PIERSTOP_CASE_HTML, contentType: "text/html; charset=utf-8" },
+  "/case/pierstop.html": { body: PIERSTOP_CASE_HTML, contentType: "text/html; charset=utf-8" },
   "/.well-known/agent-card.json": { body: AGENT_CARD_JSON, contentType: "application/json; charset=utf-8" },
+  "/.well-known/agent.json": { body: AGENT_CARD_JSON, contentType: "application/json; charset=utf-8" },
   "/blogg": { body: BLOGG_INDEX_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/": { body: BLOGG_INDEX_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/index.html": { body: BLOGG_INDEX_HTML, contentType: "text/html; charset=utf-8" },
@@ -138,6 +165,20 @@ const routes = {
   "/blogg/aeo-i-norge-2026.html": { body: BLOGG_AEO_I_NORGE_2026_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/norsk-aeo-benchmark-2026": { body: BLOGG_NORSK_AEO_BENCHMARK_2026_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/norsk-aeo-benchmark-2026.html": { body: BLOGG_NORSK_AEO_BENCHMARK_2026_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/mcp-security-march-2026": { body: BLOGG_MCP_SECURITY_MARCH_2026_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/mcp-security-march-2026.html": { body: BLOGG_MCP_SECURITY_MARCH_2026_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/aeo-byra-norge": { body: BLOGG_AEO_BYRA_NORGE_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/aeo-byra-norge.html": { body: BLOGG_AEO_BYRA_NORGE_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/lokal-ai-synlighet": { body: BLOGG_LOKAL_AI_SYNLIGHET_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/lokal-ai-synlighet.html": { body: BLOGG_LOKAL_AI_SYNLIGHET_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/slik-blir-du-synlig-i-chatgpt": { body: BLOGG_SLIK_BLIR_DU_SYNLIG_I_CHATGPT_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/slik-blir-du-synlig-i-chatgpt.html": { body: BLOGG_SLIK_BLIR_DU_SYNLIG_I_CHATGPT_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/caveman-ai-pricing-april-2026": { body: BLOGG_CAVEMAN_AI_PRICING_APRIL_2026_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/caveman-ai-pricing-april-2026.html": { body: BLOGG_CAVEMAN_AI_PRICING_APRIL_2026_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/er-nettsida-di-klar-for-ai-agentar": { body: BLOGG_ER_NETTSIDA_DI_KLAR_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/er-nettsida-di-klar-for-ai-agentar.html": { body: BLOGG_ER_NETTSIDA_DI_KLAR_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/stavanger-agent-beredskap-april-2026": { body: BLOGG_STAVANGER_AGENT_BEREDSKAP_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/stavanger-agent-beredskap-april-2026.html": { body: BLOGG_STAVANGER_AGENT_BEREDSKAP_HTML, contentType: "text/html; charset=utf-8" },
   "/rapport/state-of-aeo-2026": { body: RAPPORT_STATE_AEO_2026_HTML, contentType: "text/html; charset=utf-8" },
   "/rapport/state-of-aeo-2026.html": { body: RAPPORT_STATE_AEO_2026_HTML, contentType: "text/html; charset=utf-8" },
 };
