@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>AI-Synlighetsrapport — Kampanje</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface2: #334155;
+    --border: #475569;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --indigo: #6366f1;
+    --indigo-light: #818cf8;
+    --green: #22c55e;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+  a { color: var(--indigo-light); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Layout */
+  .container { max-width: 860px; margin: 0 auto; padding: 24px 16px; }
+  .header {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 0;
+    margin-bottom: 32px;
+  }
+  .header-inner { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+  .logo { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .logo span { color: var(--indigo-light); font-weight: 600; }
+  h1 { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { color: var(--text-muted); font-size: 14px; }
+  .meta-row { display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap; }
+  .meta-item { font-size: 13px; color: var(--text-muted); }
+  .meta-item strong { color: var(--text); }
+
+  /* Hero score */
+  .hero { display: flex; gap: 32px; align-items: center; margin-bottom: 32px; flex-wrap: wrap; }
+  .gauge-wrap { position: relative; width: 160px; height: 160px; flex-shrink: 0; }
+  .gauge-wrap svg { width: 100%; height: 100%; }
+  .gauge-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .gauge-score { font-size: 40px; font-weight: 800; line-height: 1; }
+  .gauge-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .grade-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface); border: 2px solid var(--border);
+    border-radius: 12px; padding: 8px 16px; font-size: 14px; margin-bottom: 12px;
+  }
+  .grade-letter { font-size: 28px; font-weight: 800; }
+  .grade-desc { color: var(--text-muted); }
+  .hero-text h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .hero-text p { color: var(--text-muted); font-size: 14px; max-width: 500px; }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 8px; }
+  .card-title { font-size: 16px; font-weight: 700; }
+  .score-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .section-title { font-size: 14px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin: 20px 0 12px; }
+
+  /* Component bars */
+  .comp-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .comp-label { font-size: 13px; color: var(--text-muted); flex: 0 0 160px; }
+  .comp-bar-track { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+  .comp-bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+  .comp-score { font-size: 13px; font-weight: 600; flex: 0 0 45px; text-align: right; }
+
+  /* Table */
+  .check-table { width: 100%; border-collapse: collapse; }
+  .check-table td { padding: 8px 0; border-bottom: 1px solid var(--surface2); font-size: 14px; vertical-align: top; }
+  .check-table td:first-child { color: var(--text-muted); width: 200px; }
+  .check-table tr:last-child td { border-bottom: none; }
+  .check-table td.val { font-size: 13px; color: var(--text-muted); }
+
+  /* Icons */
+  .icon-ok { color: var(--green); font-weight: 700; }
+  .icon-fail { color: var(--red); font-weight: 700; }
+  .icon-warn { color: var(--yellow); font-weight: 700; }
+  .icon-neutral { color: var(--text-muted); }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    color: white;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* Recommendations */
+  .rec-list { list-style: none; }
+  .rec-list li {
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    background: var(--surface2);
+    border-radius: 8px;
+    font-size: 14px;
+    border-left: 3px solid var(--border);
+  }
+  .rec-list li.pri-high { border-left-color: var(--red); }
+  .rec-list li.pri-med { border-left-color: var(--yellow); }
+  .rec-list li.pri-low { border-left-color: var(--border); }
+
+  /* Issues */
+  .issue-list { list-style: none; }
+  .issue-list li { padding: 8px 0; border-bottom: 1px solid var(--surface2); font-size: 14px; color: var(--text-muted); }
+  .issue-list li::before { content: "⚠ "; color: var(--yellow); }
+  .issue-list li:last-child { border-bottom: none; }
+
+  /* Blockquote */
+  .quote {
+    border-left: 3px solid var(--indigo);
+    padding: 10px 16px;
+    margin: 12px 0;
+    background: rgba(99,102,241,0.08);
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* CTA */
+  .cta-card {
+    background: linear-gradient(135deg, rgba(99,102,241,0.2) 0%, rgba(99,102,241,0.05) 100%);
+    border: 1px solid rgba(99,102,241,0.4);
+    border-radius: 12px;
+    padding: 28px;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .cta-card h2 { font-size: 20px; margin-bottom: 8px; }
+  .cta-card p { color: var(--text-muted); margin-bottom: 20px; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .btn {
+    display: inline-block;
+    background: var(--indigo);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+  }
+  .btn:hover { background: var(--indigo-light); text-decoration: none; }
+  .btn-secondary {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    margin-top: 12px;
+  }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+  .footer strong { color: var(--text); }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .hero { flex-direction: column; }
+    .comp-label { flex: 0 0 120px; }
+    .check-table td:first-child { width: 140px; }
+    .meta-row { flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+<img src="https://synligdigital.no/track?h=i7bkbc29" width="1" height="1" alt="" style="position:absolute;width:1px;height:1px;opacity:0;" />
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">Generert av <span>Synlig</span> — AI-synlighet for norske bedrifter</div>
+    <h1>AI-Synlighetsrapport</h1>
+    <div class="subtitle">Kampanje</div>
+    <div class="meta-row">
+      <div class="meta-item">🌐 <strong>https://kampanje.com</strong></div>
+      <div class="meta-item">📅 <strong>2026-05-22</strong></div>
+      <div class="meta-item">🔬 <strong>Synlig AEO Audit v1.0</strong></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- HERO: Total score -->
+  <div class="hero">
+    <div class="gauge-wrap">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background ring -->
+        <circle cx="60" cy="60" r="45" fill="none" stroke="#334155" stroke-width="10"/>
+        <!-- Score ring -->
+        <circle cx="60" cy="60" r="45" fill="none"
+          stroke="#f59e0b" stroke-width="10"
+          stroke-dasharray="161.30999999999997 283"
+          stroke-dashoffset="0"
+          stroke-linecap="round"
+          transform="rotate(-90 60 60)"/>
+      </svg>
+      <div class="gauge-text">
+        <span class="gauge-score" style="color:#f59e0b">57</span>
+        <span class="gauge-label">av 100</span>
+      </div>
+    </div>
+    <div class="hero-text">
+      <div class="grade-badge">
+        <span class="grade-letter" style="color:#f59e0b">C</span>
+        <div>
+          <div style="font-weight:600">Middels</div>
+          <div class="grade-desc">AI-synlighetsscore</div>
+        </div>
+      </div>
+      <h2>Kampanje</h2>
+      <p>Denne rapporten viser hvor godt Kampanjes nettside er optimalisert for AI-assistenter som ChatGPT, Perplexity, Google AI Overviews og Claude. Jo høyere score, desto større sjanse for at AI-er anbefaler bedriften din til potensielle kunder.</p>
+    </div>
+  </div>
+
+  <!-- COMPONENT SCORES -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📊 Komponentscorer</div>
+      <div class="score-chip">57/100 (C)</div>
+    </div>
+    
+    <div class="comp-row">
+      <span class="comp-label">Strukturerte data</span>
+      <div class="comp-bar-track">
+        <div class="comp-bar-fill" style="width:20%;background:#ef4444"></div>
+      </div>
+      <span class="comp-score">5/25</span>
+    </div>
+    
+    <div class="comp-row">
+      <span class="comp-label">Meta & SEO</span>
+      <div class="comp-bar-track">
+        <div class="comp-bar-fill" style="width:73%;background:#22c55e"></div>
+      </div>
+      <span class="comp-score">11/15</span>
+    </div>
+    
+    <div class="comp-row">
+      <span class="comp-label">Innhold & siterbarhet</span>
+      <div class="comp-bar-track">
+        <div class="comp-bar-fill" style="width:64%;background:#f59e0b"></div>
+      </div>
+      <span class="comp-score">16/25</span>
+    </div>
+    
+    <div class="comp-row">
+      <span class="comp-label">Teknisk grunnlag</span>
+      <div class="comp-bar-track">
+        <div class="comp-bar-fill" style="width:80%;background:#22c55e"></div>
+      </div>
+      <span class="comp-score">16/20</span>
+    </div>
+    
+    <div class="comp-row">
+      <span class="comp-label">AI-signaler</span>
+      <div class="comp-bar-track">
+        <div class="comp-bar-fill" style="width:60%;background:#f59e0b"></div>
+      </div>
+      <span class="comp-score">9/15</span>
+    </div>
+  </div>
+
+  <!-- RECOMMENDATIONS -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">🎯 Anbefalinger</div>
+      <div class="score-chip">20 tiltak</div>
+    </div>
+
+    
+    <div class="section-title">Høy prioritet — direkte AI-synlighet</div>
+    <ul class="rec-list">
+      <li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Legg til schema med @type som matcher bransjen (Dentist, AutoRepair, etc.)</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Legg til AggregateRating for å vise stjernerating i søk og AI-svar</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Legg til openingHours i schema</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Legg til geo-koordinater (latitude/longitude) i schema</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Legg til FAQPage schema for vanlige spørsmål — direkte AI-sitérbart</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Legg til hasOfferCatalog/Service schema for tjenester</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Legg til Person schema for ansatte/spesialister — gir individuell synlighet</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Legg til datePublished og dateModified i Article schema — ferskhet øker AI-sitering 1.8x</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Legg til sameAs i Organization schema med lenker til LinkedIn, Enhetsregisteret, Facebook</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Legg til Speakable schema for voice assistant-synlighet — markerer nøkkelseksjoner for opplesing av AI</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Legg til BreadcrumbList schema — hjelper AI forstå sidens kontekst i nettstedstrukturen</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Legg til H2/H3-overskrifter i spørsmålsformat ("Hva koster...", "Hvordan fungerer...") — AI siterer spørsmålsbaserte overskrifter 3x hyppigere</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Skriv konsise avsnitt på 40-60 ord rett under H2/H3-overskrifter — dette er formatet AI siterer oftest</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Opprett /llms.txt med strukturert info om bedriften — dedikert fil for AI-modeller (ny standard)</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Skriv selvbeskrivende avsnitt som starter med "Vi er..." / "Vi tilbyr..." — dette er det AI siterer</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Publiser priser, åpningstider og adresse i ren tekst — AI må finne dette for å anbefale</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Publiser priser/priseksempler — AI-modeller siterer priser i anbefalinger</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Presenter teamet med navn og spesialisering — individuell synlighet i AI-søk</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Fjern blokkering av AI-crawlere i robots.txt for å gjenvinne AI-synlighet</li><li class="pri-high"><span class="badge" style="background:#ef4444">HØY</span>Legg til statistikk og kildehenvisninger ('ifølge...', 'studier viser...') — øker AI-synlighet med 30-40% ifølge HubSpot</li>
+    </ul>
+
+    
+
+    
+  </div>
+
+  <!-- 1. SCHEMA -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">1️⃣ Strukturerte data (Schema.org)</div>
+      <div class="score-chip" style="color:var(--red)">5/25</div>
+    </div>
+    <p style="font-size:14px;margin-bottom:16px">Fant <strong>2</strong> JSON-LD blokker. Typer: <strong>WebSite, WebPage, Organization, ImageObject, ItemList, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, ListItem, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle, NewsArticle</strong></p>
+    <table class="check-table">
+      <tr><td>LocalBusiness / bransjetype</td><td><span class="icon-fail">✗</span></td></tr>
+      <tr><td>Spesifikk type (f.eks. Dentist)</td><td><span class="icon-fail">✗</span></td></tr>
+      <tr><td>AggregateRating (stjerner)</td><td><span class="icon-fail">✗</span></td></tr>
+      <tr><td>Åpningstider (OpeningHours)</td><td><span class="icon-fail">✗</span></td></tr>
+      <tr><td>Geo-koordinater</td><td><span class="icon-fail">✗</span></td></tr>
+      <tr><td>Kontaktpunkt (ContactPoint)</td><td><span class="icon-fail">✗</span></td></tr>
+      <tr><td>FAQPage</td><td><span class="icon-fail">✗</span></td></tr>
+      <tr><td>Tjenester / tilbud (Service)</td><td><span class="icon-fail">✗</span></td></tr>
+      <tr><td>Navngitte personer (Person)</td><td><span class="icon-fail">✗</span></td></tr>
+    </table>
+  </div>
+
+  <!-- 2. META -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">2️⃣ Meta & SEO-grunnlag</div>
+      <div class="score-chip" style="color:var(--green)">11/15</div>
+    </div>
+    <table class="check-table">
+      <tr><td>Sidetittel</td><td><strong>Kampanje - nyheter om media, kommunikasjon, markedsføring, PR, teknologi, design og ledige stillinger</strong> <span class="val">(101 tegn)</span></td></tr>
+      <tr><td>Meta description</td><td>Kampanje er Norges ledende mediehus for hele medie- og kommunikasjonsbransjen.... <span class="val">(78 tegn)</span></td></tr>
+      <tr><td>OpenGraph</td><td><span class="icon-ok">✓</span> tittel, <span class="icon-ok">✓</span> beskrivelse, <span class="icon-fail">✗</span> bilde</td></tr>
+      <tr><td>Twitter Card</td><td><span class="icon-fail">✗</span> Mangler</td></tr>
+      <tr><td>Canonical URL</td><td><span class="icon-ok">✓</span></td></tr>
+      <tr><td>Språkattributt (lang)</td><td><span class="icon-ok">✓</span> nb-NO</td></tr>
+      <tr><td>Viewport (mobil)</td><td><span class="icon-ok">✓</span></td></tr>
+    </table>
+  </div>
+
+  <!-- 3. CONTENT -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">3️⃣ Innhold & siterbarhet</div>
+      <div class="score-chip" style="color:var(--green)">16/25</div>
+    </div>
+    <table class="check-table">
+      <tr><td>Ordtelling</td><td><strong>598</strong> ord <span class="icon-warn">⚠</span></td></tr>
+      <tr><td>H1-overskrift</td><td><span class="icon-ok">✓</span> 1 H1</td></tr>
+      <tr><td>H2-overskrifter</td><td>42 stk <span class="icon-ok">✓</span></td></tr>
+      <tr><td>Avsnitt</td><td>18 avsnitt (snitt 4 ord)</td></tr>
+      <tr><td>Lister (ul/ol)</td><td>9 stk</td></tr>
+      <tr><td>Bilder</td><td>70 bilder (11 med alt-tekst) <span class="icon-warn">⚠</span></td></tr>
+      <tr><td>FAQ-seksjon</td><td><span class="icon-fail">✗</span> Mangler</td></tr>
+    </table>
+    
+    <p style="font-size:13px;color:var(--text-muted);margin-top:16px">
+      <span class="icon-fail">✗</span> Ingen siterbare selvbeskrivelser funnet. AI-modeller trenger avsnitt som starter med "Vi er...", "Vi tilbyr...", "Vår spesialitet er..." for å anbefale bedriften din.
+    </p>
+  </div>
+
+  <!-- 4. TECHNICAL -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">4️⃣ Teknisk grunnlag</div>
+      <div class="score-chip" style="color:var(--green)">16/20</div>
+    </div>
+    <table class="check-table">
+      <tr><td>HTTPS</td><td><span class="icon-ok">✓</span></td></tr>
+      <tr><td>Lastetid</td><td><strong>0.4s</strong> <span class="icon-ok">✓</span></td></tr>
+      <tr><td>robots.txt</td><td><span class="icon-ok">✓</span> Tillater crawling</td></tr>
+      <tr><td>sitemap.xml</td><td><span class="icon-ok">✓</span> 10000 URLer</td></tr>
+      <tr><td>llms.txt (AI-veiledning)</td><td><span class="icon-fail">✗</span> Mangler</td></tr>
+      <tr><td>CF Markdown for Agents</td><td>ℹ Ikke Cloudflare</td></tr>
+      <tr><td>Komprimering (gzip/br)</td><td><span class="icon-ok">✓</span></td></tr>
+      <tr><td>Mobiloptimalisert</td><td><span class="icon-ok">✓</span></td></tr>
+    </table>
+  </div>
+
+  <!-- 5. AI SIGNALS -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">5️⃣ AI-signaler & siterbarhet</div>
+      <div class="score-chip" style="color:var(--yellow)">9/15</div>
+    </div>
+    <table class="check-table">
+      <tr><td>Bedriftsnavn tydelig</td><td><span class="icon-ok">✓</span></td></tr>
+      <tr><td>Adresse synlig på siden</td><td><span class="icon-fail">✗</span></td></tr>
+      <tr><td>Telefon synlig på siden</td><td><span class="icon-ok">✓</span></td></tr>
+      <tr><td>E-post synlig på siden</td><td><span class="icon-ok">✓</span></td></tr>
+      <tr><td>Prisinformasjon</td><td><span class="icon-fail">✗</span></td></tr>
+      <tr><td>Tjenesteliste</td><td><span class="icon-ok">✓</span></td></tr>
+      <tr><td>Team / ansatte-info</td><td><span class="icon-fail">✗</span></td></tr>
+      <tr><td>Rene URLer</td><td><span class="icon-ok">✓</span></td></tr>
+      <tr><td>Semantisk HTML</td><td><span class="icon-ok">✓</span></td></tr>
+    </table>
+  </div>
+
+  
+  <!-- DIAGNOSIS: WHY NOT MENTIONED -->
+  <div class="card" style="border-left: 4px solid var(--red)">
+    <div class="card-header">
+      <div class="card-title">🔍 Diagnose: Kvifor er du ikkje nemnt?</div>
+      <div class="score-chip" style="color:var(--red)">5/5 ikkje nemnt</div>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px">
+      For bedriftar i din by — dette er spørsmål AI-assistentar faktisk svarar på. Her er kvifor du ikkje dukkar opp.
+    </p>
+    <table class="check-table" style="margin-bottom:16px">
+      <tr style="font-weight:600"><td>AI-spørsmål</td><td style="width:80px">Status</td><td style="width:70px">Impact</td></tr>
+      
+      <tr>
+        <td style="font-style:italic;color:var(--text-muted)">«beste bedrift din by»</td>
+        <td><span class="icon-fail">✗ Ikkje nemnt</span></td>
+        <td><span style="font-size:11px;background:#fee2e2;color:#dc2626;padding:2px 6px;border-radius:4px">Høg</span></td>
+      </tr>
+      
+      <tr>
+        <td colspan="3" style="padding-left:16px;padding-bottom:8px">
+          <div style="font-size:12px;color:#dc2626;margin-bottom:4px">▸ Adresse er ikkje synleg på nettsida — AI kan ikkje kople dykk til ein by</div>
+          <div style="font-size:12px;color:var(--text-muted)">→ Legg adresse i footer på alle sider, og legg til geo-koordinatar i LocalBusiness-schema</div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="font-style:italic;color:var(--text-muted)">«bedrift pris din by»</td>
+        <td><span class="icon-fail">✗ Ikkje nemnt</span></td>
+        <td><span style="font-size:11px;background:#fee2e2;color:#dc2626;padding:2px 6px;border-radius:4px">Høg</span></td>
+      </tr>
+      
+      <tr>
+        <td colspan="3" style="padding-left:16px;padding-bottom:8px">
+          <div style="font-size:12px;color:#dc2626;margin-bottom:4px">▸ Ingen prisinformasjon på nettsida — AI kan ikkje svare på prissøk</div>
+          <div style="font-size:12px;color:var(--text-muted)">→ Legg til konkrete prisar eller prisintervall på ei dedikert prisside, og legg til priceRange i schema</div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="font-style:italic;color:var(--text-muted)">«hva koster bedrift»</td>
+        <td><span class="icon-fail">✗ Ikkje nemnt</span></td>
+        <td><span style="font-size:11px;background:#fee2e2;color:#dc2626;padding:2px 6px;border-radius:4px">Høg</span></td>
+      </tr>
+      
+      <tr>
+        <td colspan="3" style="padding-left:16px;padding-bottom:8px">
+          <div style="font-size:12px;color:#dc2626;margin-bottom:4px">▸ Manglar FAQPage-schema — AI-assistentar siterer FAQ direkte i svar</div>
+          <div style="font-size:12px;color:var(--text-muted)">→ Skriv eit FAQ-svar på nettsida: «hva koster bedrift» og legg til FAQPage JSON-LD schema-markup</div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="font-style:italic;color:var(--text-muted)">«bedrift åpen nå din by»</td>
+        <td><span class="icon-fail">✗ Ikkje nemnt</span></td>
+        <td><span style="font-size:11px;background:#fef9c3;color:#92400e;padding:2px 6px;border-radius:4px">Medium</span></td>
+      </tr>
+      
+      <tr>
+        <td colspan="3" style="padding-left:16px;padding-bottom:8px">
+          <div style="font-size:12px;color:#dc2626;margin-bottom:4px">▸ Adresse er ikkje synleg på nettsida — AI kan ikkje kople dykk til ein by</div>
+          <div style="font-size:12px;color:var(--text-muted)">→ Legg adresse i footer på alle sider, og legg til geo-koordinatar i LocalBusiness-schema</div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="font-style:italic;color:var(--text-muted)">«bedrift din by»</td>
+        <td><span class="icon-fail">✗ Ikkje nemnt</span></td>
+        <td><span style="font-size:11px;background:#fee2e2;color:#dc2626;padding:2px 6px;border-radius:4px">Høg</span></td>
+      </tr>
+      
+      <tr>
+        <td colspan="3" style="padding-left:16px;padding-bottom:8px">
+          <div style="font-size:12px;color:#dc2626;margin-bottom:4px">▸ Adresse er ikkje synleg på nettsida — AI kan ikkje kople dykk til ein by</div>
+          <div style="font-size:12px;color:var(--text-muted)">→ Legg adresse i footer på alle sider, og legg til geo-koordinatar i LocalBusiness-schema</div>
+        </td>
+      </tr>
+      
+    </table>
+    
+    <div class="section-title">🚀 Raskaste tiltak</div>
+    <ul class="issue-list">
+      <li>Legg til LocalBusiness (eller bransjespesifikk type) JSON-LD på alle sider</li><li>Legg adresse i footer på alle sider, og legg til geo-koordinatar i LocalBusiness-schema</li><li>Legg til konkrete prisar eller prisintervall på ei dedikert prisside, og legg til priceRange i schema</li>
+    </ul>
+  </div>
+
+  
+  <!-- ISSUES -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">⚠ Problemer funnet</div>
+      <div class="score-chip">6 stk</div>
+    </div>
+    <ul class="issue-list">
+      <li>Mangler LocalBusiness/bransjespesifikk schema</li><li>Tittel for lang (101 tegn, anbefalt 30-65)</li><li>Meta description for kort (78 tegn, anbefalt 120-160)</li><li>59 av 70 bilder mangler alt-tekst</li><li>Lav innholdstetthet (2%) — mye kode, lite tekst</li><li>robots.txt blokkerer AI-crawlere (GPTBot/ClaudeBot/PerplexityBot) — innholdet er usynlig for de fleste AI-modeller</li>
+    </ul>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-card">
+    <h2>Klar for å øke AI-synligheten?</h2>
+    <p>Synlig hjelper norske bedrifter med å bli anbefalte av ChatGPT, Perplexity og Google AI Overviews. Ta kontakt for en uforpliktende prat.</p>
+    <a href="https://synligdigital.no/priser?ref=cold-report&utm_source=cold-report&utm_medium=html-report&utm_campaign=i7bkbc29#lead-email-handlingsplan" style="display:inline-block;background:#22c55e;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;box-shadow:0 4px 12px rgba(34,197,94,.3);margin-bottom:14px">Bestill handlingsplan — 4 900 NOK →</a><br>
+    <a href="mailto:hei@synligdigital.no?subject=AEO-hjelp%20for%20Kampanje%20(57%2F100)&body=Hei%20Synlig%20Digital%2C%0A%0AJeg%20har%20akkurat%20f%C3%A5tt%20AEO-rapport%20for%20Kampanje%20(score%3A%2057%2F100%2C%20karakter%3A%20C).%0A%0AJeg%20vil%20gjerne%20h%C3%B8re%20om%20hvordan%20dere%20kan%20hjelpe%20oss%20%C3%A5%20forbedre%20AI-synligheten.%0A%0AMin%20kontaktinfo%3A%20%5Bnavn%2C%20telefon%5D%0A%0ATakk!" class="btn-secondary">📧 Få hjelp med AEO →</a>
+    <a href="https://synligdigital.no" class="btn-secondary">Les mer om AEO →</a>
+    <p style="font-size:13px;color:var(--text-muted);margin-top:20px;padding-top:16px;border-top:1px solid rgba(99,102,241,0.2);margin-bottom:0">Full handlingsplan fra 4 900 NOK. <a href="https://synligdigital.no/priser" style="color:var(--indigo-light);text-decoration:underline;font-weight:500">Se priser →</a></p>
+  </div>
+
+  <!-- METHODOLOGY -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📋 Om denne rapporten</div>
+    </div>
+    <p style="font-size:14px;color:var(--text-muted);margin-bottom:16px">Rapporten er generert av Synlig sitt AEO (Answer Engine Optimization) audit-verktøy. Vi analyserer hvordan nettsiden fremstår for AI-assistenter som ChatGPT, Perplexity, Google AI Overviews og Claude.</p>
+    <table class="check-table">
+      <tr><td>Strukturerte data</td><td class="val">25p — Schema.org/JSON-LD markup, bransjetype, rating, FAQ</td></tr>
+      <tr><td>Meta & SEO</td><td class="val">15p — Titler, beskrivelser, OpenGraph, teknisk SEO-grunnlag</td></tr>
+      <tr><td>Innhold</td><td class="val">25p — Ordmengde, overskriftsstruktur, FAQ, bilder, lenking</td></tr>
+      <tr><td>Teknisk</td><td class="val">20p — HTTPS, hastighet, sitemap, robots.txt, llms.txt, mobil</td></tr>
+      <tr><td>AI-signaler</td><td class="val">15p — Bedriftsinformasjon, siterbarhet, priser, tjenester, semantikk</td></tr>
+    </table>
+  </div>
+
+</div><!-- /container -->
+
+<footer class="footer">
+  <div class="container">
+    <strong>Synlig</strong> — AI-synlighet for norske bedrifter<br>
+    <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> · <a href="https://synligdigital.no">synligdigital.no</a>
+    <br><br>
+    <span style="font-size:12px">Denne rapporten er konfidensiell og generert spesifikt for Kampanje. Ikke del den offentlig.</span>
+  </div>
+</footer>
+
+</body>
+</html>
