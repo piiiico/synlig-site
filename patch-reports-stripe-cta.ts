@@ -1,12 +1,17 @@
 #!/usr/bin/env bun
-// Patch /workspace/synlig-site/reports/*.html in place: upgrade each report's
-// CTA from mailto-primary to a green Stripe-direct primary button → /priser
-// with #lead-email-handlingsplan anchor (mirrors sjekk-email + sjekk-result
-// CTAs landed 2026-05-22 at 13:43).
+// BACKFILL-ONLY (as of 2026-05-22 22:xx): the green Stripe-direct primary CTA
+// is now baked directly by tools/aeo-audit/src/report-html.ts, so newly-generated
+// reports ship conversion-ready without this script. This script remains for
+// legacy report files that predate the inline bake (idempotent: skips any file
+// already carrying "ref=cold-report").
 //
-// Why: 90+ static AEO reports are linked from cold-outreach E1/E2/E3/E4 emails
-// (synligdigital.no/r/<hash>). Each click on the report's CTA today routes to
-// a mailto handler — silent leak vs. the in-page Stripe path that the rest of
+// Original mission: upgrade each report's CTA from mailto-primary to a green
+// Stripe-direct primary button → /priser with #lead-email-handlingsplan anchor
+// (mirrors sjekk-email + sjekk-result CTAs landed 2026-05-22 at 13:43).
+//
+// Why it mattered: 90+ static AEO reports are linked from cold-outreach E1/E2/E3/E4
+// emails (synligdigital.no/r/<hash>). Each click on the report's CTA used to route
+// to a mailto handler — silent leak vs. the in-page Stripe path that the rest of
 // the funnel converts on. Bringing the report CTA to parity unifies conversion
 // across email + web + report surfaces.
 //
