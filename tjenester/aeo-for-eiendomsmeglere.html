@@ -577,6 +577,51 @@
     .sjekk-field input:focus { border-color: var(--accent); }
     .sjekk-submit { width: 100%; padding: 11px 18px; background: var(--accent); color: var(--bg); border: none; border-radius: 6px; font-weight: 700; font-size: 0.9rem; cursor: pointer; margin-top: 6px; font-family: inherit; }
     .sjekk-submit:hover { opacity: 0.9; }
+
+    /* Case link */
+    .case-link {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 20px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-decoration: none;
+      margin: 16px 0;
+      transition: border-color 0.15s;
+    }
+    .case-link:hover { border-color: var(--accent-dim); }
+    .case-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      background: rgba(110,231,183,0.1);
+      border: 1px solid var(--accent-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .case-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .case-title {
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .case-desc {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
   </style>
 </head>
 <body>
@@ -815,6 +860,38 @@
         </div>
 
       </div>
+    </div>
+  </section>
+
+  <!-- Social proof: cross-industry case studies -->
+  <section>
+    <div class="container">
+      <h2>Dokumenterte resultater — annen bransje, samme metodikk</h2>
+      <p>
+        Vi har ikke en eiendomsmegler-case offentlig ennå. Men metodikken er den samme på tvers av bransjer. Her er to klienter med dokumenterte score-økninger:
+      </p>
+
+      <a href="/case/nordic-lithium?ref=eiendomsmeglere" class="case-link">
+        <div class="case-icon">⚡</div>
+        <div>
+          <div class="case-label">Case study · +18 poeng på 2 uker</div>
+          <div class="case-title">Nordic Lithium: 67/C → 85/A</div>
+          <div class="case-desc">Norsk nettbutikk for LiFePO4-batterier. Robots.txt blokkerte alle AI-crawlere. To enkle intervensjoner ga 18 poengs økning på to uker.</div>
+        </div>
+      </a>
+
+      <a href="/case/pierstop?ref=eiendomsmeglere" class="case-link">
+        <div class="case-icon">⚓</div>
+        <div>
+          <div class="case-label">Case study · +24 poeng</div>
+          <div class="case-title">Pierstop: 52/D → 76/B</div>
+          <div class="case-desc">Norges ledende cruisehavn-guide med 176 sider. Perfekt teknisk grunnmur, men manglende schema. Vi rettet JSON-LD og NAP-konsistens; AI-svarene begynte å sitere dem.</div>
+        </div>
+      </a>
+
+      <p class="muted">
+        Samme analyse og samme tiltak gjelder for eiendomsmeglerfirmaer. Det kritiske spørsmålet er det samme: <em>Er meglerkontoret synlig for AI-assistenter når en boligselger leter etter megler i området?</em>
+      </p>
     </div>
   </section>
 
