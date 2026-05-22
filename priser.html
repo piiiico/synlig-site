@@ -243,9 +243,80 @@
       text-align: center;
     }
 
+    /* Resultater fra kunder */
+    .results {
+      padding: 32px 0 8px;
+    }
+    .results-eyebrow {
+      font-size: 0.82rem;
+      color: var(--gray-600);
+      text-align: center;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .results-card {
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 20px 22px;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .results-score {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      letter-spacing: -0.01em;
+    }
+    .results-score .arrow {
+      color: var(--green-600);
+      font-weight: 700;
+    }
+    .results-score .delta {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--green-600);
+      background: var(--green-100);
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 4px;
+    }
+    .results-company {
+      font-size: 0.92rem;
+      color: var(--gray-700);
+      font-weight: 600;
+    }
+    .results-summary {
+      font-size: 0.86rem;
+      color: var(--gray-600);
+      line-height: 1.5;
+      margin: 4px 0 6px;
+    }
+    .results-link {
+      font-size: 0.85rem;
+      color: var(--blue-700);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 500;
+      margin-top: auto;
+    }
+    .results-link:hover { color: var(--blue-900); }
+
     /* Services grid */
     .services {
-      padding: 48px 0 64px;
+      padding: 32px 0 64px;
     }
     .services-grid {
       display: grid;
@@ -478,6 +549,7 @@
       .hero h1 { font-size: 1.7rem; }
       .services-grid { grid-template-columns: 1fr; }
       .service-card.featured { margin-top: 16px; }
+      .results-grid { grid-template-columns: 1fr; }
       .compare-table { font-size: 0.82rem; }
       .compare-table th, .compare-table td { padding: 10px 12px; }
     }
@@ -512,6 +584,26 @@
         <a href="/tjenester/aeo-for-saas-bedrifter" style="color: var(--blue-700); text-decoration: none; margin: 0 4px;">B2B SaaS</a> ·
         <a href="/tjenester/aeo-for-tannleger" style="color: var(--blue-700); text-decoration: none; margin: 0 4px;">Tannleger</a> ·
         <a href="mailto:hei@synligdigital.no?subject=AEO%20for%20bransjen%20min" style="color: var(--blue-700); text-decoration: none; margin: 0 4px;">Andre bransjer</a>
+      </div>
+    </section>
+
+    <section class="results">
+      <div class="container">
+        <div class="results-eyebrow">Resultater fra kunder</div>
+        <div class="results-grid">
+          <div class="results-card">
+            <div class="results-score">67/C <span class="arrow">&rarr;</span> 85/A <span class="delta">+18 på 2 uker</span></div>
+            <div class="results-company">Nordic Lithium &mdash; norsk batteri-nettbutikk</div>
+            <p class="results-summary">Schema-markup, GBP-opprydding og innholdsjustering. Ble plukket opp av ChatGPT og Perplexity uten plattformbytte.</p>
+            <a href="/case/nordic-lithium?ref=priser" class="results-link">Les hele case-studien &rarr;</a>
+          </div>
+          <div class="results-card">
+            <div class="results-score">52/D <span class="arrow">&rarr;</span> 76/B <span class="delta">+24 poeng</span></div>
+            <div class="results-company">Pierstop &mdash; cruisehavn-guide med 176 sider</div>
+            <p class="results-summary">Perfekt teknisk grunnmur, manglende schema. Vi rettet JSON-LD og NAP-konsistens; AI-svarene begynte &aring; sitere dem.</p>
+            <a href="/case/pierstop?ref=priser" class="results-link">Les hele case-studien &rarr;</a>
+          </div>
+        </div>
       </div>
     </section>
 
