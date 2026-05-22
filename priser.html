@@ -387,6 +387,17 @@
       text-align: center;
       margin-top: 8px;
     }
+    .sample-report-link {
+      font-size: 0.85rem;
+      text-align: center;
+      margin: 0 0 14px;
+    }
+    .sample-report-link a {
+      color: var(--blue-700);
+      text-decoration: underline;
+      font-weight: 500;
+    }
+    .sample-report-link a:hover { color: var(--blue-900); }
 
     /* Comparison table */
     .compare {
@@ -520,6 +531,7 @@
               <li>Skriftlig rapport med score og tiltak</li>
               <li>1 times gjennomgang</li>
             </ul>
+            <p class="sample-report-link"><a href="/r/eksempel?ref=priser-sample">Se eksempel: vår egen rapport (96/100) &rarr;</a></p>
             <form method="POST" action="/api/lead-capture" class="lead-form">
               <label class="lead-form-label" for="lead-email-handlingsplan">Skriv inn e-post for å starte &rarr;</label>
               <input type="email" id="lead-email-handlingsplan" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254">
