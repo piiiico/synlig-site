@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bestill med faktura — Synlig Digital</title>
+  <meta name="description" content="Bestill AEO-pakke fra Synlig Digital med faktura. Vi sender faktura innen 24 timer — du betaler etter mottak. Arbeidet starter når fakturaen er signert.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://synligdigital.no/faktura">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Bestill med faktura — Synlig Digital">
+  <meta property="og:description" content="Bestill AEO-pakke med faktura. Vi sender faktura innen 24 timer.">
+  <meta property="og:url" content="https://synligdigital.no/faktura">
+  <meta property="og:site_name" content="Synlig">
+  <meta property="og:locale" content="nb_NO">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --blue-900: #1a365d;
+      --blue-700: #2b4c8a;
+      --blue-100: #ebf2ff;
+      --green-600: #38a169;
+      --green-500: #48bb78;
+      --green-100: #e6f7ed;
+      --red-600: #c53030;
+      --gray-900: #1a202c;
+      --gray-700: #4a5568;
+      --gray-600: #5a6577;
+      --gray-200: #e2e8f0;
+      --gray-100: #edf2f7;
+      --gray-50: #f7fafc;
+      --white: #ffffff;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--gray-700);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--blue-700); }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    nav {
+      border-bottom: 1px solid var(--gray-200);
+      background: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      text-decoration: none;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: var(--gray-700);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    .nav-links a:hover { color: var(--gray-900); }
+    .nav-cta {
+      background: var(--gray-900);
+      color: var(--white) !important;
+      padding: 8px 16px;
+      border-radius: 6px;
+    }
+
+    .hero {
+      padding: 48px 0 24px;
+    }
+    .hero h1 {
+      font-size: 1.9rem;
+      color: var(--gray-900);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 1.02rem;
+      color: var(--gray-600);
+    }
+    .trust-box {
+      margin: 20px 0 0;
+      padding: 16px 20px;
+      background: var(--green-100);
+      border: 1px solid var(--green-500);
+      border-radius: 8px;
+      font-size: 0.92rem;
+      color: var(--gray-700);
+    }
+
+    .form-section {
+      padding: 32px 0 64px;
+    }
+    form {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 32px;
+    }
+    .field {
+      margin-bottom: 20px;
+    }
+    .field label {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 6px;
+    }
+    .field .hint {
+      font-size: 0.82rem;
+      color: var(--gray-600);
+      font-weight: 400;
+      margin-left: 6px;
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 0.95rem;
+      font-family: var(--font);
+      color: var(--gray-900);
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--blue-700);
+    }
+    .field textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+    .field input:invalid:not(:placeholder-shown) {
+      border-color: var(--red-600);
+    }
+    .submit-row {
+      margin-top: 24px;
+    }
+    button[type="submit"] {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      background: var(--green-600);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: background 0.15s;
+    }
+    button[type="submit"]:hover { background: var(--green-500); }
+    button[type="submit"]:disabled { opacity: 0.6; cursor: wait; }
+    .note {
+      font-size: 0.82rem;
+      color: var(--gray-600);
+      text-align: center;
+      margin-top: 12px;
+    }
+    .error-banner {
+      display: none;
+      margin-bottom: 20px;
+      padding: 12px 16px;
+      background: #fff5f5;
+      border: 1px solid var(--red-600);
+      border-radius: 6px;
+      color: var(--red-600);
+      font-size: 0.92rem;
+    }
+
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--gray-200);
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--gray-600);
+    }
+    footer a { color: var(--gray-700); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 800px) {
+      .nav-links { gap: 16px; }
+      .nav-links li:not(:last-child) { display: none; }
+      .hero h1 { font-size: 1.5rem; }
+      form { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">Synlig</a>
+      <ul class="nav-links">
+        <li><a href="/guide">Guide</a></li>
+        <li><a href="/blogg">Blogg</a></li>
+        <li><a href="/priser">Priser</a></li>
+        <li><a href="https://sjekk.synligdigital.no/" class="nav-cta">Gratis sjekk</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Bestill med faktura</h1>
+        <p>Fyll inn skjemaet, så sender vi faktura innen 24 timer. Du betaler etter mottak. Arbeidet starter når fakturaen er signert.</p>
+        <div class="trust-box">
+          <strong>Slik fungerer det:</strong> Du sender bestillingen → vi sender faktura med 14 dagers betalingsfrist → arbeidet starter når faktura er signert. Alle priser eksklusiv mva.
+        </div>
+      </div>
+    </section>
+
+    <section class="form-section">
+      <div class="container">
+        <div id="error-banner" class="error-banner"></div>
+        <form id="faktura-form" method="POST" action="/faktura" novalidate>
+          <input type="hidden" name="source" value="faktura-form">
+          <input type="hidden" name="timestamp" id="timestamp">
+
+          <div class="field">
+            <label for="pakke">Pakke <span class="hint">(velg den du vil bestille)</span></label>
+            <select id="pakke" name="pakke" required>
+              <option value="">— Velg pakke —</option>
+              <option value="priser-analyse">AI-synlighetsanalyse — 4 900 kr (engangsanalyse, 5 virkedager)</option>
+              <option value="priser-fundament">AI-synlighetsfundament — 14 900 kr (implementering, 2–4 uker)</option>
+              <option value="priser-lopende">Løpende overvåking — 4 900 kr/mnd (månedlig abonnement)</option>
+              <option value="aeo-for-advokater">AEO for advokater — vertikalpakke</option>
+              <option value="aeo-for-saas-bedrifter">AEO for B2B SaaS — vertikalpakke</option>
+              <option value="aeo-for-tannleger">AEO for tannleger — vertikalpakke</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="firmanavn">Firmanavn</label>
+            <input type="text" id="firmanavn" name="firmanavn" required placeholder="F.eks. Eksempel AS" autocomplete="organization" maxlength="200">
+          </div>
+
+          <div class="field">
+            <label for="orgnr">Organisasjonsnummer <span class="hint">(9 siffer)</span></label>
+            <input type="text" id="orgnr" name="orgnr" required pattern="[0-9]{9}" inputmode="numeric" placeholder="987654321" maxlength="9" autocomplete="off">
+          </div>
+
+          <div class="field">
+            <label for="kontaktperson">Kontaktperson</label>
+            <input type="text" id="kontaktperson" name="kontaktperson" required placeholder="Fornavn Etternavn" autocomplete="name" maxlength="200">
+          </div>
+
+          <div class="field">
+            <label for="epost">E-post</label>
+            <input type="email" id="epost" name="epost" required placeholder="navn@firma.no" autocomplete="email" maxlength="200">
+          </div>
+
+          <div class="field">
+            <label for="telefon">Telefon <span class="hint">(valgfritt)</span></label>
+            <input type="tel" id="telefon" name="telefon" placeholder="+47 123 45 678" autocomplete="tel" maxlength="40">
+          </div>
+
+          <div class="field">
+            <label for="domene">Domene som skal analyseres <span class="hint">(uten https://)</span></label>
+            <input type="text" id="domene" name="domene" required placeholder="dinbedrift.no" autocomplete="url" maxlength="200">
+          </div>
+
+          <div class="field">
+            <label for="kommentar">Eventuelle ønsker eller spørsmål <span class="hint">(valgfritt)</span></label>
+            <textarea id="kommentar" name="kommentar" placeholder="F.eks. spesifikke konkurrenter, fakturaadresse, EHF-bestillinger, eller andre detaljer." maxlength="2000"></textarea>
+          </div>
+
+          <div class="submit-row">
+            <button type="submit" id="submit-btn">Send bestilling</button>
+            <p class="note">Vi sender faktura innen 24 timer. Ingen betaling før du har mottatt og signert.</p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Synlig Digital · Stavanger · <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> · <a href="/">synligdigital.no</a></p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      // Pre-fill pakke from ?slug=
+      var params = new URLSearchParams(window.location.search);
+      var slug = params.get("slug");
+      if (slug) {
+        var sel = document.getElementById("pakke");
+        for (var i = 0; i < sel.options.length; i++) {
+          if (sel.options[i].value === slug) {
+            sel.selectedIndex = i;
+            break;
+          }
+        }
+      }
+      // Stamp client-side timestamp
+      document.getElementById("timestamp").value = new Date().toISOString();
+
+      // Client-side validation + submit UX
+      var form = document.getElementById("faktura-form");
+      var btn = document.getElementById("submit-btn");
+      var errorBanner = document.getElementById("error-banner");
+      var orgnrInput = document.getElementById("orgnr");
+
+      form.addEventListener("submit", function(e) {
+        errorBanner.style.display = "none";
+        // Orgnr validation
+        if (!/^[0-9]{9}$/.test(orgnrInput.value.trim())) {
+          e.preventDefault();
+          errorBanner.textContent = "Organisasjonsnummer må være 9 siffer.";
+          errorBanner.style.display = "block";
+          orgnrInput.focus();
+          return;
+        }
+        btn.disabled = true;
+        btn.textContent = "Sender…";
+      });
+    })();
+  </script>
+</body>
+</html>

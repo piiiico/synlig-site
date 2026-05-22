@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AEO for tannleger — Bli klinikken ChatGPT anbefaler — Synlig</title>
+  <meta name="description" content="Norske tannklinikker er nesten usynlige i AI-svar. Fem audits av norske klinikker scorer snitt 50 av 100. Ingen hadde MedicalBusiness-schema. Se hva som mangler.">
+  <link rel="canonical" href="https://synligdigital.no/tjenester/aeo-for-tannleger">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AEO for tannleger — Bli klinikken ChatGPT anbefaler">
+  <meta property="og:description" content="Fem norske tannklinikker auditert. Snitt 50/100. 0 hadde MedicalBusiness-schema. Pasienter spør AI om akutt tannlege — du må være svaret.">
+  <meta property="og:url" content="https://synligdigital.no/tjenester/aeo-for-tannleger">
+  <meta property="og:image" content="https://synligdigital.no/og.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Synlig">
+  <meta property="og:locale" content="nb_NO">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="AEO for tannleger — Bli svaret i ChatGPT">
+  <meta name="twitter:description" content="Fem norske tannklinikker auditert. Snitt 50/100. Ingen hadde MedicalBusiness-schema.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "AEO for tannleger",
+    "description": "Answer Engine Optimization spesialisert for norske tannklinikker. Vi hjelper tannleger med å bli anbefalt i ChatGPT, Perplexity og Google AI Overview når pasienter spør om tannlege i sin by, akutt tannlege eller spesifikke behandlinger. Tjenesten dekker MedicalBusiness/Dentist-schema, åpningstider og akutt-FAQ, behandlingssider med pris, bydels-targeting og samkjøring med Google Business Profile.",
+    "provider": {
+      "@type": "Organization",
+      "name": "Synlig Digital",
+      "url": "https://synligdigital.no",
+      "email": "hei@synligdigital.no"
+    },
+    "serviceType": "Answer Engine Optimization",
+    "areaServed": {
+      "@type": "Country",
+      "name": "Norway"
+    },
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "Tannklinikker og tannleger i Norge"
+    },
+    "url": "https://synligdigital.no/tjenester/aeo-for-tannleger",
+    "inLanguage": "nb-NO"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Hva er AEO for tannleger?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AEO (Answer Engine Optimization) for tannleger handler om at klinikken blir anbefalt når pasienter spør ChatGPT, Perplexity eller Google AI om 'tannlege i Stavanger', 'akutt tannlege Oslo' eller 'Invisalign-spesialist'. Tre tekniske byggesteiner avgjør: MedicalBusiness/Dentist schema-markup, FAQ-side med åpningstider og akutt-rutiner, og behandlingssider med pris og spesialiseringer. AEO erstatter ikke Google Business Profile — det forsterker det ved å gi AI-modeller den strukturen de leter etter."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Hvorfor bør tannklinikker bry seg om AI-synlighet nå?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pasienter starter ikke alltid på Google lenger. De spør ChatGPT 'beste tannlege i Stavanger med Invisalign' eller 'akutt tannlege i Oslo søndag'. AI svarer med to eller tre konkrete klinikknavn. Hvis du ikke er ett av dem, eksisterer du ikke i den første vurderingsrunden. Tannleger er særlig utsatt fordi pasientvalg ofte er hastig (smerte, akutt) og lokal — AI gjør hele forfilteret før pasienten ringer rundt."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Hva er forskjellen på AEO og SEO for tannleger?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SEO handler om å rangere høyt på Google-søk når noen taster 'tannlege Stavanger'. AEO handler om at ChatGPT, Perplexity og Google AI Overview siterer klinikken din når noen spør i naturlig språk. Tannleger trenger begge, men AEO krever én ting SEO ikke nødvendigvis krever: strukturerte data spesifikt for medisinske virksomheter (MedicalBusiness, Dentist), eksplisitte åpningstider, og innhold som svarer på pasient-spørsmål i FAQ-format. Vi gjør AEO uten å bryte SEO som allerede fungerer."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Hva koster det?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Tre pakker. AI-synlighetsanalyse fra 4 900 NOK er en engangsrapport med score, schema-sjekk og prioriterte tiltak for klinikken, levering innen 5 virkedager. AI-synlighetsfundament fra 14 900 NOK er full implementering: MedicalBusiness/Dentist schema, åpningstider og akutt-FAQ, behandlingssider med pris, og bydels-targeting. Løpende overvåking fra 4 900 NOK per måned er månedlig audit, innholdsproduksjon (behandlingsguider, FAQ-oppdatering) og konkurransesporing i AI-svar."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Hvor lang tid tar det å se resultater?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Schema-markup og åpningstider blir indeksert på 1 til 2 uker. Behandlingssider og FAQ trenger 4 til 8 uker før AI-assistenter begynner å sitere dem konsekvent. I praksis ser vi at klinikker som mangler all strukturert data — som var fire av fem i vår analyse — får størst hopp på de første tekniske endringene alene. Synlighet i AI-svar måles månedlig i den løpende pakka."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0b;
+      --bg-raised: #111113;
+      --border: #222225;
+      --text: #e8e8ed;
+      --text-dim: #9f9faa;
+      --text-muted: #9f9faa;
+      --accent: #6ee7b7;
+      --accent-dim: #2d6a5a;
+      --red: #f87171;
+      --red-dim: #6a2d2d;
+      --yellow: #fbbf24;
+      --yellow-dim: #6a5a2d;
+      --blue: #60a5fa;
+      --mono: 'SF Mono', 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+      --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+    }
+
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container { max-width: 640px; margin: 0 auto; padding: 0 24px; width: 100%; }
+    .container-wide { max-width: 880px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+    main { flex: 1; padding: 0 0 80px; }
+
+    .hero {
+      padding: 80px 0 64px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      background: rgba(110,231,183,0.1);
+      border: 1px solid var(--accent-dim);
+      padding: 3px 10px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--text-dim);
+      line-height: 1.65;
+      margin-bottom: 32px;
+      max-width: 520px;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--accent);
+      color: #0a0a0b;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-primary:hover { opacity: 0.9; }
+
+    .btn-secondary {
+      display: inline-block;
+      color: var(--text-dim);
+      font-size: 0.88rem;
+      padding: 12px 0;
+      text-decoration: none;
+    }
+
+    .btn-secondary:hover { color: var(--text); }
+
+    .stat-bar {
+      background: var(--bg-raised);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 0;
+    }
+
+    .stat-bar-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .stat-item { text-align: center; }
+
+    .stat-value {
+      font-family: var(--mono);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+    section:last-child { border-bottom: none; }
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    p {
+      font-size: 0.92rem;
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+
+    p.muted { color: var(--text-dim); }
+
+    /* Query examples */
+    .query-card {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin: 14px 0;
+    }
+    .query-prompt {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .query-response {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    /* Audit data table */
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 0.82rem;
+    }
+
+    .audit-table th {
+      text-align: left;
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .audit-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(34,34,37,0.7);
+      color: var(--text-dim);
+      vertical-align: top;
+    }
+
+    .audit-table tr:last-child td { border-bottom: none; }
+    .audit-table .firm-name { color: var(--text); font-weight: 500; }
+
+    .check-ok { color: var(--accent); font-family: var(--mono); font-size: 0.72rem; }
+    .check-fail { color: var(--red); font-family: var(--mono); font-size: 0.72rem; }
+    .check-partial { color: var(--yellow); font-family: var(--mono); font-size: 0.72rem; }
+
+    .score-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+    .score-c {
+      background: rgba(251,191,36,0.1);
+      border: 1px solid var(--yellow-dim);
+      color: var(--yellow);
+    }
+    .score-d {
+      background: rgba(248,113,113,0.1);
+      border: 1px solid var(--red-dim);
+      color: var(--red);
+    }
+
+    /* Warning block */
+    .warning-block {
+      margin: 24px 0;
+      padding: 18px 20px;
+      background: rgba(251,191,36,0.05);
+      border: 1px solid var(--yellow-dim);
+      border-left: 3px solid var(--yellow);
+      border-radius: 6px;
+    }
+    .warning-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--yellow);
+      margin-bottom: 8px;
+    }
+    .warning-block p { margin: 0; font-size: 0.88rem; }
+
+    /* Tactics steps */
+    .steps { margin: 24px 0; }
+    .step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(110,231,183,0.12);
+      border: 1px solid var(--accent-dim);
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-title {
+      font-weight: 600;
+      font-size: 0.92rem;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .step-desc {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.55;
+      margin: 0;
+    }
+    .step-code {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      line-height: 1.5;
+      overflow-x: auto;
+    }
+
+    /* Pricing block */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin: 28px 0 8px;
+    }
+    .price-card {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+    }
+    .price-card.featured {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent-dim);
+    }
+    .price-card.featured::before {
+      content: "Start her";
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 3px 10px;
+      border-radius: 3px;
+      align-self: flex-start;
+      margin-bottom: 10px;
+    }
+    .price-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .price-amount {
+      font-family: var(--mono);
+      font-size: 1.5rem;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .price-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+    .price-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 18px;
+      flex: 1;
+    }
+    .price-list li {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      padding: 4px 0 4px 18px;
+      position: relative;
+    }
+    .price-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .price-cta {
+      display: block;
+      text-align: center;
+      padding: 10px 14px;
+      background: var(--accent);
+      color: #0a0a0b;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-bottom: 6px;
+    }
+    .price-cta:hover { opacity: 0.9; }
+    .price-cta-secondary {
+      display: block;
+      text-align: center;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 4px 0 0;
+    }
+    .price-cta-secondary:hover { color: var(--text-dim); text-decoration: underline; }
+
+    /* Audit form (bottom CTA secondary) */
+    .audit-form-box {
+      margin-top: 28px;
+      padding: 20px 22px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+    }
+    .audit-form-label {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+    .audit-form-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .audit-form-input {
+      flex: 1 1 200px;
+      min-width: 160px;
+      padding: 9px 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .audit-form-input:focus { border-color: var(--accent); }
+    .audit-form-btn {
+      padding: 9px 16px;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .audit-form-btn:hover { opacity: 0.9; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+    }
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: var(--text-dim); }
+
+    @media (max-width: 700px) {
+      .hero-title { font-size: 1.5rem; }
+      .stat-bar-inner { grid-template-columns: 1fr; gap: 16px; }
+      .audit-table { font-size: 0.74rem; }
+      .audit-table th, .audit-table td { padding: 6px 8px; }
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Inline sjekk form */
+    .sjekk-inline-wrap { max-width: 520px; margin-top: 28px; }
+    .sjekk-inline-label { font-size: 0.78rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+    .sjekk-inline-form { background: var(--bg); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; padding: 22px 24px; }
+    .sjekk-field { margin-bottom: 12px; }
+    .sjekk-field label { display: block; font-size: 0.78rem; font-weight: 500; color: var(--text-dim); margin-bottom: 4px; }
+    .sjekk-field input { width: 100%; padding: 9px 11px; background: var(--bg-raised); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 0.88rem; outline: none; font-family: inherit; }
+    .sjekk-field input:focus { border-color: var(--accent); }
+    .sjekk-submit { width: 100%; padding: 11px 18px; background: var(--accent); color: var(--bg); border: none; border-radius: 6px; font-weight: 700; font-size: 0.9rem; cursor: pointer; margin-top: 6px; font-family: inherit; }
+    .sjekk-submit:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+
+<nav style="background:rgba(10,10,11,0.92);backdrop-filter:blur(12px);border-bottom:1px solid #222225;padding:1rem 2rem;position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;max-width:100%;">
+  <a href="/" style="font-size:1.15rem;font-weight:700;color:#6ee7b7;text-decoration:none;">Synlig</a>
+  <div style="display:flex;gap:2rem;">
+    <a href="/" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Hjem</a>
+    <a href="/priser" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Priser</a>
+    <a href="/blogg" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Blogg</a>
+    <a href="mailto:hei@synligdigital.no" style="background:#6ee7b7;color:#0a0a0b;padding:0.4rem 1rem;border-radius:6px;font-weight:600;text-decoration:none;font-size:0.9rem;">Kontakt</a>
+  </div>
+</nav>
+
+<main>
+
+  <div class="hero">
+    <div class="container">
+      <div class="hero-tag">AEO for tannleger</div>
+      <h1 class="hero-title">Bli klinikken<br><em>ChatGPT anbefaler</em></h1>
+      <p class="hero-subtitle">
+        Pasienter googler ikke alltid lenger. De spør ChatGPT eller Perplexity: "akutt tannlege i Stavanger", "Invisalign-spesialist Oslo", "tannlege som tar nye pasienter i Bergen". AI nevner to eller tre klinikker. Hvis du ikke er én av dem, finnes du ikke i den første runden av valget.
+      </p>
+      <div class="hero-cta-group">
+        <a href="#priser" class="btn-primary">Se priser og bestill →</a>
+        <a href="#aeo-sjekk" class="btn-secondary">Eller kjør gratis sjekk først ↓</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-bar">
+    <div class="container">
+      <div class="stat-bar-inner">
+        <div class="stat-item">
+          <div class="stat-value">5</div>
+          <div class="stat-label">norske tannklinikker auditert i vår analyse</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">50/100</div>
+          <div class="stat-label">snitt-score, fra 42 (D) til 64 (C)</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">0/5</div>
+          <div class="stat-label">hadde MedicalBusiness eller Dentist schema-markup</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+      <h2>Sånn ser AI-svaret ut akkurat nå</h2>
+      <p>
+        Vi har stilt ChatGPT spørsmål som pasienter faktisk bruker. Svarene viser et mønster: AI nevner de få klinikkene som har strukturen den leter etter — eller den nevner ingen i din by i det hele tatt, og gir et generelt råd om å sjekke Google.
+      </p>
+
+      <div class="query-card">
+        <div class="query-prompt">› Akutt tannlege i Stavanger nå?</div>
+        <p class="query-response">ChatGPT svarer med generelle åpningstider og forslag om å ringe 116 117. Få konkrete klinikknavn. De klinikkene som mangler åpningstider i strukturert data filtreres bort av AI-en før den engang vurderer å nevne dem.</p>
+      </div>
+
+      <div class="query-card">
+        <div class="query-prompt">› Tannlege i Stavanger som tar Invisalign?</div>
+        <p class="query-response">ChatGPT nevner ett eller to navn, og legger til at "ta kontakt med klinikken for å bekrefte tilbudet". Klinikker som ikke har behandlingsliste på siden får ikke plass i svaret — selv om de faktisk tilbyr behandlingen.</p>
+      </div>
+
+      <div class="query-card">
+        <div class="query-prompt">› Beste tannlege for nye pasienter i Oslo?</div>
+        <p class="query-response">Tre forslag, alle med synlige anmeldelser og strukturert tilstedeværelse på nettet. AI vekter ikke "beste" — den vekter "den jeg kan beskrive med data". Klinikker uten anmeldelses-snippet eller MedicalBusiness-schema er usynlige.</p>
+      </div>
+
+      <p>
+        Pasientvalget skjer ofte på 30 sekunder. ChatGPT svaret blir lista. Hvis klinikken din ikke er på lista, blir du ikke ringt — uansett hvor god behandlingen er.
+      </p>
+
+      <div class="warning-block">
+        <div class="warning-label">⚠ Hvorfor det skjer</div>
+        <p>
+          AI vekter sider den kan parse strukturelt. MedicalBusiness-schema, Dentist-spesifikasjon, OpeningHoursSpecification, FAQPage. Norske tannklinikker har stort sett pen design og Google Business Profile, men nettsiden mangler dataen AI faktisk leser. Den som har strukturen vinner anbefalingen.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2>Fem norske tannklinikker, samme mønster</h2>
+      <p class="muted">
+        Vi kjørte AEO-audit på fem norske tannklinikker (anonymisert). Snitt-score 50 av 100. Spennet går fra 42 (D) til 64 (C). Fire av fem hadde null JSON-LD strukturerte data. Ingen hadde MedicalBusiness eller Dentist-schema. Ingen hadde FAQPage med åpningstider eller akutt-rutiner.
+      </p>
+
+      <table class="audit-table">
+        <thead>
+          <tr>
+            <th>Klinikk</th>
+            <th>Schema</th>
+            <th>FAQ</th>
+            <th>Pris synlig</th>
+            <th>llms.txt</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="firm-name">Klinikk A (ortodonti og Invisalign)</td>
+            <td><span class="check-fail">Mangler</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="score-badge score-d">42/D</span></td>
+          </tr>
+          <tr>
+            <td class="firm-name">Klinikk B (sentrum, allmenntannlege)</td>
+            <td><span class="check-fail">Mangler</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="score-badge score-d">42/D</span></td>
+          </tr>
+          <tr>
+            <td class="firm-name">Klinikk C (forstad, full-service)</td>
+            <td><span class="check-fail">Mangler</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="score-badge score-d">49/D</span></td>
+          </tr>
+          <tr>
+            <td class="firm-name">Klinikk D (Oslo, allmenntannlege)</td>
+            <td><span class="check-partial">Delvis</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="score-badge score-c">55/C</span></td>
+          </tr>
+          <tr>
+            <td class="firm-name">Klinikk E (Stavanger, tann og kjeve)</td>
+            <td><span class="check-partial">Delvis</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="score-badge score-c">64/C</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="muted" style="font-size:0.8rem; margin-top: 12px;">
+        Audit kjørt med Synlig AEO Audit v1.1 i mars 2026. Score er målt på schema, meta, innholdsstruktur, teknisk grunnlag og AI-signaler. De to klinikkene med C-score hadde WebPage- eller Person-schema, men ingen Dentist eller MedicalBusiness — som er det AI faktisk vekter for medisinske bedrifter.
+      </p>
+
+      <div class="warning-block" style="background: rgba(248,113,113,0.05); border-color: var(--red-dim); border-left-color: var(--red); margin-top:24px;">
+        <div class="warning-label" style="color: var(--red);">Hovedfunn</div>
+        <p>
+          0 av 5 hadde Dentist eller MedicalBusiness schema. 0 av 5 hadde FAQ-side. 0 av 5 viste behandlingspriser. Fire av fem hadde null strukturerte data overhodet. Det er typisk 4 til 8 timers arbeid å rette — og det er nok til å flytte en D til C eller B på de fleste klinikker.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2>Sju tiltak som flytter tannlege-score</h2>
+      <p class="muted">Prioritert etter hva som faktisk endrer om klinikken blir nevnt i AI-svar. Bygd på over 30 audits og fem konkrete tannlege-rapporter.</p>
+
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <div class="step-title">MedicalBusiness / Dentist schema-markup</div>
+            <p class="step-desc">
+              Den største enkeltvinningen for tannleger. Legg JSON-LD med <code>@type: "Dentist"</code> (eller "MedicalBusiness" hvis du har flere typer behandlinger). Spesifiser <code>medicalSpecialty</code>, <code>availableService</code> med behandlingsnavn, <code>openingHoursSpecification</code> med faktiske tider, og <code>geo</code> med koordinater. Fire av fem klinikker i analysen vår hadde null JSON-LD.
+            </p>
+            <div class="step-code">"@type": "Dentist",<br>"name": "Klinikknavn",<br>"medicalSpecialty": ["Cosmetic", "Orthodontic"],<br>"openingHoursSpecification": [&hellip;],<br>"address": { "@type": "PostalAddress", &hellip; }</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <div class="step-title">FAQ-side: åpningstider, akutt, nye pasienter</div>
+            <p class="step-desc">
+              Marker med FAQPage-schema. Svar konkret på: "Tar dere akutt time?", "Er klinikken åpen lørdag?", "Tar dere imot nye pasienter?", "Hva koster en undersøkelse?", "Hvilken HELFO-avtale har dere?". AI siterer ofte FAQ-svar ordrett. Ingen av de fem klinikkene hadde dette.
+            </p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <div class="step-title">Behandlingssider med fra-pris</div>
+            <p class="step-desc">
+              Egen side per hovedbehandling: <code>/invisalign</code>, <code>/tannimplantat</code>, <code>/tannbleking</code>, <code>/akutt-tannlege</code>. Hver med en fra-pris og hva som inngår. ChatGPT svarer ikke på "hva koster X" hvis ingen klinikk i nærheten viser prisen — og hopper over deg når den må gjette.
+            </p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">4</div>
+          <div>
+            <div class="step-title">Bydels- og områdetargeting</div>
+            <p class="step-desc">
+              Pasienter spør ofte etter bydel: "tannlege på Storhaug", "tannlege i Sandnes sentrum", "tannlege Grünerløkka". En kort seksjon per dekningsområde, med tilreisetid og parkering, gir AI noe konkret å peke på. Ikke duplisér hele siden — bare området-spesifikk informasjon.
+            </p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">5</div>
+          <div>
+            <div class="step-title">Samkjør med Google Business Profile</div>
+            <p class="step-desc">
+              Åpningstider, telefon, adresse og kategori i Google Business Profile må stemme nøyaktig med det som står på nettsiden og i schema-markupen. AI-modellene krysssjekker. Avvik (f.eks. forskjellig telefonnummer eller åpningstid) gir lavere tillit, og klinikken blir hoppet over til fordel for en konkurrent med samme data alle steder.
+            </p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">6</div>
+          <div>
+            <div class="step-title">Anmeldelses-snippet og AggregateRating</div>
+            <p class="step-desc">
+              Vis offentlige anmeldelser på siden, med <code>AggregateRating</code> i schema. Vi siterer ikke tilfeldige tall — bruk de faktiske gjennomsnittene fra Google eller Trustpilot. ChatGPT bruker anmeldelses-snippet til å bestemme rekkefølge når flere klinikker dekker samme behandling. Klinikk uten snippet faller bak.
+            </p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">7</div>
+          <div>
+            <div class="step-title">llms.txt og crawler-rydding</div>
+            <p class="step-desc">
+              Publiser <code>/llms.txt</code> med kort klinikkbeskrivelse, behandlingsliste, åpningstider og kontakt. Sjekk at robots.txt ikke blokkerer GPTBot, ClaudeBot og PerplexityBot. Mindre klinikker bruker ofte WordPress-temaer som blokkerer AI-crawlere ved en feil. Det er en 5-minutters fiks som synes.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="aeo-sjekk">
+    <div class="container">
+      <h2>Sjekk tannklinikken sin AI-synlighet — gratis</h2>
+      <p class="muted">Fyll inn skjemaet og få en gratis AEO-rapport på e-post. Vi analyserer om klinikken er synlig i ChatGPT, Perplexity og Google AI Overview.</p>
+      <div class="sjekk-inline-wrap">
+        <div class="sjekk-inline-label">Gratis rapport — leveres på e-post</div>
+        <div class="sjekk-inline-form">
+          <form method="POST" action="https://sjekk.synligdigital.no/sjekk">
+            <input type="hidden" name="utm_source" value="tjenester-tannleger">
+            <div class="sjekk-field">
+              <label>Nettsidens domene *</label>
+              <input type="text" name="domain" placeholder="tannklinikken.no" required
+                oninput="this.value=this.value.replace(/^https?:\/\//,'').replace(/^www\./,'').replace(/\/.*$/,'').trim()">
+            </div>
+            <div class="sjekk-field">
+              <label>Firmanavn *</label>
+              <input type="text" name="company" placeholder="Tannlegekontoret AS" required>
+            </div>
+            <div class="sjekk-field">
+              <label>Bransje *</label>
+              <input type="text" name="industry" value="Tannlege / tannhelse" required>
+            </div>
+            <div class="sjekk-field">
+              <label>E-postadresse *</label>
+              <input type="email" name="email" placeholder="deg@klinikken.no" required>
+            </div>
+            <button type="submit" class="sjekk-submit">Kjør gratis sjekk →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="priser" style="background: var(--bg-raised);">
+    <div class="container-wide">
+      <h2>Tre pakker. Faste priser. Bestilling med kort.</h2>
+      <p class="muted">Samme priser som på <a href="/priser" style="color: var(--accent); text-decoration: none;">/priser</a>. Velg det som passer der klinikken er nå.</p>
+
+      <div class="pricing-grid">
+        <div class="price-card featured">
+          <div class="price-name">AI-synlighetsanalyse</div>
+          <div class="price-amount">4 900 kr</div>
+          <div class="price-note">Engangsanalyse, levering 5 virkedager</div>
+          <ul class="price-list">
+            <li>Test i ChatGPT, Perplexity, Google AI</li>
+            <li>Score med konkrete tiltak</li>
+            <li>Dentist-schema-sjekk og opening-hours-sjekk</li>
+            <li>1 times gjennomgang</li>
+          </ul>
+          <a href="/api/handlingsplan-checkout?slug=aeo-for-tannleger" class="price-cta">Bestill med kort →</a>
+          <a href="mailto:hei@synligdigital.no?subject=Bestilling%3A%20AI-synlighetsanalyse%204%20900%20NOK&body=Hei%20Synlig%2C%0A%0AJeg%20vil%20bestille%20AI-synlighetsanalyse%20%284%20900%20NOK%29%20for%20tannklinikken%20v%C3%A5r.%0A%0AKlinikk%3A%20%0ANettside%3A%20%0A%0AMvh%2C" class="price-cta-secondary">Send forespørsel (faktura)</a>
+        </div>
+
+        <div class="price-card">
+          <div class="price-name">AI-synlighetsfundament</div>
+          <div class="price-amount">14 900 kr</div>
+          <div class="price-note">Engangsimplementering, 2 til 4 uker</div>
+          <ul class="price-list">
+            <li>Alt i analysen, pluss implementering</li>
+            <li>Dentist/MedicalBusiness-schema utrullet</li>
+            <li>FAQ-side med åpningstider og akutt</li>
+            <li>Behandlingssider med fra-pris</li>
+            <li>1 times opplæring</li>
+          </ul>
+          <a href="/api/fundament-checkout?slug=aeo-for-tannleger" class="price-cta">Bestill med kort →</a>
+          <a href="mailto:hei@synligdigital.no?subject=Bestilling%3A%20AI-synlighetsfundament%2014%20900%20NOK&body=Hei%20Synlig%2C%0A%0AJeg%20vil%20bestille%20AI-synlighetsfundament%20%2814%20900%20NOK%29%20for%20tannklinikken%20v%C3%A5r.%0A%0AKlinikk%3A%20%0ANettside%3A%20%0A%0AMvh%2C" class="price-cta-secondary">Send forespørsel (faktura)</a>
+        </div>
+
+        <div class="price-card">
+          <div class="price-name">Løpende overvåking</div>
+          <div class="price-amount">4 900 kr/mnd</div>
+          <div class="price-note">Forutsetter at fundamentet er på plass</div>
+          <ul class="price-list">
+            <li>Månedlig AI-synlighetsaudit</li>
+            <li>1 til 2 nye behandlingsguider per måned</li>
+            <li>Konkurransesporing i ChatGPT</li>
+            <li>Kvartalsrapport med trend</li>
+          </ul>
+          <a href="/api/lopende-checkout?slug=aeo-for-tannleger" class="price-cta">Start abonnement →</a>
+          <a href="mailto:hei@synligdigital.no?subject=Bestilling%3A%20L%C3%B8pende%20overv%C3%A5king%204%20900%20NOK%2Fmnd&body=Hei%20Synlig%2C%0A%0AJeg%20vil%20starte%20abonnement%20p%C3%A5%20L%C3%B8pende%20overv%C3%A5king%20%284%20900%20NOK%2Fmnd%29%20for%20tannklinikken%20v%C3%A5r.%0A%0AKlinikk%3A%20%0ANettside%3A%20%0A%0AMvh%2C" class="price-cta-secondary">Send forespørsel (faktura)</a>
+        </div>
+      </div>
+
+      <p class="muted" style="font-size: 0.78rem; margin-top: 16px; text-align: center;">
+        Sikker betaling via Stripe. Alle priser er eksklusiv mva. Faktura sendes med 14 dagers betalingsfrist.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2>Vil du sjekke klinikkens score først?</h2>
+      <p class="muted">Du får en gratis AEO-score på 30 sekunder. Ingen registrering, ingen e-postliste. Bare for å se hvor klinikken står.</p>
+
+      <div class="audit-form-box">
+        <div class="audit-form-label">Skriv inn nettsiden til klinikken:</div>
+        <form class="audit-form-row" action="https://synligdigital.no/audit" method="get" target="_self">
+          <input type="hidden" name="src" value="tjenester-aeo-for-tannleger">
+          <input class="audit-form-input" type="text" name="url" placeholder="klinikken-din.no" autocomplete="off" required>
+          <button class="audit-form-btn" type="submit">Kjør gratis sjekk →</button>
+        </form>
+      </div>
+
+      <p class="muted" style="margin-top: 24px;">
+        Eller send oss en e-post direkte: <a href="mailto:hei@synligdigital.no" style="color: var(--accent); text-decoration: none;">hei@synligdigital.no</a>. Vi svarer innen ett virkedøgn.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <span>© 2026 Synlig Digital · <a href="/">synligdigital.no</a></span>
+    <span><a href="/priser">Priser</a> · <a href="/blogg">Blogg</a> · <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

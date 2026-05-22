@@ -1,0 +1,35 @@
+{
+  "_doc": "Buyer-journey stage per blog post slug. Drives audit-cta rendering: which CTA is primary (highlighted card) and which is secondary (muted link).",
+  "_stages": {
+    "awareness": "Intro/explainer. Reader is learning what AEO is. Primary CTA: free audit. Secondary: pricing.",
+    "consideration": "Comparison/methodology. Reader is weighing approaches. Equal weight: both CTAs visible, audit slightly leads (still gathering data).",
+    "decision": "Pricing/budget/case. Reader is buyer-shape — already knows what AEO is, evaluating spend. Primary CTA: pricing (handlingsplan). Secondary: audit."
+  },
+  "stages": {
+    "aeo-budsjett-45x-okonomi": "decision",
+    "aeo-byra-norge": "decision",
+    "aeo-i-norge-2026": "awareness",
+    "aeo-sjekkliste-2026": "consideration",
+    "aeo-vs-seo": "consideration",
+    "automatisert-aeo-vs-radgiving": "consideration",
+    "caveman-ai-pricing-april-2026": "decision",
+    "chatgpt-annonser-og-aeo-april-2026": "awareness",
+    "chatgpt-konverterer-9x": "decision",
+    "digital-markedsforing-stavanger": "consideration",
+    "google-sok-redesign-mai-2026": "awareness",
+    "90-prosent-usynlige-i-ai-sok": "consideration",
+    "er-nettsida-di-klar-for-ai-agentar": "awareness",
+    "eu-ai-act-norske-bedrifter": "awareness",
+    "ga4-ai-assistant-2026": "awareness",
+    "hva-er-aeo": "awareness",
+    "hva-er-aeo-guide": "awareness",
+    "lokal-ai-synlighet": "awareness",
+    "mcp-security-march-2026": "awareness",
+    "norges-aeo-leaderboard-2026-04": "consideration",
+    "norsk-aeo-benchmark-2026": "consideration",
+    "slik-blir-du-synlig-i-chatgpt": "awareness",
+    "stavanger-agent-beredskap-april-2026": "awareness",
+    "stavanger-klinikk-aeo-analyse": "decision",
+    "google-spam-policy-aeo-mai-2026": "decision"
+  }
+}
