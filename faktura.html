@@ -336,22 +336,26 @@
         for (var i = 0; i < sel.options.length; i++) {
           if (sel.options[i].value === rawSlug) { match = rawSlug; break; }
         }
-        // Substring alias fallback. Order matters: vertical names take
-        // precedence over generic priser-* aliases because vertical slugs
-        // are more specific. "handlingsplan" is the internal name for the
-        // Analyse tier — alias both.
+        // Substring alias fallback. Order matters: tier names take
+        // precedence over vertical names so a compound slug like
+        // "aeo-for-saas-bedrifter-analyse" (clicked from a vertical landing's
+        // Analyse-tier CTA) preselects the Analyse tier the buyer actually
+        // chose. Pure vertical slugs ("aeo-for-saas-bedrifter") still match
+        // to the vertikalpakke option, and the original raw slug is preserved
+        // in referrer_slug for admin attribution. "handlingsplan" is the
+        // internal name for the Analyse tier — alias both.
         if (!match) {
           var aliases = [
+            ["fundament", "priser-fundament"],
+            ["lopende", "priser-lopende"],
+            ["analyse", "priser-analyse"],
+            ["handlingsplan", "priser-analyse"],
             ["eiendomsmeglere", "aeo-for-eiendomsmeglere"],
             ["kiropraktor", "aeo-for-kiropraktor"],
             ["advokater", "aeo-for-advokater"],
             ["tannleger", "aeo-for-tannleger"],
             ["regnskap", "aeo-for-regnskap"],
-            ["saas", "aeo-for-saas-bedrifter"],
-            ["fundament", "priser-fundament"],
-            ["lopende", "priser-lopende"],
-            ["analyse", "priser-analyse"],
-            ["handlingsplan", "priser-analyse"]
+            ["saas", "aeo-for-saas-bedrifter"]
           ];
           for (var a = 0; a < aliases.length; a++) {
             if (rawSlug.indexOf(aliases[a][0]) !== -1) { match = aliases[a][1]; break; }
