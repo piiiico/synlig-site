@@ -499,6 +499,35 @@
       padding: 4px 0 0;
     }
     .price-cta-secondary:hover { color: var(--text-dim); text-decoration: underline; }
+    /* lead-form (tjenester-tier-email-capture) */
+    .lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 0 0 6px;
+    }
+    .lead-form-input {
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--text);
+      box-sizing: border-box;
+      transition: border-color 0.15s;
+      font-family: inherit;
+      outline: none;
+    }
+    .lead-form-input:focus { border-color: var(--accent); }
+    button.price-cta {
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      font-family: inherit;
+      line-height: 1.2;
+    }
+
 
     /* Audit form (bottom CTA secondary) */
     .audit-form-box {
@@ -944,7 +973,12 @@
             <li>AccountingService-schema-sjekk</li>
             <li>1 times gjennomgang</li>
           </ul>
-          <a href="/api/handlingsplan-checkout?slug=aeo-for-regnskap" class="price-cta">Bestill med kort →</a>
+          <form method="POST" action="/api/lead-capture" class="lead-form">
+            <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254" aria-label="E-postadresse">
+            <input type="hidden" name="tier" value="handlingsplan">
+            <input type="hidden" name="slug" value="tjenester-aeo-for-regnskap-handlingsplan">
+            <button type="submit" class="price-cta">Bestill med kort →</button>
+          </form>
           <a href="mailto:hei@synligdigital.no?subject=Bestilling%3A%20AI-synlighetsanalyse%204%20900%20NOK&body=Hei%20Synlig%2C%0A%0AJeg%20vil%20bestille%20AI-synlighetsanalyse%20%284%20900%20NOK%29%20for%20regnskapsbyrået%20v%C3%A5rt.%0A%0AByrå%3A%20%0ANettside%3A%20%0A%0AMvh%2C" class="price-cta-secondary">Send forespørsel (faktura)</a>
         </div>
 
@@ -959,7 +993,12 @@
             <li>Tjenestesider med prisinformasjon</li>
             <li>1 times opplæring</li>
           </ul>
-          <a href="/api/fundament-checkout?slug=aeo-for-regnskap" class="price-cta">Bestill med kort →</a>
+          <form method="POST" action="/api/lead-capture" class="lead-form">
+            <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254" aria-label="E-postadresse">
+            <input type="hidden" name="tier" value="fundament">
+            <input type="hidden" name="slug" value="tjenester-aeo-for-regnskap-fundament">
+            <button type="submit" class="price-cta">Bestill med kort →</button>
+          </form>
           <a href="mailto:hei@synligdigital.no?subject=Bestilling%3A%20AI-synlighetsfundament%2014%20900%20NOK&body=Hei%20Synlig%2C%0A%0AJeg%20vil%20bestille%20AI-synlighetsfundament%20%2814%20900%20NOK%29%20for%20regnskapsbyrået%20v%C3%A5rt.%0A%0AByrå%3A%20%0ANettside%3A%20%0A%0AMvh%2C" class="price-cta-secondary">Send forespørsel (faktura)</a>
         </div>
 
@@ -973,7 +1012,12 @@
             <li>Konkurransesporing i ChatGPT</li>
             <li>Kvartalsrapport med trend</li>
           </ul>
-          <a href="/api/lopende-checkout?slug=aeo-for-regnskap" class="price-cta">Start abonnement →</a>
+          <form method="POST" action="/api/lead-capture" class="lead-form">
+            <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254" aria-label="E-postadresse">
+            <input type="hidden" name="tier" value="lopende">
+            <input type="hidden" name="slug" value="tjenester-aeo-for-regnskap-lopende">
+            <button type="submit" class="price-cta">Start abonnement →</button>
+          </form>
           <a href="mailto:hei@synligdigital.no?subject=Bestilling%3A%20L%C3%B8pende%20overv%C3%A5king%204%20900%20NOK%2Fmnd&body=Hei%20Synlig%2C%0A%0AJeg%20vil%20starte%20abonnement%20p%C3%A5%20L%C3%B8pende%20overv%C3%A5king%20%284%20900%20NOK%2Fmnd%29%20for%20regnskapsbyrået%20v%C3%A5rt.%0A%0AByrå%3A%20%0ANettside%3A%20%0A%0AMvh%2C" class="price-cta-secondary">Send forespørsel (faktura)</a>
         </div>
       </div>
