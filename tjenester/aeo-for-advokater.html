@@ -642,12 +642,12 @@
           <div class="stat-label">av AI-søk gir null klikk — AI-en svarer direkte</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">0/6</div>
-          <div class="stat-label">norske advokatfirmaer i Stavanger med llms.txt</div>
+          <div class="stat-value">1/5</div>
+          <div class="stat-label">norske advokatfirma med llms.txt for AI-modellar</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">67%</div>
-          <div class="stat-label">mangler LegalService schema-markup</div>
+          <div class="stat-value">4/5</div>
+          <div class="stat-label">manglar LegalService schema på hovudsida</div>
         </div>
       </div>
     </div>
@@ -681,82 +681,68 @@
   <!-- Data -->
   <section>
     <div class="container">
-      <h2>Slik ser det ut for norske advokatfirmaer</h2>
+      <h2>Slik ser det ut for norske advokatfirma</h2>
       <p class="muted">
-        Vi har analysert 6 advokatfirmaer i Stavanger-regionen. Her er funna (anonymisert etter standardmodellen vår):
+        Vi har analysert 5 advokatfirma — 4 i Stavanger og 1 i Oslo. Snitt-score 60 av 100. Spennet går frå 51 (D) til 69 (C). Her er funna (anonymisert etter standardmodellen vår):
       </p>
 
       <table class="audit-table">
         <thead>
           <tr>
             <th>Firma</th>
-            <th>AI-tilgang</th>
-            <th>Schema</th>
+            <th>LegalService schema</th>
+            <th>FAQ-schema</th>
             <th>llms.txt</th>
-            <th>Meta</th>
-            <th>Nivå</th>
+            <th>Score</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="firm-name">Firma A</td>
-            <td><span class="check-partial">Delvis</span></td>
+            <td class="firm-name">Firma A (Stavanger)</td>
             <td><span class="check-fail">Mangler</span></td>
             <td><span class="check-fail">Nei</span></td>
-            <td><span class="check-ok">OK</span></td>
-            <td><span class="level-badge level-1">Nivå 1</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="score-badge score-c">55/C</span></td>
           </tr>
           <tr>
-            <td class="firm-name">Firma B</td>
-            <td><span class="check-partial">Delvis</span></td>
+            <td class="firm-name">Firma B (Stavanger)</td>
+            <td><span class="check-partial">Delvis (kun underseter)</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="score-badge score-c">64/C</span></td>
+          </tr>
+          <tr>
+            <td class="firm-name">Firma C (Stavanger)</td>
             <td><span class="check-fail">Mangler</span></td>
             <td><span class="check-fail">Nei</span></td>
-            <td><span class="check-ok">OK</span></td>
-            <td><span class="level-badge level-1">Nivå 1</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="score-badge score-d">51/D</span></td>
           </tr>
           <tr>
-            <td class="firm-name">Firma C</td>
-            <td><span class="check-partial">Delvis</span></td>
+            <td class="firm-name">Firma D (Stavanger)</td>
+            <td><span class="check-fail">Mangler</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="check-ok">Ja</span></td>
+            <td><span class="score-badge score-c">61/C</span></td>
+          </tr>
+          <tr>
+            <td class="firm-name">Firma E (Oslo)</td>
             <td><span class="check-ok">Har det</span></td>
             <td><span class="check-fail">Nei</span></td>
-            <td><span class="check-ok">OK</span></td>
-            <td><span class="level-badge level-1">Nivå 1</span></td>
-          </tr>
-          <tr>
-            <td class="firm-name">Firma D</td>
-            <td><span class="check-partial">Delvis</span></td>
-            <td><span class="check-ok">Har det</span></td>
             <td><span class="check-fail">Nei</span></td>
-            <td><span class="check-ok">OK</span></td>
-            <td><span class="level-badge level-1">Nivå 1</span></td>
-          </tr>
-          <tr>
-            <td class="firm-name">Firma E</td>
-            <td><span class="check-fail">Blokkert</span></td>
-            <td><span class="check-fail">Mangler</span></td>
-            <td><span class="check-fail">Nei</span></td>
-            <td><span class="check-ok">OK</span></td>
-            <td><span class="level-badge level-0">Nivå 0</span></td>
-          </tr>
-          <tr>
-            <td class="firm-name">Firma F</td>
-            <td><span class="check-fail">Blokkert</span></td>
-            <td><span class="check-fail">Mangler</span></td>
-            <td><span class="check-fail">Nei</span></td>
-            <td><span class="check-fail">Mangler</span></td>
-            <td><span class="level-badge level-0">Nivå 0</span></td>
+            <td><span class="score-badge score-c">69/C</span></td>
           </tr>
         </tbody>
       </table>
 
-      <p class="muted" style="font-size:0.78rem; margin-top: 8px;">
-        Nivå 0 = AI-crawlarar er blokkert. Nivå 1 = Grunnlag på plass, men manglar schema-markup og AI-spesifikt innhald. Ingen av firmaa nådde Nivå 2 (AI-optimalisert) i vår analyse.
+      <p class="muted" style="font-size:0.8rem; margin-top: 12px;">
+        Audit kjørt med Synlig AEO Audit v1.0 (mars–mai 2026). Score er målt på schema, meta, innholdsstruktur, teknisk grunnlag og AI-signaler. Berre Firma E hadde fullverdig LegalService-blokk på hovudsida; Firma B hadde det på praksisområde-underseter (men ikkje på front). Firma D var det einaste med llms.txt-fil — eit Squarespace/Wix-bygd nettstad der dette kjem som ein bieffekt av plattformval, ikkje aktiv AEO-strategi.
       </p>
 
       <div class="warning-block" style="margin-top:28px; background: rgba(251,191,36,0.05); border-color: var(--yellow-dim); border-left-color: var(--yellow);">
         <div class="warning-label" style="color: var(--yellow);">📊 Hovudfunn</div>
         <p>
-          <strong>0 av 6</strong> hadde llms.txt — det enkle dokumentet som fortel AI kva firmaet gjer. <strong>4 av 6</strong> blokkerer AI-crawlarar delvis. <strong>Ingen</strong> hadde fullverdig LegalService schema-markup med praksisområder og advokat-profilering.
+          <strong>4 av 5</strong> manglar LegalService schema-markup på hovudsida. <strong>0 av 5</strong> har FAQPage schema. <strong>4 av 5</strong> manglar llms.txt. Og kanskje viktigast: <strong>ingen</strong> av dei 5 blokkerer AI-crawlarane aktivt i robots.txt — så problemet er ikkje tilgang. Problemet er at AI ikkje har noko strukturert innhald å sitere når klienten spør.
         </p>
       </div>
     </div>
@@ -784,9 +770,9 @@
         <div class="step">
           <div class="step-num">2</div>
           <div class="step-content">
-            <div class="step-title">Opne robots.txt for AI-crawlarar</div>
+            <div class="step-title">Sjekk at robots.txt ikkje blokkerer AI-crawlarar</div>
             <p class="step-desc">
-              To av seks firma i vår analyse blokkerte GPTBot, ClaudeBot og PerplexityBot fullstendig — ofte som ein bieffekt av ein gammal robots.txt-regel. Sjekk robots.txt og fjern blokkeringa for dei viktigaste AI-crawlarane. Viss AI-en aldri får lest nettsida di, kan han heller ikkje sitere deg.
+              Ingen av dei 5 advokatfirmaa vi analyserte blokkerte AI-crawlarane aktivt — men det er likevel ein vanleg fallgruve. Eldre robots.txt-reglar kan ha eit «Disallow: /»-mønster som AI-crawlarane les som «hald deg unna». Vår Nordic Lithium-klient hadde nettopp dette, og fekk 18 poeng auke etter at det blei opna. Sjekk robots.txt på firma.no/robots.txt og bekreft at GPTBot, ClaudeBot, PerplexityBot og Google-Extended ikkje har eit Disallow: /-direktiv.
             </p>
           </div>
         </div>
