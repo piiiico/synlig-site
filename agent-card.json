@@ -1,9 +1,9 @@
 {
   "name": "Synlig AEO Service",
-  "description": "Answer Engine Optimization (AEO) service for Norwegian businesses. We help local businesses become visible in ChatGPT, Perplexity, and Google AI Overview through schema.org markup, Google Business Profile optimization, and AI-optimized content.",
+  "description": "Answer Engine Optimization (AEO) service for Norwegian B2B SaaS and software companies — accounting SaaS, HR SaaS, healthcare SaaS, fintech, marketing SaaS and vertical SaaS. We help Norwegian SaaS get cited when buyers ask ChatGPT, Perplexity and Google AI Overview for software recommendations, through SoftwareApplication schema.org markup, alternative-to and integration pages, and AI-optimized content.",
   "url": "https://synligdigital.no",
-  "version": "1.0.0",
-  "documentationUrl": "https://synligdigital.no/guide",
+  "version": "1.1.0",
+  "documentationUrl": "https://synligdigital.no/tjenester/aeo-for-saas-bedrifter",
   "iconUrl": "https://synligdigital.no/favicon.svg",
   "capabilities": {
     "streaming": false,
@@ -16,11 +16,11 @@
     {
       "id": "aeo-audit",
       "name": "Free AEO Audit",
-      "description": "Instant AI-visibility audit for any Norwegian business website. Returns score (0-100), grade (A-F), and prioritized recommendations. Free, no signup required.",
-      "tags": ["aeo", "seo", "ai-visibility", "schema.org", "norwegian", "audit"],
+      "description": "Instant AI-visibility audit for any business website. Returns score (0-100), grade (A-F), and prioritized recommendations. Free, no signup required. Works for any URL but tuned for Norwegian B2B SaaS.",
+      "tags": ["aeo", "seo", "ai-visibility", "schema.org", "saas", "b2b", "norwegian", "audit"],
       "examples": [
         "Audit the AEO score for https://example.no",
-        "How visible is this business in AI search?"
+        "How visible is this SaaS in ChatGPT and Perplexity?"
       ],
       "inputModes": ["text/plain"],
       "outputModes": ["application/json", "text/html"],
@@ -30,17 +30,17 @@
     },
     {
       "id": "aeo-implementation",
-      "name": "AEO Implementation Service",
-      "description": "Full AEO implementation: schema.org markup, Google Business Profile optimization, AI-optimized content, and ongoing monitoring. For Norwegian businesses, 5,000–30,000 NOK.",
-      "tags": ["aeo", "schema.org", "gbp", "norwegian", "implementation"],
-      "inputModes": ["text/plain"],
+      "name": "AEO Implementation for B2B SaaS",
+      "description": "Full AEO implementation for Norwegian B2B SaaS and software companies: SoftwareApplication schema.org markup, alternative-to and integration pages, AI-optimized buyer-question content, and ongoing monitoring. Pricing: AI-synlighetsanalyse 4 900 NOK (one-time), AI-synlighetsfundament 14 900 NOK (one-time, includes implementation), Løpende overvåking 4 900 NOK/month (subscription, 3-month minimum). Order directly via web form, EHF invoice within 24h.",
+      "tags": ["aeo", "schema.org", "saas", "b2b", "software", "norwegian", "implementation"],
+      "inputModes": ["text/html"],
       "outputModes": ["text/html"],
-      "endpoint": "mailto:hei@synligdigital.no",
-      "endpointMethod": "EMAIL"
+      "endpoint": "https://synligdigital.no/faktura?slug=agent-card-saas-implementation",
+      "endpointMethod": "HTTPS"
     }
   ],
   "provider": {
-    "organization": "Synlig",
+    "organization": "Synlig Digital",
     "url": "https://synligdigital.no",
     "email": "hei@synligdigital.no"
   },
@@ -50,6 +50,16 @@
       "type": "HTTPS",
       "url": "https://sjekk.synligdigital.no/",
       "description": "Free AEO audit endpoint. GET ?url=<website> returns JSON with score (0-100), grade (A-F), and prioritized recommendations."
+    },
+    {
+      "type": "HTTPS",
+      "url": "https://synligdigital.no/tjenester/aeo-for-saas-bedrifter",
+      "description": "B2B SaaS vertical landing page. Describes the AEO playbook for Norwegian SaaS, with three pricing tiers and inline lead-capture forms."
+    },
+    {
+      "type": "HTTPS",
+      "url": "https://synligdigital.no/faktura",
+      "description": "Web order form. Accepts ?slug=<tier-key> to preselect a package. Norwegian EHF invoice within 24h. No payment-up-front required."
     }
   ]
 }
