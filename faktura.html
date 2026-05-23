@@ -248,6 +248,7 @@
         <form id="faktura-form" method="POST" action="/faktura" novalidate>
           <input type="hidden" name="source" value="faktura-form">
           <input type="hidden" name="timestamp" id="timestamp">
+          <input type="hidden" name="referrer_slug" id="referrer-slug" value="">
 
           <div class="field">
             <label for="pakke">Pakke <span class="hint">(velg den du vil bestille)</span></label>
@@ -259,6 +260,9 @@
               <option value="aeo-for-advokater">AEO for advokater — vertikalpakke</option>
               <option value="aeo-for-saas-bedrifter">AEO for B2B SaaS — vertikalpakke</option>
               <option value="aeo-for-tannleger">AEO for tannleger — vertikalpakke</option>
+              <option value="aeo-for-eiendomsmeglere">AEO for eiendomsmeglere — vertikalpakke</option>
+              <option value="aeo-for-kiropraktor">AEO for kiropraktor — vertikalpakke</option>
+              <option value="aeo-for-regnskap">AEO for regnskap — vertikalpakke</option>
             </select>
           </div>
 
@@ -314,18 +318,60 @@
 
   <script>
     (function() {
-      // Pre-fill pakke from ?slug=
       var params = new URLSearchParams(window.location.search);
-      var slug = params.get("slug");
-      if (slug) {
+
+      // Pre-fill pakke from ?slug=, with alias matching for slugs that don't
+      // map 1:1 to dropdown values. Stripe cancel_url writes the slug used at
+      // checkout (e.g. priser-handlingsplan, aeo-for-eiendomsmeglere) — these
+      // must resolve to a dropdown option or the buyer sees a blank field.
+      // Original slug preserved in referrer_slug for attribution.
+      var rawSlug = (params.get("slug") || "").toLowerCase().trim();
+      if (rawSlug) {
+        var rsField = document.getElementById("referrer-slug");
+        if (rsField) rsField.value = rawSlug.slice(0, 200);
+
         var sel = document.getElementById("pakke");
+        var match = "";
+        // Exact match first
         for (var i = 0; i < sel.options.length; i++) {
-          if (sel.options[i].value === slug) {
-            sel.selectedIndex = i;
-            break;
+          if (sel.options[i].value === rawSlug) { match = rawSlug; break; }
+        }
+        // Substring alias fallback. Order matters: vertical names take
+        // precedence over generic priser-* aliases because vertical slugs
+        // are more specific. "handlingsplan" is the internal name for the
+        // Analyse tier — alias both.
+        if (!match) {
+          var aliases = [
+            ["eiendomsmeglere", "aeo-for-eiendomsmeglere"],
+            ["kiropraktor", "aeo-for-kiropraktor"],
+            ["advokater", "aeo-for-advokater"],
+            ["tannleger", "aeo-for-tannleger"],
+            ["regnskap", "aeo-for-regnskap"],
+            ["saas", "aeo-for-saas-bedrifter"],
+            ["fundament", "priser-fundament"],
+            ["lopende", "priser-lopende"],
+            ["analyse", "priser-analyse"],
+            ["handlingsplan", "priser-analyse"]
+          ];
+          for (var a = 0; a < aliases.length; a++) {
+            if (rawSlug.indexOf(aliases[a][0]) !== -1) { match = aliases[a][1]; break; }
+          }
+        }
+        if (match) {
+          for (var j = 0; j < sel.options.length; j++) {
+            if (sel.options[j].value === match) { sel.selectedIndex = j; break; }
           }
         }
       }
+
+      // Pre-fill e-post from ?email= (banner-recovery flow may pass it).
+      // Validated as basic email shape before write to avoid garbage input.
+      var emailParam = (params.get("email") || "").trim();
+      if (emailParam && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailParam) && emailParam.length <= 254) {
+        var epostInput = document.getElementById("epost");
+        if (epostInput && !epostInput.value) epostInput.value = emailParam;
+      }
+
       // Stamp client-side timestamp
       document.getElementById("timestamp").value = new Date().toISOString();
 
