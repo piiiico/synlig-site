@@ -56,7 +56,12 @@ function auditForm(slug: string, suffix: string): string {
 function pricingBlock(slug: string): string {
   return `<div class="audit-cta__pricing-link">
       <span class="audit-cta__pricing-label">Vil du ha en plan?</span>
-      <a class="audit-cta__pricing-anchor" href="${checkoutHref(slug)}">Full handlingsplan, 4 900 NOK &rarr;</a>
+      <form method="POST" action="/api/lead-capture" class="lead-form">
+        <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email">
+        <input type="hidden" name="tier" value="handlingsplan">
+        <input type="hidden" name="slug" value="blog-${slug}">
+        <button type="submit" class="audit-cta__btn">Full handlingsplan, 4 900 NOK &rarr;</button>
+      </form>
       <a class="audit-cta__pricing-mail" href="${mailtoFor(slug)}">Eller send oss en e-post</a>
     </div>`;
 }
@@ -64,9 +69,12 @@ function pricingBlock(slug: string): string {
 function pricingPrimary(slug: string): string {
   return `<h3 class="audit-cta__headline">${PRICING_HEADLINE}</h3>
   <p class="audit-cta__sub">${PRICING_SUB}</p>
-  <p class="audit-cta__primary-row">
-    <a class="audit-cta__btn audit-cta__btn--link" href="${checkoutHref(slug)}">${PRICING_BTN}</a>
-  </p>
+  <form method="POST" action="/api/lead-capture" class="lead-form">
+    <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email">
+    <input type="hidden" name="tier" value="handlingsplan">
+    <input type="hidden" name="slug" value="blog-${slug}">
+    <button type="submit" class="audit-cta__btn">${PRICING_BTN}</button>
+  </form>
   <p class="audit-cta__trust">Sikker betaling via Stripe. Levering innen 5 virkedager. <a href="${mailtoFor(slug)}" class="audit-cta__mailto-fallback">Eller send oss en e-post: hei@synligdigital.no</a></p>`;
 }
 
@@ -199,6 +207,26 @@ const SHARED_STYLE = `<style>
   .audit-cta__row { flex-direction: column; }
   .audit-cta__input, .audit-cta__btn { width: 100%; }
 }
+.lead-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0.5rem 0 0.3rem;
+}
+.lead-form-input {
+  width: 100%;
+  padding: 0.55rem 0.9rem;
+  background: var(--bg, #0a0a0b);
+  border: 1px solid var(--border, #222225);
+  border-radius: 6px;
+  color: var(--text, #e8e8ed);
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+}
+.lead-form-input:focus { border-color: var(--accent, #6ee7b7); }
+.lead-form .audit-cta__btn { width: 100%; font-family: inherit; }
 </style>`;
 
 export function renderAuditCta(slug: string, position: Position, stage: Stage): string {
@@ -228,8 +256,10 @@ export const MID_MARKER = "<!-- AUDIT-CTA:mid -->";
 export const BOTTOM_MARKER = "<!-- AUDIT-CTA:bottom -->";
 
 // Exports for build-time invariants: every rendered blog post must carry
-// BOTH a /api/handlingsplan-checkout href AND a mailto:hei@synligdigital.no
-// fallback. Primary CTA = click-to-buy; secondary = email (low-trust path).
+// BOTH a /api/lead-capture entry point AND a mailto:hei@synligdigital.no
+// fallback. Primary CTA = lead-capture form → Stripe; secondary = email (low-trust path).
+// CHECKOUT_HREF_PREFIX kept as tombstone in case any page still has a direct checkout link.
+export const LEAD_CAPTURE_PATH = "/api/lead-capture";
 export const CHECKOUT_HREF_PREFIX = "/api/handlingsplan-checkout?slug=";
 export const MAILTO_PREFIX = "mailto:hei@synligdigital.no";
 
