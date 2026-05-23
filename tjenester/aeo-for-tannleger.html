@@ -94,7 +94,7 @@
         "name": "Hvor lang tid tar det å se resultater?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Schema-markup og åpningstider blir indeksert på 1 til 2 uker. Behandlingssider og FAQ trenger 4 til 8 uker før AI-assistenter begynner å sitere dem konsekvent. I praksis ser vi at klinikker som mangler all strukturert data — som var fire av fem i vår analyse — får størst hopp på de første tekniske endringene alene. Synlighet i AI-svar måles månedlig i den løpende pakka."
+          "text": "Schema-markup og åpningstider blir indeksert på 1 til 2 uker. Behandlingssider og FAQ trenger 4 til 8 uker før AI-assistenter begynner å sitere dem konsekvent. I praksis ser vi at klinikker som mangler all strukturert data — som var tre av fem i vår analyse — får størst hopp på de første tekniske endringene alene. Synlighet i AI-svar måles månedlig i den løpende pakka."
         }
       }
     ]
@@ -739,7 +739,7 @@
     <div class="container">
       <h2>Fem norske tannklinikker, samme mønster</h2>
       <p class="muted">
-        Vi kjørte AEO-audit på fem norske tannklinikker (anonymisert). Snitt-score 50 av 100. Spennet går fra 42 (D) til 64 (C). Fire av fem hadde null JSON-LD strukturerte data. Ingen hadde MedicalBusiness eller Dentist-schema. Ingen hadde FAQPage med åpningstider eller akutt-rutiner.
+        Vi kjørte AEO-audit på fem norske tannklinikker (anonymisert). Snitt-score 50 av 100. Spennet går fra 42 (D) til 64 (C). Tre av fem hadde null JSON-LD strukturerte data. Ingen hadde MedicalBusiness eller Dentist-schema. Ingen hadde FAQPage med åpningstider eller akutt-rutiner.
       </p>
 
       <table class="audit-table">
@@ -804,7 +804,7 @@
       <div class="warning-block" style="background: rgba(248,113,113,0.05); border-color: var(--red-dim); border-left-color: var(--red); margin-top:24px;">
         <div class="warning-label" style="color: var(--red);">Hovedfunn</div>
         <p>
-          0 av 5 hadde Dentist eller MedicalBusiness schema. 0 av 5 hadde FAQ-side. 0 av 5 viste behandlingspriser. Fire av fem hadde null strukturerte data overhodet. Det er typisk 4 til 8 timers arbeid å rette — og det er nok til å flytte en D til C eller B på de fleste klinikker.
+          0 av 5 hadde Dentist eller MedicalBusiness schema. 0 av 5 hadde FAQ-side. 0 av 5 viste behandlingspriser. Tre av fem hadde null strukturerte data overhodet. Det er typisk 4 til 8 timers arbeid å rette — og det er nok til å flytte en D til C eller B på de fleste klinikker.
         </p>
       </div>
     </div>
@@ -822,7 +822,7 @@
           <div>
             <div class="step-title">MedicalBusiness / Dentist schema-markup</div>
             <p class="step-desc">
-              Den største enkeltvinningen for tannleger. Legg JSON-LD med <code>@type: "Dentist"</code> (eller "MedicalBusiness" hvis du har flere typer behandlinger). Spesifiser <code>medicalSpecialty</code>, <code>availableService</code> med behandlingsnavn, <code>openingHoursSpecification</code> med faktiske tider, og <code>geo</code> med koordinater. Fire av fem klinikker i analysen vår hadde null JSON-LD.
+              Den største enkeltvinningen for tannleger. Legg JSON-LD med <code>@type: "Dentist"</code> (eller "MedicalBusiness" hvis du har flere typer behandlinger). Spesifiser <code>medicalSpecialty</code>, <code>availableService</code> med behandlingsnavn, <code>openingHoursSpecification</code> med faktiske tider, og <code>geo</code> med koordinater. Tre av fem klinikker i analysen vår hadde null JSON-LD.
             </p>
             <div class="step-code">"@type": "Dentist",<br>"name": "Klinikknavn",<br>"medicalSpecialty": ["Cosmetic", "Orthodontic"],<br>"openingHoursSpecification": [&hellip;],<br>"address": { "@type": "PostalAddress", &hellip; }</div>
           </div>
