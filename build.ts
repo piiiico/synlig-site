@@ -995,6 +995,25 @@ export default {
       return handleTakkPage(request, env);
     }
 
+    // Path-shorthand redirects — typing-pattern conversion repair (2026-05-23 idle audit).
+    // Both paths were 404ing despite being the natural URL a prospect types when
+    // they hear "sjekk din score på Synlig" or "kontakt Synlig Digital".
+    // /sjekk → the AEO audit subdomain app; /kontakt → homepage anchor section.
+    // 301 (permanent) because the canonical surface is stable; cached 1 day so the
+    // redirect cost is paid once per browser per day, not per click.
+    if (pathname === "/sjekk" || pathname === "/sjekk/") {
+      return new Response(null, {
+        status: 301,
+        headers: { "Location": "https://sjekk.synligdigital.no/", "Cache-Control": "public, max-age=86400" },
+      });
+    }
+    if (pathname === "/kontakt" || pathname === "/kontakt/") {
+      return new Response(null, {
+        status: 301,
+        headers: { "Location": "https://synligdigital.no/#kontakt", "Cache-Control": "public, max-age=86400" },
+      });
+    }
+
     // AEO Report hosting: GET /r/{hash}
     if (pathname.startsWith("/r/")) {
       const hash = pathname.slice(3); // Remove /r/
