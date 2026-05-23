@@ -66,6 +66,25 @@
   .grade-desc { color: var(--text-muted); }
   .hero-text h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
   .hero-text p { color: var(--text-muted); font-size: 14px; max-width: 500px; }
+  /* Top CTA — peak-attention conversion surface, positioned right after hero
+     so skim-readers see the next-step before the wall of recommendations. */
+  .top-cta {
+    background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
+    border: 1px solid var(--indigo);
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .top-cta-headline { font-size: 17px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+  .top-cta-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; }
+  .top-cta-secondary {
+    display: inline-block;
+    color: var(--indigo-light);
+    font-size: 13px;
+    text-decoration: underline;
+    margin-top: 2px;
+  }
 
   /* Cards */
   .card {
@@ -253,6 +272,16 @@
       <h2>kannikfysikalske.no</h2>
       <p>Denne rapporten viser hvor godt kannikfysikalske.nos nettside er optimalisert for AI-assistenter som ChatGPT, Perplexity, Google AI Overviews og Claude. Jo høyere score, desto større sjanse for at AI-er anbefaler bedriften din til potensielle kunder.</p>
     </div>
+  </div>
+
+  <!-- TOP CTA — primary conversion surface at peak attention right after the
+       hero. Mirrors the bottom .cta-card action so skim-readers who never
+       reach the recommendations wall still see the next step. -->
+  <div class="top-cta">
+    <div class="top-cta-headline">15 høy-prioritets tiltak gjenstår</div>
+    <div class="top-cta-sub">Vi leverer komplett handlingsplan på 5 virkedager. Faktura eller kort.</div>
+    <a href="https://synligdigital.no/priser?ref=cold-report&utm_source=cold-report&utm_medium=html-report&utm_campaign=7cfe4ecf#lead-email-handlingsplan" style="display:inline-block;background:#22c55e;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;box-shadow:0 4px 12px rgba(34,197,94,.3);margin-bottom:14px;border:0;cursor:pointer">Bestill handlingsplan — 4 900 NOK →</a><br>
+    <a href="mailto:hei@synligdigital.no?subject=AEO-rapport for kannikfysikalske.no" class="top-cta-secondary">eller ta en uforpliktende prat →</a>
   </div>
 
   <!-- COMPONENT SCORES -->
