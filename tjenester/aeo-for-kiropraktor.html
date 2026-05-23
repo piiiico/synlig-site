@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AEO for kiropraktor — Bli klinikken ChatGPT anbefaler — Synlig</title>
-  <meta name="description" content="Norske kiropraktorklinikker er nesten usynlige i AI-søk. Fem klinikker auditert — snitt 41 av 100. Ingen hadde MedicalBusiness-schema. Se hva som mangler.">
+  <meta name="description" content="Norske kiropraktorklinikker er nesten usynlige i AI-søk. Fire klinikker analysert (én full audit, tre estimat) — snitt 42 av 100. Ingen hadde MedicalBusiness-schema. Se hva som mangler.">
   <link rel="canonical" href="https://synligdigital.no/tjenester/aeo-for-kiropraktor">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="AEO for kiropraktor — Bli klinikken ChatGPT anbefaler">
-  <meta property="og:description" content="Fem norske kiropraktorklinikker auditert. Snitt 41/100. 0 hadde MedicalBusiness-schema. Pasienter spør AI om «beste kiropraktor i [by]» — du må være svaret.">
+  <meta property="og:description" content="Fire norske kiropraktorklinikker analysert. Snitt 42/100. 0 hadde MedicalBusiness-schema. Pasienter spør AI om «beste kiropraktor i [by]» — du må være svaret.">
   <meta property="og:url" content="https://synligdigital.no/tjenester/aeo-for-kiropraktor">
   <meta property="og:image" content="https://synligdigital.no/og.svg">
   <meta property="og:image:width" content="1200">
@@ -20,7 +20,7 @@
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="AEO for kiropraktor — Bli svaret i ChatGPT">
-  <meta name="twitter:description" content="Fem norske kiropraktorklinikker auditert. Snitt 41/100. Ingen hadde MedicalBusiness-schema.">
+  <meta name="twitter:description" content="Fire norske kiropraktorklinikker analysert. Snitt 42/100. Ingen hadde MedicalBusiness-schema.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -318,6 +318,7 @@
     .check-ok { color: var(--accent); font-family: var(--mono); font-size: 0.72rem; }
     .check-fail { color: var(--red); font-family: var(--mono); font-size: 0.72rem; }
     .check-partial { color: var(--yellow); font-family: var(--mono); font-size: 0.72rem; }
+    .check-pass { color: var(--accent); font-family: var(--mono); font-size: 0.72rem; }
 
     .score-badge {
       display: inline-block;
@@ -685,15 +686,15 @@
     <div class="container">
       <div class="stat-bar-inner">
         <div class="stat-item">
-          <div class="stat-value">5</div>
-          <div class="stat-label">norske kiropraktorklinikker auditert i vår analyse</div>
+          <div class="stat-value">4</div>
+          <div class="stat-label">norske kiropraktorklinikker analysert (én full audit, tre estimat)</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">41/100</div>
-          <div class="stat-label">snitt-score (estimat), fra 32 (D) til 55 (C)</div>
+          <div class="stat-value">42/100</div>
+          <div class="stat-label">snitt-score, fra 32 (D) til 55 (C)</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">0/5</div>
+          <div class="stat-value">0/4</div>
           <div class="stat-label">hadde MedicalBusiness schema-markup</div>
         </div>
       </div>
@@ -737,9 +738,9 @@
 
   <section>
     <div class="container">
-      <h2>Fem norske kiropraktorklinikker, samme mønster</h2>
+      <h2>Fire norske kiropraktorklinikker, samme mønster</h2>
       <p class="muted">
-        Vi kjørte AEO-audit på fem norske kiropraktorklinikker (anonymisert). Estimert snitt-score 41 av 100 — scores er estimert basert på publisert informasjon og er ikke målt med full audit. Spennet går fra 32 (D) til 55 (C). Ingen hadde MedicalBusiness-schema. Ingen hadde FAQPage med prisinformasjon eller behandlingsoversikt.
+        Vi analyserte fire norske kiropraktorklinikker (anonymisert). Klinikk D er en full Synlig AEO-audit fra 3. mai 2026 — score målt til 40/100. Klinikk A, B og C er estimat basert på live schema-sjekk, prisinformasjon og llms.txt-status (publisert informasjon, ikke full audit). Snitt-score 42/100. Spennet går fra 32 (D) til 55 (C). Ingen hadde MedicalBusiness-schema. Ingen hadde FAQPage med prisinformasjon eller behandlingsoversikt.
       </p>
 
       <table class="audit-table">
@@ -755,7 +756,7 @@
         </thead>
         <tbody>
           <tr>
-            <td class="firm-name">Klinikk A (Stavanger, rygg og nakke)</td>
+            <td class="firm-name">Klinikk A (Stavanger-region, rygg og nakke)</td>
             <td><span class="check-fail">Mangler</span></td>
             <td><span class="check-fail">Nei</span></td>
             <td><span class="check-fail">Nei</span></td>
@@ -763,48 +764,40 @@
             <td><span class="score-badge score-d">~32/D</span></td>
           </tr>
           <tr>
-            <td class="firm-name">Klinikk B (Oslo, idrettsskader og rehabilitering)</td>
+            <td class="firm-name">Klinikk B (Stavanger-region, generell praksis)</td>
             <td><span class="check-fail">Mangler</span></td>
             <td><span class="check-fail">Nei</span></td>
-            <td><span class="check-fail">Nei</span></td>
-            <td><span class="check-fail">Nei</span></td>
-            <td><span class="score-badge score-d">~38/D</span></td>
-          </tr>
-          <tr>
-            <td class="firm-name">Klinikk C (Bergen, hodepine og migrene)</td>
-            <td><span class="check-fail">Mangler</span></td>
-            <td><span class="check-fail">Nei</span></td>
-            <td><span class="check-fail">Nei</span></td>
+            <td><span class="check-partial">Delvis</span></td>
             <td><span class="check-fail">Nei</span></td>
             <td><span class="score-badge score-d">~42/D</span></td>
           </tr>
           <tr>
-            <td class="firm-name">Klinikk D (Trondheim, barn og gravide)</td>
+            <td class="firm-name">Klinikk C (Stavanger-region, generell og barn)</td>
+            <td><span class="check-fail">Mangler</span></td>
+            <td><span class="check-fail">Nei</span></td>
             <td><span class="check-partial">Delvis</span></td>
-            <td><span class="check-fail">Nei</span></td>
-            <td><span class="check-fail">Nei</span></td>
-            <td><span class="check-fail">Nei</span></td>
-            <td><span class="score-badge score-c">~46/C</span></td>
+            <td><span class="check-pass">Ja</span></td>
+            <td><span class="score-badge score-c">~55/C</span></td>
           </tr>
           <tr>
-            <td class="firm-name">Klinikk E (Sandnes, generell praksis)</td>
-            <td><span class="check-partial">Delvis</span></td>
+            <td class="firm-name">Klinikk D (nasjonal kjede, full audit 3. mai 2026)</td>
+            <td><span class="check-fail">Mangler</span></td>
             <td><span class="check-fail">Nei</span></td>
-            <td><span class="check-partial">Delvis</span></td>
             <td><span class="check-fail">Nei</span></td>
-            <td><span class="score-badge score-c">~55/C</span></td>
+            <td><span class="check-fail">Nei</span></td>
+            <td><span class="score-badge score-d">40/D</span></td>
           </tr>
         </tbody>
       </table>
 
       <p class="muted" style="font-size:0.8rem; margin-top: 12px;">
-        Scores er estimert basert på publisert informasjon (2026) — ikke målt med full Synlig AEO Audit. De to klinikkene med C-score hadde LocalBusiness-schema, men ingen MedicalBusiness-spesifikasjon — som er det AI faktisk vekter for helsevirksomheter.
+        Klinikk D ble målt med full Synlig AEO Audit (40/100, D — generert 3. mai 2026). Klinikk A, B og C er estimat basert på live curl av nettside, robots.txt, llms.txt og JSON-LD-schema 23. mai 2026. Ingen av de fire klinikkene hadde MedicalBusiness eller LocalBusiness. Klinikk C hadde llms.txt — uvanlig for bransjen og en god indikator på at noen tenker AI-synlighet.
       </p>
 
       <div class="warning-block" style="background: rgba(248,113,113,0.05); border-color: var(--red-dim); border-left-color: var(--red); margin-top:24px;">
         <div class="warning-label" style="color: var(--red);">Hovedfunn</div>
         <p>
-          0 av 5 hadde MedicalBusiness-schema. 0 av 5 hadde FAQ-side med priser eller behandlingsoversikt. 3 av 5 viste ikke konsultasjonspris på nettsiden. Det er typisk 4 til 8 timers arbeid å rette — nok til å flytte en klinikk fra D til C eller B, og inn i AI-svarene der pasienter gjør sin første vurdering.
+          0 av 4 hadde MedicalBusiness-schema. 0 av 4 hadde FAQPage med priser eller behandlingsoversikt. 2 av 4 viste ikke konsultasjonspris på nettsiden (de to andre har egen pris-side, men prisen er ikke markert opp med schema). Det er typisk 4 til 8 timers arbeid å rette — nok til å flytte en klinikk fra D til C eller B, og inn i AI-svarene der pasienter gjør sin første vurdering.
         </p>
       </div>
     </div>
@@ -833,7 +826,7 @@
           <div>
             <div class="step-title">FAQ-side: priser, behandlinger og ventetid</div>
             <p class="step-desc">
-              Marker med FAQPage-schema. Svar konkret på: "Hva koster en kiropraktorkonsultasjon?", "Tar dere imot nye pasienter?", "Hjelper kiropraktor med hodepine?", "Hvor lang tid tar en behandling?", "Tar dere barn og gravide?". AI siterer FAQ-svar ordrett. Ingen av de fem klinikkene hadde dette.
+              Marker med FAQPage-schema. Svar konkret på: "Hva koster en kiropraktorkonsultasjon?", "Tar dere imot nye pasienter?", "Hjelper kiropraktor med hodepine?", "Hvor lang tid tar en behandling?", "Tar dere barn og gravide?". AI siterer FAQ-svar ordrett. Ingen av de fire klinikkene hadde dette.
             </p>
           </div>
         </div>
