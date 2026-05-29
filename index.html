@@ -658,6 +658,47 @@
       text-decoration: underline;
     }
 
+    .hero-proof {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 28px;
+      padding: 10px 18px;
+      background: rgba(110, 231, 183, 0.08);
+      border: 1px solid rgba(5, 150, 105, 0.18);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+
+    .hero-proof-check {
+      color: var(--green-600);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .hero-proof strong {
+      color: var(--gray-900);
+      font-weight: 600;
+    }
+
+    .hero-proof a {
+      color: var(--green-600);
+      text-decoration: none;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .hero-proof a:hover {
+      text-decoration: underline;
+    }
+
     /* --- Problem section --- */
     .problem {
       padding: 80px 0;
@@ -1098,6 +1139,23 @@
     .service-card .service-cta-secondary:hover {
       color: var(--gray-900);
       text-decoration: underline;
+    }
+    /* Faktura CTA — visually balanced second choice (subordinate to the kort CTA
+       above, but a real button instead of a footnote). Norwegian B2B buyers who
+       default to invoice payment shouldn't have to hunt past the big primary CTA
+       to find the faktura path. Soft grey fill + thin border keeps it secondary
+       without making it invisible. Same width and shape as the kort buttons. */
+    .service-card .service-cta-faktura {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      color: var(--gray-900);
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+    .service-card .service-cta-faktura:hover {
+      background: var(--gray-100);
+      border-color: var(--gray-700);
+      color: var(--gray-900);
     }
     .service-card .stripe-note {
       font-size: 0.78rem;
@@ -1656,6 +1714,10 @@
     .hero-cta { background: #6ee7b7 !important; color: #0a0a0b !important; }
     .hero-cta:hover { background: #86efb8 !important; }
     .hero-tool-link { color: #6ee7b7 !important; }
+    .hero-proof { background: rgba(110,231,183,0.10) !important; border-color: rgba(110,231,183,0.25) !important; color: #c0c0ca !important; }
+    .hero-proof strong { color: #e8e8ed !important; }
+    .hero-proof a { color: #6ee7b7 !important; }
+    .hero-proof-check { color: #6ee7b7 !important; }
     /* Section headers */
     .section-header h2 { color: #e8e8ed !important; }
     .section-header p { color: #c0c0ca !important; }
@@ -1778,6 +1840,20 @@
     /* Service CTA fill button */
     .service-cta-fill { background: #6ee7b7 !important; color: #0a0a0b !important; }
     .service-cta-fill:hover { background: #86efb8 !important; }
+    /* Faktura CTA — dark theme. Subordinate to the kort button above (which is
+       either outlined dim or filled green). Translucent dark fill + thin border
+       + dim text reads as a real secondary action without competing visually
+       with the primary CTA. */
+    .service-card .service-cta-faktura {
+      background: rgba(255,255,255,0.04) !important;
+      border-color: #2a2a2e !important;
+      color: #b8b8c2 !important;
+    }
+    .service-card .service-cta-faktura:hover {
+      background: rgba(255,255,255,0.08) !important;
+      border-color: #444448 !important;
+      color: #e8e8ed !important;
+    }
     /* Footer brand description */
     .footer-brand p { color: #b8b8c2 !important; }
   </style>
@@ -1813,6 +1889,11 @@
       <a href="#kontakt" class="hero-cta">Gratis 15-minutters gjennomgang</a>
       <p class="hero-note">Ingen forpliktelser. Vi viser deg nøyaktig hva AI svarer i dag.<br>
       Eller: <a href="https://sjekk.synligdigital.no/" class="hero-tool-link">sjekk nettstedet ditt selv gratis →</a></p>
+      <div class="hero-proof">
+        <svg class="hero-proof-check" aria-hidden="true" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 10 8 14 16 6"></polyline></svg>
+        <span>Synlig sin egen AI-synlighet: <strong>5/5 Agent-Native</strong> (toppnivå) på Cloudflares uavhengige agent-skanner.</span>
+        <a href="/bevis/agent-readiness" rel="noopener">Verifiser →</a>
+      </div>
     </div>
   </section>
 
@@ -1823,8 +1904,8 @@
         <div>
           <h2>Kundene dine har sluttet å bare google.</h2>
           <p>Stadig flere spør AI-assistenter direkte: <em>&laquo;Hvilken tannlege i Stavanger er best på rotfylling?&raquo;</em></p>
-          <p>AI gir ett til tre svar &mdash; og ignorerer alle andre. Hvis du ikke er blant dem, finnes du ikke.</p>
-          <p>Ifølge HubSpot sier <strong>79%</strong> av dei som allereie brukar AI til netthandel at opplevinga er betre enn tradisjonelt søk. Skiftet er allereie i gong — blant dei som har prøvd.</p>
+          <p>AI gir ett til tre svar, og ignorerer alle andre. Hvis du ikke er blant dem, finnes du ikke.</p>
+          <p>Ifølge HubSpot sier <strong>79%</strong> av dei som allereie brukar AI til netthandel at opplevinga er betre enn tradisjonelt søk. Skiftet er allereie i gong blant dei som har prøvd.</p>
           <p>Det handler ikke om kompetansen din. Det handler om at nettsiden og de digitale profilene dine ikke er satt opp på en måte AI-systemer forstår.</p>
           <p><strong>Det kan fikses.</strong></p>
         </div>
@@ -1833,10 +1914,10 @@
             <em>&laquo;Anbefal en tannlege i Stavanger med spesialkompetanse på endodonti&raquo;</em>
           </div>
           <ul class="demo-results">
-            <li><span class="check">&check;</span> Colosseum Tannlege &mdash; nevnt med navngitt spesialist</li>
-            <li><span class="check">&check;</span> Oris Dental Madla &mdash; anbefalt som alternativ</li>
-            <li><span class="check">&check;</span> Hinna Tannlegesenter &mdash; sitert fra anmeldelser</li>
-            <li><span class="miss">&cross;</span> <span class="you">Din klinikk (to endodontister) &mdash; ikke nevnt</span></li>
+            <li><span class="check">&check;</span> Colosseum Tannlege: nevnt med navngitt spesialist</li>
+            <li><span class="check">&check;</span> Oris Dental Madla: anbefalt som alternativ</li>
+            <li><span class="check">&check;</span> Hinna Tannlegesenter: sitert fra anmeldelser</li>
+            <li><span class="miss">&cross;</span> <span class="you">Din klinikk (to endodontister): ikke nevnt</span></li>
           </ul>
         </div>
       </div>
@@ -1848,7 +1929,7 @@
     <div class="container">
       <div class="case-label">Ekte analyse</div>
       <h2>Tannlegeklinikk i Stavanger: Score 24 av 100</h2>
-      <p class="case-intro">Vi analyserte AI-synligheten til en klinikk med to sertifiserte endodontister, implantat-spesialist og åtte tannleger. Resultatene var nedslående &mdash; men problemene var enkle å fikse.</p>
+      <p class="case-intro">Vi analyserte AI-synligheten til en klinikk med to sertifiserte endodontister, implantat-spesialist og åtte tannleger. Resultatene var nedslående, men problemene var enkle å fikse.</p>
 
       <div class="case-grid">
         <div class="case-card">
@@ -1864,12 +1945,12 @@
         <div class="case-card">
           <div class="score meh">7/15</div>
           <div class="score-label">Anmeldelser</div>
-          <div class="score-detail">4.5 stjerner på legelisten, men ratingene lever i en silo &mdash; ikke synlige for AI.</div>
+          <div class="score-detail">4.5 stjerner på legelisten, men ratingene lever i en silo, ikke synlige for AI.</div>
         </div>
       </div>
 
       <div class="case-quote">
-        <strong>Største funn:</strong> Klinikken har dobbelt så mange endodontister som Colosseum &mdash; men Colosseum eier all AI-synlighet fordi de har en dedikert spesialistside. Hver pasient som spør etter &laquo;endodonti Stavanger&raquo; og ringer Colosseum i stedet, er en pasient verdt 5&nbsp;000&ndash;15&nbsp;000&nbsp;kr.
+        <strong>Største funn:</strong> Klinikken har dobbelt så mange endodontister som Colosseum, men Colosseum eier all AI-synlighet fordi de har en dedikert spesialistside. Hver pasient som spør etter &laquo;endodonti Stavanger&raquo; og ringer Colosseum i stedet, er en pasient verdt 5&nbsp;000&ndash;15&nbsp;000&nbsp;kr.
       </div>
 
       <div style="margin-top:24px;display:flex;gap:16px;flex-wrap:wrap;">
@@ -1884,7 +1965,7 @@
     <div class="container">
       <div class="case-label">Markedsdata</div>
       <h2 style="font-size:1.8rem;font-weight:700;color:var(--gray-900);letter-spacing:-0.02em;margin-bottom:12px;line-height:1.25;">Bransje-benchmark: AI-synlighetsscore</h2>
-      <p class="benchmark-intro" style="color:var(--text-secondary);">Vi har analysert AI-synligheten til 30+ norske bedrifter på tvers av 9 bransjar (Norges AEO-leaderboard). Tidlege analysar dekka lokale tjenesteytarar; vi spesialiserer oss no på B2B SaaS- og programvarebedrifter. Slik ser det ut i dag — uten optimalisering.</p>
+      <p class="benchmark-intro" style="color:var(--text-secondary);">Vi har analysert AI-synligheten til 30+ norske bedrifter på tvers av 9 bransjar (Norges AEO-leaderboard). Tidlege analysar dekka lokale tjenesteytarar; vi spesialiserer oss no på B2B SaaS- og programvarebedrifter. Slik ser det ut i dag, uten optimalisering.</p>
 
       <table class="benchmark-table">
         <thead>
@@ -1897,7 +1978,7 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>Tannlegeklinikk A</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Stavanger — 2 endodontister, 8 tannleger</span></td>
+            <td><strong>Tannlegeklinikk A</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Stavanger · 2 endodontister, 8 tannleger</span></td>
             <td>Tannlege</td>
             <td>
               <div class="score-bar-wrap">
@@ -1908,7 +1989,7 @@
             <td><span class="grade-badge grade-f">F</span></td>
           </tr>
           <tr>
-            <td><strong>Tannlegeklinikk B</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Stavanger — ortodonti/Invisalign-spesialist</span></td>
+            <td><strong>Tannlegeklinikk B</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Stavanger · ortodonti/Invisalign-spesialist</span></td>
             <td>Tannlege</td>
             <td>
               <div class="score-bar-wrap">
@@ -1919,7 +2000,7 @@
             <td><span class="grade-badge grade-d">D</span></td>
           </tr>
           <tr>
-            <td><strong>Advokatfirma A</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Stavanger — allmennpraksis</span></td>
+            <td><strong>Advokatfirma A</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Stavanger · allmennpraksis</span></td>
             <td>Advokat</td>
             <td>
               <div class="score-bar-wrap">
@@ -1930,7 +2011,7 @@
             <td><span class="grade-badge grade-d">D</span></td>
           </tr>
           <tr>
-            <td><strong>Advokatfirma B</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Stavanger — forretningsjus</span></td>
+            <td><strong>Advokatfirma B</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Stavanger · forretningsjus</span></td>
             <td>Advokat</td>
             <td>
               <div class="score-bar-wrap">
@@ -1941,7 +2022,7 @@
             <td><span class="grade-badge grade-c">C</span></td>
           </tr>
           <tr>
-            <td><strong>Tannlegeklinikk C</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Stavanger — 5 tannleger, implantat og estetikk</span></td>
+            <td><strong>Tannlegeklinikk C</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Stavanger · 5 tannleger, implantat og estetikk</span></td>
             <td>Tannlege</td>
             <td>
               <div class="score-bar-wrap">
@@ -1952,7 +2033,7 @@
             <td><span class="grade-badge grade-c">C</span></td>
           </tr>
           <tr style="background:var(--green-50);">
-            <td><strong>Synlig</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Referansepunkt — AEO-optimalisert</span></td>
+            <td><strong>Synlig</strong><br><span style="font-size:0.8rem;color:var(--text-secondary);">Referansepunkt · AEO-optimalisert</span></td>
             <td>Referanse</td>
             <td>
               <div class="score-bar-wrap">
@@ -1966,11 +2047,11 @@
       </table>
 
       <div class="benchmark-note">
-        <strong>Gjennomsnitt uten optimalisering: 46/100.</strong> Synlig scorer 81/100 (B) etter AEO-optimalisering. Structured data er den desidert største enkeltsvakheten &mdash; de fleste scorer 0 av 25 mulige poeng på schema.org-markup.
+        <strong>Gjennomsnitt uten optimalisering: 46/100.</strong> Synlig scorer 81/100 (B) etter AEO-optimalisering. Structured data er den desidert største enkeltsvakheten. De fleste scorer 0 av 25 mulige poeng på schema.org-markup.
       </div>
 
       <div class="benchmark-cta">
-        <p>Lurer på hvor din bedrift scorer? Sjekk selv gratis — ingen registrering.</p>
+        <p>Lurer på hvor din bedrift scorer? Sjekk selv gratis, uten registrering.</p>
         <a href="https://sjekk.synligdigital.no/" target="_blank" rel="noopener">Sjekk din AI-synlighetsscore →</a>
       </div>
     </div>
@@ -2039,7 +2120,7 @@
             </tbody>
           </table>
         </div>
-        <p style="font-size:0.75rem;color:rgba(255,255,255,0.55);margin-top:0.5rem;">Kilde: Seer Interactive 2025 (case study, 1 370 konverteringar / 11 000 sesjonar mot 14 mill. organiske, okt 2024–apr 2025) — ChatGPT-trafikk konverterte ca. 9× betre enn Google organisk.</p>
+        <p style="font-size:0.75rem;color:rgba(255,255,255,0.55);margin-top:0.5rem;">Kilde: Seer Interactive 2025 (case study, 1 370 konverteringar / 11 000 sesjonar mot 14 mill. organiske, okt 2024–apr 2025). ChatGPT-trafikk konverterte ca. 9× betre enn Google organisk.</p>
       </div>
     </div>
   </section>
@@ -2048,12 +2129,12 @@
   <section class="about" id="om">
     <div class="container">
       <h2>Hvem er Synlig?</h2>
-      <p>Synlig er Norges ledende AEO-ekspert &mdash; spesialiserer seg på Answer Engine Optimization, kunsten å gjøre bedrifter synlige i AI-assistenter som ChatGPT, Perplexity og Google AI Overview. Vi holder til i Stavanger og betjener norske bedrifter over hele landet.</p>
+      <p>Synlig er Norges ledende AEO-ekspert og spesialiserer seg på Answer Engine Optimization, kunsten å gjøre bedrifter synlige i AI-assistenter som ChatGPT, Perplexity og Google AI Overview. Vi holder til i Stavanger og betjener norske bedrifter over hele landet.</p>
       <div class="team-members">
         <p><strong>Håkon Åmdal</strong> er AEO-spesialisten og grunnleggeren bak Synlig. Med daglig analyse av hvordan AI-assistenter forstår og anbefaler norske bedrifter, vet Håkon eksakt hva som skal til for at din bedrift skal komme med i svarene.</p>
       </div>
       <p>Vi tilbyr AI-synlighetsanalyse, implementering av strukturerte data (schema.org), Google Business Profile-optimalisering og løpende overvåking av hvordan AI-modeller omtaler og anbefaler din bedrift.</p>
-      <p>Kontakt oss på <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> &mdash; 4006 Stavanger, Norge.</p>
+      <p>Kontakt oss på <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a>, 4006 Stavanger, Norge.</p>
       <p><small>Sist oppdatert: april 2026</small></p>
     </div>
   </section>
@@ -2063,7 +2144,7 @@
     <div class="container">
       <div class="section-header">
         <h2>Hvordan fungerer AEO-prosessen?</h2>
-        <p>Fra usynlig til anbefalt &mdash; i tre steg. Prosessen tar typisk 4&ndash;8 uker, avhengig av nettstedets utgangspunkt og hvilke tiltak som prioriteres.</p>
+        <p>Fra usynlig til anbefalt på tre steg. Prosessen tar typisk 4&ndash;8 uker, avhengig av nettstedets utgangspunkt og hvilke tiltak som prioriteres.</p>
       </div>
       <div class="steps">
         <div class="step">
@@ -2096,7 +2177,7 @@
         <a href="/blogg/hva-er-aeo" class="blog-card">
           <span class="blog-tag">Guide</span>
           <h3>Hva er AEO? En komplett guide til Answer Engine Optimization</h3>
-          <p>AEO er den nye SEO. Lær hva det er, og hvorfor norske bedrifter trenger det nå — i ChatGPT, Perplexity og Google AI Overview.</p>
+          <p>AEO er den nye SEO. Lær hva det er, og hvorfor norske bedrifter trenger det nå i ChatGPT, Perplexity og Google AI Overview.</p>
           <span class="blog-meta">8. mars 2026 · 10 min lesing</span>
         </a>
       </div>
@@ -2132,9 +2213,9 @@
             <input type="email" id="lead-email-home-analyse" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254">
             <input type="hidden" name="tier" value="handlingsplan">
             <input type="hidden" name="slug" value="home-analyse">
-            <button type="submit" class="service-cta service-cta-outline lead-form-button">Bestill — betal med kort →</button>
+            <button type="submit" class="service-cta service-cta-outline lead-form-button">Bestill med kort →</button>
           </form>
-          <a href="/faktura?slug=home-analyse" class="service-cta-secondary">Send forespørsel (faktura)</a>
+          <a href="/faktura?slug=home-analyse" class="service-cta service-cta-faktura faktura-link" data-email-input="lead-email-home-analyse">Få faktura med 14 dagers betalingsfrist →</a>
         </div>
         <!-- Package 2 -->
         <div class="service-card featured">
@@ -2155,9 +2236,9 @@
             <input type="email" id="lead-email-home-fundament" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254">
             <input type="hidden" name="tier" value="fundament">
             <input type="hidden" name="slug" value="home-fundament">
-            <button type="submit" class="service-cta service-cta-fill lead-form-button">Bestill — betal med kort →</button>
+            <button type="submit" class="service-cta service-cta-fill lead-form-button">Bestill med kort →</button>
           </form>
-          <a href="/faktura?slug=home-fundament" class="service-cta-secondary">Send forespørsel (faktura)</a>
+          <a href="/faktura?slug=home-fundament" class="service-cta service-cta-faktura faktura-link" data-email-input="lead-email-home-fundament">Få faktura med 14 dagers betalingsfrist →</a>
         </div>
         <!-- Package 3 -->
         <div class="service-card">
@@ -2175,9 +2256,9 @@
             <input type="email" id="lead-email-home-lopende" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254">
             <input type="hidden" name="tier" value="lopende">
             <input type="hidden" name="slug" value="home-lopende">
-            <button type="submit" class="service-cta service-cta-outline lead-form-button">Start abonnement — kort →</button>
+            <button type="submit" class="service-cta service-cta-outline lead-form-button">Start abonnement med kort →</button>
           </form>
-          <a href="/faktura?slug=home-lopende" class="service-cta-secondary">Send forespørsel (faktura)</a>
+          <a href="/faktura?slug=home-lopende" class="service-cta service-cta-faktura faktura-link" data-email-input="lead-email-home-lopende">Få faktura, månedlig etterskuddsvis →</a>
         </div>
       </div>
     </div>
@@ -2193,7 +2274,7 @@
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1" onclick="toggleFaq(this)">Hva er Answer Engine Optimization (AEO)?</button>
-          <div class="faq-answer" id="faq-answer-1" aria-hidden="true"><div class="faq-answer-inner">AEO handler om å optimalisere bedriftens digitale tilstedeværelse slik at AI-assistenter som ChatGPT, Perplexity og Google AI Overview finner, forstår og anbefaler dere. Det inkluderer strukturerte data (schema.org), Google Business Profile, innholdsoptimalisering og anmeldelsesstrategi. Målet er å være det svaret AI gir &mdash; ikke bare å rangere på Google.</div></div>
+          <div class="faq-answer" id="faq-answer-1" aria-hidden="true"><div class="faq-answer-inner">AEO handler om å optimalisere bedriftens digitale tilstedeværelse slik at AI-assistenter som ChatGPT, Perplexity og Google AI Overview finner, forstår og anbefaler dere. Det inkluderer strukturerte data (schema.org), Google Business Profile, innholdsoptimalisering og anmeldelsesstrategi. Målet er å være det svaret AI gir, ikke bare å rangere på Google.</div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2" onclick="toggleFaq(this)">Hvordan er AEO forskjellig fra vanlig SEO?</button>
@@ -2201,7 +2282,7 @@
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3" onclick="toggleFaq(this)">Hvilke bedrifter har mest å vinne på AEO?</button>
-          <div class="faq-answer" id="faq-answer-3" aria-hidden="true"><div class="faq-answer-inner">Norske B2B SaaS- og programvarebedrifter — regnskaps-SaaS, HR-SaaS, healthcare-SaaS, fintech, marketing-SaaS, vertikal SaaS. AI-assistenter er det første kjøparen spør når de vurderer ny SaaS (&laquo;beste norske regnskaps-SaaS for byrå&raquo;), og ChatGPT-trafikk konverterte 9× bedre enn Google organisk (15,9% vs 1,76%, Seer Interactive 2025). Norske SaaS scorer i snitt 43–55 av 100 på AI-synlighet og manglar nesten alltid SoftwareApplication-schema, alternative-to-sider og integrasjonslister.</div></div>
+          <div class="faq-answer" id="faq-answer-3" aria-hidden="true"><div class="faq-answer-inner">Norske B2B SaaS- og programvarebedrifter: regnskaps-SaaS, HR-SaaS, healthcare-SaaS, fintech, marketing-SaaS, vertikal SaaS. AI-assistenter er det første kjøparen spør når de vurderer ny SaaS (&laquo;beste norske regnskaps-SaaS for byrå&raquo;), og ChatGPT-trafikk konverterte 9× bedre enn Google organisk (15,9% vs 1,76%, Seer Interactive 2025). Norske SaaS scorer i snitt 43–55 av 100 på AI-synlighet og manglar nesten alltid SoftwareApplication-schema, alternative-to-sider og integrasjonslister.</div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-4" onclick="toggleFaq(this)">Hvor lang tid tar det å se resultater?</button>
@@ -2209,7 +2290,7 @@
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-5" onclick="toggleFaq(this)">Må vi bygge om nettsiden vår?</button>
-          <div class="faq-answer" id="faq-answer-5" aria-hidden="true"><div class="faq-answer-inner">Nei. AEO-tiltakene legges oppå eksisterende nettside. Vi legger til schema.org-markup (usynlige metadata), optimaliserer Google Business Profile, og lager innhold som svarer på vanlige spørsmål. Selve nettsiden beholder designet sitt &mdash; vi gjør den lesbar for AI.</div></div>
+          <div class="faq-answer" id="faq-answer-5" aria-hidden="true"><div class="faq-answer-inner">Nei. AEO-tiltakene legges oppå eksisterende nettside. Vi legger til schema.org-markup (usynlige metadata), optimaliserer Google Business Profile, og lager innhold som svarer på vanlige spørsmål. Selve nettsiden beholder designet sitt; vi gjør den lesbar for AI.</div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-6" onclick="toggleFaq(this)">Hva koster det?</button>
@@ -2245,7 +2326,7 @@
       <div class="footer-inner">
         <div class="footer-brand">
           <a href="/" class="nav-logo">Synlig</a>
-          <p>Vi hjelper norske bedrifter med å bli synlige der kundene faktisk spør &mdash; i AI-assistenter som ChatGPT, Perplexity og Google AI Overview.</p>
+          <p>Vi hjelper norske bedrifter med å bli synlige der kundene faktisk spør, i AI-assistenter som ChatGPT, Perplexity og Google AI Overview.</p>
         </div>
         <div class="footer-links">
           <h4>Tjenester</h4>
@@ -2291,6 +2372,54 @@
       btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
       if (answer) answer.setAttribute('aria-hidden', isOpen ? 'true' : 'false');
     }
+
+    /* Faktura-CTA: (1) forward typed email into /faktura?email=<…> so the
+       epost field pre-fills (one less field on the longer faktura form),
+       (2) beacon /api/lead-capture with intent=faktura BEFORE navigation so
+       Synlig is notified at click-time — symmetry with the kort path, which
+       beacons at form-submit (handleLeadCapture in checkout-handler.ts). If
+       the prospect abandons the /faktura form, the lead is still visible
+       (Faktura-intent inbox notification + faktura-intent KV marker).
+       Best-effort throughout: bad email or missing input leaves the link
+       unchanged; beacon failure does not block navigation. */
+    (function() {
+      try {
+        document.querySelectorAll(".faktura-link[data-email-input]").forEach(function(link) {
+          link.addEventListener("click", function() {
+            try {
+              var inputId = link.getAttribute("data-email-input");
+              if (!inputId) return;
+              var input = document.getElementById(inputId);
+              if (!input || !input.value) return;
+              var email = String(input.value).trim();
+              if (!email || email.length > 254) return;
+              if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return;
+              var href = link.getAttribute("href") || "";
+              var sep = href.indexOf("?") === -1 ? "?" : "&";
+              if (!/[?&]email=/.test(href)) {
+                link.setAttribute("href", href + sep + "email=" + encodeURIComponent(email));
+              }
+              // Beacon faktura intent. sendBeacon is fire-and-forget; navigation
+              // proceeds in parallel. Slug parsed from href (e.g. home-analyse).
+              try {
+                var slugMatch = href.match(/[?&]slug=([^&]+)/);
+                var slug = slugMatch ? decodeURIComponent(slugMatch[1]) : "";
+                if (!slug) return;
+                var fd = new FormData();
+                fd.append("email", email);
+                fd.append("slug", slug);
+                fd.append("intent", "faktura");
+                if (typeof navigator.sendBeacon === "function") {
+                  navigator.sendBeacon("/api/lead-capture", fd);
+                } else if (typeof fetch === "function") {
+                  fetch("/api/lead-capture", { method: "POST", body: fd, keepalive: true }).catch(function() {});
+                }
+              } catch (beaconErr) { /* swallow — best-effort beacon */ }
+            } catch (inner) { /* swallow — plain link still works */ }
+          });
+        });
+      } catch (e) { /* best-effort */ }
+    })();
   </script>
 </body>
 </html>
