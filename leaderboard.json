@@ -1,56 +1,86 @@
 {
-  "generatedAt": "2026-05-18T08:01:12.481Z",
+  "generatedAt": "2026-06-01T15:45:57.351Z",
   "toolVersion": "1.1",
-  "totalCompanies": 30,
-  "successfulAudits": 23,
+  "totalCompanies": 35,
+  "successfulAudits": 28,
   "ranking": [
     {
       "rank": 1,
       "name": "Rema 1000",
       "url": "https://www.rema.no",
       "category": "retail",
-      "totalScore": 68,
+      "totalScore": 69,
       "grade": "C",
       "breakdown": {
         "schema": 9,
         "meta": 13,
-        "content": 18,
-        "technical": 16,
-        "aiSignals": 12
+        "content": 19,
+        "technical": 15,
+        "aiSignals": 13
       }
     },
     {
       "rank": 2,
+      "name": "Lanullva",
+      "url": "https://lanullva.no",
+      "category": "ull",
+      "totalScore": 67,
+      "grade": "C",
+      "breakdown": {
+        "schema": 7,
+        "meta": 14,
+        "content": 17,
+        "technical": 20,
+        "aiSignals": 9
+      }
+    },
+    {
+      "rank": 3,
       "name": "Stavanger Aftenblad",
       "url": "https://www.aftenbladet.no",
       "category": "stavanger",
-      "totalScore": 63,
+      "totalScore": 66,
+      "grade": "C",
+      "breakdown": {
+        "schema": 5,
+        "meta": 12,
+        "content": 22,
+        "technical": 16,
+        "aiSignals": 11
+      }
+    },
+    {
+      "rank": 4,
+      "name": "Janus",
+      "url": "https://janus.no",
+      "category": "ull",
+      "totalScore": 65,
+      "grade": "C",
+      "breakdown": {
+        "schema": 6,
+        "meta": 12,
+        "content": 19,
+        "technical": 19,
+        "aiSignals": 9
+      }
+    },
+    {
+      "rank": 5,
+      "name": "NRK",
+      "url": "https://www.nrk.no",
+      "category": "media",
+      "totalScore": 60,
       "grade": "C",
       "breakdown": {
         "schema": 5,
         "meta": 12,
         "content": 20,
         "technical": 16,
-        "aiSignals": 10
+        "aiSignals": 7
       }
     },
     {
-      "rank": 3,
-      "name": "Aftenposten",
-      "url": "https://www.aftenposten.no",
-      "category": "media",
-      "totalScore": 61,
-      "grade": "C",
-      "breakdown": {
-        "schema": 4,
-        "meta": 8,
-        "content": 20,
-        "technical": 16,
-        "aiSignals": 13
-      }
-    },
-    {
-      "rank": 4,
+      "rank": 6,
       "name": "Schibsted",
       "url": "https://schibsted.com",
       "category": "tech",
@@ -65,22 +95,37 @@
       }
     },
     {
-      "rank": 5,
+      "rank": 7,
       "name": "Aker BP",
       "url": "https://www.akerbp.com",
       "category": "stavanger",
-      "totalScore": 59,
+      "totalScore": 60,
       "grade": "C",
       "breakdown": {
         "schema": 7,
         "meta": 13,
         "content": 15,
-        "technical": 14,
+        "technical": 15,
         "aiSignals": 10
       }
     },
     {
-      "rank": 6,
+      "rank": 8,
+      "name": "Stavanger kommune",
+      "url": "https://www.stavanger.kommune.no",
+      "category": "stavanger",
+      "totalScore": 60,
+      "grade": "C",
+      "breakdown": {
+        "schema": 5,
+        "meta": 12,
+        "content": 19,
+        "technical": 13,
+        "aiSignals": 11
+      }
+    },
+    {
+      "rank": 9,
       "name": "Smedvig",
       "url": "https://smedvig.no",
       "category": "stavanger",
@@ -95,52 +140,67 @@
       }
     },
     {
-      "rank": 7,
-      "name": "NRK",
-      "url": "https://www.nrk.no",
+      "rank": 10,
+      "name": "Devold",
+      "url": "https://devold.no",
+      "category": "ull",
+      "totalScore": 58,
+      "grade": "C",
+      "breakdown": {
+        "schema": 8,
+        "meta": 11,
+        "content": 11,
+        "technical": 18,
+        "aiSignals": 10
+      }
+    },
+    {
+      "rank": 11,
+      "name": "Equinor",
+      "url": "https://www.equinor.com/no",
+      "category": "energi",
+      "totalScore": 57,
+      "grade": "C",
+      "breakdown": {
+        "schema": 5,
+        "meta": 12,
+        "content": 16,
+        "technical": 14,
+        "aiSignals": 10
+      }
+    },
+    {
+      "rank": 12,
+      "name": "VG",
+      "url": "https://www.vg.no",
       "category": "media",
       "totalScore": 57,
       "grade": "C",
       "breakdown": {
         "schema": 5,
         "meta": 12,
-        "content": 18,
+        "content": 15,
         "technical": 16,
-        "aiSignals": 6
+        "aiSignals": 9
       }
     },
     {
-      "rank": 8,
-      "name": "Stavanger kommune",
-      "url": "https://www.stavanger.kommune.no",
-      "category": "stavanger",
-      "totalScore": 57,
-      "grade": "C",
-      "breakdown": {
-        "schema": 5,
-        "meta": 12,
-        "content": 16,
-        "technical": 13,
-        "aiSignals": 11
-      }
-    },
-    {
-      "rank": 9,
+      "rank": 13,
       "name": "Visma",
       "url": "https://www.visma.no",
       "category": "tech",
       "totalScore": 56,
       "grade": "C",
       "breakdown": {
-        "schema": 0,
+        "schema": 6,
         "meta": 12,
-        "content": 16,
-        "technical": 18,
-        "aiSignals": 10
+        "content": 14,
+        "technical": 19,
+        "aiSignals": 5
       }
     },
     {
-      "rank": 10,
+      "rank": 14,
       "name": "Norsk Hydro",
       "url": "https://www.hydro.com/no-NO",
       "category": "industri",
@@ -155,22 +215,7 @@
       }
     },
     {
-      "rank": 11,
-      "name": "Telenor",
-      "url": "https://www.telenor.no",
-      "category": "telekom",
-      "totalScore": 55,
-      "grade": "C",
-      "breakdown": {
-        "schema": 0,
-        "meta": 14,
-        "content": 18,
-        "technical": 15,
-        "aiSignals": 8
-      }
-    },
-    {
-      "rank": 12,
+      "rank": 15,
       "name": "Nordea",
       "url": "https://www.nordea.no",
       "category": "finans",
@@ -185,82 +230,97 @@
       }
     },
     {
-      "rank": 13,
-      "name": "Equinor",
-      "url": "https://www.equinor.com/no",
-      "category": "energi",
-      "totalScore": 54,
-      "grade": "D",
-      "breakdown": {
-        "schema": 5,
-        "meta": 12,
-        "content": 16,
-        "technical": 13,
-        "aiSignals": 8
-      }
-    },
-    {
-      "rank": 14,
-      "name": "Avinor",
-      "url": "https://avinor.no",
-      "category": "transport",
-      "totalScore": 54,
-      "grade": "D",
-      "breakdown": {
-        "schema": 4,
-        "meta": 11,
-        "content": 17,
-        "technical": 14,
-        "aiSignals": 8
-      }
-    },
-    {
-      "rank": 15,
+      "rank": 16,
       "name": "Storebrand",
       "url": "https://www.storebrand.no",
       "category": "finans",
-      "totalScore": 53,
-      "grade": "D",
+      "totalScore": 55,
+      "grade": "C",
       "breakdown": {
         "schema": 0,
         "meta": 12,
-        "content": 15,
+        "content": 17,
         "technical": 18,
         "aiSignals": 8
       }
     },
     {
-      "rank": 16,
-      "name": "Posten Bring",
-      "url": "https://www.posten.no",
-      "category": "transport",
-      "totalScore": 53,
-      "grade": "D",
-      "breakdown": {
-        "schema": 7,
-        "meta": 11,
-        "content": 16,
-        "technical": 14,
-        "aiSignals": 5
-      }
-    },
-    {
       "rank": 17,
-      "name": "VG",
-      "url": "https://www.vg.no",
+      "name": "Aftenposten",
+      "url": "https://www.aftenposten.no",
       "category": "media",
-      "totalScore": 52,
-      "grade": "D",
+      "totalScore": 55,
+      "grade": "C",
       "breakdown": {
-        "schema": 5,
+        "schema": 4,
         "meta": 12,
-        "content": 11,
+        "content": 15,
         "technical": 16,
         "aiSignals": 8
       }
     },
     {
       "rank": 18,
+      "name": "Avinor",
+      "url": "https://avinor.no",
+      "category": "transport",
+      "totalScore": 55,
+      "grade": "C",
+      "breakdown": {
+        "schema": 4,
+        "meta": 12,
+        "content": 17,
+        "technical": 14,
+        "aiSignals": 8
+      }
+    },
+    {
+      "rank": 19,
+      "name": "Gjensidige",
+      "url": "https://www.gjensidige.no",
+      "category": "finans",
+      "totalScore": 54,
+      "grade": "D",
+      "breakdown": {
+        "schema": 7,
+        "meta": 11,
+        "content": 15,
+        "technical": 15,
+        "aiSignals": 6
+      }
+    },
+    {
+      "rank": 20,
+      "name": "Telenor",
+      "url": "https://www.telenor.no",
+      "category": "telekom",
+      "totalScore": 53,
+      "grade": "D",
+      "breakdown": {
+        "schema": 0,
+        "meta": 14,
+        "content": 15,
+        "technical": 16,
+        "aiSignals": 8
+      }
+    },
+    {
+      "rank": 21,
+      "name": "Posten Bring",
+      "url": "https://www.posten.no",
+      "category": "transport",
+      "totalScore": 52,
+      "grade": "D",
+      "breakdown": {
+        "schema": 7,
+        "meta": 11,
+        "content": 16,
+        "technical": 13,
+        "aiSignals": 5
+      }
+    },
+    {
+      "rank": 22,
       "name": "Kiwi",
       "url": "https://kiwi.no",
       "category": "retail",
@@ -275,22 +335,22 @@
       }
     },
     {
-      "rank": 19,
-      "name": "Gjensidige",
-      "url": "https://www.gjensidige.no",
-      "category": "finans",
-      "totalScore": 50,
+      "rank": 23,
+      "name": "Lyse",
+      "url": "https://www.lyse.no",
+      "category": "stavanger",
+      "totalScore": 47,
       "grade": "D",
       "breakdown": {
         "schema": 0,
         "meta": 11,
-        "content": 17,
+        "content": 14,
         "technical": 16,
         "aiSignals": 6
       }
     },
     {
-      "rank": 20,
+      "rank": 24,
       "name": "Helse Stavanger",
       "url": "https://helse-stavanger.no",
       "category": "stavanger",
@@ -305,22 +365,22 @@
       }
     },
     {
-      "rank": 21,
-      "name": "Lyse",
-      "url": "https://www.lyse.no",
-      "category": "stavanger",
-      "totalScore": 46,
+      "rank": 25,
+      "name": "Ulvang",
+      "url": "https://ulvang.no",
+      "category": "ull",
+      "totalScore": 43,
       "grade": "D",
       "breakdown": {
         "schema": 0,
-        "meta": 11,
-        "content": 14,
+        "meta": 10,
+        "content": 13,
         "technical": 15,
-        "aiSignals": 6
+        "aiSignals": 5
       }
     },
     {
-      "rank": 22,
+      "rank": 26,
       "name": "Coop",
       "url": "https://coop.no",
       "category": "retail",
@@ -329,13 +389,28 @@
       "breakdown": {
         "schema": 0,
         "meta": 9,
-        "content": 12,
+        "content": 13,
         "technical": 13,
-        "aiSignals": 8
+        "aiSignals": 7
       }
     },
     {
-      "rank": 23,
+      "rank": 27,
+      "name": "Aclima",
+      "url": "https://aclima.com",
+      "category": "ull",
+      "totalScore": 42,
+      "grade": "D",
+      "breakdown": {
+        "schema": 4,
+        "meta": 11,
+        "content": 7,
+        "technical": 15,
+        "aiSignals": 5
+      }
+    },
+    {
+      "rank": 28,
       "name": "DNB",
       "url": "https://www.dnb.no",
       "category": "finans",
