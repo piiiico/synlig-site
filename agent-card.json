@@ -31,7 +31,7 @@
     {
       "id": "aeo-implementation",
       "name": "AEO Implementation for B2B SaaS",
-      "description": "Full AEO implementation for Norwegian B2B SaaS and software companies: SoftwareApplication schema.org markup, alternative-to and integration pages, AI-optimized buyer-question content, and ongoing monitoring. Pricing: AI-synlighetsanalyse 4 900 NOK (one-time), AI-synlighetsfundament 14 900 NOK (one-time, includes implementation), Løpende overvåking 4 900 NOK/month (subscription, 3-month minimum). Order directly via web form, EHF invoice within 24h.",
+      "description": "Full AEO implementation for Norwegian B2B SaaS and software companies: SoftwareApplication schema.org markup, alternative-to and integration pages, AI-optimized buyer-question content, and ongoing monitoring. Pricing (four tiers): Synlig Lite 990 NOK (one-time, FAQPage JSON-LD for one page, 1 business day delivery), Analyse 4 900 NOK (one-time, full AEO audit + written action plan, 5 business days), Fundament 14 900 NOK (one-time, Analyse + full implementation, 2–4 weeks), Løpende overvåking 4 900 NOK/month (subscription, monthly citation tracking, requires Fundament in place). Order directly via Stripe or web form, EHF invoice within 24h.",
       "tags": ["aeo", "schema.org", "saas", "b2b", "software", "norwegian", "implementation"],
       "inputModes": ["text/html"],
       "outputModes": ["text/html"],

@@ -7,7 +7,7 @@
 **E-post:** hei@synligdigital.no  
 **Nettstad:** https://synligdigital.no  
 **Dagleg leiar:** Håkon Åmdal  
-**Sist oppdatert:** 2026-05-21
+**Sist oppdatert:** 2026-06-06
 
 ---
 
@@ -21,11 +21,16 @@ AEO er optimalisering for AI-genererte svar — ikkje berre søkemotorrangeringa
 
 ## Tenester
 
-| Teneste | Pris | Type |
-|---------|------|------|
-| Synlighetsrapport | 4 900 NOK | Eingong |
-| AI-synlighetsfundament | 14 900 NOK | Eingong |
-| AI-Synlighet Kontinuerleg | 4 900 NOK/mnd | Abonnement |
+Fire faste pakker for AEO og digital markedsføring. Alle prisar er eks. MVA.
+
+| Teneste | Pris | Type | Levering |
+|---------|------|------|----------|
+| Synlig Lite (FAQPage for éi side) | 990 NOK | Eingong | 1 virkedag |
+| Analyse (full AEO-audit + handlingsplan) | 4 900 NOK | Eingong | 5 virkedagar |
+| Fundament (Analyse + full implementering) | 14 900 NOK | Eingong | 2–4 veker |
+| Løpende overvåking | 4 900 NOK/mnd | Abonnement | Månedleg rapport |
+
+Synlig Lite er inngangspunktet for bedrifter som vil teste AEO-effekten på éi kritisk side. Analyse og Fundament er hovudleveransane våre. Løpande overvåking forutset at fundamentet er på plass.
 
 Full prisinformasjon: https://synligdigital.no/priser.md
 
@@ -33,15 +38,25 @@ Full prisinformasjon: https://synligdigital.no/priser.md
 
 ## Dokumenterte resultat
 
-**Nordic Lithium (case study 2026):**
+Begge publiserte case studies under er **nærstående part**-implementeringar (interne metode-case, ikkje arm's-length kundeleveransar). Eierskapsopplysning ligg på respektive case-side. Første arm's-length kundecase er under arbeid.
+
+**Nordic Lithium (nærstående metode-case, 2026):**
+- Eierskapsopplysning: Felles eigarskap med Synlig (Håkon Åmdal)
 - AEO-score frå 67/100 til 85/100 (F → B)
 - Citation rate frå 0/8 til 5/8 AI-spørsmål
-- Full case study: https://synligdigital.no/case/nordic-lithium
+- Full case study + eierskapsopplysning: https://synligdigital.no/case/nordic-lithium
 
-**Pierstop.com (case study 2026):**
+**Pierstop.com (nærstående metode-case, 2026):**
+- Eierskapsopplysning: Co-styremedlem AS Åmdal Invest; vederlagsfri levering
 - AEO-score frå 52/100 til 76/100 (D → B)
 - 24 poeng auke etter schema-sprint
-- Full case study: https://synligdigital.no/case/pierstop
+- Full case study + eierskapsopplysning: https://synligdigital.no/case/pierstop
+
+**Synlig Digital (dogfooding 2026-05-27):**
+- Cloudflare Agent Readiness Score: **Level 5 (Agent-Native)** — topp av 6 nivå
+- Verifiserbart hjå Cloudflare: https://isitagentready.com/?url=https://synligdigital.no
+- Greier alle agent-readiness-sjekkar utanom kommersielle protokoll (x402, MPP) og OAuth — sjølve nettsida vår er ikkje eit handelsendepunkt
+- Vi køyrer same prosessen for kundar som vi køyrer for oss sjølve
 
 ---
 
@@ -59,10 +74,9 @@ Synlig Digital har analysert over 200 norske AI-søk på tvers av 20 bransjar og
 
 ## Målgruppe
 
-Norske lokale tenesteytarar med høg transaksjonsverdi:
-- Tannlegar, advokatar, rørleggarar, eigedomsmeklerar
-- Bilverkstader, rekneskapsførarar, revisorar, reingjøringsfirma
-- Alle norske SMB som ynskjer å bli nemnt av AI-assistentar
+Norske B2B SaaS- og programvarebedrifter (regnskaps-SaaS, HR-SaaS, healthcare-SaaS, fintech, marketing-SaaS, vertikal SaaS) som vil bli synlege i ChatGPT, Perplexity og Google AI Mode. Sjå: https://synligdigital.no/tjenester/aeo-for-saas-bedrifter
+
+Vi betener òg norske SMB-ar over heile landet — særleg verksemder i Stavanger-regionen og Rogaland som vil dominere lokale AI-svar.
 
 ---
 

@@ -780,6 +780,75 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
   }
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// AI-DISCOVERY-SURFACE GATE — files explicitly served as machine-readable
+// pricing/service catalogues to AI assistants (llms.txt, priser.md, context.md,
+// agent-card.json) must mention every active tier. These are the surfaces
+// ChatGPT/Perplexity/Google AI fetch first when answering "what does Synlig
+// offer?" and "what's the cheapest option?" — stale pricing here propagates
+// directly into AI citations.
+//
+// Why this gate exists: 2026-06-05 funnel-wide-launch sweep shipped Synlig
+// Lite 990 NOK to ~10 HTML surfaces, 7 frozen reports, and 7 blog posts via
+// three prior code gates — but llms.txt, priser.md, context.md and
+// agent-card.json (the canonical AI-discovery files) were missed entirely.
+// Found 9th occurrence by curl-walking AI-discovery surfaces. Per self-
+// awareness rule: 9 occurrences in 24h across 5 distinct surface CATEGORIES
+// (HTML source, frozen reports, blogs, skill text, AI-discovery files) — text
+// rules failed; gate added on default execution path.
+//
+// Each tier MUST be assertable by substring match in each surface. Surface
+// list and tier needles are intent — the build compares intent vs. state.
+//
+// Opt-out: BUILD_GATE_NEGATIVE_TEST env var (same as other gates, for testing).
+// ─────────────────────────────────────────────────────────────────────────────
+const AI_DISCOVERY_SURFACES = [
+  "/workspace/synlig-site/llms.txt",
+  "/workspace/synlig-site/priser.md",
+  "/workspace/synlig-site/context.md",
+  "/workspace/synlig-site/agent-card.json",
+];
+// Each tier needle is a set of alternates — the build passes if ANY alternate
+// appears. This tolerates language differences (English in agent-card.json,
+// Norwegian in the .txt/.md files) without forcing a single canonical phrase.
+const AI_DISCOVERY_TIER_NEEDLES: Record<string, string[]> = {
+  lite:        ["Synlig Lite", "990 NOK", "990 kr"],
+  analyse:     ["Analyse", "4 900 NOK", "4 900 kr"],
+  fundament:   ["Fundament", "14 900 NOK", "14 900 kr"],
+  lopende:     ["Løpende", "4 900 NOK/mnd", "4 900 NOK/month", "4 900 kr/mnd"],
+};
+if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
+  const aiSurfaceViolations: string[] = [];
+  for (const path of AI_DISCOVERY_SURFACES) {
+    let text = "";
+    try { text = readFileSync(path, "utf-8"); } catch (err) {
+      aiSurfaceViolations.push(
+        `AI-discovery surface MISSING file: ${path} (${err instanceof Error ? err.message : String(err)})`
+      );
+      continue;
+    }
+    for (const [tier, alternates] of Object.entries(AI_DISCOVERY_TIER_NEEDLES)) {
+      const matched = alternates.some(n => text.includes(n));
+      if (!matched) {
+        aiSurfaceViolations.push(
+          `tier="${tier}" missing from AI-discovery surface: ${path}\n      alternates (any one suffices): ${alternates.join(" | ")}`
+        );
+      }
+    }
+  }
+  if (aiSurfaceViolations.length > 0) {
+    console.error(`\n[BUILD FAIL] AI-discovery-surface gate violated (${aiSurfaceViolations.length} issue(s)):`);
+    for (const v of aiSurfaceViolations) console.error(`  - ${v}`);
+    console.error(`\nWhy: llms.txt, priser.md, context.md and agent-card.json are the canonical`);
+    console.error(`machine-readable surfaces AI assistants fetch when answering "what does Synlig`);
+    console.error(`offer?" and "what's the cheapest option?" Stale pricing here propagates into`);
+    console.error(`citations and silently filters out price-sensitive prospects.`);
+    console.error(`\nFix: add the missing tier (or one of its alternates) to the listed surface.`);
+    console.error(`Registry: synlig-site/build.ts AI_DISCOVERY_TIER_NEEDLES.`);
+    process.exit(1);
+  }
+}
+
 // Load reports from /workspace/synlig-site/reports/
 const reportsDir = "/workspace/synlig-site/reports";
 const reportEntries: Array<{ hash: string; html: string }> = [];
