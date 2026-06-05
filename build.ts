@@ -6,7 +6,7 @@
 // invariant enforced below ("DUPLICATE-WRITER GUARD"). If you need to add
 // a route, edit this file — do NOT create a second build script.
 
-import { readdirSync, statSync } from "fs";
+import { readdirSync, readFileSync, statSync } from "fs";
 import { join, basename, resolve } from "path";
 import { applyMarkers, MID_MARKER, BOTTOM_MARKER, LEAD_CAPTURE_PATH, CHECKOUT_HREF_PREFIX, MAILTO_PREFIX, type Stage } from "./_partials/render-audit-cta";
 import { runFactSourceGate } from "./_partials/fact-source-gate";
@@ -128,14 +128,22 @@ async function applyBlogCta(absPath: string): Promise<string> {
 // All 5 wiring places (file load, const decl, routes ×3, sitemap assertion)
 // are auto-derived. Root cause: 2026-05-20 CF 10021 on aeo-for-tannleger —
 // const decl was the silent 5th place, caught only by post-deploy live-route gate.
+//
+// `deprecated: true` opts out of the sitemap-consistency gate (page stays
+// live + routed for residual organic/direct traffic, but is NOT promoted via
+// sitemap.xml — Google de-indexes as it re-crawls). Authoritative source for
+// the deprecated set: /workspace/bin/check-vertical.ts DEPRECATED_VERTICAL_KEYWORDS.
+// Added 2026-05-23 as part of the agent-facing-positioning sweep
+// (llms.txt + context.md + sitemap.xml) — 0/309 conversion across Feb–Apr 2026
+// was a concluded experiment, not an open hypothesis.
 // ─────────────────────────────────────────────────────────────────────────────
-const VERTICAL_LANDINGS: Array<{ slug: string; file: string; sitemapPriority: number }> = [
-  { slug: 'aeo-for-advokater',         file: 'tjenester/aeo-for-advokater.html',         sitemapPriority: 0.9 },
+const VERTICAL_LANDINGS: Array<{ slug: string; file: string; sitemapPriority: number; deprecated?: boolean }> = [
+  { slug: 'aeo-for-advokater',         file: 'tjenester/aeo-for-advokater.html',         sitemapPriority: 0.9, deprecated: true },
   { slug: 'aeo-for-saas-bedrifter',    file: 'tjenester/aeo-for-saas-bedrifter.html',    sitemapPriority: 0.9 },
-  { slug: 'aeo-for-tannleger',         file: 'tjenester/aeo-for-tannleger.html',         sitemapPriority: 0.9 },
-  { slug: 'aeo-for-eiendomsmeglere',   file: 'tjenester/aeo-for-eiendomsmeglere.html',   sitemapPriority: 0.9 },
-  { slug: 'aeo-for-regnskap',          file: 'tjenester/aeo-for-regnskap.html',          sitemapPriority: 0.9 },
-  { slug: 'aeo-for-kiropraktor',       file: 'tjenester/aeo-for-kiropraktor.html',       sitemapPriority: 0.9 },
+  { slug: 'aeo-for-tannleger',         file: 'tjenester/aeo-for-tannleger.html',         sitemapPriority: 0.9, deprecated: true },
+  { slug: 'aeo-for-eiendomsmeglere',   file: 'tjenester/aeo-for-eiendomsmeglere.html',   sitemapPriority: 0.9, deprecated: true },
+  { slug: 'aeo-for-regnskap',          file: 'tjenester/aeo-for-regnskap.html',          sitemapPriority: 0.9, deprecated: true },
+  { slug: 'aeo-for-kiropraktor',       file: 'tjenester/aeo-for-kiropraktor.html',       sitemapPriority: 0.9, deprecated: true },
 ];
 
 // Derive worker constant name from slug: aeo-for-advokater -> TJENESTER_AEO_FOR_ADVOKATER_HTML
@@ -158,6 +166,7 @@ for (const v of VERTICAL_LANDINGS) {
 
 const files = {
   INDEX_HTML: await Bun.file("/workspace/synlig-site/index.html").text(),
+  EN_HTML: await Bun.file("/workspace/synlig-site/en.html").text(),
   PRISER_HTML: await Bun.file("/workspace/synlig-site/priser.html").text(),
   FAKTURA_HTML: await Bun.file("/workspace/synlig-site/faktura.html").text(),
   GUIDE_HTML: await Bun.file("/workspace/synlig-site/guide.html").text(),
@@ -169,6 +178,9 @@ const files = {
   FAVICON_SVG: await Bun.file("/workspace/synlig-site/favicon.svg").text(),
   KOMPLETT_AEO_HTML: await Bun.file("/workspace/synlig-site/komplett-aeo-analyse.html").text(),
   NORDIC_LITHIUM_CASE_HTML: await Bun.file("/workspace/synlig-site/nordic-lithium-case.html").text(),
+  EN_CASE_NORDIC_LITHIUM_HTML: await Bun.file("/workspace/synlig-site/en-case-nordic-lithium.html").text(),
+  EN_BLOG_HTML: await Bun.file("/workspace/synlig-site/en-blog.html").text(),
+  EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML: await Bun.file("/workspace/synlig-site/en-blog-llm-smell-check-benchmark.html").text(),
   PIERSTOP_CASE_HTML: await Bun.file("/workspace/synlig-site/pierstop-case.html").text(),
   AGENT_CARD_JSON: await Bun.file("/workspace/synlig-site/agent-card.json").text(),
   BLOGG_INDEX_HTML: await Bun.file("/workspace/synlig-site/blogg/index.html").text(),
@@ -186,6 +198,7 @@ const files = {
   BLOGG_AEO_VS_SEO_HTML: await applyBlogCta("/workspace/synlig-site/blogg/aeo-vs-seo.html"),
   RAPPORT_STATE_AEO_2026_HTML: await Bun.file("/workspace/synlig-site/rapport/state-of-aeo-2026.html").text(),
   // Note: /tjenester/aeo-for-* verticals are loaded via VERTICAL_LANDINGS registry above (verticalFiles).
+  TJENESTER_INDEX_HTML: await Bun.file("/workspace/synlig-site/tjenester/index.html").text(),
   TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML: await Bun.file("/workspace/synlig-site/tjenester/digital-markedsforing-stavanger.html").text(),
   BLOGG_DIGITAL_MARKEDSFORING_STAVANGER_HTML: await applyBlogCta("/workspace/synlig-site/blogg/digital-markedsforing-stavanger.html"),
   BLOGG_CHATGPT_ANNONSER_OG_AEO_HTML: await applyBlogCta("/workspace/synlig-site/blogg/chatgpt-annonser-og-aeo-april-2026.html"),
@@ -201,19 +214,48 @@ const files = {
   BLOGG_90_PROSENT_USYNLIGE_HTML: await applyBlogCta("/workspace/synlig-site/blogg/90-prosent-usynlige-i-ai-sok.html"),
   BLOGG_GOOGLE_SPAM_POLICY_AEO_HTML: await applyBlogCta("/workspace/synlig-site/blogg/google-spam-policy-aeo-mai-2026.html"),
   BLOGG_93_PROSENT_AI_MODE_NULL_KLIKK_HTML: await applyBlogCta("/workspace/synlig-site/blogg/93-prosent-ai-mode-null-klikk.html"),
+  BLOGG_AI_PRODUKSJON_RELIABILITY_GAP_HTML: await applyBlogCta("/workspace/synlig-site/blogg/ai-produksjon-reliability-gap.html"),
+  BLOGG_ROBINHOOD_AI_AGENTER_HTML: await applyBlogCta("/workspace/synlig-site/blogg/robinhood-ai-agenter-norske-merkevarer.html"),
+  BLOGG_VIBESEC_AI_GENERERT_KODE_HTML: await applyBlogCta("/workspace/synlig-site/blogg/vibesec-ai-generert-kode-sikkerhet.html"),
+  BLOGG_SOK_FRAGMENTERES_2026_HTML: await applyBlogCta("/workspace/synlig-site/blogg/sok-fragmenteres-2026.html"),
+  BLOGG_EY_FALSKE_AI_KILDER_HTML: await applyBlogCta("/workspace/synlig-site/blogg/ey-falske-ai-kilder.html"),
+  BLOGG_LLM_SMELLS_AEO_HTML: await applyBlogCta("/workspace/synlig-site/blogg/llm-smells-aeo-synlighet.html"),
   LEADERBOARD_HTML: await Bun.file("/workspace/synlig-site/leaderboard.html").text(),
   LEADERBOARD_JSON: await Bun.file("/workspace/synlig-site/leaderboard.json").text(),
   CONTEXT_MD: await Bun.file("/workspace/synlig-site/context.md").text(),
   PRISER_MD: await Bun.file("/workspace/synlig-site/priser.md").text(),
+  // Cloudflare Agent Readiness Score — Level 3+ ("Agent-Readable") well-known endpoints.
+  // Added 2026-05-27 after isitagentready.com scan reported Level 2 with the
+  // following missing checks: markdownNegotiation, agentSkills, mcpServerCard,
+  // apiCatalog, linkHeaders. Each file below corresponds to one check.
+  AGENT_SKILLS_INDEX_JSON: await Bun.file("/workspace/synlig-site/.well-known/agent-skills/index.json").text(),
+  AGENT_SKILLS_AEO_AUDIT_MD: await Bun.file("/workspace/synlig-site/.well-known/agent-skills/aeo-audit-SKILL.md").text(),
+  AGENT_SKILLS_AEO_IMPLEMENTATION_MD: await Bun.file("/workspace/synlig-site/.well-known/agent-skills/aeo-implementation-SKILL.md").text(),
+  MCP_JSON: await Bun.file("/workspace/synlig-site/.well-known/mcp.json").text(),
+  API_CATALOG: await Bun.file("/workspace/synlig-site/.well-known/api-catalog").text(),
+  // IndexNow key file — served at /<key>.txt so search engines can verify ownership.
+  // Key generated 2026-06-05 for synligdigital.no. Rotate by generating a new key
+  // with `openssl rand -hex 16`, updating this file + INDEXNOW_KEY below + scripts/indexnow-ping.ts.
+  INDEXNOW_KEY_TXT: await Bun.file("/workspace/synlig-site/22424f96edcdb8ea14002edcd65a6b0c.txt").text(),
 };
 
-// Sitemap assertion: every vertical in VERTICAL_LANDINGS must appear in sitemap.xml.
-// Adding a new vertical without updating sitemap.xml fails the build here,
-// not silently at deploy time.
+// Sitemap assertion: every ACTIVE vertical in VERTICAL_LANDINGS must appear in
+// sitemap.xml. Adding a new vertical without updating sitemap.xml fails the
+// build here, not silently at deploy time.
+// Deprecated verticals (`deprecated: true`) must NOT appear in sitemap —
+// they're being de-promoted, kept live only for residual traffic. The check
+// runs both directions so re-adding a deprecated slug to sitemap also fails.
 for (const v of VERTICAL_LANDINGS) {
-  if (!files.SITEMAP_XML.includes(`/tjenester/${v.slug}`)) {
+  const inSitemap = files.SITEMAP_XML.includes(`/tjenester/${v.slug}`);
+  if (!v.deprecated && !inSitemap) {
     console.error(`\n[BUILD FAIL] VERTICAL_LANDINGS: slug "${v.slug}" missing from sitemap.xml.`);
     console.error(`Add https://synligdigital.no/tjenester/${v.slug} to /workspace/synlig-site/sitemap.xml.`);
+    process.exit(1);
+  }
+  if (v.deprecated && inSitemap) {
+    console.error(`\n[BUILD FAIL] VERTICAL_LANDINGS: deprecated slug "${v.slug}" is still in sitemap.xml.`);
+    console.error(`Remove the <url> entry for https://synligdigital.no/tjenester/${v.slug} from sitemap.xml.`);
+    console.error(`(Deprecated verticals stay live for residual traffic but must not be promoted to search engines.)`);
     process.exit(1);
   }
 }
@@ -256,6 +298,12 @@ const blogFileMap: Record<string, string> = {
   "90-prosent-usynlige-i-ai-sok.html": files.BLOGG_90_PROSENT_USYNLIGE_HTML,
   "google-spam-policy-aeo-mai-2026.html": files.BLOGG_GOOGLE_SPAM_POLICY_AEO_HTML,
   "93-prosent-ai-mode-null-klikk.html": files.BLOGG_93_PROSENT_AI_MODE_NULL_KLIKK_HTML,
+  "ai-produksjon-reliability-gap.html": files.BLOGG_AI_PRODUKSJON_RELIABILITY_GAP_HTML,
+  "robinhood-ai-agenter-norske-merkevarer.html": files.BLOGG_ROBINHOOD_AI_AGENTER_HTML,
+  "vibesec-ai-generert-kode-sikkerhet.html": files.BLOGG_VIBESEC_AI_GENERERT_KODE_HTML,
+  "sok-fragmenteres-2026.html": files.BLOGG_SOK_FRAGMENTERES_2026_HTML,
+  "ey-falske-ai-kilder.html": files.BLOGG_EY_FALSKE_AI_KILDER_HTML,
+  "llm-smells-aeo-synlighet.html": files.BLOGG_LLM_SMELLS_AEO_HTML,
 };
 const allBlogFiles = readdirSync(bloggDir).filter(f => f.endsWith(".html") && f !== "index.html");
 for (const fname of allBlogFiles) {
@@ -286,6 +334,35 @@ if (ctaViolations.length > 0) {
   console.error(ctaViolations.join("\n"));
   console.error(`\nRenderer: /workspace/synlig-site/_partials/render-audit-cta.ts`);
   console.error(`Stages:   /workspace/synlig-site/_partials/blog-stages.json`);
+  process.exit(1);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SITEMAP-PARITY GATE — every published blog post must appear in sitemap.xml.
+//
+// History: 2026-06-05 idle-mode discovery. Six blog posts were live (200 OK) but
+// silently absent from /sitemap.xml — invisible to crawlers via sitemap discovery
+// since publication (some since 2026-04-23). The existing VERTICAL_LANDINGS gate
+// caught the same drift class for vertical pages but blog posts had no gate, so
+// every new post since ~April could leak. Per CLAUDE.md "recurring failures need
+// code gates, not more text" — and this is the second sitemap-drift class.
+//
+// Source of truth: blogFileMap above (published posts loaded into the worker).
+// If a slug is in blogFileMap, it's live and must be in sitemap.xml.
+// ─────────────────────────────────────────────────────────────────────────────
+const sitemapViolations: string[] = [];
+for (const fname of Object.keys(blogFileMap)) {
+  const slug = fname.replace(/\.html$/, "");
+  const expectedLoc = `https://synligdigital.no/blogg/${slug}`;
+  if (!files.SITEMAP_XML.includes(expectedLoc)) {
+    sitemapViolations.push(`  blogg/${fname}: ${expectedLoc} missing from sitemap.xml`);
+  }
+}
+if (sitemapViolations.length > 0) {
+  console.error(`\n[BUILD FAIL] sitemap-parity violations (published posts not in sitemap.xml):`);
+  console.error(sitemapViolations.join("\n"));
+  console.error(`\nAdd <url> entries for each to /workspace/synlig-site/sitemap.xml.`);
+  console.error(`Crawlers using sitemap discovery (Bing, ChatGPT-bot, PerplexityBot) skip orphan URLs.`);
   process.exit(1);
 }
 
@@ -533,6 +610,130 @@ if (pricingViolations.length > 0) {
   process.exit(1);
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// TIER-SURFACE GATE — enforce funnel-wide tier coverage.
+//
+// When a tier appears on /priser, it must also appear on every funnel surface
+// listed in its registry — hero, /audit, case pages, vertical landings — or
+// the build fails. The failure mode this catches: shipping a new tier on /priser
+// (and only /priser) creates discoverability vacuums on every adjacent surface
+// where cold visitors first land. We've patched this same pattern 5× in one
+// day (2026-06-05 19:16 priser, 19:36 hero, 20:12 /audit, 20:45 case pages,
+// 21:31 vertical landings) — each patch shipped the tier on the most-recent
+// surface but missed all the others. Per self-awareness rule: text rule failed
+// twice (it's still being added one surface at a time), so escalate to a code
+// gate.
+//
+// Registry shape: { tier: { needle: string, surfaces: filePath[] } }
+// "needle" is a substring that must appear in EACH surface's inlined HTML.
+// To add a new tier, add an entry here. To add a new surface to an existing
+// tier, append the path. Skipping the gate is intentional (opt-out via env)
+// only for negative-test scenarios.
+//
+// Why not auto-derive from `tier=lite` in /priser? Because the registry is
+// the *intent* — "these are the funnel surfaces a tier SHOULD appear on" —
+// not the current state. The gate compares intent vs. state.
+// ─────────────────────────────────────────────────────────────────────────────
+interface TierSurface {
+  needle: string;       // substring asserted in each surface
+  surfaces: string[];   // absolute file paths
+}
+const TIER_SURFACE_REGISTRY: Record<string, TierSurface> = {
+  lite: {
+    needle: `name="tier" value="lite"`,
+    surfaces: [
+      "/workspace/synlig-site/priser.html",
+      "/workspace/synlig-site/index.html",
+      "/workspace/synlig-site/nordic-lithium-case.html",
+      "/workspace/synlig-site/pierstop-case.html",
+      "/workspace/synlig-site/en-case-nordic-lithium.html",
+      "/workspace/synlig-site/tjenester/aeo-for-tannleger.html",
+      "/workspace/synlig-site/tjenester/aeo-for-saas-bedrifter.html",
+      "/workspace/synlig-site/tjenester/aeo-for-eiendomsmeglere.html",
+      "/workspace/synlig-site/tjenester/aeo-for-regnskap.html",
+      "/workspace/synlig-site/tjenester/aeo-for-kiropraktor.html",
+      // /audit report is generated by report-html.ts; tier surfaces inlined
+      // at request time. Covered by audit-self-audit-cta.test.ts contract tests,
+      // not by static file scan.
+      //
+      // Sent-prospect /r/<hash>.html reports (frozen pre-Lite) are enumerated
+      // dynamically from /workspace/money/aeo/sent-emails.jsonl below — they
+      // can't be hardcoded because the set changes with every outreach send.
+    ],
+  },
+};
+
+// Dynamic registry extension: any /r/<hash>.html report referenced by an
+// active outreach E1 send (sent-emails.jsonl) must contain the tier needle.
+// This catches the 6th occurrence of the funnel-wide-launch miss caught
+// 2026-06-05 22:13Z — pre-Lite reports were FROZEN with single-tier CTA
+// even after Lite shipped to all 10 hardcoded surfaces. The fix (and this
+// gate) ensures any future tier launch that ships a `tier=<X>` needle to
+// `/priser` will also be required to appear on every actively-referenced
+// prospect report — closing the static-report blind-spot.
+function dynamicReportSurfaces(): string[] {
+  const SENT_EMAILS = "/workspace/money/aeo/sent-emails.jsonl";
+  const slugs = new Set<string>();
+  let text = "";
+  try { text = readFileSync(SENT_EMAILS, "utf-8"); } catch { return []; }
+  for (const line of text.split("\n")) {
+    if (!line.trim()) continue;
+    try {
+      const obj = JSON.parse(line) as Record<string, unknown>;
+      const url = typeof obj.report_url === "string" ? obj.report_url : "";
+      const m = /\/r\/([a-z0-9]+)\b/i.exec(url);
+      if (m) slugs.add(m[1].toLowerCase());
+    } catch {}
+  }
+  return [...slugs].map(s => `/workspace/synlig-site/reports/${s}.html`);
+}
+const dynamicReports = dynamicReportSurfaces();
+if (dynamicReports.length > 0) {
+  // Lite tier inherits all sent-prospect reports as additional surfaces.
+  TIER_SURFACE_REGISTRY.lite.surfaces.push(...dynamicReports);
+}
+
+const tierViolations: string[] = [];
+if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
+  for (const [tier, spec] of Object.entries(TIER_SURFACE_REGISTRY)) {
+    for (const path of spec.surfaces) {
+      let text: string;
+      try {
+        text = readFileSync(path, "utf-8");
+      } catch (err) {
+        tierViolations.push(
+          `tier="${tier}" surface MISSING file: ${path} (${err instanceof Error ? err.message : String(err)})`
+        );
+        continue;
+      }
+      // Match either single or double quotes around the value, since some
+      // surfaces (button.name carrier on case pages) use button[name="tier"
+      // value="lite"] while others use input[type=hidden] — both forms POST
+      // tier=lite. The needle is the canonical form; relax for button form.
+      const matched =
+        text.includes(spec.needle) ||
+        text.includes(spec.needle.replace(`name="tier" value=`, `name="tier" value=`));
+      if (!matched) {
+        tierViolations.push(
+          `tier="${tier}" missing from surface: ${path}\n      needle: ${spec.needle}`
+        );
+      }
+    }
+  }
+}
+
+if (tierViolations.length > 0) {
+  console.error(`\n[BUILD FAIL] tier-surface gate violated (${tierViolations.length} issue(s)):`);
+  for (const v of tierViolations) console.error(`  - ${v}`);
+  console.error(`\nWhy this gate exists: a tier added to /priser without parity on all funnel`);
+  console.error(`surfaces creates discoverability vacuums — cold visitors land on the un-`);
+  console.error(`patched surface and never see the tier. Caught 5× in one day on 2026-06-05.`);
+  console.error(`\nFix: either (a) add the tier to the missing surface, or (b) if the tier`);
+  console.error(`genuinely doesn't apply to that vertical, remove the surface from the registry.`);
+  console.error(`Registry: synlig-site/build.ts TIER_SURFACE_REGISTRY.`);
+  process.exit(1);
+}
+
 // Load reports from /workspace/synlig-site/reports/
 const reportsDir = "/workspace/synlig-site/reports";
 const reportEntries: Array<{ hash: string; html: string }> = [];
@@ -558,9 +759,63 @@ try {
   console.log("  No reports directory found, skipping.");
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// ORPHAN-REPORT GUARD — detect reports written to the wrong directory.
+//
+// History: 2026-05-25 12:27. Outreach session generated 3 E1 deliverables
+// (eab6fb9e/401d8d98/b0fda823) and wrote them to /workspace/synlig-worker/reports/
+// instead of the canonical /workspace/synlig-site/reports/. At 12:55 a different
+// session ran this build script (which only reads the canonical dir) — the 3
+// reports vanished from worker.ts and went 404 on synligdigital.no/r/{hash}.
+// Three prospects had received E1 emails linking to those 404 URLs.
+//
+// Guard: any *.html in /workspace/synlig-worker/reports/ that is NOT also in
+// /workspace/synlig-site/reports/ → fail the build with a clear message telling
+// the operator to copy the file and retry. Cheaper than another buyer-journey
+// dogfood pass discovering the same class of bug.
+// ─────────────────────────────────────────────────────────────────────────────
+{
+  const orphanDir = "/workspace/synlig-worker/reports";
+  const canonicalSet = new Set(reportEntries.map(r => r.hash + ".html"));
+  let orphans: string[] = [];
+  try {
+    orphans = readdirSync(orphanDir)
+      .filter(f => f.endsWith(".html"))
+      .filter(f => !canonicalSet.has(f));
+  } catch { /* dir absent: fine */ }
+  if (orphans.length > 0) {
+    console.error(`\n[BUILD FAIL] ORPHAN-REPORT GUARD: ${orphans.length} report(s) found in ${orphanDir} but NOT in ${reportsDir} (canonical):`);
+    for (const o of orphans) console.error(`  - ${o}`);
+    console.error(`\nFix: copy each orphan to the canonical dir and re-run deploy.`);
+    console.error(`  for f in ${orphans.join(' ')}; do cp ${orphanDir}/$f ${reportsDir}/$f; done`);
+    console.error(`\nRoot cause: an outreach session wrote the HTML report to the wrong dir.`);
+    console.error(`Canonical write location is /workspace/synlig-site/reports/<hash>.html.`);
+    console.error(`History: 2026-05-25 — 3 prospects received E1 emails linking to 404 URLs.\n`);
+    process.exit(1);
+  }
+}
+
 // Binary files (base64-encoded)
 const pdfBytes = await Bun.file("/workspace/money/aeo/synlig-digital-one-pager.pdf").arrayBuffer();
 const PDF_B64 = Buffer.from(pdfBytes).toString("base64");
+
+// Per-article OG PNG. LinkedIn does NOT render SVG og:images (silently drops the
+// preview card or shows broken placeholder — well-documented). The site default
+// is /og.svg, which works in Slack/Discord/Twitter but kills LinkedIn previews.
+// For cornerstone posts driving LinkedIn campaigns, ship a 1200×630 PNG.
+// First instance: sok-fragmenteres-2026 (LinkedIn launch 2026-06-01/02).
+// Pattern: add /workspace/synlig-site/og-<slug>.png + a route handler below,
+// and switch the post's og:image to the PNG URL.
+const sokFragOgPngBytes = await Bun.file("/workspace/synlig-site/og-sok-fragmenteres-2026.png").arrayBuffer();
+const OG_SOK_FRAG_PNG_B64 = Buffer.from(sokFragOgPngBytes).toString("base64");
+
+// Default OG raster — replaces /og.svg as the site-wide preview image. SVG
+// og:image silently fails on LinkedIn/Twitter/Facebook (raster-only renderers
+// drop the card or show a broken placeholder). PNG renders everywhere.
+// Rendered once via @resvg/resvg-js from /workspace/synlig-site/og.svg with
+// Liberation Sans (Inter-equivalent metrics) so the brand stays consistent.
+const ogPngBytes = await Bun.file("/workspace/synlig-site/og.png").arrayBuffer();
+const OG_PNG_B64 = Buffer.from(ogPngBytes).toString("base64");
 
 // Escape backticks and dollar signs for template literals
 function escape(s: string): string {
@@ -594,10 +849,14 @@ const worker = `// Auto-generated Cloudflare Worker — do not edit by hand.
 // Generated: ${new Date().toISOString()}
 
 import { handleAuditRequest } from "./audit-handler";
-import { handleCheckoutRequest, handleFundamentCheckout, handleLopendeCheckout, handleLeadCapture, handleStripeWebhook, handleTakkPage } from "./checkout-handler";
+import { handleBevisRequest } from "./bevis-handler";
+import { handleBrregSearch } from "./brreg-handler";
+import { handleCheckoutRequest, handleFundamentCheckout, handleLiteCheckout, handleLopendeCheckout, handleLeadCapture, handleStripeWebhook, handleTakkPage } from "./checkout-handler";
 import { handleFakturaSubmit } from "./faktura-handler";
 
 const INDEX_HTML = \`${escape(files.INDEX_HTML)}\`;
+
+const EN_HTML = \`${escape(files.EN_HTML)}\`;
 
 const PRISER_HTML = \`${escape(files.PRISER_HTML)}\`;
 
@@ -611,6 +870,8 @@ const LLMS_TXT = \`${escape(files.LLMS_TXT)}\`;
 
 const ROBOTS_TXT = \`${escape(files.ROBOTS_TXT)}\`;
 
+const INDEXNOW_KEY_TXT = \`${escape(files.INDEXNOW_KEY_TXT)}\`;
+
 const SITEMAP_XML = \`${escape(files.SITEMAP_XML)}\`;
 
 const OG_SVG = \`${escape(files.OG_SVG)}\`;
@@ -620,6 +881,12 @@ const FAVICON_SVG = \`${escape(files.FAVICON_SVG)}\`;
 const KOMPLETT_AEO_HTML = \`${escape(files.KOMPLETT_AEO_HTML)}\`;
 
 const NORDIC_LITHIUM_CASE_HTML = \`${escape(files.NORDIC_LITHIUM_CASE_HTML)}\`;
+
+const EN_CASE_NORDIC_LITHIUM_HTML = \`${escape(files.EN_CASE_NORDIC_LITHIUM_HTML)}\`;
+
+const EN_BLOG_HTML = \`${escape(files.EN_BLOG_HTML)}\`;
+
+const EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML = \`${escape(files.EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML)}\`;
 
 const PIERSTOP_CASE_HTML = \`${escape(files.PIERSTOP_CASE_HTML)}\`;
 
@@ -655,6 +922,8 @@ const RAPPORT_STATE_AEO_2026_HTML = \`${escape(files.RAPPORT_STATE_AEO_2026_HTML
 
 ${verticalConsts}
 
+const TJENESTER_INDEX_HTML = \`${escape(files.TJENESTER_INDEX_HTML)}\`;
+
 const TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML = \`${escape(files.TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML)}\`;
 
 const BLOGG_DIGITAL_MARKEDSFORING_STAVANGER_HTML = \`${escape(files.BLOGG_DIGITAL_MARKEDSFORING_STAVANGER_HTML)}\`;
@@ -685,6 +954,18 @@ const BLOGG_GOOGLE_SPAM_POLICY_AEO_HTML = \`${escape(files.BLOGG_GOOGLE_SPAM_POL
 
 const BLOGG_93_PROSENT_AI_MODE_NULL_KLIKK_HTML = \`${escape(files.BLOGG_93_PROSENT_AI_MODE_NULL_KLIKK_HTML)}\`;
 
+const BLOGG_AI_PRODUKSJON_RELIABILITY_GAP_HTML = \`${escape(files.BLOGG_AI_PRODUKSJON_RELIABILITY_GAP_HTML)}\`;
+
+const BLOGG_ROBINHOOD_AI_AGENTER_HTML = \`${escape(files.BLOGG_ROBINHOOD_AI_AGENTER_HTML)}\`;
+
+const BLOGG_VIBESEC_AI_GENERERT_KODE_HTML = \`${escape(files.BLOGG_VIBESEC_AI_GENERERT_KODE_HTML)}\`;
+
+const BLOGG_SOK_FRAGMENTERES_2026_HTML = \`${escape(files.BLOGG_SOK_FRAGMENTERES_2026_HTML)}\`;
+
+const BLOGG_EY_FALSKE_AI_KILDER_HTML = \`${escape(files.BLOGG_EY_FALSKE_AI_KILDER_HTML)}\`;
+
+const BLOGG_LLM_SMELLS_AEO_HTML = \`${escape(files.BLOGG_LLM_SMELLS_AEO_HTML)}\`;
+
 const LEADERBOARD_HTML = \`${escape(files.LEADERBOARD_HTML)}\`;
 
 const LEADERBOARD_JSON = \`${escape(files.LEADERBOARD_JSON)}\`;
@@ -693,7 +974,21 @@ const CONTEXT_MD = \`${escape(files.CONTEXT_MD)}\`;
 
 const PRISER_MD = \`${escape(files.PRISER_MD)}\`;
 
+const AGENT_SKILLS_INDEX_JSON = \`${escape(files.AGENT_SKILLS_INDEX_JSON)}\`;
+
+const AGENT_SKILLS_AEO_AUDIT_MD = \`${escape(files.AGENT_SKILLS_AEO_AUDIT_MD)}\`;
+
+const AGENT_SKILLS_AEO_IMPLEMENTATION_MD = \`${escape(files.AGENT_SKILLS_AEO_IMPLEMENTATION_MD)}\`;
+
+const MCP_JSON = \`${escape(files.MCP_JSON)}\`;
+
+const API_CATALOG = \`${escape(files.API_CATALOG)}\`;
+
 const ONE_PAGER_PDF_B64 = "${PDF_B64}";
+
+const OG_SOK_FRAG_PNG_B64 = "${OG_SOK_FRAG_PNG_B64}";
+
+const OG_PNG_B64 = "${OG_PNG_B64}";
 
 // AEO Reports: hash -> HTML content
 const REPORTS = {
@@ -719,6 +1014,10 @@ const TRACKING_GIF_B64 = "R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRA
 const routes = {
   "/": { body: INDEX_HTML, contentType: "text/html; charset=utf-8" },
   "/index.html": { body: INDEX_HTML, contentType: "text/html; charset=utf-8" },
+  "/en": { body: EN_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/": { body: EN_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/index.html": { body: EN_HTML, contentType: "text/html; charset=utf-8" },
+  "/en.html": { body: EN_HTML, contentType: "text/html; charset=utf-8" },
   "/priser": { body: PRISER_HTML, contentType: "text/html; charset=utf-8" },
   "/priser/": { body: PRISER_HTML, contentType: "text/html; charset=utf-8" },
   "/priser.html": { body: PRISER_HTML, contentType: "text/html; charset=utf-8" },
@@ -731,6 +1030,7 @@ const routes = {
   "/dashboard.html": { body: DASHBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/llms.txt": { body: LLMS_TXT, contentType: "text/plain; charset=utf-8" },
   "/robots.txt": { body: ROBOTS_TXT, contentType: "text/plain; charset=utf-8" },
+  "/22424f96edcdb8ea14002edcd65a6b0c.txt": { body: INDEXNOW_KEY_TXT, contentType: "text/plain; charset=utf-8" },
   "/sitemap.xml": { body: SITEMAP_XML, contentType: "application/xml; charset=utf-8" },
   "/og.svg": { body: OG_SVG, contentType: "image/svg+xml" },
   "/favicon.svg": { body: FAVICON_SVG, contentType: "image/svg+xml" },
@@ -738,6 +1038,15 @@ const routes = {
   "/analyse/komplett-aeo.html": { body: KOMPLETT_AEO_HTML, contentType: "text/html; charset=utf-8" },
   "/case/nordic-lithium": { body: NORDIC_LITHIUM_CASE_HTML, contentType: "text/html; charset=utf-8" },
   "/case/nordic-lithium.html": { body: NORDIC_LITHIUM_CASE_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/case/nordic-lithium": { body: EN_CASE_NORDIC_LITHIUM_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/case/nordic-lithium/": { body: EN_CASE_NORDIC_LITHIUM_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/case/nordic-lithium.html": { body: EN_CASE_NORDIC_LITHIUM_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog": { body: EN_BLOG_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/": { body: EN_BLOG_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/index.html": { body: EN_BLOG_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/llm-smell-check-benchmark": { body: EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/llm-smell-check-benchmark/": { body: EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/llm-smell-check-benchmark.html": { body: EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML, contentType: "text/html; charset=utf-8" },
   "/case/pierstop": { body: PIERSTOP_CASE_HTML, contentType: "text/html; charset=utf-8" },
   "/case/pierstop.html": { body: PIERSTOP_CASE_HTML, contentType: "text/html; charset=utf-8" },
   "/.well-known/agent-card.json": { body: AGENT_CARD_JSON, contentType: "application/json; charset=utf-8" },
@@ -771,6 +1080,9 @@ const routes = {
   "/blogg/aeo-vs-seo.html": { body: BLOGG_AEO_VS_SEO_HTML, contentType: "text/html; charset=utf-8" },
   "/rapport/state-of-aeo-2026": { body: RAPPORT_STATE_AEO_2026_HTML, contentType: "text/html; charset=utf-8" },
   "/rapport/state-of-aeo-2026.html": { body: RAPPORT_STATE_AEO_2026_HTML, contentType: "text/html; charset=utf-8" },
+  "/tjenester": { body: TJENESTER_INDEX_HTML, contentType: "text/html; charset=utf-8" },
+  "/tjenester/": { body: TJENESTER_INDEX_HTML, contentType: "text/html; charset=utf-8" },
+  "/tjenester.html": { body: TJENESTER_INDEX_HTML, contentType: "text/html; charset=utf-8" },
 ${verticalRoutes}
   "/tjenester/digital-markedsforing-stavanger": { body: TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML, contentType: "text/html; charset=utf-8" },
   "/tjenester/digital-markedsforing-stavanger/": { body: TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML, contentType: "text/html; charset=utf-8" },
@@ -803,18 +1115,121 @@ ${verticalRoutes}
   "/blogg/google-spam-policy-aeo-mai-2026.html": { body: BLOGG_GOOGLE_SPAM_POLICY_AEO_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/93-prosent-ai-mode-null-klikk": { body: BLOGG_93_PROSENT_AI_MODE_NULL_KLIKK_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/93-prosent-ai-mode-null-klikk.html": { body: BLOGG_93_PROSENT_AI_MODE_NULL_KLIKK_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/ai-produksjon-reliability-gap": { body: BLOGG_AI_PRODUKSJON_RELIABILITY_GAP_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/ai-produksjon-reliability-gap.html": { body: BLOGG_AI_PRODUKSJON_RELIABILITY_GAP_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/robinhood-ai-agenter-norske-merkevarer": { body: BLOGG_ROBINHOOD_AI_AGENTER_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/robinhood-ai-agenter-norske-merkevarer.html": { body: BLOGG_ROBINHOOD_AI_AGENTER_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/vibesec-ai-generert-kode-sikkerhet": { body: BLOGG_VIBESEC_AI_GENERERT_KODE_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/vibesec-ai-generert-kode-sikkerhet.html": { body: BLOGG_VIBESEC_AI_GENERERT_KODE_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/sok-fragmenteres-2026": { body: BLOGG_SOK_FRAGMENTERES_2026_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/sok-fragmenteres-2026.html": { body: BLOGG_SOK_FRAGMENTERES_2026_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/ey-falske-ai-kilder": { body: BLOGG_EY_FALSKE_AI_KILDER_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/ey-falske-ai-kilder.html": { body: BLOGG_EY_FALSKE_AI_KILDER_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/llm-smells-aeo-synlighet": { body: BLOGG_LLM_SMELLS_AEO_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/llm-smells-aeo-synlighet.html": { body: BLOGG_LLM_SMELLS_AEO_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard/": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard.html": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard.json": { body: LEADERBOARD_JSON, contentType: "application/json; charset=utf-8" },
   "/context.md": { body: CONTEXT_MD, contentType: "text/markdown; charset=utf-8" },
   "/priser.md": { body: PRISER_MD, contentType: "text/markdown; charset=utf-8" },
+  // Agent-readiness well-known endpoints (Cloudflare Agent Readiness Score Level 3+).
+  // See /workspace/synlig-site/.well-known/ for source files. Added 2026-05-27 to
+  // pass: agentSkills, mcpServerCard, apiCatalog. markdownNegotiation handled
+  // separately in the fetch handler (Accept: text/markdown on /).
+  "/.well-known/agent-skills/index.json": { body: AGENT_SKILLS_INDEX_JSON, contentType: "application/json; charset=utf-8" },
+  "/.well-known/skills/index.json": { body: AGENT_SKILLS_INDEX_JSON, contentType: "application/json; charset=utf-8" },
+  "/.well-known/agent-skills/aeo-audit/SKILL.md": { body: AGENT_SKILLS_AEO_AUDIT_MD, contentType: "text/markdown; charset=utf-8" },
+  "/.well-known/agent-skills/aeo-implementation/SKILL.md": { body: AGENT_SKILLS_AEO_IMPLEMENTATION_MD, contentType: "text/markdown; charset=utf-8" },
+  "/.well-known/mcp.json": { body: MCP_JSON, contentType: "application/json; charset=utf-8" },
+  "/.well-known/mcp/server-card.json": { body: MCP_JSON, contentType: "application/json; charset=utf-8" },
+  "/.well-known/mcp/server-cards.json": { body: MCP_JSON, contentType: "application/json; charset=utf-8" },
+  "/.well-known/api-catalog": { body: API_CATALOG, contentType: "application/linkset+json; charset=utf-8" },
 };
+
+// Open Graph meta injection for /r/{hash} report responses.
+// History: 2026-06-03 — og.png shipped earlier today across synligdigital.no/*
+// and sjekk.synligdigital.no/, but the 157 /r/{hash} report HTML files have no
+// OG tags at all. /r/{hash} URLs are the highest-leverage missed share-moment
+// in the funnel — the moment a decision-maker sees a URL a colleague forwarded.
+// Without OG, Slack/Teams/email render the link as a bare URL with no preview.
+//
+// Strategy: inject at response time, not in the 157 static files. One code
+// change covers existing + future reports. Title extraction is regex on
+// <title>...</title> (verified 157/157 reports have exactly one such tag).
+function injectReportOg(html, request) {
+  if (!html) return html;
+  const titleMatch = html.match(/<title>([^<]*)<\\/title>/);
+  if (!titleMatch) return html; // No title — skip injection rather than risk malformed HTML
+  const titleText = titleMatch[1];
+  let canonical;
+  try {
+    const u = new URL(request.url);
+    canonical = u.origin + u.pathname;
+  } catch (e) {
+    canonical = "https://synligdigital.no/";
+  }
+  const esc = (s) => String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+  const description = "Gratis AEO-rapport fra Synlig Digital — sjekk om bedriften din er synlig for ChatGPT, Perplexity og Google AI";
+  const escTitle = esc(titleText);
+  const escDesc = esc(description);
+  const escUrl = esc(canonical);
+  const og =
+    '<meta property="og:type" content="website">' +
+    '<meta property="og:title" content="' + escTitle + '">' +
+    '<meta property="og:description" content="' + escDesc + '">' +
+    '<meta property="og:url" content="' + escUrl + '">' +
+    '<meta property="og:image" content="https://synligdigital.no/og.png">' +
+    '<meta property="og:image:width" content="1200">' +
+    '<meta property="og:image:height" content="630">' +
+    '<meta property="og:site_name" content="Synlig">' +
+    '<meta property="og:locale" content="nb_NO">' +
+    '<meta name="twitter:card" content="summary_large_image">' +
+    '<meta name="twitter:title" content="' + escTitle + '">' +
+    '<meta name="twitter:description" content="' + escDesc + '">' +
+    '<meta name="twitter:image" content="https://synligdigital.no/og.png">';
+  // String .replace() replaces only the first occurrence. The two reports
+  // containing "<title>" in body text (as audit findings) have no closing
+  // </title> in body, so the head match is unique.
+  return html.replace("</title>", "</title>" + og);
+}
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const pathname = url.pathname;
+
+    // Blog mailto click tracking: GET /api/track-click?src=blog-{slug}&type=mailto
+    // Fired client-side (navigator.sendBeacon) when a visitor clicks a mailto CTA fallback.
+    // Stores click in KV under mailto-click:{src}:{ts} (90-day TTL).
+    // Returns 200 JSON — no redirect. Added 2026-06-02 to fix src=null for all blog leads.
+    if (pathname === "/api/track-click") {
+      const src = url.searchParams.get("src") || "unknown";
+      const type = url.searchParams.get("type") || "mailto";
+      const ts = Date.now();
+      const ref = request.headers.get("Referer") || "-";
+      const ua = request.headers.get("User-Agent") || "-";
+      const ip = request.headers.get("CF-Connecting-IP") || "-";
+      const country = request.headers.get("CF-IPCountry") || "-";
+      console.log(\`[TRACK-CLICK] src=\${src} type=\${type} country=\${country}\`);
+      if (env && env.CLICK_LOG) {
+        const key = \`mailto-click:\${src}:\${ts}\`;
+        await env.CLICK_LOG.put(key, JSON.stringify({ src, type, ts, ref: ref.substring(0, 200), ua: ua.substring(0, 200), ip, country }), { expirationTtl: 7776000 });
+        const aggKey = \`mailto-stats:\${src}\`;
+        const agg: any = await env.CLICK_LOG.get(aggKey, "json") || { count: 0, last: 0 };
+        agg.count = (agg.count || 0) + 1;
+        agg.last = ts;
+        await env.CLICK_LOG.put(aggKey, JSON.stringify(agg), { expirationTtl: 7776000 });
+      }
+      return new Response(JSON.stringify({ ok: true }), {
+        status: 200,
+        headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "Access-Control-Allow-Origin": "https://synligdigital.no" },
+      });
+    }
 
     // Click tracking + redirect: GET /click?h={prospect_hash}&t={link_type}&u={url}
     // Logs click to KV (synlig-clicks namespace) then redirects to destination.
@@ -921,13 +1336,182 @@ export default {
       });
     }
 
+    // Per-article OG PNG — LinkedIn launch (2026-06-01/02) drives traffic to
+    // /blogg/sok-fragmenteres-2026 and needs a raster preview card. The site
+    // default /og.svg silently fails on LinkedIn (drops the card). See B64
+    // constant comment above.
+    if (pathname === "/og-sok-fragmenteres-2026.png") {
+      const bytes = Uint8Array.from(atob(OG_SOK_FRAG_PNG_B64), c => c.charCodeAt(0));
+      return new Response(bytes, {
+        status: 200,
+        headers: {
+          "Content-Type": "image/png",
+          ...SECURITY_HEADERS,
+          ...CACHE_HEADERS,
+        },
+      });
+    }
+
+    // Default site OG raster (replaces /og.svg for og:image refs).
+    if (pathname === "/og.png") {
+      const bytes = Uint8Array.from(atob(OG_PNG_B64), c => c.charCodeAt(0));
+      return new Response(bytes, {
+        status: 200,
+        headers: {
+          "Content-Type": "image/png",
+          ...SECURITY_HEADERS,
+          ...CACHE_HEADERS,
+        },
+      });
+    }
+
     // Tracking pixel: GET /track?h={hash}
-    // Returns 1x1 GIF. Each request logged by Cloudflare Analytics.
-    // Check: https://dash.cloudflare.com → Analytics → /track paths
+    // Returns 1x1 GIF. Every active outreach report (106 of 131) embeds
+    //   <img src="https://synligdigital.no/track?h=HASH" width="1" height="1">
+    // so this fires whenever a prospect renders the report HTML in a browser
+    // (or an email client auto-loads images: Gmail proxy, Apple Mail, etc).
+    //
+    // History: prior version only console.log'd — opens were invisible to the
+    // outreach pipeline. Now logs to CLICK_LOG KV (view:HASH:TS individual,
+    // view-stats:HASH aggregate) and fires Telegram alerts on first-human-view
+    // and third-human-view per hash so opus can ship a personalized E2 within
+    // hours of engagement instead of generic sonnet bulk follow-up next day.
+    //
+    // Classification: bots (Googlebot/GPTBot/Claude/etc), previewers (Gmail
+    // proxy/Outlook/Apple Mail link-expanders), and humans counted separately.
+    // Hot-prospect alert only fires for human views.
     if (pathname === "/track") {
       const h = url.searchParams.get("h") || "unknown";
-      // Log to console (visible in CF Workers logs)
-      console.log(\`[TRACK] Report viewed: \${h} | UA: \${request.headers.get("User-Agent") || "-"} | Ref: \${request.headers.get("Referer") || "-"}\`);
+      const ua = request.headers.get("User-Agent") || "-";
+      const ts = Date.now();
+      const country = request.headers.get("CF-IPCountry") || "-";
+      const ref = request.headers.get("Referer") || "-";
+      const ip = request.headers.get("CF-Connecting-IP") || "-";
+      const isBot = /bot\\b|crawler|spider|GPTBot|ClaudeBot|anthropic|Googlebot|Bingbot|YandexBot|facebookexternalhit|LinkedInBot|Slackbot|TelegramBot|WhatsApp|DuckDuckBot|Applebot|curl|wget|python-requests|node-fetch|HeadlessChrome|monitor|uptime/i.test(ua);
+      // Microsoft 365 SafeLinks scanner detection (added 2026-06-02).
+      // SafeLinks fetches the URL from a sandboxed Chromium with a regular
+      // Chrome UA (no "Outlook"/"MSOffice" marker) — it slips past the UA-only
+      // preview rule. Country-of-origin is the only server-visible tell:
+      // Microsoft's EU tenant runs out of Dublin so opens from IE arriving
+      // seconds after a Norwegian-targeted send are the scanner, not a reader.
+      // Three same-minute "human" opens from IE today (AutoSock 6636b5e6 11:02,
+      // Zaptec jrwfdkev 09:38, Fjord Tours 3be49647 06:36) triggered premature
+      // E2 tasks before any human could possibly have read the email.
+      // Conservative rule: IE country + generic Mozilla UA + non-bot → preview.
+      // Edge case (Irish prospect viewing legitimately): false-negative is
+      // recoverable on the third open via the existing humanCount===3 alert.
+      const isM365ScannerIE = !isBot && country === "IE" &&
+        /Mozilla\\/5\\.0/.test(ua) &&
+        !/GoogleImageProxy|YahooMailProxy|MSOffice|Outlook|Microsoft Office|Apple-Mail|AppleMail|ProtonMail|Superhuman|Mailchimp|MailerLite|Litmus/i.test(ua);
+      // Send-timestamp scanner detection (added 2026-06-02, generalized from IE-only rule).
+      // Any email scanner (M365, Proofpoint, Mimecast, etc.) opens URLs within
+      // seconds of delivery — before a human can read the email. 90s threshold
+      // is country-agnostic: catches scanners we don't know about. Fallback:
+      // if send-ts is missing, isM365ScannerIE still catches IE-origin opens.
+      // Precedent: Devold 6895d11a (NO/Chrome, 27s) — country rule missed it,
+      // send-ts would have caught it. KV key 'send:<hash>' written by send-email.ts.
+      let isSendTimeScanner = false;
+      if (!isBot && env && env.CLICK_LOG) {
+        try {
+          const sendData = await env.CLICK_LOG.get(\`send:\${h}\`, "json") as { ts?: number } | null;
+          if (sendData && typeof sendData.ts === "number" && (ts - sendData.ts) < 90000) {
+            isSendTimeScanner = true;
+          }
+        } catch (_) { /* KV read failure — classify unknown, not scanner */ }
+      }
+      const isPreview = !isBot && (
+        /GoogleImageProxy|YahooMailProxy|MSOffice|Outlook|Microsoft Office|Apple-Mail|AppleMail|ProtonMail|Superhuman|Mailchimp|MailerLite|Litmus/i.test(ua) ||
+        isM365ScannerIE ||
+        isSendTimeScanner
+      );
+      const isHuman = !isBot && !isPreview;
+
+      console.log(\`[TRACK] h=\${h} bot=\${isBot} preview=\${isPreview} sendTimeScan=\${isSendTimeScanner} scannerIE=\${isM365ScannerIE} country=\${country} ua=\${ua.substring(0,80)} ref=\${ref.substring(0,80)}\`);
+
+      if (env && env.CLICK_LOG) {
+        try {
+          const viewKey = \`view:\${h}:\${ts}\`;
+          const viewVal = JSON.stringify({
+            h, ts, country,
+            ua: ua.substring(0, 200),
+            ref: ref.substring(0, 200),
+            ip,
+            kind: isBot ? "bot" : isPreview ? "preview" : "human",
+          });
+          await env.CLICK_LOG.put(viewKey, viewVal, { expirationTtl: 7776000 }); // 90 days
+
+          const statsKey = \`view-stats:\${h}\`;
+          const existing = (await env.CLICK_LOG.get(statsKey, "json")) || {
+            count: 0, botCount: 0, previewCount: 0, humanCount: 0,
+            first: 0, last: 0, firstHuman: 0, lastHuman: 0,
+            countries: {},
+          };
+          existing.count = (existing.count || 0) + 1;
+          existing.last = ts;
+          if (!existing.first) existing.first = ts;
+          if (isBot) {
+            existing.botCount = (existing.botCount || 0) + 1;
+          } else if (isPreview) {
+            existing.previewCount = (existing.previewCount || 0) + 1;
+          } else {
+            existing.humanCount = (existing.humanCount || 0) + 1;
+            existing.lastHuman = ts;
+            if (!existing.firstHuman) existing.firstHuman = ts;
+          }
+          existing.countries[country] = (existing.countries[country] || 0) + 1;
+          await env.CLICK_LOG.put(statsKey, JSON.stringify(existing));
+
+          // Hot-prospect admin alert: first human view (just opened) and
+          // third human view (engaged). Sent via Resend to hei@synligdigital.no
+          // because the worker has no TELEGRAM secrets (telegram.env not in
+          // /workspace/.secrets — deploy.ts strips the binding). Fire-and-forget;
+          // pixel response must not block on Resend latency.
+          if (isHuman && (existing.humanCount === 1 || existing.humanCount === 3)) {
+            const level = existing.humanCount === 1 ? "👀 Rapport åpnet" : "🔥 HOT (3 åpninger)";
+            const subject = \`\${level} — /r/\${h}\`;
+            const body = \`<div style="font-family:system-ui;padding:20px;max-width:600px">
+<h2>\${level}</h2>
+<p><strong>Hash:</strong> <a href="https://synligdigital.no/r/\${h}">\${h}</a><br>
+<strong>Mennesker:</strong> \${existing.humanCount} · <strong>Email-preview:</strong> \${existing.previewCount} · <strong>Bot:</strong> \${existing.botCount}<br>
+<strong>Land:</strong> \${country}<br>
+<strong>UA:</strong> <code>\${ua.substring(0, 200)}</code><br>
+<strong>Første åpning:</strong> \${new Date(existing.firstHuman).toISOString().substring(0, 16).replace("T", " ")} UTC</p>
+<p><a href="https://synligdigital.no/r/\${h}">Åpne rapport</a> · <a href="https://synligdigital.no/report-views?key=pico2026">Full oversikt</a></p>
+<p style="color:#64748b;font-size:13px">\${existing.humanCount === 1 ? "Første åpning — vurder personlig E2 follow-up i opus i morgen." : "Tredje åpning — send personlig E2 NÅ. Hot prospect."}</p>
+</div>\`;
+            if (env.RESEND_API_KEY) {
+              // Awaited — fire-and-forget would be cancelled when the pixel
+              // response is sent (no ctx.waitUntil in this handler signature).
+              try {
+                const resendResp = await fetch("https://api.resend.com/emails", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": \`Bearer \${env.RESEND_API_KEY}\`,
+                  },
+                  body: JSON.stringify({
+                    from: "Synlig Digital <hei@synligdigital.no>",
+                    to: ["hei@synligdigital.no"],
+                    subject,
+                    html: body,
+                  }),
+                });
+                if (!resendResp.ok) {
+                  const errText = await resendResp.text().catch(() => "");
+                  console.error(\`[hot-prospect-resend] HTTP \${resendResp.status} — \${errText.substring(0, 200)}\`);
+                }
+              } catch (err) {
+                console.error(\`[hot-prospect-resend] \${err instanceof Error ? err.message : String(err)}\`);
+              }
+            } else {
+              console.log(\`[HOT-PROSPECT-FALLBACK] \${subject}\`);
+            }
+          }
+        } catch (e) {
+          console.error(\`[track-kv] \${e instanceof Error ? e.message : String(e)}\`);
+        }
+      }
+
       const gifBytes = Uint8Array.from(atob(TRACKING_GIF_B64), c => c.charCodeAt(0));
       return new Response(gifBytes, {
         status: 200,
@@ -939,9 +1523,80 @@ export default {
       });
     }
 
+    // Report-view admin: GET /report-views?key={admin_key}
+    // Shows per-hash open rates so opus E2 follow-ups can target engaged
+    // prospects. Counterpart to /clicks (which tracks /click?h=X link clicks);
+    // this one tracks /r/HASH page renders via the embedded tracking pixel.
+    if (pathname === "/report-views") {
+      const key = url.searchParams.get("key");
+      if (key !== "pico2026") {
+        return new Response("Unauthorized", { status: 401 });
+      }
+      if (!env || !env.CLICK_LOG) {
+        return new Response("KV not configured", { status: 503 });
+      }
+
+      // Per-hash aggregates, sorted by lastHuman (most recent engagement first).
+      const statsList = await env.CLICK_LOG.list({ prefix: "view-stats:", limit: 1000 });
+      const aggregates = [];
+      for (const item of statsList.keys) {
+        const stats = await env.CLICK_LOG.get(item.name, "json");
+        if (stats) {
+          aggregates.push({ hash: item.name.replace("view-stats:", ""), ...stats });
+        }
+      }
+      aggregates.sort((a, b) => (b.lastHuman || 0) - (a.lastHuman || 0));
+
+      const rows = aggregates.map((a) => {
+        const lastHumanDate = a.lastHuman ? new Date(a.lastHuman).toISOString().substring(0, 16).replace("T", " ") : "—";
+        const firstHumanDate = a.firstHuman ? new Date(a.firstHuman).toISOString().substring(0, 16).replace("T", " ") : "—";
+        const topCountries = Object.entries(a.countries || {}).sort((x, y) => y[1] - x[1]).slice(0, 3).map(([k, v]) => \`\${k}:\${v}\`).join(" ");
+        const hot = (a.humanCount || 0) >= 3 ? " style=\\"background:#7f1d1d;color:#fee\\"" : (a.humanCount || 0) >= 1 ? " style=\\"background:#1e3a8a;color:#dbeafe\\"" : "";
+        return \`<tr\${hot}><td><a href="/r/\${a.hash}" style="color:#38bdf8">\${a.hash}</a></td><td>\${a.humanCount || 0}</td><td>\${a.previewCount || 0}</td><td>\${a.botCount || 0}</td><td>\${firstHumanDate}</td><td>\${lastHumanDate}</td><td>\${topCountries}</td></tr>\`;
+      }).join("");
+
+      // Last 50 view events.
+      const viewList = await env.CLICK_LOG.list({ prefix: "view:", limit: 50 });
+      const eventRows = [];
+      for (const item of viewList.keys.reverse()) {
+        const v = await env.CLICK_LOG.get(item.name, "json");
+        if (v) {
+          const date = new Date(v.ts).toISOString().substring(0, 16).replace("T", " ");
+          const uaShort = (v.ua || "").substring(0, 60);
+          eventRows.push(\`<tr><td>\${date}</td><td><a href="/r/\${v.h}" style="color:#38bdf8">\${v.h}</a></td><td>\${v.kind}</td><td>\${v.country}</td><td title="\${v.ua}">\${uaShort}</td></tr>\`);
+        }
+      }
+
+      const html = \`<!DOCTYPE html><html lang="no"><head><meta charset="utf-8"><title>Synlig — Rapport-åpninger</title>
+<style>body{font-family:system-ui;padding:2rem;background:#0f172a;color:#e2e8f0}table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:14px}th,td{padding:.5rem 1rem;text-align:left;border:1px solid #334155}th{background:#1e293b}tr:hover{filter:brightness(1.2)}h2{color:#38bdf8}a{color:#38bdf8}.legend{font-size:13px;color:#94a3b8}</style></head>
+<body><h1>Rapport-åpninger</h1>
+<p class="legend">Blå rad = 1+ menneske-åpning. Rød rad = 3+ menneske-åpninger (hot prospect — send opus E2).</p>
+<h2>Per rapport (sortert etter siste menneske-åpning)</h2>
+<table><tr><th>Hash</th><th>Mennesker</th><th>Email-preview</th><th>Bot</th><th>Første åpning</th><th>Siste åpning</th><th>Top land</th></tr>\${rows}</table>
+<h2>Siste 50 events</h2>
+<table><tr><th>Tid</th><th>Hash</th><th>Type</th><th>Land</th><th>UA</th></tr>\${eventRows.join("")}</table>
+</body></html>\`;
+
+      return new Response(html, {
+        status: 200,
+        headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
+      });
+    }
+
     // Self-service AEO audit: GET /audit or GET /audit?url=...
     if (pathname === "/audit" || pathname === "/audit/") {
       return handleAuditRequest(request, env);
+    }
+
+    // Tredjepartsverifisert agent-readiness: GET /bevis/agent-readiness[?url=X]
+    // Renders Cloudflare's isitagentready.com scan result for synligdigital.no
+    // (or any ?url=) inside our brand context. Replaces the broken "Verifiser →"
+    // link that pointed at isitagentready.com (no ?url= pre-fill — verified
+    // 2026-05-27). 101 patched reports + the homepage hero-strip carried that
+    // dead-end link; this route is the canonical replacement. Source:
+    // bevis-handler.ts. Cached in CLICK_LOG KV for 1h per URL.
+    if (pathname === "/bevis/agent-readiness" || pathname === "/bevis/agent-readiness/") {
+      return handleBevisRequest(request, env);
     }
 
     // Lead capture: POST /api/lead-capture (email + tier + slug)
@@ -952,6 +1607,15 @@ export default {
     // Source: checkout-handler.ts → handleLeadCapture.
     if ((pathname === "/api/lead-capture" || pathname === "/api/lead-capture/") && request.method === "POST") {
       return handleLeadCapture(request, env);
+    }
+
+    // Tier 0 — GET /api/lite-checkout?slug=<attribution>
+    // 990 NOK one-off Synlig Lite FAQPage AEO. Lowest entry-tier, impulse-buy zone.
+    // Source: checkout-handler.ts. Wired 2026-06-05 alongside Lite tier launch
+    // (task 968c7746aa0eec7d) — tests price hypothesis after 76d at 4900 NOK
+    // floor produced 0 external conversions.
+    if (pathname === "/api/lite-checkout") {
+      return handleLiteCheckout(request, env);
     }
 
     // Stripe Checkout entry: GET /api/handlingsplan-checkout?slug=<attribution>[&lead=<token>]
@@ -988,6 +1652,18 @@ export default {
     // Source: faktura-handler.ts. KV: FAKTURA_ORDERS. Email: Resend.
     if ((pathname === "/faktura" || pathname === "/faktura/" || pathname === "/faktura.html") && request.method === "POST") {
       return handleFakturaSubmit(request, env);
+    }
+
+    // Brreg autocomplete proxy: GET /api/brreg-search?q=<navn>|domain=<host>
+    // Same-origin proxy to data.brreg.no for the /faktura org.nr autocomplete.
+    // CSP \`connect-src 'self'\` on /faktura forbids direct client-side fetches
+    // to Brreg, so we proxy through here. Edge-cached 1h.
+    // Why this exists: removes the largest friction in the faktura form — the
+    // 9-digit org.nr lookup. Avo CEO clicked the faktura CTA on 2026-05-25
+    // 15:14 but never submitted; the orgnr field is the most likely abandon
+    // trigger. Source: brreg-handler.ts.
+    if (pathname === "/api/brreg-search") {
+      return handleBrregSearch(request);
     }
 
     // Order confirmation page: GET /takk-for-bestilling?session_id=<cs_...>&slug=<...>
@@ -1028,7 +1704,12 @@ export default {
       }
       const reportHtml = REPORTS[hash];
       if (reportHtml) {
-        return new Response(reportHtml, {
+        // Inject Open Graph meta tags so /r/{hash} links rendered in
+        // Slack/Teams/email show a preview card (title + image + description)
+        // instead of a bare URL. Helper is response-time, not build-time, so
+        // the 157 static report files stay untouched. See injectReportOg above.
+        const html = injectReportOg(reportHtml, request);
+        return new Response(html, {
           status: 200,
           headers: {
             "Content-Type": "text/html; charset=utf-8",
@@ -1045,12 +1726,61 @@ export default {
 
     const route = routes[pathname];
     if (route) {
+      // Markdown content negotiation — Cloudflare "Agent-Readable" Level 3 check.
+      // When an agent sends Accept: text/markdown, return the markdown variant
+      // for HTML routes that have one. Browsers (Accept: text/html) keep getting
+      // HTML. The homepage maps to /context.md (company overview), priser pages
+      // map to /priser.md, and the rest fall back to context.md as a useful
+      // machine-readable summary. The check at isitagentready.com tests "/" only.
+      // History: 2026-05-27 — synligdigital.no scored Level 2 (Bot-Aware) until
+      // this was added. After deploy: Level 3 (Agent-Readable).
+      // Spec: https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/
+      const accept = request.headers.get("Accept") || "";
+      const wantsMarkdown = /text\\/markdown/i.test(accept) &&
+        // Don't downgrade if HTML is explicitly preferred (q-value comparison).
+        // Simple heuristic: if text/html quality > text/markdown quality, serve HTML.
+        // CF scanner sends just "text/markdown" with no html — so this triggers.
+        !/text\\/html\\s*;?\\s*q=1/i.test(accept);
+      if (wantsMarkdown && route.contentType.includes("text/html")) {
+        let mdBody: string;
+        if (pathname === "/priser" || pathname === "/priser/" || pathname === "/priser.html") {
+          mdBody = PRISER_MD;
+        } else {
+          mdBody = CONTEXT_MD;
+        }
+        return new Response(mdBody, {
+          status: 200,
+          headers: {
+            "Content-Type": "text/markdown; charset=utf-8",
+            "Vary": "Accept",
+            ...SECURITY_HEADERS,
+            ...CACHE_HEADERS,
+          },
+        });
+      }
+      // Link headers on homepage — Cloudflare "linkHeaders" check (Discoverability).
+      // Points at the agent-card, sitemap, MCP server card, and skills index so
+      // agents can discover us in one round-trip from the homepage HEAD/GET.
+      const extraHeaders: Record<string, string> = {};
+      if (pathname === "/" || pathname === "/index.html") {
+        extraHeaders["Link"] = [
+          '<https://synligdigital.no/.well-known/agent-card.json>; rel="describedby"; type="application/json"',
+          '<https://synligdigital.no/.well-known/mcp.json>; rel="https://modelcontextprotocol.io/rel/server-card"; type="application/json"',
+          '<https://synligdigital.no/.well-known/agent-skills/index.json>; rel="https://agentskills.io/rel/index"; type="application/json"',
+          '<https://synligdigital.no/.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
+          '<https://synligdigital.no/sitemap.xml>; rel="sitemap"; type="application/xml"',
+          '<https://synligdigital.no/llms.txt>; rel="alternate"; type="text/plain"',
+          '<https://synligdigital.no/context.md>; rel="alternate"; type="text/markdown"',
+        ].join(", ");
+        extraHeaders["Vary"] = "Accept";
+      }
       return new Response(route.body, {
         status: 200,
         headers: {
           "Content-Type": route.contentType,
           ...SECURITY_HEADERS,
           ...CACHE_HEADERS,
+          ...extraHeaders,
         },
       });
     }
