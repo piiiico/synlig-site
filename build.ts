@@ -734,6 +734,52 @@ if (tierViolations.length > 0) {
   process.exit(1);
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// UNIVERSAL PRICING-MENTION GATE — any blog post referencing Synlig Digital
+// pricing (4 900, 14 900, Handlingsplan, Fundament) must ALSO mention Synlig
+// Lite (990 NOK / 990 kr / "Synlig Lite") or the build fails.
+//
+// Why this gate exists: the Synlig Lite 990 NOK tier was launched 2026-06-05.
+// Blog posts that mention higher-tier pricing without mentioning Lite create a
+// vacuum — visitors who cannot afford 4 900 kr have no visible entry point.
+// This pattern recurred 7× in one day (2026-06-05) across different surface
+// types. Per self-awareness rule: text rule failed twice → escalate to a code
+// gate on the default execution path. Any future blog authored with old
+// pricing references will fail here until Lite is surfaced.
+//
+// Opt-out: BUILD_GATE_NEGATIVE_TEST env var (same as tier gate, for testing).
+// ─────────────────────────────────────────────────────────────────────────────
+if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
+  const bloggDir = "/workspace/synlig-site/blogg";
+  const pricingPattern = /4 900|14 900|Handlingsplan|Fundament/;
+  const litePattern = /Synlig Lite|990 NOK|990 kr/;
+  const pricingViolations: string[] = [];
+  let blogFiles: string[] = [];
+  try {
+    blogFiles = readdirSync(bloggDir)
+      .filter(f => f.endsWith(".html"))
+      .map(f => join(bloggDir, f));
+  } catch {}
+  for (const blogPath of blogFiles) {
+    let text = "";
+    try { text = readFileSync(blogPath, "utf-8"); } catch { continue; }
+    if (pricingPattern.test(text) && !litePattern.test(text)) {
+      pricingViolations.push(
+        `blog post references pricing but lacks Synlig Lite mention: ${blogPath}`
+      );
+    }
+  }
+  if (pricingViolations.length > 0) {
+    console.error(`\n[BUILD FAIL] pricing-mention gate violated (${pricingViolations.length} issue(s)):`);
+    for (const v of pricingViolations) console.error(`  - ${v}`);
+    console.error(`\nWhy: any blog post mentioning Synlig Digital pricing (4 900/14 900 kr,`);
+    console.error(`Handlingsplan, Fundament) must also surface Synlig Lite (990 NOK) as the`);
+    console.error(`lowest entry point. Pattern caught 7× on 2026-06-05.`);
+    console.error(`\nFix: add Synlig Lite mention to the CTA or pricing section of the post.`);
+    process.exit(1);
+  }
+}
+
 // Load reports from /workspace/synlig-site/reports/
 const reportsDir = "/workspace/synlig-site/reports";
 const reportEntries: Array<{ hash: string; html: string }> = [];
