@@ -2181,8 +2181,17 @@
              id="lite" anchored 2026-06-05 to support hero impulse-CTA — landing
              the buyer directly on the email input instead of section-top with
              4 cards. Without the anchor, the hero shortcut lost intent before
-             the form. -->
-        <div class="service-card" id="lite">
+             the form.
+             2026-06-06: PROMOTED to `featured` on homepage. Hero already routes
+             top-of-funnel visitors here ("bestill Synlig Lite fra 990 kr →"),
+             but the services section previously featured Fundament (14 900 kr)
+             — contradictory signal. After 77d dry streak at 4 900 NOK floor,
+             featuring the 990 NOK impulse-buy on homepage aligns visual
+             prominence with the hero CTA, matches /priser's principle of
+             featuring lowest-friction conversion for the audience (top-of-funnel
+             = Lite, deep-funnel /priser = Analyse). Fundament demoted to
+             non-featured (still available, just no green-border halo). -->
+        <div class="service-card featured" id="lite">
           <div class="service-name">Synlig Lite</div>
           <div class="service-price">fra 990 kr</div>
           <div class="service-price-note">FAQPage for én side, 1 virkedag</div>
@@ -2198,9 +2207,10 @@
             <input type="email" id="lead-email-home-lite" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254">
             <input type="hidden" name="tier" value="lite">
             <input type="hidden" name="slug" value="home-lite">
-            <button type="submit" class="service-cta service-cta-outline lead-form-button">Bestill med kort →</button>
+            <button type="submit" class="service-cta service-cta-fill lead-form-button">Bestill med kort →</button>
           </form>
           <a href="/faktura?slug=home-lite" class="service-cta service-cta-faktura faktura-link" data-email-input="lead-email-home-lite">Få faktura med 14 dagers betalingsfrist →</a>
+          <a href="/blogg/aeo-lite-faqpage-990-kr" class="service-cta-secondary">Les mer om Lite-pakken →</a>
         </div>
         <!-- Package 1 -->
         <div class="service-card">
@@ -2224,8 +2234,11 @@
           </form>
           <a href="/faktura?slug=home-analyse" class="service-cta service-cta-faktura faktura-link" data-email-input="lead-email-home-analyse">Få faktura med 14 dagers betalingsfrist →</a>
         </div>
-        <!-- Package 2 -->
-        <div class="service-card featured">
+        <!-- Package 2: Fundament. Demoted 2026-06-06 from featured to regular
+             card on homepage — see Lite card comment above. Still available
+             with same content, just no green-border halo. Visible deep-funnel
+             upsell after Analyse. -->
+        <div class="service-card">
           <div class="service-name">AI-synlighetsfundament</div>
           <div class="service-price">fra 14 900 kr</div>
           <div class="service-price-note">Engangsimplementering</div>
@@ -2243,7 +2256,7 @@
             <input type="email" id="lead-email-home-fundament" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254">
             <input type="hidden" name="tier" value="fundament">
             <input type="hidden" name="slug" value="home-fundament">
-            <button type="submit" class="service-cta service-cta-fill lead-form-button">Bestill med kort →</button>
+            <button type="submit" class="service-cta service-cta-outline lead-form-button">Bestill med kort →</button>
           </form>
           <a href="/faktura?slug=home-fundament" class="service-cta service-cta-faktura faktura-link" data-email-input="lead-email-home-fundament">Få faktura med 14 dagers betalingsfrist →</a>
         </div>
