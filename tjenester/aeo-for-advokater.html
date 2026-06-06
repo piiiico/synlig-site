@@ -12,13 +12,13 @@
   <meta property="og:title" content="AEO for advokatfirmaer — Bli synlig i ChatGPT og Perplexity">
   <meta property="og:description" content="93% av AI-søk gir null klikk. Advokatfirmaet ditt kan bli svaret — eller usynlig. Se konkrete data fra norske advokatfirmaer og hva du kan gjøre.">
   <meta property="og:url" content="https://synligdigital.no/tjenester/aeo-for-advokater">
-  <meta property="og:image" content="https://synligdigital.no/og.svg">
+  <meta property="og:image" content="https://synligdigital.no/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="Synlig">
   <meta property="og:locale" content="nb_NO">
 
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AEO for advokatfirmaer — Bli synlig i ChatGPT">
   <meta name="twitter:description" content="93% av AI-søk gir null klikk. Er advokatfirmaet ditt svaret?">
 
@@ -86,7 +86,7 @@
         "name": "Hva koster en AI-synlighetsanalyse for advokatfirmaet?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Grunnleggende AI-synlighetssjekk er gratis på sjekk.synligdigital.no. Full revisjon med konkrete handlingspunkter, prioriterte tiltak og implementeringsstøtte er tilgjengelig som en betalt tjeneste. Kontakt hei@synligdigital.no for priser tilpasset firmaets størrelse."
+          "text": "Fire pakker. Synlig Lite fra 990 NOK (FAQPage-schema for én side, levering 1 virkedag) gir deg en lavterskel test av metodikken. AI-synlighetsanalyse er 4 900 NOK (engangsanalyse, 5 virkedager). AI-synlighetsfundament er 14 900 NOK (engangsimplementering, 2–4 uker). Løpende AEO-overvåking er 4 900 NOK/mnd. Grunnleggende sjekk er gratis på sjekk.synligdigital.no. Se /tjenester/aeo-for-advokater#priser for full sammenligning."
         }
       },
       {
@@ -94,7 +94,7 @@
         "name": "Hvor lang tid tar det å se resultater fra AEO?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Tekniske forbedringer som schema-markup og robots.txt-oppdatering vises typisk innen 1-2 uker. Innholdsbaserte tiltak som FAQ-sider og praksisområdesider tar 4-8 uker å indekseres og begynne å gi AI-siteringer. Dokumenterte resultater fra vår Nordic Lithium-klient: fra 67/C til 85/A på to uker."
+          "text": "Tekniske forbedringer som schema-markup og robots.txt-oppdatering vises typisk innen 1-2 uker. Innholdsbaserte tiltak som FAQ-sider og praksisområdesider tar 4-8 uker å indekseres og begynne å gi AI-siteringer. Dokumenterte resultater fra vårt interne metode-case Nordic Lithium (nærstående part — felles eierskap): fra 67/C til 85/A på to uker; eierskapsopplysning på /case/nordic-lithium."
         }
       }
     ]
@@ -491,6 +491,20 @@
       color: var(--text);
       margin-bottom: 4px;
     }
+    .results-disclosure {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--gray-500);
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 3px;
+      padding: 1px 5px;
+      margin-left: 6px;
+      vertical-align: middle;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
     .case-desc {
       font-size: 0.8rem;
       color: var(--text-dim);
@@ -584,11 +598,135 @@
     footer a { color: var(--text-muted); text-decoration: none; }
     footer a:hover { color: var(--text-dim); }
 
+    /* Pricing block — 4-tier (Lite + Handlingsplan + Fundament + Lopende).
+       Added 2026-06-06 idle-mode surface-parity fix: advokater was on disk
+       as a vertical landing page but had no #priser section, leaving cold
+       advokat-search visitors at a 4 900-floor (no entry-point tier). */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 28px 0 8px;
+    }
+    .price-card {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+    }
+    .price-card.featured {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent-dim);
+    }
+    .price-card.featured::before {
+      content: "Start her";
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 3px 10px;
+      border-radius: 3px;
+      align-self: flex-start;
+      margin-bottom: 10px;
+    }
+    .price-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .price-amount {
+      font-family: var(--mono);
+      font-size: 1.5rem;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .price-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+    .price-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 18px;
+      flex: 1;
+    }
+    .price-list li {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      padding: 4px 0 4px 18px;
+      position: relative;
+    }
+    .price-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .price-cta {
+      display: block;
+      text-align: center;
+      padding: 10px 14px;
+      background: var(--accent);
+      color: #0a0a0b;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-bottom: 6px;
+    }
+    .price-cta:hover { opacity: 0.9; }
+    .price-cta-secondary {
+      display: block;
+      text-align: center;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 4px 0 0;
+    }
+    .price-cta-secondary:hover { color: var(--text-dim); text-decoration: underline; }
+    .lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 0 0 6px;
+    }
+    .lead-form-input {
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--text);
+      box-sizing: border-box;
+      transition: border-color 0.15s;
+      font-family: inherit;
+      outline: none;
+    }
+    .lead-form-input:focus { border-color: var(--accent); }
+    button.price-cta {
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      font-family: inherit;
+      line-height: 1.2;
+    }
+
     @media (max-width: 600px) {
       .hero-title { font-size: 1.5rem; }
       .stat-bar-inner { grid-template-columns: 1fr; gap: 16px; }
       .audit-table { font-size: 0.73rem; }
       .audit-table th, .audit-table td { padding: 6px 8px; }
+      .pricing-grid { grid-template-columns: 1fr; }
     }
 
     /* Inline sjekk form */
@@ -610,7 +748,7 @@
   <div style="display:flex;gap:2rem;">
     <a href="/" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Hjem</a>
     <a href="/guide" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Guide</a>
-    <a href="/case/nordic-lithium" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Klienter</a>
+    <a href="/case/nordic-lithium" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Metode-case</a>
     <a href="/blogg" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Blogg</a>
     <a href="mailto:hei@synligdigital.no" style="background:#6ee7b7;color:#0a0a0b;padding:0.4rem 1rem;border-radius:6px;font-weight:600;text-decoration:none;font-size:0.9rem;">Kontakt</a>
   </div>
@@ -772,7 +910,7 @@
           <div class="step-content">
             <div class="step-title">Sjekk at robots.txt ikkje blokkerer AI-crawlarar</div>
             <p class="step-desc">
-              Ingen av dei 5 advokatfirmaa vi analyserte blokkerte AI-crawlarane aktivt — men det er likevel ein vanleg fallgruve. Eldre robots.txt-reglar kan ha eit «Disallow: /»-mønster som AI-crawlarane les som «hald deg unna». Vår Nordic Lithium-klient hadde nettopp dette, og fekk 18 poeng auke etter at det blei opna. Sjekk robots.txt på firma.no/robots.txt og bekreft at GPTBot, ClaudeBot, PerplexityBot og Google-Extended ikkje har eit Disallow: /-direktiv.
+              Ingen av dei 5 advokatfirmaa vi analyserte blokkerte AI-crawlarane aktivt — men det er likevel ein vanleg fallgruve. Eldre robots.txt-reglar kan ha eit «Disallow: /»-mønster som AI-crawlarane les som «hald deg unna». Vårt interne metode-case Nordic Lithium (nærstående part — felles eigarskap) hadde nettopp dette, og fekk 18 poeng auke etter at det blei opna; eierskapsopplysning på /case/nordic-lithium. Sjekk robots.txt på firma.no/robots.txt og bekreft at GPTBot, ClaudeBot, PerplexityBot og Google-Extended ikkje har eit Disallow: /-direktiv.
             </p>
           </div>
         </div>
@@ -823,7 +961,7 @@
         <div class="case-icon">⚡</div>
         <div class="case-meta">
           <div class="case-label">Case study · +18 poeng på 2 veker</div>
-          <div class="case-title">Nordic Lithium: 67/C → 85/A</div>
+          <div class="case-title">Nordic Lithium: 67/C → 85/A <span class="results-disclosure">Nærstående</span></div>
           <div class="case-desc">Norsk nettbutikk for LiFePO4-batteri. Robots.txt blokkerte alle AI-crawlarar. To enkle intervensjonar ga 18 poeng auke på to veker.</div>
         </div>
       </a>
@@ -832,13 +970,105 @@
         <div class="case-icon">⚓</div>
         <div class="case-meta">
           <div class="case-label">Case study · +24 poeng</div>
-          <div class="case-title">Pierstop: 52/D → 76/B</div>
+          <div class="case-title">Pierstop: 52/D → 76/B <span class="results-disclosure">Nærstående</span></div>
           <div class="case-desc">Noregs leiande cruisehamn-guide med 176 sider. Perfekt teknisk grunnmur, men manglande schema. Vi retta JSON-LD og NAP-konsistens; AI-svara begynte å sitere dei.</div>
         </div>
       </a>
 
       <p class="muted">
         Same analyse og same tiltak gjeld for advokatfirmaer. Det kritiske spørsmålet er det same: <em>Er de synlege for AI-assistentar når potensiell klient treng dykk?</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- Pricing — 4 tiers with Synlig Lite as entry point -->
+  <section id="priser" style="background: var(--bg-raised);">
+    <div class="container-wide">
+      <h2>Fire pakker. Faste priser. Bestilling med kort.</h2>
+      <p class="muted">Samme priser som på <a href="/priser" style="color: var(--accent); text-decoration: none;">/priser</a>. Velg det som passer der firmaet er nå.</p>
+
+      <div class="pricing-grid">
+        <div class="price-card featured">
+          <div class="price-name">Synlig Lite</div>
+          <div class="price-amount">990 kr</div>
+          <div class="price-note">FAQPage for én side, levering 1 virkedag</div>
+          <ul class="price-list">
+            <li>FAQPage-schema for én side du velger</li>
+            <li>3–5 spørsmål–svar-par grunnet i innholdet ditt</li>
+            <li>JSON-LD-blob klar til innliming i &lt;head&gt;</li>
+            <li>F.eks. praksisområde-side, prosessbeskrivelse eller honorar-side</li>
+            <li>Engangsbetaling — ingen oppfølging</li>
+          </ul>
+          <form method="POST" action="/api/lead-capture" class="lead-form">
+            <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254" aria-label="E-postadresse">
+            <input type="hidden" name="tier" value="lite">
+            <input type="hidden" name="slug" value="tjenester-aeo-for-advokater-lite">
+            <button type="submit" class="price-cta">Bestill med kort →</button>
+          </form>
+          <a href="/faktura?slug=tjenester-aeo-for-advokater-lite" class="price-cta-secondary">Send forespørsel (faktura)</a>
+        </div>
+
+        <div class="price-card">
+          <div class="price-name">AI-synlighetsanalyse</div>
+          <div class="price-amount">4 900 kr</div>
+          <div class="price-note">Engangsanalyse, levering 5 virkedager</div>
+          <ul class="price-list">
+            <li>Test i ChatGPT, Perplexity, Google AI</li>
+            <li>Score med konkrete tiltak</li>
+            <li>LegalService-schema-sjekk og praksisområde-sjekk</li>
+            <li>Skriftlig spørsmål-og-svar-runde på e-post etter levering</li>
+          </ul>
+          <form method="POST" action="/api/lead-capture" class="lead-form">
+            <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254" aria-label="E-postadresse">
+            <input type="hidden" name="tier" value="handlingsplan">
+            <input type="hidden" name="slug" value="tjenester-aeo-for-advokater-handlingsplan">
+            <button type="submit" class="price-cta">Bestill med kort →</button>
+          </form>
+          <a href="/faktura?slug=tjenester-aeo-for-advokater-handlingsplan" class="price-cta-secondary">Send forespørsel (faktura)</a>
+        </div>
+
+        <div class="price-card">
+          <div class="price-name">AI-synlighetsfundament</div>
+          <div class="price-amount">14 900 kr</div>
+          <div class="price-note">Engangsimplementering, 2 til 4 uker</div>
+          <ul class="price-list">
+            <li>Alt i analysen, pluss implementering</li>
+            <li>LegalService-schema utrullet på relevante sider</li>
+            <li>FAQ-side med vanlige spørsmål om honorar og prosess</li>
+            <li>Praksisområde-sider strukturert for AI-sitering</li>
+            <li>Skriftlig opplæringsmateriale og e-post-oppfølging</li>
+          </ul>
+          <form method="POST" action="/api/lead-capture" class="lead-form">
+            <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254" aria-label="E-postadresse">
+            <input type="hidden" name="tier" value="fundament">
+            <input type="hidden" name="slug" value="tjenester-aeo-for-advokater-fundament">
+            <button type="submit" class="price-cta">Bestill med kort →</button>
+          </form>
+          <a href="/faktura?slug=tjenester-aeo-for-advokater-fundament" class="price-cta-secondary">Send forespørsel (faktura)</a>
+        </div>
+
+        <div class="price-card">
+          <div class="price-name">Løpende overvåking</div>
+          <div class="price-amount">4 900 kr/mnd</div>
+          <div class="price-note">Forutsetter at fundamentet er på plass</div>
+          <ul class="price-list">
+            <li>Månedlig AI-synlighetsaudit</li>
+            <li>1 til 2 nye fagartikler eller praksisområde-utvidelser per måned</li>
+            <li>Konkurransesporing i ChatGPT</li>
+            <li>Kvartalsrapport med trend</li>
+          </ul>
+          <form method="POST" action="/api/lead-capture" class="lead-form">
+            <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254" aria-label="E-postadresse">
+            <input type="hidden" name="tier" value="lopende">
+            <input type="hidden" name="slug" value="tjenester-aeo-for-advokater-lopende">
+            <button type="submit" class="price-cta">Start abonnement →</button>
+          </form>
+          <a href="/faktura?slug=tjenester-aeo-for-advokater-lopende" class="price-cta-secondary">Send forespørsel (faktura)</a>
+        </div>
+      </div>
+
+      <p class="muted" style="font-size: 0.78rem; margin-top: 16px; text-align: center;">
+        Sikker betaling via Stripe. Alle priser er eksklusiv mva. Faktura sendes med 14 dagers betalingsfrist.
       </p>
     </div>
   </section>
@@ -885,7 +1115,7 @@
 <footer>
   <div class="container">
     <span>© 2026 Synlig Digital · <a href="/">synligdigital.no</a></span>
-    <span><a href="/blogg">Blogg</a> · <a href="/guide">Guide</a> · <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a></span>
+    <span><a href="/priser">Priser</a> · <a href="/blogg">Blogg</a> · <a href="/guide">Guide</a> · <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a></span>
   </div>
 </footer>
 
