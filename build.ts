@@ -764,32 +764,49 @@ if (tierViolations.length > 0) {
 // Opt-out: BUILD_GATE_NEGATIVE_TEST env var (same as tier gate, for testing).
 // ─────────────────────────────────────────────────────────────────────────────
 if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
-  const bloggDir = "/workspace/synlig-site/blogg";
+  // Extended 2026-06-06 (10th occurrence — Stavanger geo-local + state-of-aeo-2026
+  // research report + komplett-aeo-analyse stub): the gate originally scanned
+  // /blogg only, but tier-discoverability gaps appeared in /tjenester (geographic
+  // landing pages) and /rapport (research pillar pages). Per
+  // funnel-wide-launch principle, every page surfacing pricing must surface the
+  // entry tier — extend the same gate to those directories rather than
+  // creating parallel registries.
+  const PRICING_GATED_DIRS = [
+    "/workspace/synlig-site/blogg",
+    "/workspace/synlig-site/tjenester",
+    "/workspace/synlig-site/rapport",
+  ];
   const pricingPattern = /4 900|14 900|Handlingsplan|Fundament/;
   const litePattern = /Synlig Lite|990 NOK|990 kr/;
   const pricingViolations: string[] = [];
-  let blogFiles: string[] = [];
-  try {
-    blogFiles = readdirSync(bloggDir)
-      .filter(f => f.endsWith(".html"))
-      .map(f => join(bloggDir, f));
-  } catch {}
-  for (const blogPath of blogFiles) {
+  const scanFiles: string[] = [];
+  for (const dir of PRICING_GATED_DIRS) {
+    try {
+      const entries = readdirSync(dir).filter(f => f.endsWith(".html"));
+      for (const f of entries) scanFiles.push(join(dir, f));
+    } catch {}
+  }
+  // Also include the long-form pillar at the root (komplett-aeo-analyse.html)
+  // which lives outside /blogg but mentions Fundament in its CTA.
+  scanFiles.push("/workspace/synlig-site/komplett-aeo-analyse.html");
+  for (const filePath of scanFiles) {
     let text = "";
-    try { text = readFileSync(blogPath, "utf-8"); } catch { continue; }
+    try { text = readFileSync(filePath, "utf-8"); } catch { continue; }
     if (pricingPattern.test(text) && !litePattern.test(text)) {
       pricingViolations.push(
-        `blog post references pricing but lacks Synlig Lite mention: ${blogPath}`
+        `page references pricing but lacks Synlig Lite mention: ${filePath}`
       );
     }
   }
   if (pricingViolations.length > 0) {
     console.error(`\n[BUILD FAIL] pricing-mention gate violated (${pricingViolations.length} issue(s)):`);
     for (const v of pricingViolations) console.error(`  - ${v}`);
-    console.error(`\nWhy: any blog post mentioning Synlig Digital pricing (4 900/14 900 kr,`);
+    console.error(`\nWhy: any page mentioning Synlig Digital pricing (4 900/14 900 kr,`);
     console.error(`Handlingsplan, Fundament) must also surface Synlig Lite (990 NOK) as the`);
-    console.error(`lowest entry point. Pattern caught 7× on 2026-06-05.`);
-    console.error(`\nFix: add Synlig Lite mention to the CTA or pricing section of the post.`);
+    console.error(`lowest entry point. Pattern caught 7× on 2026-06-05 + 3× on 2026-06-06`);
+    console.error(`(Stavanger geo-landing, state-of-aeo-2026 rapport, komplett-aeo-analyse).`);
+    console.error(`\nFix: add Synlig Lite mention to the CTA or pricing section.`);
+    console.error(`Gated dirs: ${PRICING_GATED_DIRS.join(", ")} + komplett-aeo-analyse.html`);
     process.exit(1);
   }
 }
