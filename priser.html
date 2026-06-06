@@ -4,17 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Priser for AI-synlighet (AEO) — Synlig Digital</title>
-  <meta name="description" content="Tre faste pakker for å bli synlig i ChatGPT, Perplexity og Google AI: Analyse fra 4 900 kr, Fundament fra 14 900 kr, Løpende fra 4 900 kr/mnd. Ingen skjulte kostnader.">
+  <meta name="description" content="Fire faste pakker for å bli synlig i ChatGPT, Perplexity og Google AI: Lite fra 990 kr, Analyse fra 4 900 kr, Fundament fra 14 900 kr, Løpende fra 4 900 kr/mnd. Ingen skjulte kostnader.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://synligdigital.no/priser">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Priser for AI-synlighet (AEO) — Synlig Digital">
-  <meta property="og:description" content="Tre faste pakker for AEO: Analyse fra 4 900 kr, Fundament fra 14 900 kr, Løpende fra 4 900 kr/mnd. Ingen skjulte kostnader.">
+  <meta property="og:description" content="Fire faste pakker for AEO: Lite fra 990 kr, Analyse fra 4 900 kr, Fundament fra 14 900 kr, Løpende fra 4 900 kr/mnd. Ingen skjulte kostnader.">
   <meta property="og:url" content="https://synligdigital.no/priser">
   <meta property="og:site_name" content="Synlig">
   <meta property="og:locale" content="nb_NO">
-  <meta property="og:image" content="https://synligdigital.no/og.svg">
+  <meta property="og:image" content="https://synligdigital.no/og.png">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,7 +29,7 @@
     "@id": "https://synligdigital.no/priser#webpage",
     "url": "https://synligdigital.no/priser",
     "name": "Priser for AI-synlighet (AEO) — Synlig Digital",
-    "description": "Tre faste pakker for AEO. Analyse fra 4 900 NOK, Fundament fra 14 900 NOK, Løpende fra 4 900 NOK/mnd.",
+    "description": "Fire faste pakker for AEO. Lite fra 990 NOK, Analyse fra 4 900 NOK, Fundament fra 14 900 NOK, Løpende fra 4 900 NOK/mnd.",
     "inLanguage": "nb",
     "isPartOf": { "@id": "https://synligdigital.no/#website" },
     "about": { "@id": "https://synligdigital.no/#organization" },
@@ -37,6 +37,20 @@
       "@type": "OfferCatalog",
       "name": "AEO-tjenester for norske bedrifter",
       "itemListElement": [
+        {
+          "@type": "Offer",
+          "name": "Synlig Lite — FAQPage AEO",
+          "description": "FAQPage schema for én side du velger. Vi skriver 3–5 spørsmål-svar-par grunnet i innholdet ditt og leverer JSON-LD klar til innliming i <head>. Levering innen 1 virkedag på e-post.",
+          "price": "990",
+          "priceCurrency": "NOK",
+          "url": "https://synligdigital.no/priser",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "FAQPage Schema Implementering",
+            "serviceType": "AEO Schema Implementering",
+            "provider": { "@id": "https://synligdigital.no/#organization" }
+          }
+        },
         {
           "@type": "Offer",
           "name": "AI-synlighetsanalyse",
@@ -98,6 +112,14 @@
     "@type": "FAQPage",
     "@id": "https://synligdigital.no/priser#faq",
     "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Hva er Lite-pakken?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Lite (990 kr) er den minste pakken vi tilbyr. Du velger én side på nettstedet ditt; vi skriver 3–5 spørsmål-svar-par grunnet i innholdet på den siden, og leverer en ferdig FAQPage JSON-LD-blob klar til innliming i <head> eller via tag-manager. Levering på e-post innen 1 virkedag, engangsbetaling, ingen oppfølging. Bra inngangspunkt hvis du vil teste AEO-effekten på én kritisk side før du bestiller Analyse eller Fundament."
+        }
+      },
       {
         "@type": "Question",
         "name": "Hva er forskjellen på Analyse og Fundament?",
@@ -242,6 +264,44 @@
       color: var(--gray-700);
       text-align: center;
     }
+    /* Cloudflare Agent Readiness Score — verifiable third-party trust signal
+       at the conversion bottleneck. Mirrors homepage hero-proof + /r/<hash>
+       trust-anchor so cold prospects don't lose the credential between
+       report (peak skepticism #1) and form (peak skepticism #2). */
+    .hero-proof {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 12px auto 0;
+      padding: 10px 18px;
+      background: rgba(110, 231, 183, 0.08);
+      border: 1px solid rgba(5, 150, 105, 0.18);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--gray-700);
+      max-width: 640px;
+      line-height: 1.5;
+    }
+    .hero-proof-check {
+      color: var(--green-600);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .hero-proof strong {
+      color: var(--gray-900);
+      font-weight: 600;
+    }
+    .hero-proof a {
+      color: var(--green-600);
+      text-decoration: none;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .hero-proof a:hover {
+      text-decoration: underline;
+    }
 
     /* Resultater fra kunder */
     .results {
@@ -313,6 +373,20 @@
       margin-top: auto;
     }
     .results-link:hover { color: var(--blue-900); }
+    .results-disclosure {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--gray-500);
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 3px;
+      padding: 1px 5px;
+      margin-left: 6px;
+      vertical-align: middle;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
 
     /* Services grid */
     .services {
@@ -320,7 +394,10 @@
     }
     .services-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      /* 4 columns since Lite tier launched 2026-06-05. auto-fit with minmax
+         lets the grid collapse gracefully on mid-width screens before the
+         mobile breakpoint kicks in (single column at <800px). */
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 24px;
     }
     .service-card {
@@ -407,6 +484,24 @@
       color: var(--gray-700);
     }
     .service-cta-outline:hover { background: var(--gray-50); }
+    /* Faktura CTA — visually balanced second choice. Filled-gray button instead
+       of a tiny grey text link, so Norwegian B2B buyers who default to invoice
+       payment don't get pushed into Stripe by visual hierarchy alone. Subordinate
+       to the green kort button (lighter weight, softer color) but clearly a
+       clickable button rather than a footnote. Same width as the kort CTA so the
+       choice reads as two real options, not one CTA with a fineprint escape. */
+    .service-cta-faktura {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      color: var(--gray-900);
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+    .service-cta-faktura:hover {
+      background: var(--gray-100);
+      border-color: var(--gray-700);
+      color: var(--gray-900);
+    }
     .service-cta-secondary {
       display: block;
       text-align: center;
@@ -637,28 +732,54 @@
         <h1>Priser for AI-synlighet (AEO)</h1>
         <p>Tre faste pakker, oppgitte priser, ingen skjulte kostnader. Velg det som passer der bedriften din er i dag.</p>
         <div class="trust-strip">Synlig Digital — uavhengig AEO-konsulent i Stavanger. Vi måler først, deretter implementerer vi det som faktisk flytter score.</div>
+        <div class="hero-proof">
+          <svg class="hero-proof-check" aria-hidden="true" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 10 8 14 16 6"></polyline></svg>
+          <span>Synlig sin egen AI-synlighet: <strong>5/5 Agent-Native</strong> (toppnivå) på Cloudflares uavhengige agent-skanner.</span>
+          <a href="/bevis/agent-readiness" rel="noopener">Verifiser →</a>
+        </div>
       </div>
     </section>
 
-    <section style="padding: 12px 0 4px;">
+    <!-- Soft-conversion strip — always-visible. Consolidates the soft paths
+         that previously only appeared in the post-Stripe-abandonment recovery
+         banner (lines 681-688) and the bransje paragraph below. Shipped after
+         data showed 244 lifetime lead-capture submissions, 0 real prospects:
+         every form-fill assumed commit-to-pay framing ("Bestill — betal med
+         kort") with no way to start a conversation. Two paths offered —
+         mailto: question (low commitment, lands in hei@synligdigital.no
+         monitored by check-synlig-inbox cron) and the existing /sjekk free
+         check. Mirrors recovery-banner copy so post-cancellation visitors see
+         familiar paths instead of a different recovery surface. -->
+    <section style="padding: 16px 0 6px;">
+      <div class="container" style="text-align: center;">
+        <div style="display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 10px 16px; align-items: baseline; max-width: 720px; font-size: 0.95rem; color: var(--gray-700); padding: 14px 22px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px;">
+          <strong style="color: var(--gray-900); font-weight: 600;">Ikke klar for å bestille enda?</strong>
+          <a href="mailto:hei@synligdigital.no?subject=Sp%C3%B8rsm%C3%A5l%20om%20AEO-pakker&amp;body=Hei%20Synlig%2C%0A%0AJeg%20vurderer%20[bytt%20ut%20med%20pakke%20eller%20la%20st%C3%A5]%20og%20lurer%20p%C3%A5%3A%0A%0A" style="color: var(--blue-700); text-decoration: none; font-weight: 500;">Send oss en kort melding &rarr;</a>
+          <span style="color: var(--gray-200);">·</span>
+          <a href="https://sjekk.synligdigital.no/?ref=priser-soft" style="color: var(--blue-700); text-decoration: none; font-weight: 500;">Ta en gratis AI-synlighetssjekk &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding: 6px 0 4px;">
       <div class="container" style="text-align: center; font-size: 0.88rem; color: var(--gray-600);">
-        Vi jobber primært med <a href="/tjenester/aeo-for-saas-bedrifter" style="color: var(--blue-700); text-decoration: none;">B2B SaaS-bedrifter</a> &mdash; er bransjen din annerledes? <a href="https://sjekk.synligdigital.no/?ref=priser-bransje" style="color: var(--blue-700); text-decoration: none;">Ta en gratis AI-synlighetssjekk</a> for å se hvordan AI-svarene ser ut.
+        Vi jobber primært med <a href="/tjenester/aeo-for-saas-bedrifter" style="color: var(--blue-700); text-decoration: none;">B2B SaaS-bedrifter</a> &mdash; er bransjen din annerledes? Spør oss gjerne om det passer.
       </div>
     </section>
 
     <section class="results">
       <div class="container">
-        <div class="results-eyebrow">Resultater fra kunder</div>
+        <div class="results-eyebrow">Tidlige resultater</div>
         <div class="results-grid">
           <div class="results-card">
             <div class="results-score">67/C <span class="arrow">&rarr;</span> 85/A <span class="delta">+18 på 2 uker</span></div>
-            <div class="results-company">Nordic Lithium &mdash; norsk batteri-nettbutikk</div>
+            <div class="results-company">Nordic Lithium &mdash; norsk batteri-nettbutikk <span class="results-disclosure">Nærstående part</span></div>
             <p class="results-summary">Schema-markup, GBP-opprydding og innholdsjustering. Ble plukket opp av ChatGPT og Perplexity uten plattformbytte.</p>
             <a href="/case/nordic-lithium?ref=priser" class="results-link">Les hele case-studien &rarr;</a>
           </div>
           <div class="results-card">
             <div class="results-score">52/D <span class="arrow">&rarr;</span> 76/B <span class="delta">+24 poeng</span></div>
-            <div class="results-company">Pierstop &mdash; cruisehavn-guide med 176 sider</div>
+            <div class="results-company">Pierstop &mdash; cruisehavn-guide med 176 sider <span class="results-disclosure">Nærstående part</span></div>
             <p class="results-summary">Perfekt teknisk grunnmur, manglende schema. Vi rettet JSON-LD og NAP-konsistens; AI-svarene begynte &aring; sitere dem.</p>
             <a href="/case/pierstop?ref=priser" class="results-link">Les hele case-studien &rarr;</a>
           </div>
@@ -669,6 +790,31 @@
     <section class="services">
       <div class="container">
         <div class="services-grid">
+          <!-- Tier 0: Lite (990 NOK FAQPage) — impulse-buy zone entry, added 2026-06-05.
+               Tests price hypothesis after 76d at 4900 NOK floor produced 0 external
+               conversions. Manual delivery via Telegram webhook notification. -->
+          <div class="service-card">
+            <div class="service-name">Synlig Lite</div>
+            <div class="service-price">fra 990 kr</div>
+            <div class="service-price-note">FAQPage for én side, levering 1 virkedag</div>
+            <ul class="service-list">
+              <li>FAQPage schema for én side du velger</li>
+              <li>3–5 spørsmål-svar-par grunnet i innholdet ditt</li>
+              <li>JSON-LD blob klar til innliming i &lt;head&gt;</li>
+              <li>Levering på e-post innen 1 virkedag</li>
+              <li>Engangsbetaling — ingen oppfølging</li>
+            </ul>
+            <form method="POST" action="/api/lead-capture" class="lead-form">
+              <label class="lead-form-label" for="lead-email-lite">Skriv inn e-post for å starte &rarr;</label>
+              <input type="email" id="lead-email-lite" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254">
+              <input type="hidden" name="tier" value="lite">
+              <input type="hidden" name="slug" value="priser-lite">
+              <button type="submit" class="service-cta service-cta-fill lead-form-button">Bestill — betal med kort &rarr;</button>
+            </form>
+            <a href="/faktura?slug=priser-lite" class="service-cta service-cta-faktura faktura-link" data-email-input="lead-email-lite">Få faktura — 14 dagers betalingsfrist &rarr;</a>
+            <a href="/blogg/aeo-lite-faqpage-990-kr" class="service-cta-secondary">Les mer om Lite-pakken &rarr;</a>
+          </div>
+
           <!-- Tier 1: Analyse (Stripe 1-click — featured because deep-funnel /priser visitors convert best on lowest-friction path) -->
           <div class="service-card featured">
             <div class="service-name">AI-synlighetsanalyse</div>
@@ -680,7 +826,7 @@
               <li>NAP-konsistens på tvers av kataloger</li>
               <li>Anmeldelsesanalyse</li>
               <li>Skriftlig rapport med score og tiltak</li>
-              <li>1 times gjennomgang</li>
+              <li>Skriftlig spørsmål-og-svar-runde på e-post etter levering</li>
             </ul>
             <p class="sample-report-link"><a href="/r/eksempel?ref=priser-sample">Se eksempel: vår egen rapport (96/100) &rarr;</a></p>
             <form method="POST" action="/api/lead-capture" class="lead-form">
@@ -690,8 +836,8 @@
               <input type="hidden" name="slug" value="priser-handlingsplan">
               <button type="submit" class="service-cta service-cta-fill lead-form-button">Bestill — betal med kort &rarr;</button>
             </form>
-            <a href="/faktura?slug=priser-analyse" class="service-cta-secondary">Send forespørsel (faktura)</a>
-            <p class="stripe-note">Stripe sikker betaling. Rapport innen 5 virkedager.</p>
+            <a href="/faktura?slug=priser-analyse" class="service-cta service-cta-faktura faktura-link" data-email-input="lead-email-handlingsplan">Få faktura — 14 dagers betalingsfrist &rarr;</a>
+            <p class="stripe-note">Velg det som passer bedriften. Rapport innen 5 virkedager uansett.</p>
           </div>
 
           <!-- Tier 2: Fundament -->
@@ -706,7 +852,7 @@
               <li>NAP-retting på alle kataloger</li>
               <li>Spesialistside(r) med riktig innhold</li>
               <li>Anmeldelsesstrategi med maler</li>
-              <li>1 times opplæring</li>
+              <li>Skriftlig opplæringsmateriale og e-post-oppfølging</li>
             </ul>
             <form method="POST" action="/api/lead-capture" class="lead-form">
               <label class="lead-form-label" for="lead-email-fundament">Skriv inn e-post for å starte &rarr;</label>
@@ -715,7 +861,7 @@
               <input type="hidden" name="slug" value="priser-fundament">
               <button type="submit" class="service-cta service-cta-fill lead-form-button">Bestill — betal med kort &rarr;</button>
             </form>
-            <a href="/faktura?slug=priser-fundament" class="service-cta-secondary">Send forespørsel (faktura)</a>
+            <a href="/faktura?slug=priser-fundament" class="service-cta service-cta-faktura faktura-link" data-email-input="lead-email-fundament">Få faktura — 14 dagers betalingsfrist &rarr;</a>
           </div>
 
           <!-- Tier 3: Løpende -->
@@ -736,7 +882,7 @@
               <input type="hidden" name="slug" value="priser-lopende">
               <button type="submit" class="service-cta service-cta-fill lead-form-button">Start abonnement — kort &rarr;</button>
             </form>
-            <a href="/faktura?slug=priser-lopende" class="service-cta-secondary">Send forespørsel (faktura)</a>
+            <a href="/faktura?slug=priser-lopende" class="service-cta service-cta-faktura faktura-link" data-email-input="lead-email-lopende">Få faktura — månedlig etterskuddsvis &rarr;</a>
           </div>
         </div>
       </div>
@@ -749,6 +895,7 @@
           <thead>
             <tr>
               <th>Inkludert</th>
+              <th>Lite</th>
               <th>Analyse</th>
               <th>Fundament</th>
               <th>Løpende</th>
@@ -756,19 +903,29 @@
           </thead>
           <tbody>
             <tr>
+              <td>FAQPage JSON-LD for én side</td>
+              <td class="check">&check;</td>
+              <td class="miss">—</td>
+              <td class="check">&check;</td>
+              <td class="check">&check;</td>
+            </tr>
+            <tr>
               <td>Skriftlig AEO-rapport med score</td>
+              <td class="miss">—</td>
               <td class="check">&check;</td>
               <td class="check">&check;</td>
               <td class="check">&check;</td>
             </tr>
             <tr>
               <td>Test i ChatGPT, Perplexity, Google AI</td>
+              <td class="miss">—</td>
               <td class="check">&check;</td>
               <td class="check">&check;</td>
               <td class="check">&check;</td>
             </tr>
             <tr>
-              <td>Schema.org-markup implementert</td>
+              <td>Schema.org-markup implementert (full)</td>
+              <td class="miss">—</td>
               <td class="miss">—</td>
               <td class="check">&check;</td>
               <td class="check">&check;</td>
@@ -776,17 +933,20 @@
             <tr>
               <td>Google Business Profile-optimalisering</td>
               <td class="miss">—</td>
+              <td class="miss">—</td>
               <td class="check">&check;</td>
               <td class="check">&check;</td>
             </tr>
             <tr>
               <td>NAP-retting på aggregatorer</td>
               <td class="miss">—</td>
+              <td class="miss">—</td>
               <td class="check">&check;</td>
               <td class="check">&check;</td>
             </tr>
             <tr>
               <td>Spesialistside(r) skrevet</td>
+              <td class="miss">—</td>
               <td class="miss">—</td>
               <td class="check">&check;</td>
               <td class="check">&check;</td>
@@ -795,16 +955,19 @@
               <td>Månedlig audit + rapport</td>
               <td class="miss">—</td>
               <td class="miss">—</td>
+              <td class="miss">—</td>
               <td class="check">&check;</td>
             </tr>
             <tr>
               <td>1–2 nye artikler/mnd</td>
               <td class="miss">—</td>
               <td class="miss">—</td>
+              <td class="miss">—</td>
               <td class="check">&check;</td>
             </tr>
             <tr>
               <td>Konkurranseovervåking</td>
+              <td class="miss">—</td>
               <td class="miss">—</td>
               <td class="miss">—</td>
               <td class="check">&check;</td>
@@ -817,6 +980,10 @@
     <section class="faq">
       <div class="container">
         <h2>Vanlige spørsmål</h2>
+        <div class="faq-item">
+          <div class="faq-q">Hva er Lite-pakken?</div>
+          <div class="faq-a">Lite (990 kr) er den minste pakken vi tilbyr. Du velger én side på nettstedet ditt; vi skriver 3–5 spørsmål-svar-par grunnet i innholdet på den siden, og leverer en ferdig FAQPage JSON-LD-blob klar til innliming i &lt;head&gt; eller via tag-manager. Levering på e-post innen 1 virkedag, engangsbetaling, ingen oppfølging. Bra inngangspunkt hvis du vil teste AEO-effekten på én kritisk side før du bestiller Analyse eller Fundament.</div>
+        </div>
         <div class="faq-item">
           <div class="faq-q">Hva er forskjellen på Analyse og Fundament?</div>
           <div class="faq-a">Analyse (4 900 kr) er bare rapporten: vi måler AI-synligheten, dokumenterer hva som mangler, og leverer en skriftlig handlingsplan. Fundament (14 900 kr) er rapport pluss implementering: vi gjør de tekniske endringene selv — schema.org-markup, Google Business Profile-optimalisering, NAP-retting på katalogene, spesialistside(r) med riktig innhold.</div>
@@ -891,14 +1058,31 @@
             var tier = "";
             if (slug.indexOf("fundament") !== -1) tier = "Fundament";
             else if (slug.indexOf("lopende") !== -1) tier = "Løpende";
+            else if (slug.indexOf("lite") !== -1) tier = "Lite";
             else if (slug.indexOf("handlingsplan") !== -1 || slug.indexOf("analyse") !== -1) tier = "Analyse";
+            // outreach-<hash>: cold-outreach handlingsplan checkout (sells
+            // priser-analyse exclusively, see checkout-handler.ts). Banner
+            // header now shows "Du var nesten i mål med Analyse 👋" instead
+            // of generic copy when an outreach prospect bails at Stripe.
+            else if (slug.indexOf("outreach") !== -1) tier = "Analyse";
             if (tier) {
               var title = document.getElementById("recovery-banner-title");
               if (title) title.textContent = "Du var nesten i mål med " + tier + " 👋";
             }
             var fakturaLink = document.getElementById("recovery-faktura-link");
             if (fakturaLink && slug) {
-              fakturaLink.href = "/faktura?slug=" + encodeURIComponent(slug);
+              /* Forward ?email= from cancel_url (checkout-handler buildCancelUrl)
+                 into /faktura so epost field + Brreg autocomplete pre-fill on
+                 the recovery form. Closes the friction loop for buyers who
+                 typed email at /priser, bailed at Stripe, and would otherwise
+                 retype on /faktura. Validated email-shape + length before
+                 forwarding so a malformed ?email= can't poison the link. */
+              var fakturaQs = "slug=" + encodeURIComponent(slug);
+              var emailFwd = params.get("email") || "";
+              if (emailFwd && emailFwd.length <= 254 && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailFwd)) {
+                fakturaQs += "&email=" + encodeURIComponent(emailFwd);
+              }
+              fakturaLink.href = "/faktura?" + fakturaQs;
             }
             banner.classList.add("show");
           }
@@ -906,6 +1090,52 @@
       } catch (e) {
         /* Attribution is best-effort — never block the form. */
       }
+
+      /* Faktura-CTA: (1) forward typed email into /faktura?email=<…> so the
+         epost field pre-fills (one less field on the longer faktura form),
+         (2) beacon /api/lead-capture with intent=faktura BEFORE navigation so
+         Synlig is notified at click-time — symmetry with the kort path, which
+         beacons at form-submit (handleLeadCapture in checkout-handler.ts). If
+         the prospect abandons the /faktura form, the lead is still visible
+         (Faktura-intent inbox notification + faktura-intent KV marker).
+         Best-effort throughout: bad email or missing input leaves the link
+         unchanged; beacon failure does not block navigation. */
+      try {
+        document.querySelectorAll(".faktura-link[data-email-input]").forEach(function(link) {
+          link.addEventListener("click", function() {
+            try {
+              var inputId = link.getAttribute("data-email-input");
+              if (!inputId) return;
+              var input = document.getElementById(inputId);
+              if (!input || !input.value) return;
+              var email = String(input.value).trim();
+              if (!email || email.length > 254) return;
+              if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return;
+              var href = link.getAttribute("href") || "";
+              var sep = href.indexOf("?") === -1 ? "?" : "&";
+              if (!/[?&]email=/.test(href)) {
+                link.setAttribute("href", href + sep + "email=" + encodeURIComponent(email));
+              }
+              // Beacon faktura intent. sendBeacon is fire-and-forget; navigation
+              // proceeds in parallel. Slug parsed from href (e.g. priser-analyse).
+              try {
+                var slugMatch = href.match(/[?&]slug=([^&]+)/);
+                var slug = slugMatch ? decodeURIComponent(slugMatch[1]) : "";
+                if (!slug) return;
+                var fd = new FormData();
+                fd.append("email", email);
+                fd.append("slug", slug);
+                fd.append("intent", "faktura");
+                if (typeof navigator.sendBeacon === "function") {
+                  navigator.sendBeacon("/api/lead-capture", fd);
+                } else if (typeof fetch === "function") {
+                  fetch("/api/lead-capture", { method: "POST", body: fd, keepalive: true }).catch(function() {});
+                }
+              } catch (beaconErr) { /* swallow — best-effort beacon */ }
+            } catch (inner) { /* swallow — fall through to plain link */ }
+          });
+        });
+      } catch (e) { /* best-effort */ }
     })();
   </script>
 </body>
