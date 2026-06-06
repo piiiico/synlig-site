@@ -36,6 +36,22 @@ function mailtoFor(slug: string): string {
   return `mailto:hei@synligdigital.no?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
+// Lite-flavored mailto for awareness/consideration footers where Lite is the
+// primary CTA. The pre-2026-06-06 footer regressed Lite-curious readers into a
+// Handlingsplan-shaped email — breaking tier continuity from button click to
+// reply. This restores intent-shaped email path for the impulse-buy floor.
+function mailtoForLite(slug: string): string {
+  const subject = `Synlig Lite — ${slug}`;
+  const body =
+    `Hei,\n\nJeg leste blogginnlegget «${slug}» på synligdigital.no og er interessert i Synlig Lite (990 NOK FAQPage for én side, levert på 1 virkedag).\n\nKan dere svare skriftlig på e-post med konkrete neste steg?\n\nVennlig hilsen,\n`;
+  return `mailto:hei@synligdigital.no?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+// Canonical Lite product page — gives cautious readers a no-email-required
+// discovery path. Closes the asymmetric internal-link state for 32 blog
+// post footers (parallel to the 2026-06-06 12:40 /priser → product-page link).
+const LITE_PRODUCT_PAGE = "/blogg/aeo-lite-faqpage-990-kr";
+
 function auditForm(slug: string, suffix: string): string {
   return `<form class="audit-cta__form" action="https://synligdigital.no/audit" method="get" target="_self">
     <input type="hidden" name="src" class="audit-cta__src-field" value="blog-${slug}${suffix}">
@@ -72,7 +88,8 @@ function pricingBlock(slug: string): string {
         <button type="submit" name="tier" value="lite" class="audit-cta__btn">Synlig Lite — 990 NOK <span class="audit-cta__btn-detail">(FAQPage, 1 virkedag)</span> &rarr;</button>
         <button type="submit" name="tier" value="handlingsplan" class="audit-cta__btn audit-cta__btn--secondary">Full handlingsplan — 4 900 NOK <span class="audit-cta__btn-detail">(5 virkedager)</span> &rarr;</button>
       </form>
-      <a class="audit-cta__pricing-mail" href="${mailtoFor(slug)}">Eller send oss en e-post</a>
+      <a class="audit-cta__pricing-learn" href="${LITE_PRODUCT_PAGE}">Usikker på Lite? Les hva 990 kr kjøper deg &rarr;</a>
+      <a class="audit-cta__pricing-mail" href="${mailtoForLite(slug)}">Eller spør om Lite på e-post</a>
     </div>`;
 }
 
@@ -92,7 +109,8 @@ function pricingPrimary(slug: string): string {
     <button type="submit" name="tier" value="handlingsplan" class="audit-cta__btn">${PRICING_BTN}</button>
     <button type="submit" name="tier" value="lite" class="audit-cta__btn audit-cta__btn--secondary">Test først: Synlig Lite — 990 NOK <span class="audit-cta__btn-detail">(FAQPage, 1 virkedag)</span> &rarr;</button>
   </form>
-  <p class="audit-cta__trust">Sikker betaling via Stripe. Levering innen 5 virkedager (Lite: 1 virkedag). <a href="${mailtoFor(slug)}" class="audit-cta__mailto-fallback">Eller send oss en e-post: hei@synligdigital.no</a></p>`;
+  <p class="audit-cta__trust">Sikker betaling via Stripe. Levering innen 5 virkedager (Lite: 1 virkedag). <a href="${mailtoFor(slug)}" class="audit-cta__mailto-fallback">Eller send oss en e-post: hei@synligdigital.no</a></p>
+  <p class="audit-cta__trust audit-cta__trust--lite-learn"><a href="${LITE_PRODUCT_PAGE}" class="audit-cta__mailto-fallback">Vil du teste først? Les om Synlig Lite (990 NOK, 1 virkedag) &rarr;</a></p>`;
 }
 
 function auditPrimary(slug: string, suffix: string): string {
@@ -123,6 +141,14 @@ const MAILTO_TRACKING_SCRIPT = `<script>
       var raw=cta?cta.getAttribute('data-slug'):'unknown';
       var slug=raw?raw.replace(/-end$/,''):'unknown';
       navigator.sendBeacon('/api/track-click?src=blog-'+encodeURIComponent(slug)+'&type=mailto');
+    });
+  });
+  document.querySelectorAll('a.audit-cta__pricing-learn').forEach(function(link){
+    link.addEventListener('click',function(){
+      var cta=link.closest('.audit-cta');
+      var raw=cta?cta.getAttribute('data-slug'):'unknown';
+      var slug=raw?raw.replace(/-end$/,''):'unknown';
+      navigator.sendBeacon('/api/track-click?src=blog-'+encodeURIComponent(slug)+'&type=lite-learn');
     });
   });
 })();
@@ -244,6 +270,21 @@ const SHARED_STYLE = `<style>
   text-decoration: none;
 }
 .audit-cta__pricing-mail:hover { color: var(--text, #e8e8ed); text-decoration: underline; }
+.audit-cta__pricing-learn {
+  display: block;
+  color: var(--accent, #6ee7b7);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-top: 0.55rem;
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+  width: fit-content;
+}
+.audit-cta__pricing-learn:hover {
+  border-bottom-color: var(--accent, #6ee7b7);
+  text-decoration: none;
+}
+.audit-cta__trust--lite-learn { margin-top: 0.45rem; }
 .audit-cta__mailto-fallback {
   color: var(--text-dim, #9f9faa);
   text-decoration: underline;
