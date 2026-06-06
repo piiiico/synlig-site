@@ -144,6 +144,12 @@ const VERTICAL_LANDINGS: Array<{ slug: string; file: string; sitemapPriority: nu
   { slug: 'aeo-for-eiendomsmeglere',   file: 'tjenester/aeo-for-eiendomsmeglere.html',   sitemapPriority: 0.9, deprecated: true },
   { slug: 'aeo-for-regnskap',          file: 'tjenester/aeo-for-regnskap.html',          sitemapPriority: 0.9, deprecated: true },
   { slug: 'aeo-for-kiropraktor',       file: 'tjenester/aeo-for-kiropraktor.html',       sitemapPriority: 0.9, deprecated: true },
+  // Added 2026-06-06: psykolog vertical to back active outreach pipeline
+  // (Stavanger Psykologhus E1 2026-06-02, Dialog Psykologsenter E1 2026-06-02,
+  // E2s scheduled 2026-06-09). deprecated: true follows the verticals-are-
+  // poor-organic-converters finding (0/309 Feb–Apr 2026) — page is routed for
+  // inbound outreach replies but NOT sitemap-promoted.
+  { slug: 'aeo-for-psykolog',          file: 'tjenester/aeo-for-psykolog.html',          sitemapPriority: 0.9, deprecated: true },
 ];
 
 // Derive worker constant name from slug: aeo-for-advokater -> TJENESTER_AEO_FOR_ADVOKATER_HTML
