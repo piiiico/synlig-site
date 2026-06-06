@@ -220,6 +220,7 @@ const files = {
   BLOGG_SOK_FRAGMENTERES_2026_HTML: await applyBlogCta("/workspace/synlig-site/blogg/sok-fragmenteres-2026.html"),
   BLOGG_EY_FALSKE_AI_KILDER_HTML: await applyBlogCta("/workspace/synlig-site/blogg/ey-falske-ai-kilder.html"),
   BLOGG_LLM_SMELLS_AEO_HTML: await applyBlogCta("/workspace/synlig-site/blogg/llm-smells-aeo-synlighet.html"),
+  BLOGG_AEO_LITE_FAQPAGE_HTML: await Bun.file("/workspace/synlig-site/blogg/aeo-lite-faqpage-990-kr.html").text(),
   LEADERBOARD_HTML: await Bun.file("/workspace/synlig-site/leaderboard.html").text(),
   LEADERBOARD_JSON: await Bun.file("/workspace/synlig-site/leaderboard.json").text(),
   CONTEXT_MD: await Bun.file("/workspace/synlig-site/context.md").text(),
@@ -304,6 +305,7 @@ const blogFileMap: Record<string, string> = {
   "sok-fragmenteres-2026.html": files.BLOGG_SOK_FRAGMENTERES_2026_HTML,
   "ey-falske-ai-kilder.html": files.BLOGG_EY_FALSKE_AI_KILDER_HTML,
   "llm-smells-aeo-synlighet.html": files.BLOGG_LLM_SMELLS_AEO_HTML,
+  "aeo-lite-faqpage-990-kr.html": files.BLOGG_AEO_LITE_FAQPAGE_HTML,
 };
 const allBlogFiles = readdirSync(bloggDir).filter(f => f.endsWith(".html") && f !== "index.html");
 for (const fname of allBlogFiles) {
@@ -1081,6 +1083,8 @@ const BLOGG_EY_FALSKE_AI_KILDER_HTML = \`${escape(files.BLOGG_EY_FALSKE_AI_KILDE
 
 const BLOGG_LLM_SMELLS_AEO_HTML = \`${escape(files.BLOGG_LLM_SMELLS_AEO_HTML)}\`;
 
+const BLOGG_AEO_LITE_FAQPAGE_HTML = \`${escape(files.BLOGG_AEO_LITE_FAQPAGE_HTML)}\`;
+
 const LEADERBOARD_HTML = \`${escape(files.LEADERBOARD_HTML)}\`;
 
 const LEADERBOARD_JSON = \`${escape(files.LEADERBOARD_JSON)}\`;
@@ -1242,6 +1246,8 @@ ${verticalRoutes}
   "/blogg/ey-falske-ai-kilder.html": { body: BLOGG_EY_FALSKE_AI_KILDER_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/llm-smells-aeo-synlighet": { body: BLOGG_LLM_SMELLS_AEO_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/llm-smells-aeo-synlighet.html": { body: BLOGG_LLM_SMELLS_AEO_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/aeo-lite-faqpage-990-kr": { body: BLOGG_AEO_LITE_FAQPAGE_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/aeo-lite-faqpage-990-kr.html": { body: BLOGG_AEO_LITE_FAQPAGE_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard/": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard.html": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },

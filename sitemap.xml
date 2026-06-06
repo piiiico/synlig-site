@@ -7,6 +7,36 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://synligdigital.no/en/</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/priser</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/faktura</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/leaderboard</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/audit</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://synligdigital.no/guide</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>monthly</changefreq>
@@ -23,6 +53,12 @@
     <lastmod>2026-03-09</lastmod>
     <changefreq>never</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/en/case/nordic-lithium</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://synligdigital.no/case/pierstop</loc>
@@ -79,9 +115,177 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://synligdigital.no/blogg/slik-blir-du-synlig-i-chatgpt</loc>
+    <lastmod>2026-03-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/stavanger-agent-beredskap-april-2026</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/er-nettsida-di-klar-for-ai-agentar</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/hva-er-aeo-guide</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/aeo-vs-seo</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://synligdigital.no/rapport/state-of-aeo-2026</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>quarterly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/tjenester/aeo-for-saas-bedrifter</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/tjenester/digital-markedsforing-stavanger</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/digital-markedsforing-stavanger</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/chatgpt-annonser-og-aeo-april-2026</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/norges-aeo-leaderboard-2026-04</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/eu-ai-act-norske-bedrifter</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/aeo-budsjett-45x-okonomi</loc>
+    <lastmod>2026-05-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/aeo-sjekkliste-2026</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/ga4-ai-assistant-2026</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/chatgpt-konverterer-9x</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/google-spam-policy-aeo-mai-2026</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/google-sok-redesign-mai-2026</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/90-prosent-usynlige-i-ai-sok</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/93-prosent-ai-mode-null-klikk</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/robinhood-ai-agenter-norske-merkevarer</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/llm-smells-aeo-synlighet</loc>
+    <lastmod>2026-06-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/aeo-lite-faqpage-990-kr</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/automatisert-aeo-vs-radgiving</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/stavanger-klinikk-aeo-analyse</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/ai-produksjon-reliability-gap</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/sok-fragmenteres-2026</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/vibesec-ai-generert-kode-sikkerhet</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://synligdigital.no/blogg/ey-falske-ai-kilder</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
