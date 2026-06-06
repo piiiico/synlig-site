@@ -15,7 +15,7 @@ export type Position = "mid" | "bottom";
 
 const FREE_AUDIT_HEADLINE = "Hvor synlig er din bedrift i AI-søk?";
 const FREE_AUDIT_SUB =
-  "Få gratis AEO-score på 30 sekunder. Sjekk hva ChatGPT, Perplexity og Google AI faktisk vet om bedriften din.";
+  "Få gratis AEO-score på 2–5 sekunder. Sjekk hva ChatGPT, Perplexity og Google AI faktisk vet om bedriften din.";
 const FREE_AUDIT_BTN = "Kjør gratis sjekk &rarr;";
 const FREE_AUDIT_TRUST = "Ingen registrering nødvendig. Gratis rapport.";
 
@@ -31,8 +31,8 @@ function checkoutHref(slug: string): string {
 function mailtoFor(slug: string): string {
   const subject = `Handlingsplan AEO — ${slug}`;
   const body =
-    `Hei,\n\nJeg leste blogginnlegget «${slug}» på synligdigital.no og er interessert i å bestille en full handlingsplan (4 900 NOK).\n\nKan du ringe meg, eller foreslå tidspunkt for en kort prat?\n\nVennlig hilsen,\n`;
-  // mailto requires URL-encoded subject + body
+    `Hei,\n\nJeg leste blogginnlegget «${slug}» på synligdigital.no og er interessert i en full handlingsplan (4 900 NOK).\n\nKan dere svare skriftlig på e-post med konkrete neste steg og hva som er inkludert?\n\nVennlig hilsen,\n`;
+  // mailto requires URL-encoded subject + body. Async by design — non-negotiable #1.
   return `mailto:hei@synligdigital.no?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
@@ -53,29 +53,46 @@ function auditForm(slug: string, suffix: string): string {
   </form>`;
 }
 
+// Dual-tier secondary block (awareness + consideration stages).
+//
+// Reader is mid-funnel — still learning. Pricing block is a "if you're ready,
+// here's what's available" callout. Lite (990 NOK FAQPage-one-side) is the
+// Enter-key default — easier YES for someone who just finished an explainer.
+// Handlingsplan (4 900 NOK) is the considered-purchase secondary.
+//
+// Tier carrier: button.name="tier" (no hidden tier input — would conflict).
+// Slug: shared "blog-{slug}" preserves Stripe-attribution continuity; tier
+// differentiation lives in metadata.source ("synlig-lite"|"synlig-handlingsplan").
 function pricingBlock(slug: string): string {
   return `<div class="audit-cta__pricing-link">
-      <span class="audit-cta__pricing-label">Vil du ha en plan?</span>
-      <form method="POST" action="/api/lead-capture" class="lead-form">
+      <span class="audit-cta__pricing-label">Vil du ha en plan? Velg nivå:</span>
+      <form method="POST" action="/api/lead-capture" class="lead-form lead-form--dual">
         <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email">
-        <input type="hidden" name="tier" value="handlingsplan">
         <input type="hidden" name="slug" value="blog-${slug}">
-        <button type="submit" class="audit-cta__btn">Full handlingsplan, 4 900 NOK &rarr;</button>
+        <button type="submit" name="tier" value="lite" class="audit-cta__btn">Synlig Lite — 990 NOK <span class="audit-cta__btn-detail">(FAQPage, 1 virkedag)</span> &rarr;</button>
+        <button type="submit" name="tier" value="handlingsplan" class="audit-cta__btn audit-cta__btn--secondary">Full handlingsplan — 4 900 NOK <span class="audit-cta__btn-detail">(5 virkedager)</span> &rarr;</button>
       </form>
       <a class="audit-cta__pricing-mail" href="${mailtoFor(slug)}">Eller send oss en e-post</a>
     </div>`;
 }
 
+// Dual-tier primary block (decision stage).
+//
+// Reader is buyer-shape — already evaluating spend. Handlingsplan (4 900 NOK)
+// is the Enter-key default (matches reader intent for a "what does AEO cost?"
+// decision post). Lite (990 NOK) is the "test first" secondary.
+//
+// Tier carrier: button.name="tier" (same pattern as pricingBlock + case-pages).
 function pricingPrimary(slug: string): string {
   return `<h3 class="audit-cta__headline">${PRICING_HEADLINE}</h3>
   <p class="audit-cta__sub">${PRICING_SUB}</p>
-  <form method="POST" action="/api/lead-capture" class="lead-form">
+  <form method="POST" action="/api/lead-capture" class="lead-form lead-form--dual">
     <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email">
-    <input type="hidden" name="tier" value="handlingsplan">
     <input type="hidden" name="slug" value="blog-${slug}">
-    <button type="submit" class="audit-cta__btn">${PRICING_BTN}</button>
+    <button type="submit" name="tier" value="handlingsplan" class="audit-cta__btn">${PRICING_BTN}</button>
+    <button type="submit" name="tier" value="lite" class="audit-cta__btn audit-cta__btn--secondary">Test først: Synlig Lite — 990 NOK <span class="audit-cta__btn-detail">(FAQPage, 1 virkedag)</span> &rarr;</button>
   </form>
-  <p class="audit-cta__trust">Sikker betaling via Stripe. Levering innen 5 virkedager. <a href="${mailtoFor(slug)}" class="audit-cta__mailto-fallback">Eller send oss en e-post: hei@synligdigital.no</a></p>`;
+  <p class="audit-cta__trust">Sikker betaling via Stripe. Levering innen 5 virkedager (Lite: 1 virkedag). <a href="${mailtoFor(slug)}" class="audit-cta__mailto-fallback">Eller send oss en e-post: hei@synligdigital.no</a></p>`;
 }
 
 function auditPrimary(slug: string, suffix: string): string {
@@ -88,10 +105,28 @@ function auditPrimary(slug: string, suffix: string): string {
 function secondaryAudit(slug: string, suffix: string): string {
   // Compact secondary form (no headline, smaller framing)
   return `<div class="audit-cta__secondary">
-    <p class="audit-cta__secondary-label">Eller: kjør først en gratis 30-sek sjekk.</p>
+    <p class="audit-cta__secondary-label">Eller: kjør først en gratis 5-sek sjekk.</p>
     ${auditForm(slug, suffix)}
   </div>`;
 }
+
+// Tracking script: fires navigator.sendBeacon to /api/track-click when a visitor
+// clicks a mailto fallback CTA. Emitted once per page (with mid CTA only).
+// /api/track-click stores the click in KV under mailto-click:{src}:{ts}.
+// This gives us an intent signal for blog-originated mailto interest without
+// relying on email-client instrumentation (which bypasses the server entirely).
+const MAILTO_TRACKING_SCRIPT = `<script>
+(function(){
+  document.querySelectorAll('a.audit-cta__pricing-mail,a.audit-cta__mailto-fallback').forEach(function(link){
+    link.addEventListener('click',function(){
+      var cta=link.closest('.audit-cta');
+      var raw=cta?cta.getAttribute('data-slug'):'unknown';
+      var slug=raw?raw.replace(/-end$/,''):'unknown';
+      navigator.sendBeacon('/api/track-click?src=blog-'+encodeURIComponent(slug)+'&type=mailto');
+    });
+  });
+})();
+</script>`;
 
 const SHARED_STYLE = `<style>
 .audit-cta {
@@ -146,6 +181,27 @@ const SHARED_STYLE = `<style>
 }
 .audit-cta__btn:hover { opacity: 0.88; }
 .audit-cta__btn--link { color: var(--bg, #0a0a0b); }
+.audit-cta__btn--secondary {
+  background: transparent;
+  color: var(--accent, #6ee7b7);
+  border: 1px solid var(--accent, #6ee7b7);
+}
+.audit-cta__btn--secondary:hover {
+  background: rgba(110, 231, 183, 0.08);
+  opacity: 1;
+}
+.audit-cta__btn-detail {
+  font-weight: 400;
+  font-size: 0.82rem;
+  opacity: 0.85;
+  margin-left: 0.25rem;
+}
+.lead-form--dual {
+  gap: 0.45rem;
+}
+.lead-form--dual .audit-cta__btn {
+  text-align: center;
+}
 .audit-cta__primary-row { margin: 0.5rem 0 0.6rem; }
 .audit-cta__trust {
   color: var(--text-muted, #9f9faa);
@@ -247,8 +303,8 @@ export function renderAuditCta(slug: string, position: Position, stage: Stage): 
   ${inner}
 </div>`;
 
-  // Style only emitted with mid (shared across both blocks per post).
-  return position === "mid" ? `${block}\n${SHARED_STYLE}` : block;
+  // Style + tracking script only emitted with mid (shared across both blocks per post).
+  return position === "mid" ? `${block}\n${SHARED_STYLE}\n${MAILTO_TRACKING_SCRIPT}` : block;
 }
 
 // Validation helper for build.ts: every blog post must use both markers exactly once.
