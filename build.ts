@@ -821,6 +821,11 @@ const AI_DISCOVERY_SURFACES = [
   "/workspace/synlig-site/priser.md",
   "/workspace/synlig-site/context.md",
   "/workspace/synlig-site/agent-card.json",
+  // Agent-skills catalogue — AI assistants fetch these when surfacing services
+  // for procurement-intent queries. Added 2026-06-06 after Lite-tier surface
+  // audit found these files missing Lite despite 10+ HTML surfaces being patched.
+  "/workspace/synlig-site/.well-known/agent-skills/aeo-implementation-SKILL.md",
+  "/workspace/synlig-site/.well-known/agent-skills/index.json",
 ];
 // Each tier needle is a set of alternates — the build passes if ANY alternate
 // appears. This tolerates language differences (English in agent-card.json,

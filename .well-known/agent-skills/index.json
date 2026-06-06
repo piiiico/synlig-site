@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agentskills.io/schemas/v0.2.0/index.json",
+  "version": "0.2.0",
+  "provider": {
+    "name": "Synlig Digital",
+    "url": "https://synligdigital.no",
+    "email": "hei@synligdigital.no"
+  },
+  "skills": [
+    {
+      "id": "aeo-audit",
+      "name": "Free AEO Audit",
+      "description": "Instant Answer Engine Optimization (AEO) audit for any website. Returns a 0-100 score, grade A-F, and prioritized recommendations for AI visibility in ChatGPT, Claude, Perplexity, and Google AI Overview. Free, no signup required. Tuned for Norwegian B2B SaaS but works for any URL.",
+      "url": "https://synligdigital.no/.well-known/agent-skills/aeo-audit/SKILL.md",
+      "tags": ["aeo", "seo", "ai-visibility", "audit", "schema.org", "saas", "b2b", "norwegian"],
+      "endpoints": [
+        {
+          "type": "https",
+          "url": "https://sjekk.synligdigital.no/",
+          "method": "GET",
+          "description": "GET ?url=<website> returns JSON {score, grade, recommendations[]}"
+        },
+        {
+          "type": "mcp",
+          "url": "https://aeo-mcp-server.amdal-dev.workers.dev/mcp",
+          "transport": "streamable-http",
+          "tool": "analyze_aeo",
+          "description": "MCP tool analyze_aeo({url}) returns the same audit"
+        }
+      ]
+    },
+    {
+      "id": "aeo-implementation",
+      "name": "AEO Implementation for B2B SaaS",
+      "description": "Full AEO implementation for Norwegian B2B SaaS: SoftwareApplication schema.org markup, alternative-to and integration pages, AI-optimized buyer-question content, ongoing monitoring. Pricing (four tiers): Synlig Lite 990 NOK (one-time, FAQPage JSON-LD for one page, 1 business day), AI-synlighetsanalyse 4 900 NOK (one-time), AI-synlighetsfundament 14 900 NOK (one-time, includes implementation), Løpende overvåking 4 900 NOK/month (3-month minimum). Order via web form, EHF invoice within 24h.",
+      "url": "https://synligdigital.no/.well-known/agent-skills/aeo-implementation/SKILL.md",
+      "tags": ["aeo", "schema.org", "saas", "b2b", "norwegian", "implementation"],
+      "endpoints": [
+        {
+          "type": "https",
+          "url": "https://synligdigital.no/faktura?slug=agent-card-saas-implementation",
+          "method": "GET",
+          "description": "Order form, preselects the AI-synlighetsfundament tier"
+        }
+      ]
+    }
+  ]
+}
