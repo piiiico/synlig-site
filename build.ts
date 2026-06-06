@@ -150,6 +150,12 @@ const VERTICAL_LANDINGS: Array<{ slug: string; file: string; sitemapPriority: nu
   // poor-organic-converters finding (0/309 Feb–Apr 2026) — page is routed for
   // inbound outreach replies but NOT sitemap-promoted.
   { slug: 'aeo-for-psykolog',          file: 'tjenester/aeo-for-psykolog.html',          sitemapPriority: 0.9, deprecated: true },
+  // Added 2026-06-06: tanntekniker vertical for imminent E2s
+  // (Din Tanntekniker AS E1 2026-06-02 score 56, E2 scheduled 2026-06-08 08:00;
+  // Nano Tannteknikk E1 2026-06-02 score 42, E2 scheduled 2026-06-09 08:00).
+  // deprecated: true same pattern — page routes for outreach reply destination,
+  // not for organic search promotion.
+  { slug: 'aeo-for-tanntekniker',      file: 'tjenester/aeo-for-tanntekniker.html',      sitemapPriority: 0.9, deprecated: true },
 ];
 
 // Derive worker constant name from slug: aeo-for-advokater -> TJENESTER_AEO_FOR_ADVOKATER_HTML
