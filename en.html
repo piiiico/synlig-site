@@ -126,7 +126,24 @@
   .service-card { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 8px; padding: 16px 18px; }
   .service-card h3 { font-size: 1rem; color: var(--gray-900); margin-bottom: 6px; font-weight: 600; }
   .service-card .price { color: var(--blue-700); font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; }
-  .service-card p { font-size: 0.92rem; margin-bottom: 0; }
+  .service-card p { font-size: 0.92rem; margin-bottom: 12px; }
+  /* Inline lead-capture form per service-card. Mirrors the Norwegian /
+     homepage 4-tier inline-form pattern that was English-side missing
+     until 2026-06-10: an English buyer wanting Foundation (NOK 14,900) or
+     Continuous (NOK 4,900/mo) had to drop to mailto:hei@synligdigital.no
+     while a Norwegian buyer could one-click Stripe. POST → /api/lead-capture
+     → leadLangFromReferrer detects /en/ → checkout-handler renders Stripe
+     in English (locale=en, metadata.lang=en, English success_url to takk
+     page) per checkout-en-i18n.test.ts contract. */
+  .service-card-form { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; }
+  .service-card-form label { font-size: 0.85rem; font-weight: 600; color: var(--gray-900); }
+  .service-card-input { padding: 9px 12px; background: var(--white); border: 1px solid var(--gray-200); border-radius: 6px; color: var(--gray-900); font-size: 0.92rem; font-family: inherit; }
+  .service-card-input:focus { outline: none; border-color: var(--green-600); }
+  .service-card-cta { display: inline-block; background: var(--green-600); color: var(--white); padding: 10px 18px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.93rem; border: none; cursor: pointer; font-family: inherit; text-align: center; transition: background 0.2s; }
+  .service-card-cta:hover { background: var(--green-500); }
+  .service-card-cta-outline { background: transparent; color: var(--green-600); border: 1px solid var(--green-600); }
+  .service-card-cta-outline:hover { background: rgba(34, 197, 94, 0.08); color: var(--green-600); }
+  .service-card-stripe-note { font-size: 0.78rem; color: var(--gray-600); margin: 2px 0 0; }
 
   .case-quote { background: var(--blue-50); border-left: 3px solid var(--blue-700); padding: 14px 18px; border-radius: 0 6px 6px 0; margin: 16px 0; font-size: 0.95rem; }
   .case-quote cite { display: block; margin-top: 8px; font-size: 0.85rem; color: var(--gray-600); font-style: normal; }
@@ -253,22 +270,51 @@
       <h3>AEO Lite</h3>
       <div class="price">NOK 990 (≈ USD 92)</div>
       <p>FAQPage JSON-LD for one page you choose (3–5 Q&amp;A pairs). Ready to paste into <code>&lt;head&gt;</code>. Delivered by email within one business day. One-off, no follow-up.</p>
+      <form method="POST" action="/api/lead-capture" class="service-card-form" aria-label="Order AEO Lite">
+        <label for="lead-en-home-lite">Enter your email to start →</label>
+        <input type="email" id="lead-en-home-lite" name="email" class="service-card-input" placeholder="you@company.com" required autocomplete="email" maxlength="254">
+        <input type="hidden" name="tier" value="lite">
+        <input type="hidden" name="slug" value="en-home-lite">
+        <button type="submit" class="service-card-cta">Order with card — NOK 990 →</button>
+      </form>
     </div>
     <div class="service-card">
       <h3>AEO Analysis</h3>
       <div class="price">NOK 4,900 (≈ USD 460)</div>
       <p>Written report with score, gaps, and a prioritized fix list. One-off.</p>
+      <form method="POST" action="/api/lead-capture" class="service-card-form" aria-label="Order AEO Analysis">
+        <label for="lead-en-home-analysis">Enter your email to start →</label>
+        <input type="email" id="lead-en-home-analysis" name="email" class="service-card-input" placeholder="you@company.com" required autocomplete="email" maxlength="254">
+        <input type="hidden" name="tier" value="handlingsplan">
+        <input type="hidden" name="slug" value="en-home-analysis">
+        <button type="submit" class="service-card-cta service-card-cta-outline">Order with card — NOK 4,900 →</button>
+      </form>
     </div>
     <div class="service-card">
       <h3>AEO Foundation</h3>
       <div class="price">NOK 14,900 (≈ USD 1,400)</div>
       <p>Full implementation. Schema, structure, profile, agent metadata, content adjustments. Includes the analysis.</p>
+      <form method="POST" action="/api/lead-capture" class="service-card-form" aria-label="Order AEO Foundation">
+        <label for="lead-en-home-foundation">Enter your email to start →</label>
+        <input type="email" id="lead-en-home-foundation" name="email" class="service-card-input" placeholder="you@company.com" required autocomplete="email" maxlength="254">
+        <input type="hidden" name="tier" value="fundament">
+        <input type="hidden" name="slug" value="en-home-foundation">
+        <button type="submit" class="service-card-cta service-card-cta-outline">Order with card — NOK 14,900 →</button>
+      </form>
     </div>
     <div class="service-card">
       <h3>Continuous AEO</h3>
       <div class="price">NOK 4,900 / month (≈ USD 460/month)</div>
       <p>Monthly monitoring, content updates, quarterly review. Cancel any time.</p>
+      <form method="POST" action="/api/lead-capture" class="service-card-form" aria-label="Start Continuous AEO subscription">
+        <label for="lead-en-home-continuous">Enter your email to start →</label>
+        <input type="email" id="lead-en-home-continuous" name="email" class="service-card-input" placeholder="you@company.com" required autocomplete="email" maxlength="254">
+        <input type="hidden" name="tier" value="lopende">
+        <input type="hidden" name="slug" value="en-home-continuous">
+        <button type="submit" class="service-card-cta service-card-cta-outline">Start subscription — NOK 4,900 / month →</button>
+      </form>
     </div>
+    <p class="service-card-stripe-note">Stripe secure card payment. Need an invoice instead? Email <a href="mailto:hei@synligdigital.no?subject=Invoice%20request&amp;body=Hi%2C%20I%27d%20like%20an%20invoice%20for%3A%0A%0A%5Btier%5D%0A%0AThanks!">hei@synligdigital.no</a>.</p>
   </div>
 </section>
 
@@ -381,9 +427,19 @@ async function runAudit(ev) {
 
     // Derive top issues directly from JSON fields (no translation of Norwegian strings — fields are language-agnostic).
     const issues = [];
-    if (sch.hasOrganization === false) issues.push(['Schema', 'No Organization schema — AI assistants can’t identify the entity behind the site.']);
+    if (sch.hasMalformedSchemaTypes === true) {
+      const sample = (Array.isArray(sch.malformedTypeSamples) && sch.malformedTypeSamples[0]) || 'https://example.com/Organization';
+      issues.push(['Schema', 'Schema @type values are URL-prefixed (e.g. "' + sample + '") — Schema.org-invalid, so Google Rich Results and AI parsers reject the block even though it is in the HTML.']);
+    } else if (sch.hasOrganization === false) {
+      issues.push(['Schema', 'No Organization schema — AI assistants can’t identify the entity behind the site.']);
+    }
+    if (sch.hasEmptyOrgFields === true) {
+      const off = (Array.isArray(sch.emptyOrgSamples) && sch.emptyOrgSamples[0]) || { type: 'Organization', emptyFields: ['name'] };
+      const flist = Array.isArray(off.emptyFields) ? off.emptyFields.join(', ') : 'name';
+      issues.push(['Schema', off.type + ' schema has empty required fields (' + flist + ') — CMS default block (Squarespace, Wix) conflicts with your real entity data and confuses Knowledge Graph resolution.']);
+    }
     if (sch.hasFaqPage === false) issues.push(['Schema', 'No FAQPage schema — Q&A blocks are the easiest source of direct citations.']);
-    if (sch.hasService === false && sch.hasOrganization === true) issues.push(['Schema', 'No Service schema — what you sell isn’t machine-readable.']);
+    if (sch.hasService === false && sch.hasOrganization === true && sch.hasMalformedSchemaTypes !== true) issues.push(['Schema', 'No Service schema — what you sell isn’t machine-readable.']);
     if (sch.hasBreadcrumb === false) issues.push(['Schema', 'No BreadcrumbList — site hierarchy is invisible to crawlers.']);
     if (met.descriptionLength && met.descriptionLength < 70) issues.push(['Meta', 'Short meta description (' + met.descriptionLength + ' chars).']);
     if (met.descriptionLength === 0 || met.description === '') issues.push(['Meta', 'Missing meta description.']);
