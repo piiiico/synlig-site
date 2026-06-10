@@ -1248,7 +1248,14 @@ const SECURITY_HEADERS = {
   "Referrer-Policy": "strict-origin-when-cross-origin",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
   "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
-  "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:",
+  // connect-src includes poc-backend.amdal-dev.workers.dev so the first-party
+  // visit beacon (POST /api/v1/visit, injected site-wide by build.ts) is
+  // actually able to reach the backend. Without it, the beacon JS runs but
+  // the cross-origin fetch is silently blocked by CSP — exactly the same
+  // "operator can't diagnose what they can't see" failure that the CF Web
+  // Analytics replacement was supposed to end. (Caught 2026-06-10 13:30Z
+  // during dogfood verification after initial deploy.)
+  "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://poc-backend.amdal-dev.workers.dev; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:",
 };
 
 const CACHE_HEADERS = {
