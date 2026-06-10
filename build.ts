@@ -193,6 +193,7 @@ const files = {
   EN_CASE_NORDIC_LITHIUM_HTML: await Bun.file("/workspace/synlig-site/en-case-nordic-lithium.html").text(),
   EN_BLOG_HTML: await Bun.file("/workspace/synlig-site/en-blog.html").text(),
   EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML: await Bun.file("/workspace/synlig-site/en-blog-llm-smell-check-benchmark.html").text(),
+  EN_BLOG_AEO_DIGITAL_ASSETS_HTML: await Bun.file("/workspace/synlig-site/en-blog-aeo-digital-assets.html").text(),
   PIERSTOP_CASE_HTML: await Bun.file("/workspace/synlig-site/pierstop-case.html").text(),
   AGENT_CARD_JSON: await Bun.file("/workspace/synlig-site/agent-card.json").text(),
   BLOGG_INDEX_HTML: await Bun.file("/workspace/synlig-site/blogg/index.html").text(),
@@ -232,6 +233,7 @@ const files = {
   BLOGG_SOK_FRAGMENTERES_2026_HTML: await applyBlogCta("/workspace/synlig-site/blogg/sok-fragmenteres-2026.html"),
   BLOGG_EY_FALSKE_AI_KILDER_HTML: await applyBlogCta("/workspace/synlig-site/blogg/ey-falske-ai-kilder.html"),
   BLOGG_LLM_SMELLS_AEO_HTML: await applyBlogCta("/workspace/synlig-site/blogg/llm-smells-aeo-synlighet.html"),
+  BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML: await Bun.file("/workspace/synlig-site/blogg/google-search-profiles-61-prosent-ctr-fall.html").text(),
   BLOGG_AEO_LITE_FAQPAGE_HTML: await Bun.file("/workspace/synlig-site/blogg/aeo-lite-faqpage-990-kr.html").text(),
   LEADERBOARD_HTML: await Bun.file("/workspace/synlig-site/leaderboard.html").text(),
   LEADERBOARD_JSON: await Bun.file("/workspace/synlig-site/leaderboard.json").text(),
@@ -251,6 +253,86 @@ const files = {
   // with `openssl rand -hex 16`, updating this file + INDEXNOW_KEY below + scripts/indexnow-ping.ts.
   INDEXNOW_KEY_TXT: await Bun.file("/workspace/synlig-site/22424f96edcdb8ea14002edcd65a6b0c.txt").text(),
 };
+
+// ─────────────────────────────────────────────────────────────────────────────
+// First-party visit beacon — site-wide injection.
+//
+// Why this block exists
+// ─────────────────────
+// 2026-05-24 → 2026-06-10: Cloudflare Web Analytics produced zero data
+// account-wide. POST /cdn-cgi/rum returned 404 on the live beacon for both
+// getcommit.dev AND synligdigital.no — 17 days of silent zero. The 09:18Z
+// replacement on poc-backend (POST /api/v1/visit + GET /api/v1/visits/stats
+// + pageviews D1 table) closed the gap for getcommit.dev only; synligdigital.no
+// was named in the incident note but never wired up. Symptom: the outreach
+// machine sends 30+ E2/E3/E4 messages per day but the operator has zero
+// visibility into which prospects land, which UTM campaigns convert, or
+// which pages convince. That blindness compounds — pricing-friction-v1
+// 30-day measurement (task 05b4b20aa57ddd09) is due 2026-06-20 and would
+// have produced "0 visits" for half the traffic the operator cares about.
+//
+// What this does
+// ──────────────
+// Walk every *_HTML entry in `files`, find `</head>`, inject the same
+// fire-and-forget beacon used in commit-landing-v2/src/layouts/Layout.astro.
+// Single injection point covers every static surface (homepage, priser,
+// faktura, blog, case pages, vertical landings, tjenester) — adding a new
+// page requires no per-page wiring.
+//
+// Symmetry contract
+// ─────────────────
+// Beacon shape mirrors getcommit.dev's beacon exactly: same endpoint, same
+// payload, same sendBeacon/fetch fallback, same text/plain content-type
+// (sidesteps headless-chromium CORS preflight glitch 2026-06-10). Keep
+// these in sync — drift here means /api/v1/visits/stats reads two slightly
+// different datasets for one operator.
+// ─────────────────────────────────────────────────────────────────────────────
+const VISIT_BEACON_SCRIPT = `<script>
+(function(){
+  try {
+    var url = new URL(window.location.href);
+    var params = url.searchParams;
+    var payload = {
+      path: url.pathname,
+      referrer: document.referrer || "",
+      utm_source: params.get("utm_source") || undefined,
+      utm_medium: params.get("utm_medium") || undefined,
+      utm_campaign: params.get("utm_campaign") || undefined,
+      utm_content: params.get("utm_content") || undefined,
+      utm_term: params.get("utm_term") || undefined
+    };
+    Object.keys(payload).forEach(function(k){ if (payload[k] === undefined) delete payload[k]; });
+    var endpoint = "https://poc-backend.amdal-dev.workers.dev/api/v1/visit";
+    var body = JSON.stringify(payload);
+    var blob = new Blob([body], { type: "text/plain" });
+    if (navigator.sendBeacon && navigator.sendBeacon(endpoint, blob)) return;
+    fetch(endpoint, { method: "POST", headers: { "Content-Type": "text/plain" }, body: body, keepalive: true, credentials: "omit" }).catch(function(){});
+  } catch (e) {}
+})();
+</script>
+`;
+
+function injectBeacon(record: Record<string, string>, predicate: (k: string) => boolean): { hit: number; skip: number } {
+  let hit = 0, skip = 0;
+  for (const key of Object.keys(record)) {
+    if (!predicate(key)) continue;
+    const src = record[key];
+    // Idempotency guard — protects against build re-runs that don't reload from
+    // disk (none currently exist, but cheap insurance against future regressions).
+    if (src.includes("/api/v1/visit")) { skip++; continue; }
+    // Require </head> — admin/utility pages without it (dashboard, etc.) are
+    // tracked or not based on whether they're real user surfaces.
+    if (!src.includes("</head>")) { skip++; continue; }
+    record[key] = src.replace("</head>", VISIT_BEACON_SCRIPT + "</head>");
+    hit++;
+  }
+  return { hit, skip };
+}
+
+const staticHit = injectBeacon(files as Record<string, string>, (k) => k.endsWith("_HTML"));
+// Vertical landings live in their own map — same _HTML naming convention.
+const verticalHit = injectBeacon(verticalFiles, (k) => k.endsWith("_HTML"));
+console.log(`[build] visit-beacon injected into ${staticHit.hit + verticalHit.hit} HTML surface(s) (static=${staticHit.hit}/skip=${staticHit.skip}, vertical=${verticalHit.hit}/skip=${verticalHit.skip}).`);
 
 // Sitemap assertion: every ACTIVE vertical in VERTICAL_LANDINGS must appear in
 // sitemap.xml. Adding a new vertical without updating sitemap.xml fails the
@@ -317,6 +399,7 @@ const blogFileMap: Record<string, string> = {
   "sok-fragmenteres-2026.html": files.BLOGG_SOK_FRAGMENTERES_2026_HTML,
   "ey-falske-ai-kilder.html": files.BLOGG_EY_FALSKE_AI_KILDER_HTML,
   "llm-smells-aeo-synlighet.html": files.BLOGG_LLM_SMELLS_AEO_HTML,
+  "google-search-profiles-61-prosent-ctr-fall.html": files.BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML,
   "aeo-lite-faqpage-990-kr.html": files.BLOGG_AEO_LITE_FAQPAGE_HTML,
 };
 const allBlogFiles = readdirSync(bloggDir).filter(f => f.endsWith(".html") && f !== "index.html");
@@ -902,7 +985,14 @@ try {
       console.warn(`  ⚠ Skipping empty-hash report file: ${fname} (would expose at /r/)`);
       continue;
     }
-    const html = await Bun.file(join(reportsDir, fname)).text();
+    let html = await Bun.file(join(reportsDir, fname)).text();
+    // Inject visit beacon — reports (/r/{hash}) are the highest-value tracking
+    // surface in the outreach funnel. A lead opening their own audit report is
+    // the strongest engagement signal between "received cold email" and "started
+    // checkout", and previously invisible to the operator.
+    if (html.includes("</head>") && !html.includes("/api/v1/visit")) {
+      html = html.replace("</head>", VISIT_BEACON_SCRIPT + "</head>");
+    }
     reportEntries.push({ hash, html });
     console.log(`  Loaded report: ${hash} (${html.length} bytes)`);
   }
@@ -1039,6 +1129,8 @@ const EN_BLOG_HTML = \`${escape(files.EN_BLOG_HTML)}\`;
 
 const EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML = \`${escape(files.EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML)}\`;
 
+const EN_BLOG_AEO_DIGITAL_ASSETS_HTML = \`${escape(files.EN_BLOG_AEO_DIGITAL_ASSETS_HTML)}\`;
+
 const PIERSTOP_CASE_HTML = \`${escape(files.PIERSTOP_CASE_HTML)}\`;
 
 const AGENT_CARD_JSON = \`${escape(files.AGENT_CARD_JSON)}\`;
@@ -1116,6 +1208,8 @@ const BLOGG_SOK_FRAGMENTERES_2026_HTML = \`${escape(files.BLOGG_SOK_FRAGMENTERES
 const BLOGG_EY_FALSKE_AI_KILDER_HTML = \`${escape(files.BLOGG_EY_FALSKE_AI_KILDER_HTML)}\`;
 
 const BLOGG_LLM_SMELLS_AEO_HTML = \`${escape(files.BLOGG_LLM_SMELLS_AEO_HTML)}\`;
+
+const BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML = \`${escape(files.BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML)}\`;
 
 const BLOGG_AEO_LITE_FAQPAGE_HTML = \`${escape(files.BLOGG_AEO_LITE_FAQPAGE_HTML)}\`;
 
@@ -1200,6 +1294,9 @@ const routes = {
   "/en/blog/llm-smell-check-benchmark": { body: EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML, contentType: "text/html; charset=utf-8" },
   "/en/blog/llm-smell-check-benchmark/": { body: EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML, contentType: "text/html; charset=utf-8" },
   "/en/blog/llm-smell-check-benchmark.html": { body: EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/aeo-for-digital-asset-companies": { body: EN_BLOG_AEO_DIGITAL_ASSETS_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/aeo-for-digital-asset-companies/": { body: EN_BLOG_AEO_DIGITAL_ASSETS_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/aeo-for-digital-asset-companies.html": { body: EN_BLOG_AEO_DIGITAL_ASSETS_HTML, contentType: "text/html; charset=utf-8" },
   "/case/pierstop": { body: PIERSTOP_CASE_HTML, contentType: "text/html; charset=utf-8" },
   "/case/pierstop.html": { body: PIERSTOP_CASE_HTML, contentType: "text/html; charset=utf-8" },
   "/.well-known/agent-card.json": { body: AGENT_CARD_JSON, contentType: "application/json; charset=utf-8" },
@@ -1280,6 +1377,8 @@ ${verticalRoutes}
   "/blogg/ey-falske-ai-kilder.html": { body: BLOGG_EY_FALSKE_AI_KILDER_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/llm-smells-aeo-synlighet": { body: BLOGG_LLM_SMELLS_AEO_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/llm-smells-aeo-synlighet.html": { body: BLOGG_LLM_SMELLS_AEO_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/google-search-profiles-61-prosent-ctr-fall": { body: BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/google-search-profiles-61-prosent-ctr-fall.html": { body: BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/aeo-lite-faqpage-990-kr": { body: BLOGG_AEO_LITE_FAQPAGE_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/aeo-lite-faqpage-990-kr.html": { body: BLOGG_AEO_LITE_FAQPAGE_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
