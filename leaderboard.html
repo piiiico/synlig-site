@@ -102,6 +102,12 @@
   tr:last-child td { border-bottom: none; }
   td.rank { font-weight: 600; color: var(--gray-700); white-space: nowrap; width: 80px; }
   td.company a { color: var(--gray-900); font-weight: 600; }
+  td.company a.row-sjekk {
+    display: inline-block; margin-left: 12px; font-size: 0.78rem;
+    color: var(--blue-700); font-weight: 600; opacity: 0.85;
+    text-decoration: none; white-space: nowrap;
+  }
+  td.company a.row-sjekk:hover { opacity: 1; text-decoration: underline; }
   .cat {
     display: inline-block; margin-left: 8px; font-size: 0.75rem;
     color: var(--gray-600); background: var(--gray-100);
@@ -182,7 +188,7 @@
 
     <div class="cta" style="margin-top: 0; margin-bottom: 32px;">
       <p>Ikke på lista? Sjekk AEO-scoren din på noen sekunder — gratis, ingen registrering.</p>
-      <a href="/audit" class="cta-button">Sjekk scoren min →</a>
+      <a href="/sjekk?ref=leaderboard&amp;utm_source=leaderboard&amp;utm_medium=top-cta&amp;utm_campaign=norske-aeo-2026" class="cta-button">Sjekk scoren min →</a>
     </div>
 
     <div class="table-wrap">
@@ -206,6 +212,7 @@
       <td class="company">
         <a href="https://www.rema.no" rel="nofollow noopener" target="_blank">Rema 1000</a>
         <span class="cat">Retail</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank1-rema-1000">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>69</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -220,6 +227,7 @@
       <td class="company">
         <a href="https://lanullva.no" rel="nofollow noopener" target="_blank">Lanullva</a>
         <span class="cat">Ull</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank2-lanullva">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>67</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -234,6 +242,7 @@
       <td class="company">
         <a href="https://www.aftenbladet.no" rel="nofollow noopener" target="_blank">Stavanger Aftenblad</a>
         <span class="cat">Stavanger</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank3-stavanger-aftenblad">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>66</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -248,6 +257,7 @@
       <td class="company">
         <a href="https://janus.no" rel="nofollow noopener" target="_blank">Janus</a>
         <span class="cat">Ull</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank4-janus">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>65</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -262,6 +272,7 @@
       <td class="company">
         <a href="https://www.if.no" rel="nofollow noopener" target="_blank">If Forsikring</a>
         <span class="cat">Forsikring</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank5-if-forsikring">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>64</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -276,6 +287,7 @@
       <td class="company">
         <a href="https://www.opera.com" rel="nofollow noopener" target="_blank">Opera</a>
         <span class="cat">Tech</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank6-opera">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>62</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -290,6 +302,7 @@
       <td class="company">
         <a href="https://www.nrk.no" rel="nofollow noopener" target="_blank">NRK</a>
         <span class="cat">Media</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank7-nrk">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>60</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -304,6 +317,7 @@
       <td class="company">
         <a href="https://schibsted.com" rel="nofollow noopener" target="_blank">Schibsted</a>
         <span class="cat">Tech</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank8-schibsted">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>60</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -318,6 +332,7 @@
       <td class="company">
         <a href="https://www.akerbp.com" rel="nofollow noopener" target="_blank">Aker BP</a>
         <span class="cat">Stavanger</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank9-aker-bp">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>60</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -332,6 +347,7 @@
       <td class="company">
         <a href="https://www.stavanger.kommune.no" rel="nofollow noopener" target="_blank">Stavanger kommune</a>
         <span class="cat">Stavanger</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank10-stavanger-kommune">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>60</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -346,6 +362,7 @@
       <td class="company">
         <a href="https://smedvig.no" rel="nofollow noopener" target="_blank">Smedvig</a>
         <span class="cat">Stavanger</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank11-smedvig">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>59</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -360,6 +377,7 @@
       <td class="company">
         <a href="https://www.kahoot.com" rel="nofollow noopener" target="_blank">Kahoot</a>
         <span class="cat">Tech</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank12-kahoot">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>59</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -374,6 +392,7 @@
       <td class="company">
         <a href="https://www.thonhotels.no" rel="nofollow noopener" target="_blank">Thon Hotels</a>
         <span class="cat">Reiseliv</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank13-thon-hotels">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>59</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -388,6 +407,7 @@
       <td class="company">
         <a href="https://devold.no" rel="nofollow noopener" target="_blank">Devold</a>
         <span class="cat">Ull</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank14-devold">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>58</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -402,6 +422,7 @@
       <td class="company">
         <a href="https://www.obos.no" rel="nofollow noopener" target="_blank">OBOS</a>
         <span class="cat">Eiendom</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank15-obos">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>58</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -416,6 +437,7 @@
       <td class="company">
         <a href="https://www.kongsberg.com" rel="nofollow noopener" target="_blank">Kongsberg Gruppen</a>
         <span class="cat">Industri</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank16-kongsberg-gruppen">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>58</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -430,6 +452,7 @@
       <td class="company">
         <a href="https://www.equinor.com/no" rel="nofollow noopener" target="_blank">Equinor</a>
         <span class="cat">Energi</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank17-equinor">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>57</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -444,6 +467,7 @@
       <td class="company">
         <a href="https://www.vg.no" rel="nofollow noopener" target="_blank">VG</a>
         <span class="cat">Media</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank18-vg">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>57</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -458,6 +482,7 @@
       <td class="company">
         <a href="https://www.helse-vest.no" rel="nofollow noopener" target="_blank">Helse Vest</a>
         <span class="cat">Helse</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank19-helse-vest">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>57</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -472,6 +497,7 @@
       <td class="company">
         <a href="https://www.visma.no" rel="nofollow noopener" target="_blank">Visma</a>
         <span class="cat">Tech</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank20-visma">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>56</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -486,6 +512,7 @@
       <td class="company">
         <a href="https://www.hydro.com/no-NO" rel="nofollow noopener" target="_blank">Norsk Hydro</a>
         <span class="cat">Industri</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank21-norsk-hydro">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>56</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -500,6 +527,7 @@
       <td class="company">
         <a href="https://www.dagbladet.no" rel="nofollow noopener" target="_blank">Dagbladet</a>
         <span class="cat">Media</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank22-dagbladet">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>56</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -514,6 +542,7 @@
       <td class="company">
         <a href="https://www.nordea.no" rel="nofollow noopener" target="_blank">Nordea</a>
         <span class="cat">Finans</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank23-nordea">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>55</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -528,6 +557,7 @@
       <td class="company">
         <a href="https://www.storebrand.no" rel="nofollow noopener" target="_blank">Storebrand</a>
         <span class="cat">Finans</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank24-storebrand">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>55</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -542,6 +572,7 @@
       <td class="company">
         <a href="https://www.aftenposten.no" rel="nofollow noopener" target="_blank">Aftenposten</a>
         <span class="cat">Media</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank25-aftenposten">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>55</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -556,6 +587,7 @@
       <td class="company">
         <a href="https://avinor.no" rel="nofollow noopener" target="_blank">Avinor</a>
         <span class="cat">Transport</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank26-avinor">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ca8a04"><strong>55</strong></td>
       <td class="grade" style="background:#ca8a04">C</td>
@@ -570,6 +602,7 @@
       <td class="company">
         <a href="https://www.gjensidige.no" rel="nofollow noopener" target="_blank">Gjensidige</a>
         <span class="cat">Finans</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank27-gjensidige">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>54</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -584,6 +617,7 @@
       <td class="company">
         <a href="https://www.telenor.no" rel="nofollow noopener" target="_blank">Telenor</a>
         <span class="cat">Telekom</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank28-telenor">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>53</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -598,6 +632,7 @@
       <td class="company">
         <a href="https://www.meny.no" rel="nofollow noopener" target="_blank">Meny</a>
         <span class="cat">Retail</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank29-meny">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>53</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -612,6 +647,7 @@
       <td class="company">
         <a href="https://www.posten.no" rel="nofollow noopener" target="_blank">Posten Bring</a>
         <span class="cat">Transport</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank30-posten-bring">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>52</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -626,6 +662,7 @@
       <td class="company">
         <a href="https://www.spv.no" rel="nofollow noopener" target="_blank">Sparebanken Vest</a>
         <span class="cat">Finans</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank31-sparebanken-vest">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>52</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -640,6 +677,7 @@
       <td class="company">
         <a href="https://kiwi.no" rel="nofollow noopener" target="_blank">Kiwi</a>
         <span class="cat">Retail</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank32-kiwi">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>51</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -654,6 +692,7 @@
       <td class="company">
         <a href="https://www.strawberryhotels.com" rel="nofollow noopener" target="_blank">Strawberry Hotels</a>
         <span class="cat">Reiseliv</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank33-strawberry-hotels">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>51</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -668,6 +707,7 @@
       <td class="company">
         <a href="https://www.handelsbanken.no" rel="nofollow noopener" target="_blank">Handelsbanken</a>
         <span class="cat">Finans</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank34-handelsbanken">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>50</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -682,6 +722,7 @@
       <td class="company">
         <a href="https://www.tv2.no" rel="nofollow noopener" target="_blank">TV 2</a>
         <span class="cat">Media</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank35-tv-2">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>50</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -696,6 +737,7 @@
       <td class="company">
         <a href="https://www.statkraft.no" rel="nofollow noopener" target="_blank">Statkraft</a>
         <span class="cat">Energi</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank36-statkraft">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>50</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -710,6 +752,7 @@
       <td class="company">
         <a href="https://www.finn.no" rel="nofollow noopener" target="_blank">Finn.no</a>
         <span class="cat">Tech</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank37-finn-no">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>49</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -724,6 +767,7 @@
       <td class="company">
         <a href="https://www.akersolutions.com" rel="nofollow noopener" target="_blank">Aker Solutions</a>
         <span class="cat">Industri</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank38-aker-solutions">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>49</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -738,6 +782,7 @@
       <td class="company">
         <a href="https://www.tryg.no" rel="nofollow noopener" target="_blank">Tryg</a>
         <span class="cat">Forsikring</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank39-tryg">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>48</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -752,6 +797,7 @@
       <td class="company">
         <a href="https://ruter.no" rel="nofollow noopener" target="_blank">Ruter</a>
         <span class="cat">Transport</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank40-ruter">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>48</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -766,6 +812,7 @@
       <td class="company">
         <a href="https://www.lyse.no" rel="nofollow noopener" target="_blank">Lyse</a>
         <span class="cat">Stavanger</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank41-lyse">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>47</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -780,6 +827,7 @@
       <td class="company">
         <a href="https://helse-stavanger.no" rel="nofollow noopener" target="_blank">Helse Stavanger</a>
         <span class="cat">Stavanger</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank42-helse-stavanger">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>47</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -794,6 +842,7 @@
       <td class="company">
         <a href="https://www.hurtigruten.com" rel="nofollow noopener" target="_blank">Hurtigruten</a>
         <span class="cat">Transport</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank43-hurtigruten">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>47</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -808,6 +857,7 @@
       <td class="company">
         <a href="https://www.uio.no" rel="nofollow noopener" target="_blank">UiO</a>
         <span class="cat">Utdanning</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank44-uio">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>46</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -822,6 +872,7 @@
       <td class="company">
         <a href="https://www.eiendomsmegler1.no" rel="nofollow noopener" target="_blank">Eiendomsmegler 1</a>
         <span class="cat">Eiendom</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank45-eiendomsmegler-1">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>46</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -836,6 +887,7 @@
       <td class="company">
         <a href="https://www.orkla.no" rel="nofollow noopener" target="_blank">Orkla</a>
         <span class="cat">Industri</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank46-orkla">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>46</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -850,6 +902,7 @@
       <td class="company">
         <a href="https://www.ntnu.no" rel="nofollow noopener" target="_blank">NTNU</a>
         <span class="cat">Utdanning</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank47-ntnu">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>44</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -864,6 +917,7 @@
       <td class="company">
         <a href="https://ulvang.no" rel="nofollow noopener" target="_blank">Ulvang</a>
         <span class="cat">Ull</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank48-ulvang">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>43</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -878,6 +932,7 @@
       <td class="company">
         <a href="https://coop.no" rel="nofollow noopener" target="_blank">Coop</a>
         <span class="cat">Retail</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank49-coop">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>42</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -892,6 +947,7 @@
       <td class="company">
         <a href="https://aclima.com" rel="nofollow noopener" target="_blank">Aclima</a>
         <span class="cat">Ull</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank50-aclima">Sjekk din →</a>
       </td>
       <td class="score" style="color:#ea580c"><strong>42</strong></td>
       <td class="grade" style="background:#ea580c">D</td>
@@ -906,6 +962,7 @@
       <td class="company">
         <a href="https://www.uib.no" rel="nofollow noopener" target="_blank">UiB</a>
         <span class="cat">Utdanning</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank51-uib">Sjekk din →</a>
       </td>
       <td class="score" style="color:#dc2626"><strong>38</strong></td>
       <td class="grade" style="background:#dc2626">E</td>
@@ -920,6 +977,7 @@
       <td class="company">
         <a href="https://www.power.no" rel="nofollow noopener" target="_blank">Power</a>
         <span class="cat">Retail</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank52-power">Sjekk din →</a>
       </td>
       <td class="score" style="color:#dc2626"><strong>28</strong></td>
       <td class="grade" style="background:#dc2626">E</td>
@@ -934,6 +992,7 @@
       <td class="company">
         <a href="https://www.sr-bank.no" rel="nofollow noopener" target="_blank">SpareBank 1 SR-Bank</a>
         <span class="cat">Finans</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank53-sparebank-1-sr-bank">Sjekk din →</a>
       </td>
       <td class="score" style="color:#991b1b"><strong>23</strong></td>
       <td class="grade" style="background:#991b1b">F</td>
@@ -948,6 +1007,7 @@
       <td class="company">
         <a href="https://www.xxl.no" rel="nofollow noopener" target="_blank">XXL Sport</a>
         <span class="cat">Retail</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank54-xxl-sport">Sjekk din →</a>
       </td>
       <td class="score" style="color:#991b1b"><strong>20</strong></td>
       <td class="grade" style="background:#991b1b">F</td>
@@ -962,6 +1022,7 @@
       <td class="company">
         <a href="https://www.elkjop.no" rel="nofollow noopener" target="_blank">Elkjøp</a>
         <span class="cat">Retail</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank55-elkjop">Sjekk din →</a>
       </td>
       <td class="score" style="color:#991b1b"><strong>19</strong></td>
       <td class="grade" style="background:#991b1b">F</td>
@@ -976,6 +1037,7 @@
       <td class="company">
         <a href="https://www.wideroe.no" rel="nofollow noopener" target="_blank">Widerøe</a>
         <span class="cat">Transport</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank56-wideroe">Sjekk din →</a>
       </td>
       <td class="score" style="color:#991b1b"><strong>18</strong></td>
       <td class="grade" style="background:#991b1b">F</td>
@@ -990,6 +1052,7 @@
       <td class="company">
         <a href="https://www.dnb.no" rel="nofollow noopener" target="_blank">DNB</a>
         <span class="cat">Finans</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank57-dnb">Sjekk din →</a>
       </td>
       <td class="score" style="color:#991b1b"><strong>17</strong></td>
       <td class="grade" style="background:#991b1b">F</td>
@@ -1004,6 +1067,7 @@
       <td class="company">
         <a href="https://www.komplett.no" rel="nofollow noopener" target="_blank">Komplett</a>
         <span class="cat">Retail</span>
+        <a class="row-sjekk" href="/sjekk?ref=leaderboard&utm_source=leaderboard&utm_medium=row-cta&utm_campaign=norske-aeo-2026&utm_content=rank58-komplett">Sjekk din →</a>
       </td>
       <td class="score" style="color:#991b1b"><strong>16</strong></td>
       <td class="grade" style="background:#991b1b">F</td>
@@ -1047,9 +1111,9 @@
     <section class="cta">
       <h2>Vil du vite hvordan din egen bedrift skårer?</h2>
       <p>
-        Vi kjører gratis AEO-audit på din nettside og sender deg en konkret tiltaksliste. Ingen møter, ingen telefonsamtaler — bare en rapport på e-post.
+        Vi kjører gratis AEO-audit på din nettside og sender deg en konkret tiltaksliste. Ingen møter, ingen telefonsamtaler — bare en rapport på e-post — 2–3 minutter.
       </p>
-      <a class="cta-button" href="mailto:hei@synligdigital.no?subject=Gratis%20AEO-audit">Be om gratis audit</a>
+      <a class="cta-button" href="/sjekk?ref=leaderboard&amp;utm_source=leaderboard&amp;utm_medium=bottom-cta&amp;utm_campaign=norske-aeo-2026">Start gratis audit →</a>
     </section>
   </div>
 </main>

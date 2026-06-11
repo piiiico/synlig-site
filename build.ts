@@ -1938,10 +1938,20 @@ export default {
     // /sjekk → the AEO audit subdomain app; /kontakt → homepage anchor section.
     // 301 (permanent) because the canonical surface is stable; cached 1 day so the
     // redirect cost is paid once per browser per day, not per click.
+    //
+    // 2026-06-11: PRESERVE query string in the redirect. Without this the
+    // leaderboard row CTAs (?ref=leaderboard&utm_source=...) and similar
+    // intent-tagged links were stripped on the 301, killing attribution.
+    // Browsers follow the Location verbatim — if Location has no query, the
+    // visitor lands at sjekk.synligdigital.no/ with no UTM, no ref, no source.
     if (pathname === "/sjekk" || pathname === "/sjekk/") {
+      let sjekkLocation = "https://sjekk.synligdigital.no/";
+      if (url.search) {
+        sjekkLocation = "https://sjekk.synligdigital.no/" + url.search;
+      }
       return new Response(null, {
         status: 301,
-        headers: { "Location": "https://sjekk.synligdigital.no/", "Cache-Control": "public, max-age=86400" },
+        headers: { "Location": sjekkLocation, "Cache-Control": "public, max-age=86400" },
       });
     }
     if (pathname === "/kontakt" || pathname === "/kontakt/") {
