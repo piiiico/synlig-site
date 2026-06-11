@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-06-01T15:45:57.351Z",
-  "toolVersion": "1.1",
-  "totalCompanies": 35,
-  "successfulAudits": 28,
+  "generatedAt": "2026-06-11T15:09:09.720Z",
+  "toolVersion": "1.2",
+  "totalCompanies": 66,
+  "successfulAudits": 58,
   "ranking": [
     {
       "rank": 1,
@@ -65,7 +65,37 @@
       }
     },
     {
-      "rank": 5,
+      "name": "If Forsikring",
+      "url": "https://www.if.no",
+      "category": "forsikring",
+      "totalScore": 64,
+      "grade": "C",
+      "breakdown": {
+        "schema": 14,
+        "meta": 12,
+        "content": 14,
+        "technical": 13,
+        "aiSignals": 11
+      },
+      "rank": 5
+    },
+    {
+      "name": "Opera",
+      "url": "https://www.opera.com",
+      "category": "tech",
+      "totalScore": 62,
+      "grade": "C",
+      "breakdown": {
+        "schema": 7,
+        "meta": 14,
+        "content": 20,
+        "technical": 16,
+        "aiSignals": 5
+      },
+      "rank": 6
+    },
+    {
+      "rank": 7,
       "name": "NRK",
       "url": "https://www.nrk.no",
       "category": "media",
@@ -80,7 +110,7 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 8,
       "name": "Schibsted",
       "url": "https://schibsted.com",
       "category": "tech",
@@ -95,7 +125,7 @@
       }
     },
     {
-      "rank": 7,
+      "rank": 9,
       "name": "Aker BP",
       "url": "https://www.akerbp.com",
       "category": "stavanger",
@@ -110,7 +140,7 @@
       }
     },
     {
-      "rank": 8,
+      "rank": 10,
       "name": "Stavanger kommune",
       "url": "https://www.stavanger.kommune.no",
       "category": "stavanger",
@@ -125,7 +155,7 @@
       }
     },
     {
-      "rank": 9,
+      "rank": 11,
       "name": "Smedvig",
       "url": "https://smedvig.no",
       "category": "stavanger",
@@ -140,7 +170,37 @@
       }
     },
     {
-      "rank": 10,
+      "name": "Kahoot",
+      "url": "https://www.kahoot.com",
+      "category": "tech",
+      "totalScore": 59,
+      "grade": "C",
+      "breakdown": {
+        "schema": 5,
+        "meta": 14,
+        "content": 16,
+        "technical": 13,
+        "aiSignals": 11
+      },
+      "rank": 12
+    },
+    {
+      "name": "Thon Hotels",
+      "url": "https://www.thonhotels.no",
+      "category": "reiseliv",
+      "totalScore": 59,
+      "grade": "C",
+      "breakdown": {
+        "schema": 4,
+        "meta": 13,
+        "content": 19,
+        "technical": 17,
+        "aiSignals": 6
+      },
+      "rank": 13
+    },
+    {
+      "rank": 14,
       "name": "Devold",
       "url": "https://devold.no",
       "category": "ull",
@@ -155,7 +215,37 @@
       }
     },
     {
-      "rank": 11,
+      "name": "OBOS",
+      "url": "https://www.obos.no",
+      "category": "eiendom",
+      "totalScore": 58,
+      "grade": "C",
+      "breakdown": {
+        "schema": 7,
+        "meta": 13,
+        "content": 16,
+        "technical": 15,
+        "aiSignals": 7
+      },
+      "rank": 15
+    },
+    {
+      "name": "Kongsberg Gruppen",
+      "url": "https://www.kongsberg.com",
+      "category": "industri",
+      "totalScore": 58,
+      "grade": "C",
+      "breakdown": {
+        "schema": 6,
+        "meta": 13,
+        "content": 15,
+        "technical": 16,
+        "aiSignals": 8
+      },
+      "rank": 16
+    },
+    {
+      "rank": 17,
       "name": "Equinor",
       "url": "https://www.equinor.com/no",
       "category": "energi",
@@ -170,7 +260,7 @@
       }
     },
     {
-      "rank": 12,
+      "rank": 18,
       "name": "VG",
       "url": "https://www.vg.no",
       "category": "media",
@@ -185,7 +275,22 @@
       }
     },
     {
-      "rank": 13,
+      "name": "Helse Vest",
+      "url": "https://www.helse-vest.no",
+      "category": "helse",
+      "totalScore": 57,
+      "grade": "C",
+      "breakdown": {
+        "schema": 5,
+        "meta": 11,
+        "content": 16,
+        "technical": 16,
+        "aiSignals": 9
+      },
+      "rank": 19
+    },
+    {
+      "rank": 20,
       "name": "Visma",
       "url": "https://www.visma.no",
       "category": "tech",
@@ -200,7 +305,7 @@
       }
     },
     {
-      "rank": 14,
+      "rank": 21,
       "name": "Norsk Hydro",
       "url": "https://www.hydro.com/no-NO",
       "category": "industri",
@@ -215,7 +320,22 @@
       }
     },
     {
-      "rank": 15,
+      "name": "Dagbladet",
+      "url": "https://www.dagbladet.no",
+      "category": "media",
+      "totalScore": 56,
+      "grade": "C",
+      "breakdown": {
+        "schema": 5,
+        "meta": 13,
+        "content": 15,
+        "technical": 15,
+        "aiSignals": 8
+      },
+      "rank": 22
+    },
+    {
+      "rank": 23,
       "name": "Nordea",
       "url": "https://www.nordea.no",
       "category": "finans",
@@ -230,7 +350,7 @@
       }
     },
     {
-      "rank": 16,
+      "rank": 24,
       "name": "Storebrand",
       "url": "https://www.storebrand.no",
       "category": "finans",
@@ -245,7 +365,7 @@
       }
     },
     {
-      "rank": 17,
+      "rank": 25,
       "name": "Aftenposten",
       "url": "https://www.aftenposten.no",
       "category": "media",
@@ -260,7 +380,7 @@
       }
     },
     {
-      "rank": 18,
+      "rank": 26,
       "name": "Avinor",
       "url": "https://avinor.no",
       "category": "transport",
@@ -275,7 +395,7 @@
       }
     },
     {
-      "rank": 19,
+      "rank": 27,
       "name": "Gjensidige",
       "url": "https://www.gjensidige.no",
       "category": "finans",
@@ -290,7 +410,7 @@
       }
     },
     {
-      "rank": 20,
+      "rank": 28,
       "name": "Telenor",
       "url": "https://www.telenor.no",
       "category": "telekom",
@@ -305,7 +425,22 @@
       }
     },
     {
-      "rank": 21,
+      "name": "Meny",
+      "url": "https://www.meny.no",
+      "category": "retail",
+      "totalScore": 53,
+      "grade": "D",
+      "breakdown": {
+        "schema": 0,
+        "meta": 13,
+        "content": 15,
+        "technical": 15,
+        "aiSignals": 10
+      },
+      "rank": 29
+    },
+    {
+      "rank": 30,
       "name": "Posten Bring",
       "url": "https://www.posten.no",
       "category": "transport",
@@ -320,7 +455,22 @@
       }
     },
     {
-      "rank": 22,
+      "name": "Sparebanken Vest",
+      "url": "https://www.spv.no",
+      "category": "finans",
+      "totalScore": 52,
+      "grade": "D",
+      "breakdown": {
+        "schema": 4,
+        "meta": 12,
+        "content": 14,
+        "technical": 16,
+        "aiSignals": 6
+      },
+      "rank": 31
+    },
+    {
+      "rank": 32,
       "name": "Kiwi",
       "url": "https://kiwi.no",
       "category": "retail",
@@ -335,7 +485,127 @@
       }
     },
     {
-      "rank": 23,
+      "name": "Strawberry Hotels",
+      "url": "https://www.strawberryhotels.com",
+      "category": "reiseliv",
+      "totalScore": 51,
+      "grade": "D",
+      "breakdown": {
+        "schema": 0,
+        "meta": 13,
+        "content": 15,
+        "technical": 16,
+        "aiSignals": 7
+      },
+      "rank": 33
+    },
+    {
+      "name": "Handelsbanken",
+      "url": "https://www.handelsbanken.no",
+      "category": "finans",
+      "totalScore": 50,
+      "grade": "D",
+      "breakdown": {
+        "schema": 4,
+        "meta": 8,
+        "content": 17,
+        "technical": 13,
+        "aiSignals": 8
+      },
+      "rank": 34
+    },
+    {
+      "name": "TV 2",
+      "url": "https://www.tv2.no",
+      "category": "media",
+      "totalScore": 50,
+      "grade": "D",
+      "breakdown": {
+        "schema": 0,
+        "meta": 11,
+        "content": 15,
+        "technical": 14,
+        "aiSignals": 10
+      },
+      "rank": 35
+    },
+    {
+      "name": "Statkraft",
+      "url": "https://www.statkraft.no",
+      "category": "energi",
+      "totalScore": 50,
+      "grade": "D",
+      "breakdown": {
+        "schema": 0,
+        "meta": 13,
+        "content": 14,
+        "technical": 13,
+        "aiSignals": 10
+      },
+      "rank": 36
+    },
+    {
+      "name": "Finn.no",
+      "url": "https://www.finn.no",
+      "category": "tech",
+      "totalScore": 49,
+      "grade": "D",
+      "breakdown": {
+        "schema": 7,
+        "meta": 12,
+        "content": 9,
+        "technical": 16,
+        "aiSignals": 5
+      },
+      "rank": 37
+    },
+    {
+      "name": "Aker Solutions",
+      "url": "https://www.akersolutions.com",
+      "category": "industri",
+      "totalScore": 49,
+      "grade": "D",
+      "breakdown": {
+        "schema": 0,
+        "meta": 10,
+        "content": 15,
+        "technical": 16,
+        "aiSignals": 8
+      },
+      "rank": 38
+    },
+    {
+      "name": "Tryg",
+      "url": "https://www.tryg.no",
+      "category": "forsikring",
+      "totalScore": 48,
+      "grade": "D",
+      "breakdown": {
+        "schema": 0,
+        "meta": 10,
+        "content": 15,
+        "technical": 16,
+        "aiSignals": 7
+      },
+      "rank": 39
+    },
+    {
+      "name": "Ruter",
+      "url": "https://ruter.no",
+      "category": "transport",
+      "totalScore": 48,
+      "grade": "D",
+      "breakdown": {
+        "schema": 0,
+        "meta": 12,
+        "content": 16,
+        "technical": 16,
+        "aiSignals": 4
+      },
+      "rank": 40
+    },
+    {
+      "rank": 41,
       "name": "Lyse",
       "url": "https://www.lyse.no",
       "category": "stavanger",
@@ -350,7 +620,7 @@
       }
     },
     {
-      "rank": 24,
+      "rank": 42,
       "name": "Helse Stavanger",
       "url": "https://helse-stavanger.no",
       "category": "stavanger",
@@ -365,7 +635,82 @@
       }
     },
     {
-      "rank": 25,
+      "name": "Hurtigruten",
+      "url": "https://www.hurtigruten.com",
+      "category": "transport",
+      "totalScore": 47,
+      "grade": "D",
+      "breakdown": {
+        "schema": 0,
+        "meta": 10,
+        "content": 16,
+        "technical": 13,
+        "aiSignals": 8
+      },
+      "rank": 43
+    },
+    {
+      "name": "UiO",
+      "url": "https://www.uio.no",
+      "category": "utdanning",
+      "totalScore": 46,
+      "grade": "D",
+      "breakdown": {
+        "schema": 0,
+        "meta": 12,
+        "content": 13,
+        "technical": 13,
+        "aiSignals": 8
+      },
+      "rank": 44
+    },
+    {
+      "name": "Eiendomsmegler 1",
+      "url": "https://www.eiendomsmegler1.no",
+      "category": "eiendom",
+      "totalScore": 46,
+      "grade": "D",
+      "breakdown": {
+        "schema": 0,
+        "meta": 12,
+        "content": 16,
+        "technical": 12,
+        "aiSignals": 6
+      },
+      "rank": 45
+    },
+    {
+      "name": "Orkla",
+      "url": "https://www.orkla.no",
+      "category": "industri",
+      "totalScore": 46,
+      "grade": "D",
+      "breakdown": {
+        "schema": 0,
+        "meta": 11,
+        "content": 14,
+        "technical": 16,
+        "aiSignals": 5
+      },
+      "rank": 46
+    },
+    {
+      "name": "NTNU",
+      "url": "https://www.ntnu.no",
+      "category": "utdanning",
+      "totalScore": 44,
+      "grade": "D",
+      "breakdown": {
+        "schema": 0,
+        "meta": 8,
+        "content": 13,
+        "technical": 16,
+        "aiSignals": 7
+      },
+      "rank": 47
+    },
+    {
+      "rank": 48,
       "name": "Ulvang",
       "url": "https://ulvang.no",
       "category": "ull",
@@ -380,7 +725,7 @@
       }
     },
     {
-      "rank": 26,
+      "rank": 49,
       "name": "Coop",
       "url": "https://coop.no",
       "category": "retail",
@@ -395,7 +740,7 @@
       }
     },
     {
-      "rank": 27,
+      "rank": 50,
       "name": "Aclima",
       "url": "https://aclima.com",
       "category": "ull",
@@ -410,7 +755,97 @@
       }
     },
     {
-      "rank": 28,
+      "name": "UiB",
+      "url": "https://www.uib.no",
+      "category": "utdanning",
+      "totalScore": 38,
+      "grade": "E",
+      "breakdown": {
+        "schema": 0,
+        "meta": 6,
+        "content": 12,
+        "technical": 13,
+        "aiSignals": 7
+      },
+      "rank": 51
+    },
+    {
+      "name": "Power",
+      "url": "https://www.power.no",
+      "category": "retail",
+      "totalScore": 28,
+      "grade": "E",
+      "breakdown": {
+        "schema": 0,
+        "meta": 13,
+        "content": 0,
+        "technical": 13,
+        "aiSignals": 2
+      },
+      "rank": 52
+    },
+    {
+      "name": "SpareBank 1 SR-Bank",
+      "url": "https://www.sr-bank.no",
+      "category": "finans",
+      "totalScore": 23,
+      "grade": "F",
+      "breakdown": {
+        "schema": 0,
+        "meta": 8,
+        "content": 0,
+        "technical": 10,
+        "aiSignals": 5
+      },
+      "rank": 53
+    },
+    {
+      "name": "XXL Sport",
+      "url": "https://www.xxl.no",
+      "category": "retail",
+      "totalScore": 20,
+      "grade": "F",
+      "breakdown": {
+        "schema": 0,
+        "meta": 0,
+        "content": 4,
+        "technical": 15,
+        "aiSignals": 1
+      },
+      "rank": 54
+    },
+    {
+      "name": "Elkjøp",
+      "url": "https://www.elkjop.no",
+      "category": "retail",
+      "totalScore": 19,
+      "grade": "F",
+      "breakdown": {
+        "schema": 0,
+        "meta": 4,
+        "content": 2,
+        "technical": 9,
+        "aiSignals": 4
+      },
+      "rank": 55
+    },
+    {
+      "name": "Widerøe",
+      "url": "https://www.wideroe.no",
+      "category": "transport",
+      "totalScore": 18,
+      "grade": "F",
+      "breakdown": {
+        "schema": 0,
+        "meta": 4,
+        "content": 0,
+        "technical": 11,
+        "aiSignals": 3
+      },
+      "rank": 56
+    },
+    {
+      "rank": 57,
       "name": "DNB",
       "url": "https://www.dnb.no",
       "category": "finans",
@@ -423,6 +858,21 @@
         "technical": 14,
         "aiSignals": 2
       }
+    },
+    {
+      "name": "Komplett",
+      "url": "https://www.komplett.no",
+      "category": "retail",
+      "totalScore": 16,
+      "grade": "F",
+      "breakdown": {
+        "schema": 0,
+        "meta": 2,
+        "content": 4,
+        "technical": 7,
+        "aiSignals": 3
+      },
+      "rank": 58
     }
   ],
   "errored": [
@@ -460,6 +910,11 @@
       "name": "Mathiesen-Eiendom",
       "url": "https://mathiesen-eiendom.no",
       "error": "HTTP 0"
+    },
+    {
+      "name": "Oslo Universitetssykehus",
+      "url": "https://www.ous-hf.no",
+      "error": "exit code 1"
     }
   ]
 }
