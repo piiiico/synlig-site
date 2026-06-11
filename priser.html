@@ -687,6 +687,58 @@
     }
     .recovery-cta-secondary:hover { background: var(--gray-50); }
 
+    /* Cold-report continuation banner — shown when ?ref=cold-report (or
+       utm_medium=html-report). Surfaces context preservation between the
+       personalized /r/<hash> report and /priser, so report-clickers don't
+       land on generic "Priser for AI-synlighet" headline at peak skepticism.
+       Mirrors the recovery-banner pattern with positive (green) framing
+       instead of warning (amber). Same conversion-bottleneck logic. */
+    .cold-report-banner {
+      display: none;
+      background: #ecfdf5;
+      border: 1px solid #10b981;
+      border-left: 4px solid #10b981;
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin: 18px auto 0;
+      max-width: 1100px;
+    }
+    .cold-report-banner.show { display: block; }
+    .cold-report-banner h2 {
+      font-size: 1.05rem;
+      color: var(--gray-900);
+      margin: 0 0 6px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .cold-report-banner p {
+      font-size: 0.95rem;
+      color: var(--gray-700);
+      margin: 0 0 14px;
+    }
+    .cold-report-cta-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .cold-report-cta {
+      display: inline-block;
+      padding: 9px 16px;
+      border-radius: 6px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-decoration: none;
+      line-height: 1.3;
+    }
+    .cold-report-cta-primary { background: #065f46; color: var(--white) !important; }
+    .cold-report-cta-primary:hover { background: #064e3b; }
+    .cold-report-cta-secondary {
+      background: var(--white);
+      color: var(--gray-900) !important;
+      border: 1px solid var(--gray-200);
+    }
+    .cold-report-cta-secondary:hover { background: var(--gray-50); }
+
     /* Mobile */
     @media (max-width: 800px) {
       .nav-links { gap: 16px; }
@@ -699,6 +751,8 @@
       .compare-table th, .compare-table td { padding: 10px 12px; }
       .recovery-banner { margin: 12px 16px 0; padding: 14px 16px; }
       .recovery-cta { width: 100%; text-align: center; }
+      .cold-report-banner { margin: 12px 16px 0; padding: 14px 16px; }
+      .cold-report-cta { width: 100%; text-align: center; }
     }
   </style>
 </head>
@@ -723,6 +777,20 @@
     <div class="recovery-cta-row">
       <a id="recovery-faktura-link" href="/faktura" class="recovery-cta recovery-cta-primary">Få faktura i stedet</a>
       <a href="https://sjekk.synligdigital.no/?ref=priser-canceled" class="recovery-cta recovery-cta-secondary">Ta en gratis AI-synlighetssjekk</a>
+    </div>
+  </section>
+
+  <!-- Cold-report continuation banner: shown via JS only when ?ref=cold-report
+       OR ?utm_medium=html-report. Hidden by default so organic visitors see
+       nothing. Preserves context between the personalized /r/<hash> report
+       and /priser. Default link points to /faktura?pakke=priser-analyse —
+       JS rewrites with email+slug from URL if present. -->
+  <section id="cold-report-banner" class="cold-report-banner" role="status" aria-live="polite">
+    <h2 id="cold-report-banner-title">Fortsetter fra AEO-rapporten 📊</h2>
+    <p id="cold-report-banner-body">Pakkene under er sortert etter hva som flytter score mest, og Analyse (4 900 kr) er skriftlig handlingsplan basert på akkurat de tiltakene rapporten flagget for dere. Bestill direkte. Eller send oss en kort melding først.</p>
+    <div class="cold-report-cta-row">
+      <a id="cold-report-analyse-link" href="/faktura?pakke=priser-analyse" class="cold-report-cta cold-report-cta-primary">Bestill Analyse (4 900 kr)</a>
+      <a id="cold-report-mail-link" href="mailto:hei@synligdigital.no?subject=Sp%C3%B8rsm%C3%A5l%20etter%20AEO-rapporten&amp;body=Hei%20Synlig%2C%0A%0AVi%20fikk%20AEO-rapporten%20og%20har%20et%20sp%C3%B8rsm%C3%A5l%20f%C3%B8r%20vi%20bestiller%3A%0A%0A" class="cold-report-cta cold-report-cta-secondary">Spør først på e-post</a>
     </div>
   </section>
 
@@ -1085,6 +1153,66 @@
               fakturaLink.href = "/faktura?" + fakturaQs;
             }
             banner.classList.add("show");
+          }
+        }
+
+        /* Cold-report continuation: ref=cold-report or utm_medium=html-report
+           means visitor came from a personalized /r/<hash> report. Show the
+           green continuation banner above the hero so they don't lose context.
+           Forward email + slug into Analyse-CTA so /faktura prefills + Brreg
+           autocomplete fires (mirrors the canceled-recovery flow). Mail-CTA
+           prepends company name to subject if we can infer it from email
+           domain — best-effort, validated. */
+        var isColdReport =
+          params.get("ref") === "cold-report" ||
+          params.get("utm_medium") === "html-report" ||
+          params.get("utm_source") === "cold-report";
+        if (isColdReport) {
+          var coldBanner = document.getElementById("cold-report-banner");
+          if (coldBanner) {
+            var coldSlugRaw = params.get("utm_campaign") || params.get("slug") || "";
+            var coldSlug = sanitize(coldSlugRaw);
+            var coldEmail = params.get("email") || "";
+            var validColdEmail =
+              coldEmail &&
+              coldEmail.length <= 254 &&
+              /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(coldEmail);
+
+            var analyseLink = document.getElementById("cold-report-analyse-link");
+            if (analyseLink) {
+              /* Build /faktura?pakke=priser-analyse[&slug=outreach-<hash>][&email=…]
+                 — slug prefix outreach- matches checkout-handler.ts cold-outreach
+                 routing (sells priser-analyse exclusively), so cancel_url logic
+                 in checkout-handler routes the recovery-banner Tier mapping
+                 correctly if they bail at Stripe. */
+              var fakturaQs = "pakke=priser-analyse";
+              if (coldSlug) fakturaQs += "&slug=outreach-" + encodeURIComponent(coldSlug);
+              if (validColdEmail) fakturaQs += "&email=" + encodeURIComponent(coldEmail);
+              analyseLink.href = "/faktura?" + fakturaQs;
+            }
+
+            var mailLink = document.getElementById("cold-report-mail-link");
+            if (mailLink && validColdEmail) {
+              /* Domain → company name guess: gmail/outlook/etc filtered out.
+                 If we have a corporate domain we can include the host in the
+                 mailto subject so hei@synligdigital.no gets context without
+                 the visitor having to type it. */
+              var domain = coldEmail.split("@")[1] || "";
+              var freeMail = /^(gmail|outlook|hotmail|yahoo|icloud|live|me|protonmail)\./;
+              if (domain && !freeMail.test(domain)) {
+                var company = domain.replace(/\.(no|com|se|dk|fi|io|app|dev|net|org|ai)$/i, "");
+                if (company && company.length <= 40) {
+                  var subj = encodeURIComponent("Spørsmål etter AEO-rapporten — " + company);
+                  var bodyPart =
+                    "Hei Synlig%2C%0A%0AVi%20fikk%20AEO-rapporten%20for%20" +
+                    encodeURIComponent(company) +
+                    "%20og%20har%20et%20sp%C3%B8rsm%C3%A5l%20f%C3%B8r%20vi%20bestiller%3A%0A%0A";
+                  mailLink.href = "mailto:hei@synligdigital.no?subject=" + subj + "&body=" + bodyPart;
+                }
+              }
+            }
+
+            coldBanner.classList.add("show");
           }
         }
       } catch (e) {
