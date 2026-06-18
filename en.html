@@ -30,14 +30,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<!-- JSON-LD Structured Data — Block 1: LocalBusiness (Organization, full)
+     Mirrors the Norwegian / block 1 with English copy, English-priced
+     OfferCatalog (4 tiers visible on this page), geo + opening hours,
+     and the named employee (Håkon Åmdal). Shipped 2026-06-15 idle-mode
+     after dogfooding /en/ showed only 1 JSON-LD block vs / having 7 —
+     a glaring AEO-dogfooding failure on the page we route international
+     cold-outreach prospects to. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": ["LocalBusiness", "MarketingAgency", "ProfessionalService"],
   "@id": "https://synligdigital.no/#organization",
   "name": "Synlig Digital",
-  "alternateName": ["Synlig", "Synlig AEO"],
-  "description": "Synlig Digital is a small Answer Engine Optimization (AEO) consultancy in Stavanger, Norway. We help businesses become visible in answers from ChatGPT, Perplexity, Google AI Overview, and other AI assistants.",
+  "alternateName": ["Synlig", "Synlig AEO", "Synlig Answer Engine Optimization"],
+  "legalName": "Synlig Digital",
+  "description": "Synlig Digital is a small Answer Engine Optimization (AEO) consultancy in Stavanger, Norway. We help businesses become visible in answers from ChatGPT, Perplexity, Google AI Overview, and other AI assistants — through schema.org markup, structured data, canonical entity definition, agent-readable metadata, and AI-targeted content.",
   "url": "https://synligdigital.no/en/",
   "logo": "https://synligdigital.no/og.png",
   "image": "https://synligdigital.no/og.png",
@@ -51,10 +59,21 @@
     "addressRegion": "Rogaland",
     "addressCountry": "NO"
   },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "58.9700",
+    "longitude": "5.7331"
+  },
   "areaServed": [
     { "@type": "Country", "name": "Norway" },
     { "@type": "Place", "name": "International (English-language clients on request)" }
   ],
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "opens": "09:00",
+    "closes": "17:00"
+  },
   "contactPoint": {
     "@type": "ContactPoint",
     "email": "hei@synligdigital.no",
@@ -72,7 +91,300 @@
     "Google AI Overview",
     "llms.txt",
     "Generative Engine Optimization",
-    "GEO"
+    "GEO",
+    "Agent-readable metadata"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "AEO services (English)",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "name": "AEO Lite — FAQPage schema (one page)",
+        "description": "FAQPage JSON-LD for one page you choose (3–5 question/answer pairs). Hand-written based on your content, ready to paste into <head>. Delivered by email within one business day. One-off, no follow-up.",
+        "price": "990",
+        "priceCurrency": "NOK",
+        "url": "https://synligdigital.no/en/",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "FAQPage Schema Implementation",
+          "serviceType": "AEO Schema Implementation",
+          "provider": { "@id": "https://synligdigital.no/#organization" }
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "AEO Analysis — written audit",
+        "description": "Written report with a 0–100 AEO score, a categorized gap list, and a prioritized fix sequence. Includes live tests of what ChatGPT, Claude, and Google AI currently say about your business. One-off.",
+        "price": "4900",
+        "priceCurrency": "NOK",
+        "url": "https://synligdigital.no/en/",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "AEO Analysis",
+          "serviceType": "AEO Audit and Advisory",
+          "provider": { "@id": "https://synligdigital.no/#organization" }
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "AEO Foundation — full implementation",
+        "description": "Schema.org markup, content structure, machine-readable metadata, canonical entity, business profile, llms.txt, agent-card. Includes the Analysis. Documented internal methodology case (related party — common ownership): Nordic Lithium moved from AEO score 67/C to 90/A in approximately two weeks. See /en/case/nordic-lithium for ownership disclosure.",
+        "price": "14900",
+        "priceCurrency": "NOK",
+        "url": "https://synligdigital.no/en/",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "AEO Foundation",
+          "serviceType": "AEO Implementation",
+          "provider": { "@id": "https://synligdigital.no/#organization" }
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "Continuous AEO — monthly monitoring",
+        "description": "Monthly visibility tracking, content updates, and quarterly review of what shifted in the AI assistants you care about. Cancel any time.",
+        "price": "4900",
+        "priceCurrency": "NOK",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "4900",
+          "priceCurrency": "NOK",
+          "unitText": "per month",
+          "billingIncrement": 1
+        },
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Continuous AEO monitoring",
+          "serviceType": "AEO Monitoring and Reporting",
+          "provider": { "@id": "https://synligdigital.no/#organization" }
+        }
+      }
+    ]
+  },
+  "priceRange": "990–14900 NOK",
+  "employee": {
+    "@type": "Person",
+    "name": "Håkon Åmdal",
+    "jobTitle": "Managing director and AEO specialist",
+    "url": "https://synligdigital.no/en/",
+    "email": "hei@synligdigital.no",
+    "knowsAbout": ["Answer Engine Optimization", "AI visibility", "Schema.org", "Structured data"]
+  },
+  "sameAs": [
+    "https://synligdigital.no",
+    "https://piiiico.github.io/llm-smell-check",
+    "https://github.com/piiiico/llm-smell-check"
+  ]
+}
+</script>
+
+<!-- JSON-LD Structured Data — Block 2: WebSite -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://synligdigital.no/#website",
+  "name": "Synlig Digital",
+  "url": "https://synligdigital.no",
+  "description": "Answer Engine Optimization consultancy. We help businesses become visible in AI assistants.",
+  "inLanguage": ["en", "nb"],
+  "publisher": { "@id": "https://synligdigital.no/#organization" }
+}
+</script>
+
+<!-- JSON-LD Structured Data — Block 3: FAQPage (English Q&A) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://synligdigital.no/en/#faq",
+  "inLanguage": "en",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Answer Engine Optimization (AEO)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Answer Engine Optimization is the engineering side of being mentioned by AI assistants. It covers schema.org markup, machine-readable metadata, canonical entity definitions, consistent business identity across data sources, and content that maps cleanly to how questions are asked. The goal is to become the answer an AI gives — not just to rank on Google."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between AEO and SEO?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SEO targets ten blue links on a Google results page. AEO targets the single answer an AI assistant returns. AI assistants read sites differently from Google: they need structured data (schema.org), clear entities (who, what, where), and content that directly answers questions. Many sites with strong SEO score F on AEO because they lack machine-readable signal."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who is Synlig Digital and what do you do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Synlig Digital is a small Answer Engine Optimization consultancy based in Stavanger, Norway. We help businesses become visible in ChatGPT, Perplexity, Google AI Overview, and other AI assistants. We offer a free AEO score on synligdigital.no/en/, AEO Lite — FAQPage schema for one page (NOK 990), a written Analysis (NOK 4,900), full Foundation implementation (NOK 14,900), and Continuous monitoring (NOK 4,900/month)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which businesses benefit most from AEO?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Two segments. (1) B2B SaaS where the buying decision starts with an AI assistant query — accounting SaaS, HR SaaS, fintech, marketing SaaS. ChatGPT-sourced traffic converted 9× better than Google organic (15.9% vs 1.76%, Seer Interactive 2025). (2) Branded portfolios and e-commerce — sports, lifestyle, retail. Across the 30+ sites we have audited, average AEO score is 43–55 of 100, and 80%+ are missing the machine-readable signals (schema.org, FAQPage, alternative-to or Product data, llms.txt) that AI assistants rely on."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does AEO cost at Synlig Digital?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Free AEO score on synligdigital.no/en/ (runs live, no email). AEO Lite — FAQPage schema for one page: NOK 990 (≈ USD 92), one-off, delivery in one business day. AEO Analysis: NOK 4,900 (≈ USD 460), written report and prioritized fix list. AEO Foundation: NOK 14,900 (≈ USD 1,400), full implementation including the Analysis. Continuous AEO: NOK 4,900/month (≈ USD 460/month), monthly monitoring with cancel-anytime. Card payment at Stripe checkout. Email hei@synligdigital.no for an invoice instead."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does it take to see results from AEO?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most businesses see first improvements within 4–8 weeks of implementing schema.org markup, business profile cleanup, and aggregator registrations. Documented internal methodology case (related party — common ownership): Nordic Lithium moved from AEO score 67/C to 90/A in approximately two weeks. AI answers refresh faster than Google ranking, and aggregator presence often shows up within 2–3 weeks."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- JSON-LD Structured Data — Block 4: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "@id": "https://synligdigital.no/en/#breadcrumb",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Synlig Digital",
+      "item": "https://synligdigital.no"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "English",
+      "item": "https://synligdigital.no/en/"
+    }
+  ]
+}
+</script>
+
+<!-- JSON-LD Structured Data — Block 5: WebPage + Speakable -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://synligdigital.no/en/#webpage",
+  "url": "https://synligdigital.no/en/",
+  "name": "Synlig Digital — Answer Engine Optimization consultancy (English)",
+  "description": "Synlig Digital helps businesses get cited when people ask ChatGPT, Perplexity, and Google AI Overview about their industry. Free AEO score, written audit, full implementation, and continuous monitoring — in English.",
+  "inLanguage": "en",
+  "isPartOf": { "@id": "https://synligdigital.no/#website" },
+  "about": { "@id": "https://synligdigital.no/#organization" },
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": ["h1", "h2", ".hero-sub", ".service-card h3", ".service-card .price", ".case-quote"]
+  },
+  "citation": [
+    {
+      "@type": "WebSite",
+      "name": "Schema.org — structured data standard",
+      "url": "https://schema.org"
+    },
+    {
+      "@type": "WebSite",
+      "name": "Google Search Central — structured data documentation",
+      "url": "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data"
+    }
+  ]
+}
+</script>
+
+<!-- JSON-LD Structured Data — Block 6: Case Studies ItemList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": "https://synligdigital.no/en/#case-studies",
+  "name": "Documented AEO results — Synlig Digital (English)",
+  "description": "Documented case studies showing the effect of Answer Engine Optimization.",
+  "numberOfItems": 1,
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@type": "Article",
+        "@id": "https://synligdigital.no/en/case/nordic-lithium",
+        "headline": "Nordic Lithium: 67/C to 90/A in two weeks — related-party methodology case",
+        "url": "https://synligdigital.no/en/case/nordic-lithium",
+        "description": "Nordic Lithium (related party — common ownership with Synlig Digital) moved from AEO score 67/C to 90/A in approximately two weeks after internal implementation of schema.org markup, business profile cleanup, and removal of AI-crawler blocking — no platform change. Ownership disclosure on /en/case/nordic-lithium.",
+        "datePublished": "2026-03",
+        "inLanguage": "en",
+        "author": { "@id": "https://synligdigital.no/#organization" },
+        "publisher": { "@id": "https://synligdigital.no/#organization" },
+        "about": {
+          "@type": "Thing",
+          "name": "Answer Engine Optimization",
+          "description": "AEO implementation for a Norwegian battery materials retailer"
+        }
+      }
+    }
+  ]
+}
+</script>
+
+<!-- JSON-LD Structured Data — Block 7: HowTo — AEO process -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "@id": "https://synligdigital.no/en/#howto-aeo",
+  "name": "How to become visible in ChatGPT and Perplexity",
+  "description": "Synlig Digital's AEO process for increasing visibility in AI assistants. Based on documented AEO audits of 30+ businesses across nine verticals.",
+  "totalTime": "P14D",
+  "inLanguage": "en",
+  "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "NOK",
+    "value": "14900"
+  },
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Free AEO score",
+      "text": "Score your site on synligdigital.no/en/. See exactly what AI assistants currently know — and don't know — about your business. Runs live in your browser.",
+      "url": "https://synligdigital.no/en/"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Technical AEO analysis and report",
+      "text": "Full analysis of schema.org markup, business profile cleanup, aggregator presence, and content quality. Written report with prioritized fix list.",
+      "url": "https://synligdigital.no/en/"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "AEO Foundation implementation",
+      "text": "Implementation of schema.org markup tuned to your vertical: SoftwareApplication for SaaS (with alternative-to and integration lists); Product, Brand, and Organization for retail and e-commerce. FAQPage and Service for all. Business profile cleanup and relevant aggregator presence.",
+      "url": "https://synligdigital.no/en/"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Continuous monitoring and optimization",
+      "text": "Monthly measurement of AI visibility: track how often you're mentioned in AI answers. Continuous adjustment to new AI models and updates.",
+      "url": "https://synligdigital.no/en/"
+    }
   ]
 }
 </script>
@@ -209,6 +521,25 @@
   .audit-result-email:focus { outline: none; border-color: var(--green-600); }
   .audit-result-redo { margin-left: 12px; color: var(--gray-600); font-size: 0.88rem; cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; font-family: inherit; }
 
+  /* Stripe abandonment recovery banner. Hidden by default; revealed by JS
+     below when ?utm_canceled=1 is present (cancel_url from checkout-handler).
+     Mirrors the Norwegian /priser recovery-banner pattern so the English
+     funnel has a parallel recovery surface — without this the cancel
+     destination /en/?utm_canceled=1 just rendered the homepage again, silently
+     killing every /en/ buyer who bailed at Stripe. Shipped 2026-06-18 after
+     dogfooding showed 3 in-flight cold-outreach prospects (Dfns/Fordefi/
+     SpherePay) E1 land here today and have zero recovery copy if they cancel. */
+  .recovery-banner { display: none; background: var(--blue-50); border: 1px solid var(--blue-100); border-radius: 10px; padding: 16px 20px; margin: 18px 0 6px; }
+  .recovery-banner.show { display: block; }
+  .recovery-banner h2 { font-size: 1.05rem; color: var(--gray-900); margin-bottom: 8px; font-weight: 600; }
+  .recovery-banner p { font-size: 0.95rem; color: var(--gray-700); margin-bottom: 12px; }
+  .recovery-cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .recovery-cta { display: inline-block; padding: 9px 16px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.92rem; transition: background 0.2s; }
+  .recovery-cta-primary { background: var(--green-600); color: var(--white); }
+  .recovery-cta-primary:hover { background: var(--green-500); }
+  .recovery-cta-secondary { background: transparent; color: var(--blue-700); border: 1px solid var(--blue-100); }
+  .recovery-cta-secondary:hover { background: var(--blue-100); }
+
   @media (max-width: 600px) {
     h1 { font-size: 1.7rem; }
     .hero { padding: 40px 0 24px; }
@@ -228,6 +559,20 @@
 
 <main class="container">
 
+<!-- Recovery banner: shown via JS only when ?utm_canceled=1 (Stripe abandonment).
+     Hidden by default so an organic /en/ visitor sees nothing. Mirrors the
+     /priser recovery-banner contract (lines ~4156 worker.ts): tier-aware copy
+     from slug, /faktura?lang=en CTA preserving slug + email, mailto fallback
+     for "something stopped me" path. -->
+<section id="recovery-banner" class="recovery-banner" role="status" aria-live="polite">
+  <h2 id="recovery-banner-title">You were almost there 👋</h2>
+  <p id="recovery-banner-body">You left Stripe before the payment went through. Prefer an invoice instead of card? We invoice with 14-day net terms — or send a quick note if something stopped you.</p>
+  <div class="recovery-cta-row">
+    <a id="recovery-faktura-link" href="/faktura?lang=en" class="recovery-cta recovery-cta-primary">Get an invoice instead →</a>
+    <a id="recovery-mail-link" href="mailto:hei@synligdigital.no?subject=Question%20about%20my%20AEO%20order&amp;body=Hi%20Synlig%2C%0A%0AI%20started%20an%20order%20but%20didn%27t%20complete%20payment.%20The%20reason%20was%3A%0A%0A" class="recovery-cta recovery-cta-secondary">Send us a quick note →</a>
+  </div>
+</section>
+
 <section class="hero">
   <div class="hero-badge">Answer Engine Optimization (AEO)</div>
   <h1>We help businesses get cited when people ask AI.</h1>
@@ -239,7 +584,7 @@
       <input type="text" id="auditInput" placeholder="yourdomain.com" autocomplete="off" autocapitalize="off" spellcheck="false" required>
       <button type="submit" id="auditBtn">Score my site →</button>
     </form>
-    <p class="audit-box-note">Same engine our paid analysis runs on. Norwegian report text — score is universal. Email for the English write-up.</p>
+    <p class="audit-box-note">Same engine our paid analysis runs on. Score, gap list, and inline card checkout — all in English.</p>
   </div>
 
   <div id="auditResult" class="audit-result" hidden></div>
@@ -275,7 +620,7 @@
         <input type="email" id="lead-en-home-lite" name="email" class="service-card-input" placeholder="you@company.com" required autocomplete="email" maxlength="254">
         <input type="hidden" name="tier" value="lite">
         <input type="hidden" name="slug" value="en-home-lite">
-        <button type="submit" class="service-card-cta">Order with card — NOK 990 →</button>
+        <button type="submit" class="service-card-cta">Order with card — NOK 990 (≈ $92) →</button>
       </form>
     </div>
     <div class="service-card">
@@ -287,7 +632,7 @@
         <input type="email" id="lead-en-home-analysis" name="email" class="service-card-input" placeholder="you@company.com" required autocomplete="email" maxlength="254">
         <input type="hidden" name="tier" value="handlingsplan">
         <input type="hidden" name="slug" value="en-home-analysis">
-        <button type="submit" class="service-card-cta service-card-cta-outline">Order with card — NOK 4,900 →</button>
+        <button type="submit" class="service-card-cta service-card-cta-outline">Order with card — NOK 4,900 (≈ $460) →</button>
       </form>
     </div>
     <div class="service-card">
@@ -299,7 +644,7 @@
         <input type="email" id="lead-en-home-foundation" name="email" class="service-card-input" placeholder="you@company.com" required autocomplete="email" maxlength="254">
         <input type="hidden" name="tier" value="fundament">
         <input type="hidden" name="slug" value="en-home-foundation">
-        <button type="submit" class="service-card-cta service-card-cta-outline">Order with card — NOK 14,900 →</button>
+        <button type="submit" class="service-card-cta service-card-cta-outline">Order with card — NOK 14,900 (≈ $1,400) →</button>
       </form>
     </div>
     <div class="service-card">
@@ -311,7 +656,7 @@
         <input type="email" id="lead-en-home-continuous" name="email" class="service-card-input" placeholder="you@company.com" required autocomplete="email" maxlength="254">
         <input type="hidden" name="tier" value="lopende">
         <input type="hidden" name="slug" value="en-home-continuous">
-        <button type="submit" class="service-card-cta service-card-cta-outline">Start subscription — NOK 4,900 / month →</button>
+        <button type="submit" class="service-card-cta service-card-cta-outline">Start subscription — NOK 4,900 / month (≈ $460/month) →</button>
       </form>
     </div>
     <p class="service-card-stripe-note">Stripe secure card payment. Need an invoice instead? Email <a href="mailto:hei@synligdigital.no?subject=Invoice%20request&amp;body=Hi%2C%20I%27d%20like%20an%20invoice%20for%3A%0A%0A%5Btier%5D%0A%0AThanks!">hei@synligdigital.no</a>.</p>
@@ -521,6 +866,92 @@ function resetAudit() {
   input.value = '';
   input.focus();
 }
+// URL prefill — matches sjekk.synligdigital.no convention (?url= and ?domain=).
+// Cold-email links like /en/?url=dfns.co land with the prospect's domain
+// pre-populated. They click "Score my site →" without typing. Removes the
+// "what domain am I auditing" step — one less reason to bounce. Added
+// 2026-06-18 after dogfooding 3 in-flight outreach prospects (Dfns/Fordefi/
+// SpherePay) showed the inline audit was friction-locked behind a blank input.
+(function prefillFromQuery(){
+  try {
+    const qp = new URLSearchParams(window.location.search);
+    const raw = (qp.get('url') || qp.get('domain') || '').trim();
+    if (!raw) return;
+    const domain = normalizeDomain(raw);
+    if (!domain || !domain.includes('.') || domain.length < 4) return;
+    const input = document.getElementById('auditInput');
+    if (input && !input.value) input.value = domain;
+  } catch (e) { /* swallow — prefill is best-effort */ }
+})();
+
+// Stripe abandonment recovery: cancel_url = /en/?utm_canceled=1&slug=<slug>&email=<addr>
+// (checkout-handler.ts buildCancelUrl, line 199). When detected, show the
+// recovery banner above the hero with tier-aware copy, build a /faktura?lang=en
+// link that pre-fills the pakke + email, and personalise the mailto subject with
+// the tier name so hei@synligdigital.no gets context. Closes the silent-kill
+// loop where /en/ buyers who abandoned Stripe just saw the homepage again with
+// no invoice path or recovery message.
+(function recoveryBanner(){
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('utm_canceled') !== '1') return;
+    const banner = document.getElementById('recovery-banner');
+    if (!banner) return;
+
+    function sanitize(s){ return String(s || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 120); }
+    const slug = sanitize(params.get('slug') || '');
+
+    // Tier inference from slug substring. Mirrors the /priser tier-mapping
+    // (worker.ts ~4510) but uses English tier names + maps to the
+    // priser-* pakke values the /faktura dropdown expects.
+    // Outreach slugs (no tier substring) sell priser-analyse exclusively
+    // per /api/handlingsplan-checkout, matching the Norwegian alias.
+    let tierLabel = '';
+    let pakke = '';
+    if (slug.indexOf('foundation') !== -1 || slug.indexOf('fundament') !== -1) { tierLabel = 'AEO Foundation'; pakke = 'priser-fundament'; }
+    else if (slug.indexOf('continuous') !== -1 || slug.indexOf('lopende') !== -1) { tierLabel = 'Continuous AEO'; pakke = 'priser-lopende'; }
+    else if (slug.indexOf('lite') !== -1) { tierLabel = 'AEO Lite'; pakke = 'priser-lite'; }
+    else if (slug.indexOf('analysis') !== -1 || slug.indexOf('analyse') !== -1 || slug.indexOf('handlingsplan') !== -1) { tierLabel = 'AEO Analysis'; pakke = 'priser-analyse'; }
+    else if (slug.indexOf('outreach') !== -1) { tierLabel = 'AEO Analysis'; pakke = 'priser-analyse'; }
+
+    if (tierLabel) {
+      const title = document.getElementById('recovery-banner-title');
+      if (title) title.textContent = 'You were almost there with ' + tierLabel + ' 👋';
+    }
+
+    // Validate ?email= shape before forwarding into /faktura — mirrors the
+    // /priser email-validation pattern (worker.ts ~4534). A malformed
+    // email param must not poison the link.
+    const emailRaw = (params.get('email') || '').trim();
+    const validEmail = emailRaw && emailRaw.length <= 254 && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailRaw);
+
+    // Build /faktura URL. ?lang=en flips the UI to English and relaxes the
+    // 9-digit org.nr to free-form Tax ID (per /faktura JS line ~5375). Use
+    // explicit ?pakke= rather than ?slug= because /en/-home-analysis slug
+    // would not match any existing /faktura alias.
+    const fakturaLink = document.getElementById('recovery-faktura-link');
+    if (fakturaLink) {
+      let qs = 'lang=en';
+      if (pakke) qs += '&pakke=' + encodeURIComponent(pakke);
+      if (slug) qs += '&slug=' + encodeURIComponent(slug);
+      if (validEmail) qs += '&email=' + encodeURIComponent(emailRaw);
+      fakturaLink.href = '/faktura?' + qs;
+    }
+
+    // Personalise the mailto: subject with the tier name when we know it.
+    // hei@synligdigital.no inbox needs immediate context — "Question about
+    // my AEO order" loses the recovery signal in noise; "Question about
+    // my AEO Lite order — didn't complete payment" reads on first scan.
+    const mailLink = document.getElementById('recovery-mail-link');
+    if (mailLink && tierLabel) {
+      const subj = encodeURIComponent('Question about my ' + tierLabel + ' order — didn\'t complete payment');
+      const body = 'Hi%20Synlig%2C%0A%0AI%20started%20an%20order%20for%20' + encodeURIComponent(tierLabel) + '%20but%20didn%27t%20complete%20payment.%20The%20reason%20was%3A%0A%0A';
+      mailLink.href = 'mailto:hei@synligdigital.no?subject=' + subj + '&body=' + body;
+    }
+
+    banner.classList.add('show');
+  } catch (e) { /* swallow — recovery is best-effort, never breaks the page */ }
+})();
 </script>
 
 </body>
