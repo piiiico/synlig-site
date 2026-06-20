@@ -613,53 +613,53 @@
   <div class="services">
     <div class="service-card">
       <h3>AEO Lite</h3>
-      <div class="price">NOK 990 (≈ USD 92)</div>
+      <div class="price">USD 92</div>
       <p>FAQPage JSON-LD for one page you choose (3–5 Q&amp;A pairs). Ready to paste into <code>&lt;head&gt;</code>. Delivered by email within one business day. One-off, no follow-up.</p>
       <form method="POST" action="/api/lead-capture" class="service-card-form" aria-label="Order AEO Lite">
         <label for="lead-en-home-lite">Enter your email to start →</label>
         <input type="email" id="lead-en-home-lite" name="email" class="service-card-input" placeholder="you@company.com" required autocomplete="email" maxlength="254">
         <input type="hidden" name="tier" value="lite">
         <input type="hidden" name="slug" value="en-home-lite">
-        <button type="submit" class="service-card-cta">Order with card — NOK 990 (≈ $92) →</button>
+        <button type="submit" class="service-card-cta">Order with card — $92 →</button>
       </form>
     </div>
     <div class="service-card">
       <h3>AEO Analysis</h3>
-      <div class="price">NOK 4,900 (≈ USD 460)</div>
+      <div class="price">USD 460</div>
       <p>Written report with score, gaps, and a prioritized fix list. One-off.</p>
       <form method="POST" action="/api/lead-capture" class="service-card-form" aria-label="Order AEO Analysis">
         <label for="lead-en-home-analysis">Enter your email to start →</label>
         <input type="email" id="lead-en-home-analysis" name="email" class="service-card-input" placeholder="you@company.com" required autocomplete="email" maxlength="254">
         <input type="hidden" name="tier" value="handlingsplan">
         <input type="hidden" name="slug" value="en-home-analysis">
-        <button type="submit" class="service-card-cta service-card-cta-outline">Order with card — NOK 4,900 (≈ $460) →</button>
+        <button type="submit" class="service-card-cta service-card-cta-outline">Order with card — $460 →</button>
       </form>
     </div>
     <div class="service-card">
       <h3>AEO Foundation</h3>
-      <div class="price">NOK 14,900 (≈ USD 1,400)</div>
+      <div class="price">USD 1,400</div>
       <p>Full implementation. Schema, structure, profile, agent metadata, content adjustments. Includes the analysis.</p>
       <form method="POST" action="/api/lead-capture" class="service-card-form" aria-label="Order AEO Foundation">
         <label for="lead-en-home-foundation">Enter your email to start →</label>
         <input type="email" id="lead-en-home-foundation" name="email" class="service-card-input" placeholder="you@company.com" required autocomplete="email" maxlength="254">
         <input type="hidden" name="tier" value="fundament">
         <input type="hidden" name="slug" value="en-home-foundation">
-        <button type="submit" class="service-card-cta service-card-cta-outline">Order with card — NOK 14,900 (≈ $1,400) →</button>
+        <button type="submit" class="service-card-cta service-card-cta-outline">Order with card — $1,400 →</button>
       </form>
     </div>
     <div class="service-card">
       <h3>Continuous AEO</h3>
-      <div class="price">NOK 4,900 / month (≈ USD 460/month)</div>
+      <div class="price">USD 460 / month</div>
       <p>Monthly monitoring, content updates, quarterly review. Cancel any time.</p>
       <form method="POST" action="/api/lead-capture" class="service-card-form" aria-label="Start Continuous AEO subscription">
         <label for="lead-en-home-continuous">Enter your email to start →</label>
         <input type="email" id="lead-en-home-continuous" name="email" class="service-card-input" placeholder="you@company.com" required autocomplete="email" maxlength="254">
         <input type="hidden" name="tier" value="lopende">
         <input type="hidden" name="slug" value="en-home-continuous">
-        <button type="submit" class="service-card-cta service-card-cta-outline">Start subscription — NOK 4,900 / month (≈ $460/month) →</button>
+        <button type="submit" class="service-card-cta service-card-cta-outline">Start subscription — $460 / month →</button>
       </form>
     </div>
-    <p class="service-card-stripe-note">Stripe secure card payment. Need an invoice instead? Email <a href="mailto:hei@synligdigital.no?subject=Invoice%20request&amp;body=Hi%2C%20I%27d%20like%20an%20invoice%20for%3A%0A%0A%5Btier%5D%0A%0AThanks!">hei@synligdigital.no</a>.</p>
+    <p class="service-card-stripe-note">Stripe charges in USD on card. Norwegian-registered company — NOK invoice available on request: email <a href="mailto:hei@synligdigital.no?subject=Invoice%20request&amp;body=Hi%2C%20I%27d%20like%20an%20invoice%20for%3A%0A%0A%5Btier%5D%0A%0AThanks!">hei@synligdigital.no</a>.</p>
   </div>
 </section>
 
@@ -823,8 +823,8 @@ async function runAudit(ev) {
       '<form method="POST" action="/api/lead-capture" class="audit-result-form" aria-label="Order Synlig Lite or AEO Analysis">' +
         '<input type="email" name="email" class="audit-result-email" placeholder="you@company.com" required autocomplete="email" maxlength="254" aria-label="Your email">' +
         '<input type="hidden" name="slug" value="audit-en-direct">' +
-        '<button type="submit" name="tier" value="lite" class="audit-result-cta">Order Synlig Lite — NOK 990 →</button>' +
-        '<button type="submit" name="tier" value="handlingsplan" class="audit-result-cta audit-result-cta-secondary">Or full write-up — NOK 4,900 →</button>' +
+        '<button type="submit" name="tier" value="lite" class="audit-result-cta">Order Synlig Lite — $92 →</button>' +
+        '<button type="submit" name="tier" value="handlingsplan" class="audit-result-cta audit-result-cta-secondary">Or full write-up — $460 →</button>' +
       '</form>';
     result.innerHTML =
       '<div class="audit-result-head">' +
@@ -842,7 +842,7 @@ async function runAudit(ev) {
       '<p class="audit-result-issues-label">Top gaps we found</p>' +
       issuesHtml +
       '<p style="font-size:0.88rem;color:var(--gray-600);margin-bottom:12px">' +
-        'Synlig Lite ships a FAQPage JSON-LD block for one page (3–5 Q&amp;A pairs) by email within one business day — NOK 990 (≈ USD 92), one-off. The full Analysis tests what ChatGPT, Claude, and Google AI actually say about you when asked, and ships a prioritized fix list — NOK 4,900 (≈ USD 460), one-off. Card payment at Stripe checkout.' +
+        'Synlig Lite ships a FAQPage JSON-LD block for one page (3–5 Q&amp;A pairs) by email within one business day — USD 92, one-off. The full Analysis tests what ChatGPT, Claude, and Google AI actually say about you when asked, and ships a prioritized fix list — USD 460, one-off. Card payment in USD at Stripe checkout.' +
       '</p>' +
       formHtml +
       '<p style="margin-top:10px"><button type="button" class="audit-result-redo" onclick="resetAudit()">Try another domain</button></p>';
