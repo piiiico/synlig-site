@@ -872,6 +872,13 @@ function resetAudit() {
 // "what domain am I auditing" step — one less reason to bounce. Added
 // 2026-06-18 after dogfooding 3 in-flight outreach prospects (Dfns/Fordefi/
 // SpherePay) showed the inline audit was friction-locked behind a blank input.
+//
+// 2026-06-26: ?auto=1 (opt-in) triggers immediate audit submission. The AEO
+// MCP free-tool CTA passes ?url=<domain>&auto=1 so a visitor who clicked from
+// their AI client lands with the audit already running — collapses
+// "type domain, click Score, wait" into "wait". Cold-email links keep the
+// no-auto prefill so the prospect chooses when to start (they may already
+// know the score and just want to talk).
 (function prefillFromQuery(){
   try {
     const qp = new URLSearchParams(window.location.search);
@@ -881,6 +888,28 @@ function resetAudit() {
     if (!domain || !domain.includes('.') || domain.length < 4) return;
     const input = document.getElementById('auditInput');
     if (input && !input.value) input.value = domain;
+    if (qp.get('auto') === '1') {
+      const form = document.getElementById('auditForm');
+      if (form) {
+        // Defer to next frame so layout + scroll target are ready before
+        // fetch + result render. requestSubmit() goes through onsubmit
+        // (runAudit) so all existing guards (rate-limit handling, mailto
+        // fallback) still fire.
+        requestAnimationFrame(function () {
+          if (typeof form.requestSubmit === 'function') {
+            form.requestSubmit();
+          } else {
+            form.dispatchEvent(new Event('submit', { cancelable: true }));
+          }
+          // Scroll the audit panel into view so the visitor sees the
+          // running state immediately on AI-client click-through.
+          var box = document.getElementById('auditBox');
+          if (box && typeof box.scrollIntoView === 'function') {
+            box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+      }
+    }
   } catch (e) { /* swallow — prefill is best-effort */ }
 })();
 
