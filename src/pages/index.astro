@@ -1,0 +1,740 @@
+---
+/**
+ * synligdigital.no forsiden — Astro-port (fase 2, 2026-08-08).
+ *
+ * Budskapet er IKKE omskrevet her: hero, bevis og tall er portert fra
+ * index.html slik de gikk live i fase 0 samme dag. Det som ER endret er
+ * tilbudslaget, fordi det var oppgavens punkt 4: JSON-LD solgte fortsatt
+ * det forlatte SMB-prissettet.
+ *
+ * Klassenavn som ser "gammeldagse" ut (.hero-cta, .service-card, .service-name,
+ * .service-price, .faq-answer-inner) er KONTRAKT, ikke stil: build.ts sin
+ * pricing-parity-gate og deploy.ts sin live-rute-gate leser dem som strenger.
+ * Bytter du dem, bytter du gaten i samme commit — ikke etterpå.
+ */
+import Base from "../layouts/Base.astro";
+import { HOMEPAGE_JSONLD } from "../data/homepage-jsonld";
+
+const MAILTO =
+  "mailto:hei@synligdigital.no?subject=Sitert-m%C3%A5ling&body=Selskap%3A%20%0AMarked%2Fkategori%20vi%20vil%20m%C3%A5les%20i%3A%20%0AKonkurrenter%20vi%20sammenlignes%20med%3A%20";
+
+const TITLE = "Synlig Digital | Blir merkevaren din sitert når AI svarer?";
+const DESCRIPTION =
+  "Vi måler om AI-svar siterer merkevaren din. Fem kjøpsnære spørsmål fra ditt marked, minst ni kjøringer over flere dager, og navn på hvem som blir sitert i stedet. Fra 9 900 kr.";
+
+const benchmarkRows = [
+  {
+    name: "Tannlegeklinikk A",
+    meta: "Stavanger · 2 endodontister, 8 tannleger",
+    bransje: "Tannlege",
+    score: 24,
+    fill: "fill-red",
+    grade: "F",
+    gradeClass: "grade-f",
+    highlight: false,
+  },
+  {
+    name: "Tannlegeklinikk B",
+    meta: "Stavanger · ortodonti/Invisalign-spesialist",
+    bransje: "Tannlege",
+    score: 44,
+    fill: "fill-red",
+    grade: "D",
+    gradeClass: "grade-d",
+    highlight: false,
+  },
+  {
+    name: "Advokatfirma A",
+    meta: "Stavanger · allmennpraksis",
+    bransje: "Advokat",
+    score: 47,
+    fill: "fill-red",
+    grade: "D",
+    gradeClass: "grade-d",
+    highlight: false,
+  },
+  {
+    name: "Advokatfirma B",
+    meta: "Stavanger · forretningsjus",
+    bransje: "Advokat",
+    score: 56,
+    fill: "fill-orange",
+    grade: "C",
+    gradeClass: "grade-c",
+    highlight: false,
+  },
+  {
+    name: "Tannlegeklinikk C",
+    meta: "Stavanger · 5 tannleger, implantat og estetikk",
+    bransje: "Tannlege",
+    score: 61,
+    fill: "fill-orange",
+    grade: "C",
+    gradeClass: "grade-c",
+    highlight: false,
+  },
+  {
+    name: "Synlig",
+    meta: "Referansepunkt · AEO-optimalisert",
+    bransje: "Referanse",
+    score: 81,
+    fill: "fill-green",
+    grade: "B",
+    gradeClass: "grade-b",
+    highlight: true,
+  },
+];
+
+const faqs = [
+  {
+    q: "Hva er Answer Engine Optimization (AEO)?",
+    a: "AEO handler om å optimalisere bedriftens digitale tilstedeværelse slik at AI-assistenter som ChatGPT, Perplexity og Google AI Overview finner, forstår og anbefaler dere. Det inkluderer strukturerte data (schema.org), Google Business Profile, innholdsoptimalisering og anmeldelsesstrategi. Målet er å være det svaret AI gir, ikke bare å rangere på Google.",
+  },
+  {
+    q: "Hvordan er AEO forskjellig fra vanlig SEO?",
+    a: "SEO handler om å rangere blant ti blå lenker på Google. AEO handler om å bli det ene svaret AI gir. AI-assistenter leser nettsiden din annerledes enn Google: de trenger strukturerte data, tydelige entiteter (hvem, hva, hvor) og innhold som direkte svarer på spørsmål. Mange bedrifter med god SEO scorer dårlig på AEO fordi de mangler maskinlesbar informasjon.",
+  },
+  {
+    q: "Hvilke bedrifter har mest å vinne på AEO?",
+    a: "To segmenter primært. (1) Norske B2B SaaS (regnskaps-SaaS, HR-SaaS, fintech, marketing-SaaS) direkte. AI-assistenter er det første kjøparen spør når de vurderer ny SaaS (&laquo;beste norske regnskaps-SaaS for byrå&raquo;), og ChatGPT-trafikk konverterte 9× bedre enn Google organisk (15,9% vs 1,76%, Seer Interactive 2025). (2) Merkevareportefølje og e-handel (sportsutstyr, lifestyle, retail), typisk levert via byråpartnerar med 70/30 co-delivery-split. Felles for begge: snittscore er 43&ndash;55 av 100 på AI-synlighet, og maskinlesbare signal (schema.org, FAQPage, alternative-to- eller Product-data, llms.txt) manglar hos 80%+ av bedriftene vi har skannet.",
+  },
+  {
+    q: "Hvor lang tid tar det å se resultater?",
+    a: "De fleste bedrifter ser endringer i AI-svarene innen 4&ndash;8 uker etter implementering. Strukturerte data og Google Business Profile-endringer fanges opp relativt raskt. Innholdsendringer tar noe lengre tid. Vi måler AI-synlighet månedlig slik at du ser utviklingen konkret.",
+  },
+  {
+    q: "Må vi bygge om nettsiden vår?",
+    a: "Nei. AEO-tiltakene legges oppå eksisterende nettside. Vi legger til schema.org-markup (usynlige metadata), optimaliserer Google Business Profile, og lager innhold som svarer på vanlige spørsmål. Selve nettsiden beholder designet sitt; vi gjør den lesbar for AI.",
+  },
+  {
+    // Prisene her MÅ matche JSON-LD Offer.price — build.ts pricing-parity-gaten
+    // leser nøyaktig denne .faq-answer-inner-blokka og feiler bygget ellers.
+    q: "Hva koster det?",
+    a: "Sitert-måling koster 9&nbsp;900&nbsp;kr eks. mva (engangs). Du får fem kjøpsnære spørsmål kjørt minst ni ganger over flere dager, med navn på hvem som siteres i stedet. Faktura med 14 dagers frist, levering på e-post, ingen møter. Er du en mindre bedrift som først og fremst vil ha selve nettsiden i stand, starter Synlig Lite &mdash; FAQPage AEO på 990&nbsp;kr (engangs, levering innen 1 virkedag). Implementering og løpende overvåking ligger på /priser. AI-synlighetssjekken på sjekk.synligdigital.no er gratis.",
+  },
+];
+---
+
+<Base
+  title={TITLE}
+  description={DESCRIPTION}
+  canonical="https://synligdigital.no/"
+  ogTitle="Blir merkevaren din sitert når AI svarer?"
+  ogDescription={DESCRIPTION}
+  jsonLd={HOMEPAGE_JSONLD}
+>
+  <main id="main-content">
+    <!-- Hero -->
+    <section class="hero border-b border-line py-20 sm:py-28">
+      <div class="container">
+        <div class="hero-badge">Sitert-måling for merkevarer</div>
+        <h1
+          class="mt-6 max-w-3xl text-4xl font-bold leading-[1.1] tracking-tight text-ink sm:text-6xl"
+        >
+          Blir merkevaren din <span class="text-brand-ink">sitert</span> når AI svarer?
+        </h1>
+        <p class="hero-sub">
+          En AEO-score sier hva siden din har på plass. Den sier ikke om
+          Perplexity faktisk lenker til deg når noen spør om ditt marked. Vi
+          måler det siste.
+        </p>
+        <a href={MAILTO} class="hero-cta">Be om en sitert-måling →</a>
+        <p class="hero-note">
+          Fem kjøpsnære spørsmål fra ditt marked, stilt minst ni ganger over
+          flere dager, med navn på hvem som blir sitert i stedet for dere. Fra 9
+          900 kr eks. mva, faktura med 14 dagers frist. Levering på e-post, ingen
+          møter.<br />
+          Se standarden før du betaler: <a
+            href="/leaderboard#skaar-mot-sitering"
+            class="hero-tool-link">ni kjøringer publisert på leaderboardet →</a
+          > &nbsp;·&nbsp; Mindre bedrift? <a
+            href="https://sjekk.synligdigital.no/"
+            class="hero-tool-link">gratis AEO-sjekk av forsiden →</a
+          >
+        </p>
+        <div class="hero-proof">
+          <svg
+            class="hero-proof-check"
+            aria-hidden="true"
+            viewBox="0 0 20 20"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><polyline points="4 10 8 14 16 6"></polyline></svg
+          >
+          <span
+            >Synlig sin egen AI-synlighet: <strong class="text-ink"
+              >5/5 Agent-Native</strong
+            > (toppnivå) på Cloudflares uavhengige agent-skanner.</span
+          >
+          <a href="/bevis/agent-readiness" rel="noopener">Verifiser →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="problem py-20" id="problem">
+      <div class="container">
+        <div class="grid items-start gap-12 lg:grid-cols-2">
+          <div class="copy">
+            <h2
+              class="mb-6 text-3xl font-bold tracking-tight text-ink sm:text-[2.1rem]"
+            >
+              Kundene dine har sluttet å bare google.
+            </h2>
+            <p>
+              Stadig flere spør AI-assistenter direkte: <em
+                >«Hvilken tannlege i Stavanger er best på rotfylling?»</em
+              >
+            </p>
+            <p>
+              AI gir ett til tre svar, og ignorerer alle andre. Hvis du ikke er
+              blant dem, finnes du ikke.
+            </p>
+            <p>
+              Ifølge HubSpot sier <strong>79%</strong> av dei som allereie brukar
+              AI til netthandel at opplevinga er betre enn tradisjonelt søk. Skiftet
+              er allereie i gong blant dei som har prøvd.
+            </p>
+            <p>
+              Det handler ikke om kompetansen din. Det handler om at nettsiden og
+              de digitale profilene dine ikke er satt opp på en måte AI-systemer
+              forstår.
+            </p>
+            <p><strong>Det kan fikses.</strong></p>
+          </div>
+          <div class="stat-box">
+            <div class="demo-query">
+              <em
+                >«Anbefal en tannlege i Stavanger med spesialkompetanse på
+                endodonti»</em
+              >
+            </div>
+            <ul class="demo-results">
+              <li>
+                <span class="check">✓</span><span
+                  >Colosseum Tannlege: nevnt med navngitt spesialist</span
+                >
+              </li>
+              <li>
+                <span class="check">✓</span><span
+                  >Oris Dental Madla: anbefalt som alternativ</span
+                >
+              </li>
+              <li>
+                <span class="check">✓</span><span
+                  >Hinna Tannlegesenter: sitert fra anmeldelser</span
+                >
+              </li>
+              <li>
+                <span class="miss">✕</span><span class="you"
+                  >Din klinikk (to endodontister): ikke nevnt</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case -->
+    <section class="case rule py-20" id="case">
+      <div class="container">
+        <div class="section-label">Ekte analyse</div>
+        <h2 class="text-3xl font-bold tracking-tight text-ink sm:text-[2.1rem]">
+          Tannlegeklinikk i Stavanger: Score 24 av 100
+        </h2>
+        <p class="case-intro">
+          Vi analyserte AI-synligheten til en klinikk med to sertifiserte
+          endodontister, implantat-spesialist og åtte tannleger. Resultatene var
+          nedslående, men problemene var enkle å fikse.
+        </p>
+
+        <div class="mt-10 grid gap-5 sm:grid-cols-3">
+          <div class="case-card">
+            <div class="score bad">0/25</div>
+            <div class="score-label">AI-synlighet</div>
+            <div class="score-detail">
+              Null av fire testspørringer returnerte klinikken. Konkurrenter med
+              dårligere kompetanse ble anbefalt i stedet.
+            </div>
+          </div>
+          <div class="case-card">
+            <div class="score bad">0/20</div>
+            <div class="score-label">Strukturerte data</div>
+            <div class="score-detail">
+              Ingen schema.org-markup, ingen meta-tagger, ingen strukturert
+              informasjon AI kan lese.
+            </div>
+          </div>
+          <div class="case-card">
+            <div class="score meh">7/15</div>
+            <div class="score-label">Anmeldelser</div>
+            <div class="score-detail">
+              4.5 stjerner på legelisten, men ratingene lever i en silo, ikke
+              synlige for AI.
+            </div>
+          </div>
+        </div>
+
+        <div class="case-quote">
+          <strong>Største funn:</strong> Klinikken har dobbelt så mange endodontister
+          som Colosseum, men Colosseum eier all AI-synlighet fordi de har en dedikert
+          spesialistside. Hver pasient som spør etter «endodonti Stavanger» og ringer
+          Colosseum i stedet, er en pasient verdt 5&nbsp;000&ndash;15&nbsp;000&nbsp;kr.
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href="/case/pierstop" class="btn-solid"
+            >Metode-case: Pierstop.com →</a
+          >
+          <a href="/case/nordic-lithium" class="btn-outline"
+            >Metode-case: Nordic Lithium →</a
+          >
+        </div>
+        <p class="mt-4 text-sm text-muted">
+          Begge er nærstående part-implementeringer (eierskapsopplysning på
+          respektive case-side). Arm's-length kundecase under arbeid.
+        </p>
+      </div>
+    </section>
+
+    <!-- Benchmark -->
+    <section class="benchmark rule py-20" id="benchmark">
+      <div class="container">
+        <div class="section-label">Markedsdata</div>
+        <h2 class="text-3xl font-bold tracking-tight text-ink sm:text-[2.1rem]">
+          Bransje-benchmark: AI-synlighetsscore
+        </h2>
+        <p class="benchmark-intro mt-3 max-w-2xl text-lg leading-relaxed text-muted">
+          Vi har analysert AI-synligheten til 30+ norske bedrifter på tvers av 9
+          bransjar (<a
+            href="/leaderboard"
+            class="text-brand-ink underline underline-offset-2"
+            >Norges AEO-leaderboard</a
+          >). Primært B2B SaaS direkte, og merkevareportefølje / e-handel via
+          byråpartnerar (70/30 co-delivery). Slik ser det ut i dag, uten
+          optimalisering.
+        </p>
+
+        <div class="overflow-x-auto">
+          <table class="benchmark-table">
+            <thead>
+              <tr>
+                <th>Bransje / bedrift</th>
+                <th>Bransje</th>
+                <th>AI-synlighetsscore</th>
+                <th>Karakter</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                benchmarkRows.map((r) => (
+                  <tr class={r.highlight ? "bg-brand-wash" : undefined}>
+                    <td>
+                      <strong>{r.name}</strong>
+                      <br />
+                      <span class="text-xs text-muted">{r.meta}</span>
+                    </td>
+                    <td>{r.bransje}</td>
+                    <td>
+                      <div class="score-bar-wrap">
+                        <div class="score-bar-bg">
+                          <span
+                            class={`score-bar-fill ${r.fill}`}
+                            style={`width:${r.score}%`}
+                          />
+                        </div>
+                        <span class="score-num">{r.score}/100</span>
+                      </div>
+                    </td>
+                    <td>
+                      <span class={`grade-badge ${r.gradeClass}`}>{r.grade}</span>
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="benchmark-note">
+          <strong>Gjennomsnitt uten optimalisering: 46/100.</strong> Synlig scorer
+          81/100 (B) etter AEO-optimalisering. Structured data er den desidert største
+          enkeltsvakheten. De fleste scorer 0 av 25 mulige poeng på schema.org-markup.
+        </div>
+
+        <div class="benchmark-cta">
+          <p>Lurer på hvor din bedrift scorer? Sjekk selv gratis, uten registrering.</p>
+          <a href="https://sjekk.synligdigital.no/" target="_blank" rel="noopener"
+            >Sjekk din AI-synlighetsscore →</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- AEO explanation (dark) -->
+    <section class="aeo bg-deep py-20 text-paper" id="aeo">
+      <div class="container">
+        <div class="grid gap-12 lg:grid-cols-2">
+          <div>
+            <h2 class="text-3xl font-bold tracking-tight sm:text-[2.1rem]">
+              Hva er Answer Engine Optimization?
+            </h2>
+            <p class="mt-5 text-lg leading-relaxed text-paper/75">
+              AEO handler om å optimalisere bedriftens digitale tilstedeværelse
+              slik at AI-assistenter kan finne, forstå og anbefale dere.
+            </p>
+            <p class="mt-4 text-lg leading-relaxed text-paper/75">
+              Det betyr riktig schema-markup, optimalisert Google Business
+              Profile, innhold som svarer på reelle spørsmål, og anmeldelser som
+              AI kan sitere.
+            </p>
+            <p class="mt-4 text-lg leading-relaxed text-paper/75">
+              Tradisjonell SEO handler om å rangere på side 1. AEO handler om å
+              være det ene svaret AI gir.
+            </p>
+          </div>
+          <div class="grid grid-cols-2 gap-x-8 gap-y-8 self-start">
+            <div class="aeo-stat">
+              <div class="num">800M</div>
+              <div class="label">Ukentlige ChatGPT-brukere</div>
+            </div>
+            <div class="aeo-stat">
+              <div class="num">60%</div>
+              <div class="label">Av søk ender nå uten klikk</div>
+            </div>
+            <div class="aeo-stat">
+              <div class="num">1-3</div>
+              <div class="label">Svar fra AI (ikke 10 blå lenker)</div>
+            </div>
+            <div class="aeo-stat">
+              <div class="num">−27%</div>
+              <div class="label">Nedgang i organisk trafikk YoY (HubSpot 2026)</div>
+            </div>
+            <p class="source-note col-span-2">
+              Kilder: OpenAI 2025 (ChatGPT ukentlege brukarar), Seer Interactive
+              2026 (zero-click), HubSpot State of Marketing 2026
+              (organisk-nedgang).
+            </p>
+          </div>
+        </div>
+
+        <h3 class="mt-16 text-xl font-semibold">
+          Hva er forskjellen mellom AEO og SEO?
+        </h3>
+        <div class="mt-4 overflow-x-auto">
+          <table class="aeo-table w-full border-collapse">
+            <thead>
+              <tr>
+                <th>Egenskap</th>
+                <th>Tradisjonell SEO</th>
+                <th>AEO (Answer Engine)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mål</td>
+                <td>Side 1 på Google</td>
+                <td>Bli AI-svaret</td>
+              </tr>
+              <tr>
+                <td>Kanal</td>
+                <td>Søkemotor</td>
+                <td>ChatGPT, Perplexity, AI Overviews</td>
+              </tr>
+              <tr>
+                <td>Teknologi</td>
+                <td>Nøkkelord og lenker</td>
+                <td>Schema.org og strukturert innhold</td>
+              </tr>
+              <tr>
+                <td>Konverteringsrate</td>
+                <td>1,76% (Google organisk)</td>
+                <td>15,9% (ChatGPT-trafikk)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="source-note">
+          Kilde: Seer Interactive 2025 (case study, 1 370 konverteringar / 11 000
+          sesjonar mot 14 mill. organiske, okt 2024–apr 2025). ChatGPT-trafikk
+          konverterte ca. 9× betre enn Google organisk.
+        </p>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="about py-20" id="om">
+      <div class="container-narrow copy">
+        <h2 class="mb-6 text-3xl font-bold tracking-tight text-ink sm:text-[2.1rem]">
+          Hvem er Synlig?
+        </h2>
+        <p>
+          Synlig er Norges ledende AEO-ekspert og spesialiserer seg på Answer
+          Engine Optimization, kunsten å gjøre bedrifter synlige i AI-assistenter
+          som ChatGPT, Perplexity og Google AI Overview. Vi holder til i
+          Stavanger og betjener norske bedrifter over hele landet.
+        </p>
+        <p>
+          <strong>Håkon Åmdal</strong> er AEO-spesialisten og grunnleggeren bak Synlig.
+          Med daglig analyse av hvordan AI-assistenter forstår og anbefaler norske
+          bedrifter, vet Håkon eksakt hva som skal til for at din bedrift skal komme
+          med i svarene.
+        </p>
+        <p>
+          Vi tilbyr sitert-måling av AI-svar, implementering av strukturerte data
+          (schema.org), Google Business Profile-optimalisering og løpende
+          overvåking av hvordan AI-modeller omtaler og anbefaler din bedrift.
+        </p>
+        <p>
+          Kontakt oss på <a href="mailto:hei@synligdigital.no"
+            >hei@synligdigital.no</a
+          >, 4006 Stavanger, Norge.
+        </p>
+        <p class="text-sm">Sist oppdatert: august 2026</p>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how rule bg-wash py-20">
+      <div class="container">
+        <div class="section-header">
+          <h2>Hvordan fungerer AEO-prosessen?</h2>
+          <p>
+            Fra usynlig til anbefalt på tre steg. Prosessen tar typisk 4&ndash;8
+            uker, avhengig av nettstedets utgangspunkt og hvilke tiltak som
+            prioriteres.
+          </p>
+        </div>
+        <div class="mt-10 grid gap-8 sm:grid-cols-3">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Vi analyserer</h3>
+            <p>
+              Vi tester hva AI faktisk svarer når kunder spør etter dine
+              tjenester. Du får en score og en konkret rapport.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Vi fikser fundamentet</h3>
+            <p>
+              Strukturerte data, Google Business Profile, tjenestesider og
+              anmeldelsesstrategi. De tiltakene som gir mest effekt først.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Vi overvaker</h3>
+            <p>
+              Månedlig sjekk av AI-synlighet, innholdsproduksjon, og
+              rapportering. Så du vet at investeringen gir avkastning.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog preview -->
+    <section class="blog-preview py-20" id="blogg-preview">
+      <div class="container">
+        <div class="section-header">
+          <h2>Siste fra bloggen</h2>
+          <p>Innsikt, analyser og guider om AEO for norske bedrifter.</p>
+        </div>
+        <div class="mt-8 grid gap-6 sm:grid-cols-2">
+          <a href="/blogg/hva-er-aeo" class="blog-card">
+            <span class="blog-tag">Guide</span>
+            <h3>Hva er AEO? En komplett guide til Answer Engine Optimization</h3>
+            <p>
+              AEO er den nye SEO. Lær hva det er, og hvorfor norske bedrifter
+              trenger det nå i ChatGPT, Perplexity og Google AI Overview.
+            </p>
+            <span class="blog-meta">8. mars 2026 · 10 min lesing</span>
+          </a>
+        </div>
+        <div class="mt-8">
+          <a href="/blogg" class="blog-all-link">Se alle artikler →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services / pricing -->
+    <section class="services rule bg-wash py-20" id="tjenester">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Tjenester og priser</div>
+          <h2>Én måling, én pris, ingen møter.</h2>
+          <p>
+            Hovedleveransen er sitert-målingen. Er du en mindre bedrift som først
+            og fremst vil ha selve nettsiden i stand, kan du bestille Synlig Lite
+            direkte — uten samtale.
+          </p>
+        </div>
+
+        <div class="mt-10 grid items-start gap-6 lg:grid-cols-2">
+          <!-- FLAGGSKIP. id="sitert-maaling" + featured leses av deploy.ts sin
+               live-rute-gate for "/". Endrer du id eller etiketten, endrer du
+               gaten i samme commit (2026-08-08: gaten pinnet tidligere Lite-
+               kortet, som var instansen og ikke invarianten). -->
+          <div class="service-card featured" id="sitert-maaling">
+            <div class="service-name">Sitert-måling</div>
+            <div class="service-price">9 900 kr</div>
+            <div class="service-price-note">
+              Engangs, eks. mva · faktura med 14 dagers frist
+            </div>
+            <p class="service-desc">
+              Vi måler om AI-svarene siterer merkevaren din i ditt marked — og
+              navngir hvem som blir sitert i stedet.
+            </p>
+            <ul class="service-list">
+              <li>Fem kjøpsnære spørsmål fra ditt marked, valgt sammen med dere</li>
+              <li>Minst ni kjøringer over flere dager, byte-identiske prompt</li>
+              <li>Navn på hvem som siteres i stedet, og hvilke kilder svaret bruker</li>
+              <li>Skriftlig leveranse på e-post — ingen møter å booke</li>
+              <li>Samme metode som er publisert på leaderboardet</li>
+            </ul>
+            <a href={MAILTO} class="service-cta service-cta-fill"
+              >Be om en sitert-måling →</a
+            >
+            <a href="/leaderboard#skaar-mot-sitering" class="service-cta-secondary"
+              >Se metoden kjørt offentlig først →</a
+            >
+          </div>
+
+          <!-- Demotert SMB-selvbetjening. 2026-08-08: hero-en ruter ikke hit
+               lenger. Lite beholdes fordi det fortsatt er det laveste
+               bestillbare inngangspunktet (build.ts TIER_SURFACE_REGISTRY).
+               4 900 / 14 900 / løpende ble tatt av forsiden samme dag: JSON-LD
+               fortalte hver crawler om et prissett vi hadde lagt ned. De lever
+               videre på /priser. -->
+          <div class="service-card" id="lite">
+            <div class="service-name">Synlig Lite</div>
+            <div class="service-price">fra 990 kr</div>
+            <div class="service-price-note">FAQPage for én side, 1 virkedag</div>
+            <p class="service-desc">
+              Mindre bedrift? Få det maskinlesbare grunnlaget på plass på én side,
+              uten prosjekt.
+            </p>
+            <ul class="service-list">
+              <li>FAQPage schema for én side du velger</li>
+              <li>3–5 spørsmål-svar-par grunnet i innholdet ditt</li>
+              <li>JSON-LD blob klar til innliming i &lt;head&gt;</li>
+              <li>Levering på e-post innen 1 virkedag</li>
+              <li>Engangsbetaling — ingen oppfølging</li>
+            </ul>
+            <form method="POST" action="/api/lead-capture" class="lead-form">
+              <label class="lead-form-label" for="lead-email-home-lite"
+                >Skriv inn e-post for å starte →</label
+              >
+              <input
+                type="email"
+                id="lead-email-home-lite"
+                name="email"
+                class="lead-form-input"
+                placeholder="din@firma.no"
+                required
+                autocomplete="email"
+                maxlength="254"
+              />
+              <input type="hidden" name="tier" value="lite" />
+              <input type="hidden" name="slug" value="home-lite" />
+              <button
+                type="submit"
+                class="service-cta service-cta-outline lead-form-button"
+                >Bestill med kort →</button
+              >
+            </form>
+            <a
+              href="/faktura?slug=home-lite"
+              class="service-cta service-cta-faktura faktura-link"
+              data-email-input="lead-email-home-lite"
+              >Få faktura med 14 dagers betalingsfrist →</a
+            >
+            <a href="/blogg/aeo-lite-faqpage-990-kr" class="service-cta-secondary"
+              >Les mer om Lite-pakken →</a
+            >
+          </div>
+        </div>
+
+        <p class="mt-6 text-sm text-muted">
+          Skal fundamentet implementeres etterpå — schema, Google Business
+          Profile, aggregatorar — eller vil du ha løpende overvåking? Det ligger
+          på <a href="/priser" class="text-brand-ink underline underline-offset-2"
+            >prissiden</a
+          >.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq py-20" id="faq">
+      <div class="container-narrow">
+        <div class="section-header">
+          <h2>Hva lurer du på om AEO og AI-synlighet?</h2>
+          <p>
+            De vanligste spørsmålene vi får fra norske bedrifter om Answer Engine
+            Optimization.
+          </p>
+        </div>
+        <div class="faq-list mt-8 border-t border-line">
+          {
+            faqs.map((f, i) => (
+              <div class="faq-item">
+                <button
+                  class="faq-question"
+                  aria-expanded="false"
+                  aria-controls={`faq-answer-${i + 1}`}
+                  onclick="toggleFaq(this)"
+                >
+                  {f.q}
+                </button>
+                <div class="faq-answer" id={`faq-answer-${i + 1}`} aria-hidden="true">
+                  <div class="faq-answer-inner" set:html={f.a} />
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact rule bg-wash py-20" id="kontakt">
+      <div class="container-narrow">
+        <h2 class="text-3xl font-bold tracking-tight text-ink sm:text-[2.1rem]">
+          Klar til å måle?
+        </h2>
+        <p class="mt-3 text-lg leading-relaxed text-muted">
+          Send oss selskapet, markedet dere vil måles i, og hvem dere blir
+          sammenlignet med. Vi svarer skriftlig innen én arbeidsdag med spørsmål
+          vi foreslår å kjøre og en dato for leveranse.
+        </p>
+        <div class="contact-card">
+          <h3 class="text-lg font-semibold text-ink">Dette får du på e-post:</h3>
+          <ul class="contact-items">
+            <li>Hvor ofte AI-svarene siterer merkevaren din i ditt marked</li>
+            <li>Navn på hvem som blir sitert i stedet, og hvilke kilder de bruker</li>
+            <li>Rådataene bak: spørsmål, modeller, dato og antall kjøringer</li>
+          </ul>
+          <a href={MAILTO} class="email-link">Be om en sitert-måling →</a>
+          <p class="promise">
+            Vi svarer skriftlig innen én arbeidsdag. Ingen møter.
+          </p>
+          <p class="mt-4 text-sm text-muted">
+            Mindre bedrift som bare vil se hvordan forsiden ser ut for AI? <a
+              href="https://sjekk.synligdigital.no/?utm_source=home&utm_medium=contact-cta&utm_campaign=audit-rapport"
+              class="text-brand-ink underline underline-offset-2"
+              >Kjør den gratis AEO-sjekken →</a
+            >
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

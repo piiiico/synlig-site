@@ -1,0 +1,407 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Synlig Digital — design system (fase 2, 2026-08-08)
+
+   Inherited from memory/knowledge/design-system-agentlair.md, which is the
+   only taste-verdict we have from Håkon ("designet var mye bedre",
+   2026-03-29): light-mode-first, DM Sans, oklch semantic tokens, generous
+   vertical rhythm, no decorative chrome.
+
+   Brand carry-over: the emerald accent (#059669) from the hand-written site
+   is kept as `brand` so the page still reads as Synlig, not as a template.
+
+   Fonts are SELF-HOSTED. The old page loaded Inter from fonts.googleapis.com
+   in the critical render path (two extra DNS+TLS handshakes before first
+   paint, and a third-party dependency on a page whose whole product claim is
+   that machines can read it).
+   ───────────────────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/dm-sans/DMSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/dm-sans/DMSans-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/dm-sans/DMSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, sans-serif;
+
+  --color-paper: oklch(1 0 0);
+  --color-wash: oklch(0.978 0.003 255);
+  --color-ink: oklch(0.21 0.015 255);
+  --color-muted: oklch(0.52 0.014 255);
+  --color-line: oklch(0.915 0.005 255);
+  --color-brand: oklch(0.6 0.13 163);
+  --color-brand-ink: oklch(0.47 0.11 163);
+  --color-brand-wash: oklch(0.965 0.025 163);
+  --color-deep: oklch(0.24 0.028 255);
+  --color-alert: oklch(0.58 0.19 27);
+  --color-warn: oklch(0.72 0.16 70);
+
+  --radius-card: 10px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── Layout primitives ─────────────────────────────────────────────────── */
+@layer components {
+  .container {
+    @apply mx-auto w-full max-w-5xl px-6;
+  }
+  .container-narrow {
+    @apply mx-auto w-full max-w-3xl px-6;
+  }
+  .section-label {
+    @apply mb-3 text-xs font-medium uppercase tracking-[0.14em] text-muted;
+  }
+  .section-header h2 {
+    @apply text-3xl font-bold tracking-tight text-ink sm:text-[2.1rem];
+  }
+  .section-header p {
+    @apply mt-3 max-w-2xl text-lg text-muted;
+  }
+  .rule {
+    @apply border-t border-line;
+  }
+
+  /* ── Navigation ─────────────────────────────────────────────────────── */
+  .nav-logo {
+    @apply text-lg font-bold tracking-tight text-ink no-underline;
+  }
+  .nav-links a {
+    @apply text-sm text-muted no-underline transition-colors hover:text-ink;
+  }
+  .nav-cta {
+    @apply rounded-md border border-ink px-3 py-1.5 !text-ink hover:bg-ink hover:!text-paper;
+  }
+
+  /* ── Hero ───────────────────────────────────────────────────────────── */
+  .hero-badge {
+    @apply inline-block rounded-full border border-line bg-wash px-3 py-1 text-xs font-medium uppercase tracking-[0.12em] text-muted;
+  }
+  .hero-sub {
+    @apply mt-6 max-w-2xl text-xl leading-relaxed text-muted;
+  }
+  .hero-cta {
+    @apply mt-8 inline-block rounded-md bg-ink px-6 py-3.5 text-base font-semibold text-paper no-underline transition-opacity hover:opacity-85;
+  }
+  .hero-note {
+    @apply mt-5 max-w-2xl text-sm leading-relaxed text-muted;
+  }
+  .hero-tool-link {
+    @apply font-medium text-brand-ink underline underline-offset-2;
+  }
+  .hero-proof {
+    @apply mt-8 flex max-w-2xl flex-wrap items-center gap-x-2.5 gap-y-1 rounded-card border border-line bg-wash px-4 py-3 text-sm text-muted;
+  }
+  .hero-proof-check {
+    @apply shrink-0 text-brand-ink;
+  }
+  .hero-proof a {
+    @apply font-medium text-brand-ink underline underline-offset-2;
+  }
+
+  /* ── Prose blocks ───────────────────────────────────────────────────── */
+  .copy p {
+    @apply mb-4 text-lg leading-relaxed text-muted;
+  }
+  .copy p strong {
+    @apply text-ink;
+  }
+  .copy a {
+    @apply text-brand-ink underline underline-offset-2;
+  }
+
+  /* ── Demo query box ─────────────────────────────────────────────────── */
+  .demo-query {
+    @apply rounded-t-card border border-line bg-wash px-5 py-4 text-base text-ink;
+  }
+  .demo-results {
+    @apply space-y-2.5 rounded-b-card border border-t-0 border-line px-5 py-4 text-sm text-muted;
+  }
+  .demo-results li {
+    @apply flex gap-2.5;
+  }
+  .demo-results .check {
+    @apply font-bold text-brand-ink;
+  }
+  .demo-results .miss {
+    @apply font-bold text-alert;
+  }
+  .demo-results .you {
+    @apply font-medium text-ink;
+  }
+
+  /* ── Case cards ─────────────────────────────────────────────────────── */
+  .case-intro {
+    @apply mt-3 max-w-2xl text-lg leading-relaxed text-muted;
+  }
+  .case-card {
+    @apply rounded-card border border-line p-5;
+  }
+  .case-card .score {
+    @apply text-3xl font-bold tracking-tight;
+  }
+  .case-card .score.bad {
+    @apply text-alert;
+  }
+  .case-card .score.meh {
+    @apply text-warn;
+  }
+  .case-card .score-label {
+    @apply mt-1 text-sm font-semibold text-ink;
+  }
+  .case-card .score-detail {
+    @apply mt-2 text-sm leading-relaxed text-muted;
+  }
+  .case-quote {
+    @apply mt-8 rounded-card border-l-2 border-brand bg-wash px-6 py-5 text-base leading-relaxed text-muted;
+  }
+  .case-quote strong {
+    @apply text-ink;
+  }
+  .btn-solid {
+    @apply inline-block rounded-md bg-brand-ink px-5 py-2.5 text-sm font-semibold text-paper no-underline hover:opacity-85;
+  }
+  .btn-outline {
+    @apply inline-block rounded-md border border-brand-ink px-5 py-2.5 text-sm font-semibold text-brand-ink no-underline hover:bg-brand-wash;
+  }
+
+  /* ── Benchmark table ────────────────────────────────────────────────── */
+  .benchmark-table {
+    @apply mt-8 w-full border-collapse text-left text-sm;
+  }
+  .benchmark-table th {
+    @apply border-b border-line pb-3 pr-4 text-xs font-semibold uppercase tracking-[0.08em] text-muted;
+  }
+  .benchmark-table td {
+    @apply border-b border-line py-4 pr-4 align-middle text-muted;
+  }
+  .benchmark-table td strong {
+    @apply text-ink;
+  }
+  .score-bar-wrap {
+    @apply flex items-center gap-3;
+  }
+  .score-bar-bg {
+    @apply h-1.5 w-28 overflow-hidden rounded-full bg-line;
+  }
+  .score-bar-fill {
+    @apply block h-full rounded-full;
+  }
+  .fill-red {
+    @apply bg-alert;
+  }
+  .fill-orange {
+    @apply bg-warn;
+  }
+  .fill-green {
+    @apply bg-brand;
+  }
+  .score-num {
+    @apply tabular-nums text-ink;
+  }
+  .grade-badge {
+    @apply inline-block rounded px-2 py-0.5 text-xs font-bold text-paper;
+  }
+  .grade-f,
+  .grade-d {
+    @apply bg-alert;
+  }
+  .grade-c {
+    @apply bg-warn;
+  }
+  .grade-b {
+    @apply bg-brand;
+  }
+  .benchmark-note {
+    @apply mt-6 rounded-card border border-line bg-wash px-5 py-4 text-sm leading-relaxed text-muted;
+  }
+  .benchmark-note strong {
+    @apply text-ink;
+  }
+  .benchmark-cta {
+    @apply mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted;
+  }
+  .benchmark-cta a {
+    @apply font-semibold text-brand-ink underline underline-offset-2;
+  }
+
+  /* ── Dark AEO section ───────────────────────────────────────────────── */
+  .aeo-stat .num {
+    @apply text-3xl font-bold tracking-tight text-paper;
+  }
+  .aeo-stat .label {
+    @apply mt-1 text-sm text-paper/60;
+  }
+  .aeo-table th {
+    @apply border-b border-paper/20 px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-[0.08em] text-paper/60;
+  }
+  .aeo-table td {
+    @apply border-b border-paper/10 px-4 py-2.5 text-sm text-paper/85;
+  }
+  .source-note {
+    @apply mt-4 text-xs leading-relaxed text-paper/50;
+  }
+
+  /* ── Steps ──────────────────────────────────────────────────────────── */
+  .step-number {
+    @apply flex h-9 w-9 items-center justify-center rounded-full border border-line text-sm font-bold text-brand-ink;
+  }
+  .step h3 {
+    @apply mt-4 text-lg font-semibold text-ink;
+  }
+  .step p {
+    @apply mt-2 text-base leading-relaxed text-muted;
+  }
+
+  /* ── Blog cards ─────────────────────────────────────────────────────── */
+  .blog-card {
+    @apply block rounded-card border border-line p-6 no-underline transition-colors hover:border-ink/30;
+  }
+  .blog-tag {
+    @apply text-xs font-semibold uppercase tracking-[0.1em] text-brand-ink;
+  }
+  .blog-card h3 {
+    @apply mt-3 text-xl font-semibold tracking-tight text-ink;
+  }
+  .blog-card p {
+    @apply mt-2 text-base leading-relaxed text-muted;
+  }
+  .blog-meta {
+    @apply mt-4 block text-sm text-muted;
+  }
+  .blog-all-link {
+    @apply font-semibold text-brand-ink no-underline underline-offset-2 hover:underline;
+  }
+
+  /* ── Service / pricing cards ────────────────────────────────────────── */
+  .service-card {
+    @apply flex flex-col rounded-card border border-line bg-paper p-6;
+  }
+  .service-card.featured {
+    @apply border-2 border-brand shadow-[0_1px_24px_-12px_oklch(0.6_0.13_163)];
+  }
+  .service-name {
+    @apply text-lg font-bold tracking-tight text-ink;
+  }
+  .service-price {
+    @apply mt-2 text-3xl font-bold tracking-tight text-ink;
+  }
+  .service-price-note {
+    @apply mt-1 text-sm text-muted;
+  }
+  .service-desc {
+    @apply mt-4 text-base leading-relaxed text-muted;
+  }
+  .service-list {
+    @apply mt-4 space-y-2 text-sm text-muted;
+  }
+  .service-list li {
+    @apply relative pl-5 before:absolute before:left-0 before:text-brand-ink before:content-['→'];
+  }
+  .service-cta {
+    @apply mt-3 block w-full rounded-md px-4 py-2.5 text-center text-sm font-semibold no-underline;
+  }
+  .service-cta-fill {
+    @apply bg-ink text-paper hover:opacity-85;
+  }
+  .service-cta-outline {
+    @apply border border-ink text-ink hover:bg-wash;
+  }
+  .service-cta-faktura {
+    @apply border border-line text-muted hover:border-ink hover:text-ink;
+  }
+  .service-cta-secondary {
+    @apply mt-3 block text-center text-sm text-muted underline underline-offset-2 hover:text-ink;
+  }
+  .lead-form {
+    @apply mt-5;
+  }
+  .lead-form-label {
+    @apply block text-sm font-medium text-ink;
+  }
+  .lead-form-input {
+    @apply mt-2 w-full rounded-md border border-line px-3 py-2.5 text-sm text-ink outline-none focus:border-ink;
+  }
+
+  /* ── FAQ ────────────────────────────────────────────────────────────── */
+  .faq-item {
+    @apply border-b border-line;
+  }
+  .faq-question {
+    @apply flex w-full items-center justify-between gap-4 py-5 text-left text-lg font-medium text-ink;
+  }
+  .faq-question::after {
+    content: "+";
+    @apply text-xl text-muted;
+  }
+  .faq-item.open .faq-question::after {
+    content: "−";
+  }
+  .faq-answer {
+    @apply hidden;
+  }
+  .faq-item.open .faq-answer {
+    @apply block;
+  }
+  .faq-answer-inner {
+    @apply pb-6 text-base leading-relaxed text-muted;
+  }
+
+  /* ── Contact ────────────────────────────────────────────────────────── */
+  .contact-card {
+    @apply mt-8 rounded-card border border-line bg-wash p-8;
+  }
+  .contact-items {
+    @apply mt-4 space-y-2 text-base text-muted;
+  }
+  .contact-items li {
+    @apply relative pl-5 before:absolute before:left-0 before:text-brand-ink before:content-['→'];
+  }
+  .email-link {
+    @apply mt-6 inline-block rounded-md bg-ink px-5 py-3 text-sm font-semibold text-paper no-underline hover:opacity-85;
+  }
+  .promise {
+    @apply mt-3 text-sm text-muted;
+  }
+
+  /* ── Footer ─────────────────────────────────────────────────────────── */
+  .footer-links h4 {
+    @apply text-sm font-semibold text-ink;
+  }
+  .footer-links ul {
+    @apply mt-3 space-y-2 text-sm text-muted;
+  }
+  .footer-links a {
+    @apply text-muted no-underline hover:text-ink;
+  }
+}

@@ -1,0 +1,245 @@
+---
+/**
+ * Base layout — head, nav, footer.
+ *
+ * Head contract (learned the hard way, 3× on /analyse/komplett-aeo and once
+ * on og.png): title / description / og / h1 / lead are ONE layer. They are
+ * derived from the claim and never re-read, so they must be passed in as
+ * data — never hand-edited in a second place.
+ */
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  jsonLd?: unknown[];
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogTitle = title,
+  ogDescription = description,
+  jsonLd = [],
+} = Astro.props;
+
+const OG_IMAGE = "https://synligdigital.no/og-2026-08.png";
+---
+
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Håkon Åmdal" />
+    <meta property="article:published_time" content="2026-02-25T10:00:00Z" />
+    <meta property="article:modified_time" content="2026-08-08T22:00:00Z" />
+    <link rel="canonical" href={canonical} />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Synlig" />
+    <meta property="og:locale" content="nb_NO" />
+    <meta property="og:image" content={OG_IMAGE} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter Card. Same claim as og:* — this pair drifted apart for months
+         while the body said something else entirely. -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={ogDescription} />
+    <meta name="twitter:image" content={OG_IMAGE} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Fonts are self-hosted (/fonts/dm-sans/*). No fonts.googleapis.com in
+         the critical render path — see src/styles/global.css. -->
+    <link
+      rel="preload"
+      href="/fonts/dm-sans/DMSans-Regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+
+    {
+      jsonLd.map((node) => (
+        <script type="application/ld+json" set:html={JSON.stringify(node)} />
+      ))
+    }
+  </head>
+
+  <body>
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+      >Hopp til innhold</a
+    >
+
+    <nav
+      class="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur-sm"
+    >
+      <div class="container flex h-16 items-center justify-between gap-6">
+        <a href="/" class="nav-logo">Synlig</a>
+        <button
+          class="nav-toggle -mr-2 flex h-10 w-10 flex-col items-center justify-center gap-1.5 sm:hidden"
+          aria-label="Meny"
+          aria-expanded="false"
+          onclick="var l=document.querySelector('.nav-links');l.classList.toggle('hidden');l.classList.toggle('flex');this.setAttribute('aria-expanded',l.classList.contains('hidden')?'false':'true')"
+        >
+          <span class="block h-px w-5 bg-ink"></span>
+          <span class="block h-px w-5 bg-ink"></span>
+          <span class="block h-px w-5 bg-ink"></span>
+        </button>
+        <ul
+          class="nav-links absolute left-0 right-0 top-16 hidden flex-col gap-4 border-b border-line bg-paper px-6 py-5 sm:static sm:flex sm:flex-row sm:items-center sm:gap-6 sm:border-0 sm:bg-transparent sm:px-0 sm:py-0"
+        >
+          <li><a href="/leaderboard">Leaderboard</a></li>
+          <li><a href="/case/pierstop">Metode-case</a></li>
+          <li><a href="/blogg">Blogg</a></li>
+          <li><a href="/rapport/state-of-aeo-2026">Rapport</a></li>
+          <li><a href="/priser">Priser</a></li>
+          <li>
+            <a
+              href="mailto:hei@synligdigital.no?subject=Sitert-m%C3%A5ling&body=Selskap%3A%20%0AMarked%2Fkategori%20vi%20vil%20m%C3%A5les%20i%3A%20%0AKonkurrenter%20vi%20sammenlignes%20med%3A%20"
+              class="nav-cta">Be om en sitert-måling</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <slot />
+
+    <footer class="rule mt-24 bg-wash py-16">
+      <div class="container">
+        <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="footer-brand lg:pr-8">
+            <a href="/" class="nav-logo">Synlig</a>
+            <p class="mt-3 text-sm leading-relaxed text-muted">
+              Vi måler om AI-assistenter siterer merkevaren din — og hvem som
+              blir sitert i stedet.
+            </p>
+          </div>
+          <div class="footer-links">
+            <h4>Tjenester</h4>
+            <ul>
+              <li><a href="#tjenester">Sitert-måling</a></li>
+              <li><a href="/leaderboard">Norges AEO-leaderboard</a></li>
+              <li><a href="/priser">Selvbetjente pakker</a></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Ressurser</h4>
+            <ul>
+              <li><a href="/blogg">Blogg</a></li>
+              <li><a href="/guide">AEO-guide</a></li>
+              <li><a href="/case/pierstop">Metode-case: Pierstop</a></li>
+              <li>
+                <a href="/case/nordic-lithium">Metode-case: Nordic Lithium</a>
+              </li>
+              <li>
+                <a href="https://sjekk.synligdigital.no/">Gratis AEO-sjekk</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Kontakt</h4>
+            <ul>
+              <li>
+                <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a>
+              </li>
+              <li>4006 Stavanger</li>
+              <li>Man–fre 09:00–17:00</li>
+              <li><a href="#tjenester">Be om en sitert-måling</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="rule mt-12 pt-6 text-sm text-muted">
+          <p>© 2026 Synlig · AI-synlighet for norske bedrifter</p>
+        </div>
+      </div>
+    </footer>
+
+    <script is:inline>
+      function toggleFaq(btn) {
+        var item = btn.parentElement;
+        var isOpen = item.classList.contains("open");
+        var answerId = btn.getAttribute("aria-controls");
+        var answer = document.getElementById(answerId);
+        item.classList.toggle("open");
+        btn.setAttribute("aria-expanded", isOpen ? "false" : "true");
+        if (answer) answer.setAttribute("aria-hidden", isOpen ? "true" : "false");
+      }
+
+      /* Faktura-CTA: (1) forward typed email into /faktura?email=<…> so the
+         epost field pre-fills, (2) beacon /api/lead-capture with intent=faktura
+         BEFORE navigation so Synlig is notified at click-time — symmetry with
+         the kort path, which beacons at form-submit (handleLeadCapture in
+         checkout-handler.ts). If the prospect abandons the /faktura form, the
+         lead is still visible. Best-effort throughout: bad email or missing
+         input leaves the link unchanged; beacon failure never blocks nav. */
+      (function () {
+        try {
+          document
+            .querySelectorAll(".faktura-link[data-email-input]")
+            .forEach(function (link) {
+              link.addEventListener("click", function () {
+                try {
+                  var inputId = link.getAttribute("data-email-input");
+                  if (!inputId) return;
+                  var input = document.getElementById(inputId);
+                  if (!input || !input.value) return;
+                  var email = String(input.value).trim();
+                  if (!email || email.length > 254) return;
+                  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return;
+                  var href = link.getAttribute("href") || "";
+                  var sep = href.indexOf("?") === -1 ? "?" : "&";
+                  if (!/[?&]email=/.test(href)) {
+                    link.setAttribute(
+                      "href",
+                      href + sep + "email=" + encodeURIComponent(email)
+                    );
+                  }
+                  try {
+                    var slugMatch = href.match(/[?&]slug=([^&]+)/);
+                    var slug = slugMatch ? decodeURIComponent(slugMatch[1]) : "";
+                    if (!slug) return;
+                    var fd = new FormData();
+                    fd.append("email", email);
+                    fd.append("slug", slug);
+                    fd.append("intent", "faktura");
+                    if (typeof navigator.sendBeacon === "function") {
+                      navigator.sendBeacon("/api/lead-capture", fd);
+                    } else if (typeof fetch === "function") {
+                      fetch("/api/lead-capture", {
+                        method: "POST",
+                        body: fd,
+                        keepalive: true,
+                      }).catch(function () {});
+                    }
+                  } catch (beaconErr) {
+                    /* swallow — best-effort beacon */
+                  }
+                } catch (inner) {
+                  /* swallow — plain link still works */
+                }
+              });
+            });
+        } catch (e) {
+          /* best-effort */
+        }
+      })();
+    </script>
+  </body>
+</html>

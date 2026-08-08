@@ -176,8 +176,40 @@ for (const v of VERTICAL_LANDINGS) {
   }
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// ASTRO STEP — the front page is built from src/pages/index.astro (fase 2 of
+// the redesign, 2026-08-08). It runs HERE, inside the single canonical build,
+// rather than as a separate command someone has to remember: dist/ is
+// gitignored and skipped by the stale-bundle checker, so a "run astro first"
+// convention would re-open exactly the stale-artifact bug this repo already
+// ate twice (2026-05-20, 2026-06-15).
+//
+// Astro writes ONLY to synlig-site/dist/. It never touches worker.ts — the
+// DUPLICATE-WRITER GUARD above still holds.
+// ─────────────────────────────────────────────────────────────────────────────
+{
+  const t0 = Date.now();
+  const astro = Bun.spawnSync({
+    cmd: ["bunx", "astro", "build"],
+    cwd: "/workspace/synlig-site",
+    stdout: "pipe",
+    stderr: "pipe",
+  });
+  if (astro.exitCode !== 0) {
+    console.error(`\n[BUILD FAIL] astro build exited ${astro.exitCode}.`);
+    console.error(astro.stdout.toString());
+    console.error(astro.stderr.toString());
+    console.error(`\nFront page source: /workspace/synlig-site/src/pages/index.astro`);
+    console.error(`Fix: cd /workspace/synlig-site && bun install && bunx astro build`);
+    process.exit(1);
+  }
+  console.log(`  astro: dist/index.html rebuilt in ${Date.now() - t0}ms`);
+}
+
 const files = {
-  INDEX_HTML: await Bun.file("/workspace/synlig-site/index.html").text(),
+  // Front page: Astro output. The hand-written root index.html was deleted
+  // 2026-08-08 so "/" has exactly one source of truth.
+  INDEX_HTML: await Bun.file("/workspace/synlig-site/dist/index.html").text(),
   EN_HTML: await Bun.file("/workspace/synlig-site/en.html").text(),
   PRISER_HTML: await Bun.file("/workspace/synlig-site/priser.html").text(),
   FAKTURA_HTML: await Bun.file("/workspace/synlig-site/faktura.html").text(),
@@ -194,7 +226,11 @@ const files = {
   EN_BLOG_HTML: await Bun.file("/workspace/synlig-site/en-blog.html").text(),
   EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML: await Bun.file("/workspace/synlig-site/en-blog-llm-smell-check-benchmark.html").text(),
   EN_BLOG_AEO_DIGITAL_ASSETS_HTML: await Bun.file("/workspace/synlig-site/en-blog-aeo-digital-assets.html").text(),
+  EN_BLOG_AEO_AGENCY_NORWAY_HTML: await Bun.file("/workspace/synlig-site/en-blog-aeo-agency-norway.html").text(),
+  EN_BLOG_VISIBILITY_PARADOX_HTML: await Bun.file("/workspace/synlig-site/en-blog-visibility-paradox.html").text(),
+  EN_BLOG_AGENTJACKING_AI_TRUST_HTML: await Bun.file("/workspace/synlig-site/en-blog-agentjacking-and-ai-trust.html").text(),
   PIERSTOP_CASE_HTML: await Bun.file("/workspace/synlig-site/pierstop-case.html").text(),
+  PICO_PAGE_HTML: await Bun.file("/workspace/synlig-site/pico.html").text(),
   AGENT_CARD_JSON: await Bun.file("/workspace/synlig-site/agent-card.json").text(),
   BLOGG_INDEX_HTML: await Bun.file("/workspace/synlig-site/blogg/index.html").text(),
   BLOGG_HVA_ER_AEO_HTML: await applyBlogCta("/workspace/synlig-site/blogg/hva-er-aeo.html"),
@@ -212,6 +248,7 @@ const files = {
   RAPPORT_STATE_AEO_2026_HTML: await Bun.file("/workspace/synlig-site/rapport/state-of-aeo-2026.html").text(),
   // Note: /tjenester/aeo-for-* verticals are loaded via VERTICAL_LANDINGS registry above (verticalFiles).
   TJENESTER_INDEX_HTML: await Bun.file("/workspace/synlig-site/tjenester/index.html").text(),
+  TJENESTER_AEO_HTML: await Bun.file("/workspace/synlig-site/tjenester/aeo.html").text(),
   TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML: await Bun.file("/workspace/synlig-site/tjenester/digital-markedsforing-stavanger.html").text(),
   BLOGG_DIGITAL_MARKEDSFORING_STAVANGER_HTML: await applyBlogCta("/workspace/synlig-site/blogg/digital-markedsforing-stavanger.html"),
   BLOGG_CHATGPT_ANNONSER_OG_AEO_HTML: await applyBlogCta("/workspace/synlig-site/blogg/chatgpt-annonser-og-aeo-april-2026.html"),
@@ -233,8 +270,10 @@ const files = {
   BLOGG_SOK_FRAGMENTERES_2026_HTML: await applyBlogCta("/workspace/synlig-site/blogg/sok-fragmenteres-2026.html"),
   BLOGG_EY_FALSKE_AI_KILDER_HTML: await applyBlogCta("/workspace/synlig-site/blogg/ey-falske-ai-kilder.html"),
   BLOGG_LLM_SMELLS_AEO_HTML: await applyBlogCta("/workspace/synlig-site/blogg/llm-smells-aeo-synlighet.html"),
+  BLOGG_CHECKOUT_AGENTIC_COMMERCE_TILLIT_GAP_HTML: await applyBlogCta("/workspace/synlig-site/blogg/checkout-agentic-commerce-tillit-gap-2026.html"),
   BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML: await Bun.file("/workspace/synlig-site/blogg/google-search-profiles-61-prosent-ctr-fall.html").text(),
   BLOGG_AEO_LITE_FAQPAGE_HTML: await Bun.file("/workspace/synlig-site/blogg/aeo-lite-faqpage-990-kr.html").text(),
+  BLOGG_B2B_FINTECH_AGENT_HTML: await Bun.file("/workspace/synlig-site/blogg/b2b-fintech-agent-discoverability.html").text(),
   LEADERBOARD_HTML: await Bun.file("/workspace/synlig-site/leaderboard.html").text(),
   LEADERBOARD_JSON: await Bun.file("/workspace/synlig-site/leaderboard.json").text(),
   CONTEXT_MD: await Bun.file("/workspace/synlig-site/context.md").text(),
@@ -399,8 +438,10 @@ const blogFileMap: Record<string, string> = {
   "sok-fragmenteres-2026.html": files.BLOGG_SOK_FRAGMENTERES_2026_HTML,
   "ey-falske-ai-kilder.html": files.BLOGG_EY_FALSKE_AI_KILDER_HTML,
   "llm-smells-aeo-synlighet.html": files.BLOGG_LLM_SMELLS_AEO_HTML,
+  "checkout-agentic-commerce-tillit-gap-2026.html": files.BLOGG_CHECKOUT_AGENTIC_COMMERCE_TILLIT_GAP_HTML,
   "google-search-profiles-61-prosent-ctr-fall.html": files.BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML,
   "aeo-lite-faqpage-990-kr.html": files.BLOGG_AEO_LITE_FAQPAGE_HTML,
+  "b2b-fintech-agent-discoverability.html": files.BLOGG_B2B_FINTECH_AGENT_HTML,
 };
 const allBlogFiles = readdirSync(bloggDir).filter(f => f.endsWith(".html") && f !== "index.html");
 for (const fname of allBlogFiles) {
@@ -740,7 +781,10 @@ const TIER_SURFACE_REGISTRY: Record<string, TierSurface> = {
     needle: `name="tier" value="lite"`,
     surfaces: [
       "/workspace/synlig-site/priser.html",
-      "/workspace/synlig-site/index.html",
+      // Front page is Astro-built (2026-08-08). Point at the ARTIFACT that
+      // ships, not at src/pages/index.astro: the needle must survive the
+      // build, and only dist/ proves that.
+      "/workspace/synlig-site/dist/index.html",
       "/workspace/synlig-site/nordic-lithium-case.html",
       "/workspace/synlig-site/pierstop-case.html",
       "/workspace/synlig-site/en-case-nordic-lithium.html",
@@ -1058,6 +1102,94 @@ const OG_SOK_FRAG_PNG_B64 = Buffer.from(sokFragOgPngBytes).toString("base64");
 const ogPngBytes = await Bun.file("/workspace/synlig-site/og.png").arrayBuffer();
 const OG_PNG_B64 = Buffer.from(ogPngBytes).toString("base64");
 
+// Self-hosted DM Sans (fase 2 redesign, 2026-08-08). The old page pulled Inter
+// from fonts.googleapis.com in the critical render path — two extra handshakes
+// before first paint, on a page whose entire product claim is that machines can
+// read it fast. Weights: 400 body, 500 UI, 700 headings. Served with immutable
+// 1-year cache (filenames are content-stable; a weight swap gets a new name).
+const FONT_FILES = ["DMSans-Regular", "DMSans-Medium", "DMSans-Bold"] as const;
+const FONTS_B64: Record<string, string> = {};
+for (const name of FONT_FILES) {
+  const p = `/workspace/synlig-site/public/fonts/dm-sans/${name}.ttf`;
+  const bytes = await Bun.file(p).arrayBuffer();
+  if (bytes.byteLength < 10_000) {
+    console.error(`\n[BUILD FAIL] font ${p} is ${bytes.byteLength} bytes — truncated or missing.`);
+    process.exit(1);
+  }
+  FONTS_B64[name] = Buffer.from(bytes).toString("base64");
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// COMMENT-STRIP — source comments stay in src/, they do not ship.
+//
+// Found 2026-08-08 by reading the DEPLOYED page's source instead of the repo's.
+// Every HTML comment we write for the next maintainer was being served to the
+// public, and four of them were internal notes:
+//   • "/priser": «Tests price hypothesis after 76d at 4900 NOK» — our pricing
+//     experiment log, on the pricing page, readable by any competitor.
+//   • "/": «...leses av deploy.ts sin live-rute-gate», «build.ts
+//     TIER_SURFACE_REGISTRY», «et prissett vi hadde lagt ned» — names our
+//     internal gates and narrates an abandoned strategy.
+//   • "/leaderboard": an OG post-mortem dated today.
+// Second cost, the quieter one: those comments plant dead strings ("4 900",
+// "14 900", "fonts.googleapis.com") inside a production artifact, so every
+// future defect-sweep grep false-POSITIVES on a page that is genuinely clean.
+//
+// This runs AFTER every gate and BEFORE embedding, on purpose. The fact-source
+// gate reads `<!-- fact-source-allow: [...] -->` markers out of these same
+// strings (line ~508); stripping at read-time would silently disarm it. Gates
+// analyse source, the worker ships the artifact — two different documents.
+// deploy.ts's scaffold gate and audit-scope-honesty.test.ts also key off HTML
+// comments, but both read from OTHER inputs (the REPORTS map, report-html.ts),
+// so neither is touched — checked, not assumed.
+//
+// <script>/<style> bodies pass through verbatim: a `<!--` inside JS or CSS is
+// not an HTML comment, and cutting there would corrupt the page.
+// ─────────────────────────────────────────────────────────────────────────────
+function stripHtmlComments(html: string): string {
+  return html
+    .split(/(<script\b[\s\S]*?<\/script>|<style\b[\s\S]*?<\/style>)/i)
+    .map((part, i) => (i % 2 === 1 ? part : part.replace(/<!--[\s\S]*?-->/g, "")))
+    .join("");
+}
+
+{
+  const htmlKeys = Object.keys(files).filter(k => k.endsWith("_HTML"));
+  // Empty-input floor: if the key set ever collapses (rename, refactor), fail
+  // loud rather than shipping a silently un-stripped site.
+  if (htmlKeys.length < 40) {
+    console.error(`\n[BUILD FAIL] comment-strip: only ${htmlKeys.length} *_HTML keys found (expected ≥40).`);
+    process.exit(1);
+  }
+  let removedBytes = 0;
+  for (const key of htmlKeys) {
+    const before = (files as Record<string, string>)[key];
+    const after = stripHtmlComments(before);
+    // Invariant, not a measured value: stripping may only DELETE, and may never
+    // touch executable or style content. A regex that eats a <script> would
+    // otherwise ship a dead page past every gate that already ran.
+    const countTags = (s: string, re: RegExp) => (s.match(re) ?? []).length;
+    for (const [label, re] of [
+      ["<script", /<script\b/gi],
+      ["</script>", /<\/script>/gi],
+      ["<style", /<style\b/gi],
+      ["ld+json", /application\/ld\+json/gi],
+    ] as const) {
+      if (countTags(before, re) !== countTags(after, re)) {
+        console.error(`\n[BUILD FAIL] comment-strip changed ${label} count in ${key}.`);
+        process.exit(1);
+      }
+    }
+    if (after.length > before.length) {
+      console.error(`\n[BUILD FAIL] comment-strip grew ${key} — the regex is wrong.`);
+      process.exit(1);
+    }
+    removedBytes += before.length - after.length;
+    (files as Record<string, string>)[key] = after;
+  }
+  console.log(`  ✅ Comment-strip: ${htmlKeys.length} HTML surfaces, ${removedBytes} bytes of source comments withheld from the public artifact.`);
+}
+
 // Escape backticks and dollar signs for template literals
 function escape(s: string): string {
   return s.replace(/\\/g, "\\\\").replace(/`/g, "\\`").replace(/\$/g, "\\$");
@@ -1103,6 +1235,43 @@ const PRISER_HTML = \`${escape(files.PRISER_HTML)}\`;
 
 const FAKTURA_HTML = \`${escape(files.FAKTURA_HTML)}\`;
 
+// English-localized initial-paint variant of FAKTURA_HTML for /faktura?lang=en.
+// Why: 2026-06-27 buyer-journey dogfood (en-home-lite Stripe cancel → recovery
+// banner → /faktura?lang=en) revealed that the JS lang-flip in FAKTURA_HTML
+// only runs AFTER DOMContentLoaded. Crawlers/AI agents that index the page,
+// and the first ∼100ms of paint for any English buyer, all see <html lang="nb">
+// plus a Norwegian <title> and <meta>. For someone who already abandoned Stripe
+// once at $92, the title bar flickering "Bestill med faktura" at the recovery
+// surface is a second credibility break — they bail again. Mirror surfaces:
+// /en/, /takk-for-bestilling?lang=en and Stripe checkout already render English
+// at the byte level; /faktura was the only English-funnel surface still serving
+// Norwegian-first. Pre-compute the EN variant at module init (six surgical
+// head replaces); the static-route handler selects it when ?lang=en is present.
+// Body strings keep their Norwegian — the existing client-side JS swap covers
+// them — so this stays a head-only fix and adds no duplicate ≈70KB to bundle.
+const FAKTURA_EN_HTML = FAKTURA_HTML
+  .replace('<html lang="nb">', '<html lang="en">')
+  .replace(
+    "<title>Bestill med faktura — Synlig Digital</title>",
+    "<title>Order with invoice — Synlig Digital</title>",
+  )
+  .replace(
+    '<meta name="description" content="Bestill AEO-pakke fra Synlig Digital med faktura. Vi sender faktura innen 24 timer — du betaler etter mottak. Arbeidet starter når fakturaen er signert.">',
+    '<meta name="description" content="Order an AEO package from Synlig Digital by invoice. Invoice sent within 24 hours — you pay after receipt. Work starts when the invoice is signed.">',
+  )
+  .replace(
+    '<meta property="og:title" content="Bestill med faktura — Synlig Digital">',
+    '<meta property="og:title" content="Order with invoice — Synlig Digital">',
+  )
+  .replace(
+    '<meta property="og:description" content="Bestill AEO-pakke med faktura. Vi sender faktura innen 24 timer.">',
+    '<meta property="og:description" content="Order an AEO package by invoice. Invoice sent within 24 hours.">',
+  )
+  .replace(
+    '<meta property="og:locale" content="nb_NO">',
+    '<meta property="og:locale" content="en_US">',
+  );
+
 const GUIDE_HTML = \`${escape(files.GUIDE_HTML)}\`;
 
 const DASHBOARD_HTML = \`${escape(files.DASHBOARD_HTML)}\`;
@@ -1131,7 +1300,15 @@ const EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML = \`${escape(files.EN_BLOG_LLM_SMEL
 
 const EN_BLOG_AEO_DIGITAL_ASSETS_HTML = \`${escape(files.EN_BLOG_AEO_DIGITAL_ASSETS_HTML)}\`;
 
+const EN_BLOG_AEO_AGENCY_NORWAY_HTML = \`${escape(files.EN_BLOG_AEO_AGENCY_NORWAY_HTML)}\`;
+
+const EN_BLOG_VISIBILITY_PARADOX_HTML = \`${escape(files.EN_BLOG_VISIBILITY_PARADOX_HTML)}\`;
+
+const EN_BLOG_AGENTJACKING_AI_TRUST_HTML = \`${escape(files.EN_BLOG_AGENTJACKING_AI_TRUST_HTML)}\`;
+
 const PIERSTOP_CASE_HTML = \`${escape(files.PIERSTOP_CASE_HTML)}\`;
+
+const PICO_PAGE_HTML = \`${escape(files.PICO_PAGE_HTML)}\`;
 
 const AGENT_CARD_JSON = \`${escape(files.AGENT_CARD_JSON)}\`;
 
@@ -1166,6 +1343,8 @@ const RAPPORT_STATE_AEO_2026_HTML = \`${escape(files.RAPPORT_STATE_AEO_2026_HTML
 ${verticalConsts}
 
 const TJENESTER_INDEX_HTML = \`${escape(files.TJENESTER_INDEX_HTML)}\`;
+
+const TJENESTER_AEO_HTML = \`${escape(files.TJENESTER_AEO_HTML)}\`;
 
 const TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML = \`${escape(files.TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML)}\`;
 
@@ -1209,9 +1388,13 @@ const BLOGG_EY_FALSKE_AI_KILDER_HTML = \`${escape(files.BLOGG_EY_FALSKE_AI_KILDE
 
 const BLOGG_LLM_SMELLS_AEO_HTML = \`${escape(files.BLOGG_LLM_SMELLS_AEO_HTML)}\`;
 
+const BLOGG_CHECKOUT_AGENTIC_COMMERCE_TILLIT_GAP_HTML = \`${escape(files.BLOGG_CHECKOUT_AGENTIC_COMMERCE_TILLIT_GAP_HTML)}\`;
+
 const BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML = \`${escape(files.BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML)}\`;
 
 const BLOGG_AEO_LITE_FAQPAGE_HTML = \`${escape(files.BLOGG_AEO_LITE_FAQPAGE_HTML)}\`;
+
+const BLOGG_B2B_FINTECH_AGENT_HTML = \`${escape(files.BLOGG_B2B_FINTECH_AGENT_HTML)}\`;
 
 const LEADERBOARD_HTML = \`${escape(files.LEADERBOARD_HTML)}\`;
 
@@ -1236,6 +1419,8 @@ const ONE_PAGER_PDF_B64 = "${PDF_B64}";
 const OG_SOK_FRAG_PNG_B64 = "${OG_SOK_FRAG_PNG_B64}";
 
 const OG_PNG_B64 = "${OG_PNG_B64}";
+
+const FONTS_B64 = ${JSON.stringify(FONTS_B64)};
 
 // AEO Reports: hash -> HTML content
 const REPORTS = {
@@ -1304,8 +1489,20 @@ const routes = {
   "/en/blog/aeo-for-digital-asset-companies": { body: EN_BLOG_AEO_DIGITAL_ASSETS_HTML, contentType: "text/html; charset=utf-8" },
   "/en/blog/aeo-for-digital-asset-companies/": { body: EN_BLOG_AEO_DIGITAL_ASSETS_HTML, contentType: "text/html; charset=utf-8" },
   "/en/blog/aeo-for-digital-asset-companies.html": { body: EN_BLOG_AEO_DIGITAL_ASSETS_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/aeo-agency-norway": { body: EN_BLOG_AEO_AGENCY_NORWAY_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/aeo-agency-norway/": { body: EN_BLOG_AEO_AGENCY_NORWAY_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/aeo-agency-norway.html": { body: EN_BLOG_AEO_AGENCY_NORWAY_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/visibility-paradox-b2b-saas": { body: EN_BLOG_VISIBILITY_PARADOX_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/visibility-paradox-b2b-saas/": { body: EN_BLOG_VISIBILITY_PARADOX_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/visibility-paradox-b2b-saas.html": { body: EN_BLOG_VISIBILITY_PARADOX_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/agentjacking-and-ai-trust": { body: EN_BLOG_AGENTJACKING_AI_TRUST_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/agentjacking-and-ai-trust/": { body: EN_BLOG_AGENTJACKING_AI_TRUST_HTML, contentType: "text/html; charset=utf-8" },
+  "/en/blog/agentjacking-and-ai-trust.html": { body: EN_BLOG_AGENTJACKING_AI_TRUST_HTML, contentType: "text/html; charset=utf-8" },
   "/case/pierstop": { body: PIERSTOP_CASE_HTML, contentType: "text/html; charset=utf-8" },
   "/case/pierstop.html": { body: PIERSTOP_CASE_HTML, contentType: "text/html; charset=utf-8" },
+  "/pico": { body: PICO_PAGE_HTML, contentType: "text/html; charset=utf-8" },
+  "/pico/": { body: PICO_PAGE_HTML, contentType: "text/html; charset=utf-8" },
+  "/pico.html": { body: PICO_PAGE_HTML, contentType: "text/html; charset=utf-8" },
   "/.well-known/agent-card.json": { body: AGENT_CARD_JSON, contentType: "application/json; charset=utf-8" },
   "/.well-known/agent.json": { body: AGENT_CARD_JSON, contentType: "application/json; charset=utf-8" },
   "/blogg": { body: BLOGG_INDEX_HTML, contentType: "text/html; charset=utf-8" },
@@ -1340,6 +1537,12 @@ const routes = {
   "/tjenester": { body: TJENESTER_INDEX_HTML, contentType: "text/html; charset=utf-8" },
   "/tjenester/": { body: TJENESTER_INDEX_HTML, contentType: "text/html; charset=utf-8" },
   "/tjenester.html": { body: TJENESTER_INDEX_HTML, contentType: "text/html; charset=utf-8" },
+
+  "/tjenester/aeo": { body: TJENESTER_AEO_HTML, contentType: "text/html; charset=utf-8" },
+  "/tjenester/aeo/": { body: TJENESTER_AEO_HTML, contentType: "text/html; charset=utf-8" },
+  "/tjenester/aeo.html": { body: TJENESTER_AEO_HTML, contentType: "text/html; charset=utf-8" },
+  "/tjenester/aeo-optimalisering": { body: TJENESTER_AEO_HTML, contentType: "text/html; charset=utf-8" },
+  "/tjenester/aeo-optimalisering/": { body: TJENESTER_AEO_HTML, contentType: "text/html; charset=utf-8" },
 ${verticalRoutes}
   "/tjenester/digital-markedsforing-stavanger": { body: TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML, contentType: "text/html; charset=utf-8" },
   "/tjenester/digital-markedsforing-stavanger/": { body: TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML, contentType: "text/html; charset=utf-8" },
@@ -1384,10 +1587,14 @@ ${verticalRoutes}
   "/blogg/ey-falske-ai-kilder.html": { body: BLOGG_EY_FALSKE_AI_KILDER_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/llm-smells-aeo-synlighet": { body: BLOGG_LLM_SMELLS_AEO_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/llm-smells-aeo-synlighet.html": { body: BLOGG_LLM_SMELLS_AEO_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/checkout-agentic-commerce-tillit-gap-2026": { body: BLOGG_CHECKOUT_AGENTIC_COMMERCE_TILLIT_GAP_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/checkout-agentic-commerce-tillit-gap-2026.html": { body: BLOGG_CHECKOUT_AGENTIC_COMMERCE_TILLIT_GAP_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/google-search-profiles-61-prosent-ctr-fall": { body: BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/google-search-profiles-61-prosent-ctr-fall.html": { body: BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/aeo-lite-faqpage-990-kr": { body: BLOGG_AEO_LITE_FAQPAGE_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/aeo-lite-faqpage-990-kr.html": { body: BLOGG_AEO_LITE_FAQPAGE_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/b2b-fintech-agent-discoverability": { body: BLOGG_B2B_FINTECH_AGENT_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/b2b-fintech-agent-discoverability.html": { body: BLOGG_B2B_FINTECH_AGENT_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard/": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard.html": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
@@ -1444,7 +1651,7 @@ function injectReportOg(html, request) {
     '<meta property="og:title" content="' + escTitle + '">' +
     '<meta property="og:description" content="' + escDesc + '">' +
     '<meta property="og:url" content="' + escUrl + '">' +
-    '<meta property="og:image" content="https://synligdigital.no/og.png">' +
+    '<meta property="og:image" content="https://synligdigital.no/og-2026-08.png">' +
     '<meta property="og:image:width" content="1200">' +
     '<meta property="og:image:height" content="630">' +
     '<meta property="og:site_name" content="Synlig">' +
@@ -1452,7 +1659,7 @@ function injectReportOg(html, request) {
     '<meta name="twitter:card" content="summary_large_image">' +
     '<meta name="twitter:title" content="' + escTitle + '">' +
     '<meta name="twitter:description" content="' + escDesc + '">' +
-    '<meta name="twitter:image" content="https://synligdigital.no/og.png">';
+    '<meta name="twitter:image" content="https://synligdigital.no/og-2026-08.png">';
   // String .replace() replaces only the first occurrence. The two reports
   // containing "<title>" in body text (as audit findings) have no closing
   // </title> in body, so the head match is unique.
@@ -1463,6 +1670,15 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const pathname = url.pathname;
+
+    // Serve-check: proves this build is serving at the edge, not just stored.
+    // Deploy stamps __SOURCE_STAMP__ → sha256(dist/worker.js)[0:12] at upload time.
+    // sjekk-worker/deploy.ts pattern applied 2026-08-06 after measuring that a
+    // deploy-200 + Cloudflare script-GET readback both reported new code while the
+    // edge served the OLD build for ~2 minutes.
+    if (pathname === "/health") {
+      return new Response(JSON.stringify({ ok: true, service: "synlig-site", stamp: "__SOURCE_STAMP__", ts: Date.now() }), { headers: { "Content-Type": "application/json" } });
+    }
 
     // Blog mailto click tracking: GET /api/track-click?src=blog-{slug}&type=mailto
     // Fired client-side (navigator.sendBeacon) when a visitor clicks a mailto CTA fallback.
@@ -1614,7 +1830,36 @@ export default {
     }
 
     // Default site OG raster (replaces /og.svg for og:image refs).
-    if (pathname === "/og.png") {
+    // 2026-08-08: the URL is now VERSIONED (/og-2026-08.png) and every og:image
+    // points at the versioned path. Reason: the image is a headline layer — it
+    // still rendered "Er bedriften din usynlig for AI?" months after that
+    // positioning died, because nobody re-reads a picture. Re-rendering it is not
+    // enough: CF holds it for max-age=3600 and LinkedIn/Slack/Teams cache OG
+    // rasters by URL for far longer, so a same-path swap leaves the dead headline
+    // in every future share preview. Bump the date suffix whenever the image
+    // content changes. /og.png stays served for links already in the wild.
+    // Self-hosted DM Sans. The front page declares @font-face against these
+    // exact paths; a 404 here degrades silently to a fallback font, which is
+    // the kind of regression nobody files a bug for — so deploy.ts gates them
+    // as live routes.
+    if (pathname.startsWith("/fonts/dm-sans/")) {
+      const key = pathname.slice("/fonts/dm-sans/".length).replace(/\\.ttf$/, "");
+      const b64 = FONTS_B64[key];
+      if (b64) {
+        const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+        return new Response(bytes, {
+          status: 200,
+          headers: {
+            "Content-Type": "font/ttf",
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "Access-Control-Allow-Origin": "*",
+            ...SECURITY_HEADERS,
+          },
+        });
+      }
+    }
+
+    if (pathname === "/og.png" || pathname === "/og-2026-08.png") {
       const bytes = Uint8Array.from(atob(OG_PNG_B64), c => c.charCodeAt(0));
       return new Response(bytes, {
         status: 200,
@@ -1649,19 +1894,26 @@ export default {
       const ref = request.headers.get("Referer") || "-";
       const ip = request.headers.get("CF-Connecting-IP") || "-";
       const isBot = /bot\\b|crawler|spider|GPTBot|ClaudeBot|anthropic|Googlebot|Bingbot|YandexBot|facebookexternalhit|LinkedInBot|Slackbot|TelegramBot|WhatsApp|DuckDuckBot|Applebot|curl|wget|python-requests|node-fetch|HeadlessChrome|monitor|uptime/i.test(ua);
-      // Microsoft 365 SafeLinks scanner detection (added 2026-06-02).
+      // Microsoft 365 SafeLinks / EU-tenant email scanner detection.
       // SafeLinks fetches the URL from a sandboxed Chromium with a regular
       // Chrome UA (no "Outlook"/"MSOffice" marker) — it slips past the UA-only
       // preview rule. Country-of-origin is the only server-visible tell:
-      // Microsoft's EU tenant runs out of Dublin so opens from IE arriving
-      // seconds after a Norwegian-targeted send are the scanner, not a reader.
-      // Three same-minute "human" opens from IE today (AutoSock 6636b5e6 11:02,
-      // Zaptec jrwfdkev 09:38, Fjord Tours 3be49647 06:36) triggered premature
-      // E2 tasks before any human could possibly have read the email.
-      // Conservative rule: IE country + generic Mozilla UA + non-bot → preview.
-      // Edge case (Irish prospect viewing legitimately): false-negative is
-      // recoverable on the third open via the existing humanCount===3 alert.
-      const isM365ScannerIE = !isBot && country === "IE" &&
+      // Microsoft's EU tenant runs out of Dublin (IE), Frankfurt (DE), and
+      // Amsterdam (NL); same pattern for Defender for Office 365.
+      // 2026-06-02: IE-only rule shipped after three same-minute "human" opens
+      //   from IE (AutoSock 6636b5e6 11:02, Zaptec jrwfdkev 09:38,
+      //   Fjord Tours 3be49647 06:36) triggered premature E2 tasks.
+      // 2026-06-23: extended to DE + NL after duett2026 (DE:1 NO:1 06:46) and
+      //   sof2026 (DE:1 NL:1 06:46) — both Norwegian B2B targets — produced
+      //   "👀 Rapport åpnet" hot-prospect alerts from a same-minute DE+EU pair
+      //   that no human could have produced. The hardcoded /r/<slug> reports
+      //   don't write \`send:<hash>\` to KV (no send-email.ts call), so
+      //   isSendTimeScanner can't catch them; only the country-based rule
+      //   prevents the false positive. Edge case (German/Dutch prospect viewing
+      //   legitimately): false-negative is recoverable on the third open via
+      //   the existing humanCount===3 alert.
+      const EU_SCANNER_COUNTRIES = new Set(["IE", "DE", "NL"]);
+      const isM365ScannerIE = !isBot && EU_SCANNER_COUNTRIES.has(country) &&
         /Mozilla\\/5\\.0/.test(ua) &&
         !/GoogleImageProxy|YahooMailProxy|MSOffice|Outlook|Microsoft Office|Apple-Mail|AppleMail|ProtonMail|Superhuman|Mailchimp|MailerLite|Litmus/i.test(ua);
       // Send-timestamp scanner detection (added 2026-06-02, generalized from IE-only rule).
@@ -2045,7 +2297,21 @@ export default {
         ].join(", ");
         extraHeaders["Vary"] = "Accept";
       }
-      return new Response(route.body, {
+      // Lang-aware initial-paint swap for /faktura when ?lang=en is set.
+      // Mirrors the same en-funnel propagation as /api/lead-capture (renders
+      // Stripe checkout in en locale) and /takk-for-bestilling?lang=en. Without
+      // this swap, /faktura?lang=en bytes are Norwegian until the in-page JS
+      // swap fires post-DOMContentLoaded — credibility flicker for an English
+      // buyer reaching this page via the Stripe-abandonment recovery banner.
+      let body = route.body;
+      const isFakturaPath =
+        pathname === "/faktura" ||
+        pathname === "/faktura/" ||
+        pathname === "/faktura.html";
+      if (isFakturaPath && url.searchParams.get("lang") === "en") {
+        body = FAKTURA_EN_HTML;
+      }
+      return new Response(body, {
         status: 200,
         headers: {
           "Content-Type": route.contentType,
