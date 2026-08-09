@@ -1,0 +1,85 @@
+---
+/**
+ * Article layout — one template for all 36 blog posts and 3 case pages.
+ *
+ * Before fase 3 every one of those files carried its own ~700-line inline
+ * <style>; 44 selectors appeared in ≥18 of 36 files. Measured 2026-08-09:
+ * 323 115 B of inline CSS across the 39 pages, 190 309 B of it (59 %) pure
+ * duplication of the site chrome. That duplication is what this file ends.
+ *
+ * The chrome — breadcrumb, category chip, h1, lead, meta row, prose rhythm —
+ * is rendered HERE from collection data. What survives per page is the
+ * bespoke long tail (score boxes, comparison grids, timelines), passed in as
+ * `css` and re-themed dark→light by ROLE via the --art-* alias layer in
+ * global.css. Role, not hue: bg→paper, text→ink, accent→deep emerald.
+ *
+ * `jsonLd` is typed data straight through to Base.astro's <script
+ * type="application/ld+json">. Never hand-written into the markup — that is
+ * the same contract src/data/homepage-jsonld.ts holds for the front page.
+ */
+import Base from "./Base.astro";
+import type { ArticleFrontmatter } from "../content.config";
+
+interface Props {
+  fm: ArticleFrontmatter;
+  /** breadcrumb parent, e.g. { href: "/blogg", label: "Blogg" } */
+  parent: { href: string; label: string };
+}
+
+const { fm, parent } = Astro.props;
+
+// The meta row on the old pages mixed the publish date, the category and an
+// author chip in an arbitrary order. Normalise: date first, then anything
+// that is not already shown as the category chip or the date.
+const dateChip = new Set([fm.published, fm.cardMeta.split("·")[0]?.trim()]);
+const chips = fm.metaChips
+  .map((c) => c.trim())
+  .filter((c) => c && c !== fm.category && !dateChip.has(c));
+
+const isoPublished = `${fm.published}T08:00:00Z`;
+const isoModified = `${fm.modified}T08:00:00Z`;
+---
+
+<Base
+  title={fm.title}
+  description={fm.description}
+  canonical={fm.canonical}
+  ogTitle={fm.ogTitle}
+  ogDescription={fm.ogDescription}
+  jsonLd={fm.jsonLd}
+  published={isoPublished}
+  modified={isoModified}
+  ogType="article"
+>
+  <main id="main-content" class="container-narrow pb-4 pt-10 sm:pt-14">
+    <nav class="breadcrumb" aria-label="Brødsmuler">
+      <a href="/">Hjem</a>
+      <span aria-hidden="true">›</span>
+      <a href={parent.href}>{parent.label}</a>
+      <span aria-hidden="true">›</span>
+      <span aria-current="page">{fm.breadcrumbLabel}</span>
+    </nav>
+
+    <header class="article-header">
+      <p class="article-tag">{fm.category}</p>
+      <h1 class="article-title">{fm.heading}</h1>
+      {fm.lead && <p class="article-lead" set:html={fm.lead} />}
+      <p class="article-meta">
+        <time datetime={fm.published}>{fm.cardMeta || fm.published}</time>
+        {chips.map((c) => <span class="meta-chip">{c}</span>)}
+        {
+          fm.modified !== fm.published && (
+            <span class="meta-chip">oppdatert {fm.modified}</span>
+          )
+        }
+      </p>
+    </header>
+
+    <article class="article-surface">
+      <slot />
+    </article>
+  </main>
+
+  {/* bespoke per-page components, re-themed onto the light tokens */}
+  {fm.css && <style set:html={fm.css} />}
+</Base>

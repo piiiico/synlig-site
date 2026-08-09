@@ -1,0 +1,16 @@
+---
+import { getCollection, render } from "astro:content";
+import Article from "../../layouts/Article.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blogg");
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Article fm={post.data} parent={{ href: "/blogg", label: "Blogg" }}>
+  <Content />
+</Article>

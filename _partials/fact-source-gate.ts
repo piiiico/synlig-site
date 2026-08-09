@@ -24,6 +24,14 @@ import { join } from "path";
 
 const PROXIMITY_CHARS = 200;
 
+// Minimum-expected-input floor. Without it an empty (or renamed-away) source
+// directory returns 0 files / 0 claims / 0 violations, and the build prints
+// "0 unverified" and passes — the gate reads loudest exactly when it has
+// stopped reading anything. Added 2026-08-09 during the fase-3 port, which
+// moved the source of truth from blogg/ to src/content/blogg/ and made a
+// silent mis-point a one-typo failure. 36 posts exist; the set only grows.
+const MIN_BLOG_FILES = 36;
+
 const REPORT_REGISTRY = "/workspace/money/aeo/report-registry.jsonl";
 const FACT_REGISTRY = "/workspace/money/aeo/fact-registry.jsonl";
 
@@ -105,8 +113,48 @@ function normalizeClaim(raw: string): string {
 // Inline style attributes contain CSS values like width:33.3% which are bar-width
 // presentation, not factual claims — see stavanger-agent-beredskap-april-2026.html
 // where 60+ such inline style percents would otherwise dominate the gate output.
+//
+// fase 3 (2026-08-09): blog sources are Astro content-collection fragments and
+// the visible headline, lead and category chips moved OUT of the body INTO a
+// <script type="application/json" id="frontmatter"> block — which the <script>
+// rule below blanks. Left alone that silently narrows the gate: measured
+// 341 → 321 claims, i.e. 20 numeric claims in headlines and leads would stop
+// being checked while the build still printed "0 unverified". A gate that
+// shrinks quietly is worse than no gate, so those prose fields are
+// re-materialised as ordinary markup before scanning.
+//
+// Only fields that were VISIBLE IN THE BODY before the port are restored.
+// title/description/og* lived in <head>, which this function has always
+// blanked; restoring them would widen the gate rather than preserve it.
+const FRONTMATTER_RE =
+  /<script type="application\/json" id="frontmatter">\s*([\s\S]*?)\s*<\/script>/;
+const BODY_PROSE_FIELDS = ["category", "heading", "lead", "breadcrumbLabel"] as const;
+
+function frontmatterProse(html: string): string {
+  const m = FRONTMATTER_RE.exec(html);
+  if (!m) return "";
+  let fm: Record<string, unknown>;
+  try {
+    fm = JSON.parse(m[1]);
+  } catch {
+    return "";
+  }
+  const parts: string[] = [];
+  for (const key of BODY_PROSE_FIELDS) {
+    const v = fm[key];
+    if (typeof v === "string" && v.trim()) {
+      parts.push(key === "heading" ? `<h1>${v}</h1>` : `<p>${v}</p>`);
+    }
+  }
+  const chips = fm.metaChips;
+  if (Array.isArray(chips)) {
+    for (const c of chips) if (typeof c === "string" && c.trim()) parts.push(`<p>${c}</p>`);
+  }
+  return parts.length ? `<header>${parts.join("")}</header>\n` : "";
+}
+
 function cleanHtml(html: string): string {
-  let out = html;
+  let out = frontmatterProse(html) + html;
   out = out.replace(/<head[\s\S]*?<\/head>/gi, (m) => " ".repeat(m.length));
   out = out.replace(/<script[\s\S]*?<\/script>/gi, (m) => " ".repeat(m.length));
   out = out.replace(/<style[\s\S]*?<\/style>/gi, (m) => " ".repeat(m.length));
@@ -115,6 +163,12 @@ function cleanHtml(html: string): string {
   // fact-source-allow / fact-source TODO comments which may legitimately quote
   // example claim strings. Strip them so the gate doesn't trip on its own metadata.
   out = out.replace(/<!--[\s\S]*?-->/g, (m) => " ".repeat(m.length));
+  // Blind spot closed 2026-08-09: "61&nbsp;%" is a percent claim, but the raw
+  // entity does not match /\d\s*%/, so seven claims in one headline-heavy post
+  // were never scanned. Six spaces keeps every byte offset intact and \s* then
+  // spans them. Found by the fase-3 port, which decoded entities into the
+  // collection frontmatter and made the gate count jump by one.
+  out = out.replace(/&nbsp;/g, "      ");
   return out;
 }
 
@@ -296,6 +350,13 @@ export function runFactSourceGate(bloggDir: string, mode: RunMode = "enforce"): 
   const { corpus, rowCount } = loadRegistryCorpus();
   const factSet = loadFactRegistry();
   const files = readdirSync(bloggDir).filter((f) => f.endsWith(".html") && f !== "index.html");
+  if (files.length < MIN_BLOG_FILES) {
+    throw new Error(
+      `fact-source gate: ${bloggDir} yielded ${files.length} scannable HTML files, ` +
+        `floor is ${MIN_BLOG_FILES}. Either posts were deleted (lower the floor ` +
+        `deliberately) or the gate is pointed at the wrong directory.`,
+    );
+  }
   let claimCount = 0;
   const allViolations: Violation[] = [];
   for (const f of files) {
@@ -311,7 +372,10 @@ export function runFactSourceGate(bloggDir: string, mode: RunMode = "enforce"): 
 // CLI: `bun fact-source-gate.ts [--report]`
 // `--report` prints all extracted claims (not just violations) for seeding the registry.
 if (import.meta.main) {
-  const bloggDir = "/workspace/synlig-site/blogg";
+  // fase 3 (2026-08-09): source of truth is the Astro content collection.
+  // build.ts passes this path explicitly; the CLI default follows it so
+  // `bun fact-source-gate.ts --report` keeps scanning what actually ships.
+  const bloggDir = "/workspace/synlig-site/src/content/blogg";
   const reportMode = process.argv.includes("--report");
   if (reportMode) {
     // Report mode: dump every extracted claim with file, heading, snippet, acceptance status.

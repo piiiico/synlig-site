@@ -95,15 +95,29 @@ import { runFactSourceGate } from "./_partials/fact-source-gate";
 const stagesDoc = await Bun.file("/workspace/synlig-site/_partials/blog-stages.json").json();
 const STAGES: Record<string, Stage> = stagesDoc.stages;
 
-// applyBlogCta: load a blog post from disk, replace AUDIT-CTA markers with
-// rendered partial HTML (stage-aware). Fails the build if markers are missing
-// or stage is unmapped.
-async function applyBlogCta(absPath: string): Promise<string> {
-  const fname = basename(absPath);
-  const slug = fname.replace(/\.html$/, "");
-  const raw = await Bun.file(absPath).text();
-  // index.html has no CTA; pass through.
-  if (fname === "index.html") return raw;
+// applyBlogCta: load a blog post from the ASTRO ARTIFACT, replace AUDIT-CTA
+// markers with rendered partial HTML (stage-aware). Fails the build if markers
+// are missing or stage is unmapped.
+//
+// fase 3 (2026-08-09): the source moved to src/content/blogg/<slug>.html (an
+// Astro content collection) and the page that ships is dist/blogg/<slug>/
+// index.html. The markers live in the collection fragment and survive the
+// Astro render untouched, so the substitution still happens here — after
+// astro build, before every gate. Reading src/ instead would ship a page with
+// no chrome; reading dist/ is reading the artifact that actually goes out.
+function distBlogPath(slug: string): string {
+  return `/workspace/synlig-site/dist/blogg/${slug}/index.html`;
+}
+async function applyBlogCta(slug: string): Promise<string> {
+  const absPath = distBlogPath(slug);
+  const f = Bun.file(absPath);
+  if (!(await f.exists())) {
+    console.error(`\n[BUILD FAIL] astro did not emit ${absPath}.`);
+    console.error(`Source should be /workspace/synlig-site/src/content/blogg/${slug}.html`);
+    console.error(`Route:  /workspace/synlig-site/src/pages/blogg/[slug].astro`);
+    process.exit(1);
+  }
+  const raw = await f.text();
 
   const stage = STAGES[slug];
   if (!stage) {
@@ -113,7 +127,7 @@ async function applyBlogCta(absPath: string): Promise<string> {
   }
   const { html, errors } = applyMarkers(slug, raw, stage);
   if (errors.length > 0) {
-    console.error(`\n[BUILD FAIL] audit-cta markers invalid in blogg/${fname}:`);
+    console.error(`\n[BUILD FAIL] audit-cta markers invalid in blogg/${slug}:`);
     for (const e of errors) console.error(`  - ${e}`);
     console.error(`\nEvery blog post must contain exactly one ${MID_MARKER} and one ${BOTTOM_MARKER}.`);
     console.error(`Source: /workspace/synlig-site/_partials/render-audit-cta.ts`);
@@ -203,7 +217,7 @@ for (const v of VERTICAL_LANDINGS) {
     console.error(`Fix: cd /workspace/synlig-site && bun install && bunx astro build`);
     process.exit(1);
   }
-  console.log(`  astro: dist/index.html rebuilt in ${Date.now() - t0}ms`);
+  console.log(`  astro: dist/ rebuilt in ${Date.now() - t0}ms (front page + 36 blog posts + /blogg + 3 case pages)`);
 }
 
 const files = {
@@ -220,8 +234,8 @@ const files = {
   SITEMAP_XML: await Bun.file("/workspace/synlig-site/sitemap.xml").text(),
   OG_SVG: await Bun.file("/workspace/synlig-site/og.svg").text(),
   FAVICON_SVG: await Bun.file("/workspace/synlig-site/favicon.svg").text(),
-  KOMPLETT_AEO_HTML: await Bun.file("/workspace/synlig-site/komplett-aeo-analyse.html").text(),
-  NORDIC_LITHIUM_CASE_HTML: await Bun.file("/workspace/synlig-site/nordic-lithium-case.html").text(),
+  KOMPLETT_AEO_HTML: await Bun.file("/workspace/synlig-site/dist/case/komplett-aeo/index.html").text(),
+  NORDIC_LITHIUM_CASE_HTML: await Bun.file("/workspace/synlig-site/dist/case/nordic-lithium/index.html").text(),
   EN_CASE_NORDIC_LITHIUM_HTML: await Bun.file("/workspace/synlig-site/en-case-nordic-lithium.html").text(),
   EN_BLOG_HTML: await Bun.file("/workspace/synlig-site/en-blog.html").text(),
   EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML: await Bun.file("/workspace/synlig-site/en-blog-llm-smell-check-benchmark.html").text(),
@@ -229,51 +243,51 @@ const files = {
   EN_BLOG_AEO_AGENCY_NORWAY_HTML: await Bun.file("/workspace/synlig-site/en-blog-aeo-agency-norway.html").text(),
   EN_BLOG_VISIBILITY_PARADOX_HTML: await Bun.file("/workspace/synlig-site/en-blog-visibility-paradox.html").text(),
   EN_BLOG_AGENTJACKING_AI_TRUST_HTML: await Bun.file("/workspace/synlig-site/en-blog-agentjacking-and-ai-trust.html").text(),
-  PIERSTOP_CASE_HTML: await Bun.file("/workspace/synlig-site/pierstop-case.html").text(),
+  PIERSTOP_CASE_HTML: await Bun.file("/workspace/synlig-site/dist/case/pierstop/index.html").text(),
   PICO_PAGE_HTML: await Bun.file("/workspace/synlig-site/pico.html").text(),
   AGENT_CARD_JSON: await Bun.file("/workspace/synlig-site/agent-card.json").text(),
-  BLOGG_INDEX_HTML: await Bun.file("/workspace/synlig-site/blogg/index.html").text(),
-  BLOGG_HVA_ER_AEO_HTML: await applyBlogCta("/workspace/synlig-site/blogg/hva-er-aeo.html"),
-  BLOGG_AEO_I_NORGE_2026_HTML: await applyBlogCta("/workspace/synlig-site/blogg/aeo-i-norge-2026.html"),
-  BLOGG_NORSK_AEO_BENCHMARK_2026_HTML: await applyBlogCta("/workspace/synlig-site/blogg/norsk-aeo-benchmark-2026.html"),
-  BLOGG_MCP_SECURITY_MARCH_2026_HTML: await applyBlogCta("/workspace/synlig-site/blogg/mcp-security-march-2026.html"),
-  BLOGG_AEO_BYRA_NORGE_HTML: await applyBlogCta("/workspace/synlig-site/blogg/aeo-byra-norge.html"),
-  BLOGG_LOKAL_AI_SYNLIGHET_HTML: await applyBlogCta("/workspace/synlig-site/blogg/lokal-ai-synlighet.html"),
-  BLOGG_SLIK_BLIR_DU_SYNLIG_I_CHATGPT_HTML: await applyBlogCta("/workspace/synlig-site/blogg/slik-blir-du-synlig-i-chatgpt.html"),
-  BLOGG_CAVEMAN_AI_PRICING_APRIL_2026_HTML: await applyBlogCta("/workspace/synlig-site/blogg/caveman-ai-pricing-april-2026.html"),
-  BLOGG_ER_NETTSIDA_DI_KLAR_HTML: await applyBlogCta("/workspace/synlig-site/blogg/er-nettsida-di-klar-for-ai-agentar.html"),
-  BLOGG_STAVANGER_AGENT_BEREDSKAP_HTML: await applyBlogCta("/workspace/synlig-site/blogg/stavanger-agent-beredskap-april-2026.html"),
-  BLOGG_HVA_ER_AEO_GUIDE_HTML: await applyBlogCta("/workspace/synlig-site/blogg/hva-er-aeo-guide.html"),
-  BLOGG_AEO_VS_SEO_HTML: await applyBlogCta("/workspace/synlig-site/blogg/aeo-vs-seo.html"),
+  BLOGG_INDEX_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/index.html").text(),
+  BLOGG_HVA_ER_AEO_HTML: await applyBlogCta("hva-er-aeo"),
+  BLOGG_AEO_I_NORGE_2026_HTML: await applyBlogCta("aeo-i-norge-2026"),
+  BLOGG_NORSK_AEO_BENCHMARK_2026_HTML: await applyBlogCta("norsk-aeo-benchmark-2026"),
+  BLOGG_MCP_SECURITY_MARCH_2026_HTML: await applyBlogCta("mcp-security-march-2026"),
+  BLOGG_AEO_BYRA_NORGE_HTML: await applyBlogCta("aeo-byra-norge"),
+  BLOGG_LOKAL_AI_SYNLIGHET_HTML: await applyBlogCta("lokal-ai-synlighet"),
+  BLOGG_SLIK_BLIR_DU_SYNLIG_I_CHATGPT_HTML: await applyBlogCta("slik-blir-du-synlig-i-chatgpt"),
+  BLOGG_CAVEMAN_AI_PRICING_APRIL_2026_HTML: await applyBlogCta("caveman-ai-pricing-april-2026"),
+  BLOGG_ER_NETTSIDA_DI_KLAR_HTML: await applyBlogCta("er-nettsida-di-klar-for-ai-agentar"),
+  BLOGG_STAVANGER_AGENT_BEREDSKAP_HTML: await applyBlogCta("stavanger-agent-beredskap-april-2026"),
+  BLOGG_HVA_ER_AEO_GUIDE_HTML: await applyBlogCta("hva-er-aeo-guide"),
+  BLOGG_AEO_VS_SEO_HTML: await applyBlogCta("aeo-vs-seo"),
   RAPPORT_STATE_AEO_2026_HTML: await Bun.file("/workspace/synlig-site/rapport/state-of-aeo-2026.html").text(),
   // Note: /tjenester/aeo-for-* verticals are loaded via VERTICAL_LANDINGS registry above (verticalFiles).
   TJENESTER_INDEX_HTML: await Bun.file("/workspace/synlig-site/tjenester/index.html").text(),
   TJENESTER_AEO_HTML: await Bun.file("/workspace/synlig-site/tjenester/aeo.html").text(),
   TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML: await Bun.file("/workspace/synlig-site/tjenester/digital-markedsforing-stavanger.html").text(),
-  BLOGG_DIGITAL_MARKEDSFORING_STAVANGER_HTML: await applyBlogCta("/workspace/synlig-site/blogg/digital-markedsforing-stavanger.html"),
-  BLOGG_CHATGPT_ANNONSER_OG_AEO_HTML: await applyBlogCta("/workspace/synlig-site/blogg/chatgpt-annonser-og-aeo-april-2026.html"),
-  BLOGG_AUTOMATISERT_AEO_VS_RADGIVING_HTML: await applyBlogCta("/workspace/synlig-site/blogg/automatisert-aeo-vs-radgiving.html"),
-  BLOGG_STAVANGER_KLINIKK_AEO_ANALYSE_HTML: await applyBlogCta("/workspace/synlig-site/blogg/stavanger-klinikk-aeo-analyse.html"),
-  BLOGG_NORGES_AEO_LEADERBOARD_2026_04_HTML: await applyBlogCta("/workspace/synlig-site/blogg/norges-aeo-leaderboard-2026-04.html"),
-  BLOGG_EU_AI_ACT_NORSKE_BEDRIFTER_HTML: await applyBlogCta("/workspace/synlig-site/blogg/eu-ai-act-norske-bedrifter.html"),
-  BLOGG_AEO_BUDSJETT_45X_HTML: await applyBlogCta("/workspace/synlig-site/blogg/aeo-budsjett-45x-okonomi.html"),
-  BLOGG_AEO_SJEKKLISTE_2026_HTML: await applyBlogCta("/workspace/synlig-site/blogg/aeo-sjekkliste-2026.html"),
-  BLOGG_GA4_AI_ASSISTANT_2026_HTML: await applyBlogCta("/workspace/synlig-site/blogg/ga4-ai-assistant-2026.html"),
-  BLOGG_CHATGPT_KONVERTERER_9X_HTML: await applyBlogCta("/workspace/synlig-site/blogg/chatgpt-konverterer-9x.html"),
-  BLOGG_GOOGLE_SOK_REDESIGN_MAI_2026_HTML: await applyBlogCta("/workspace/synlig-site/blogg/google-sok-redesign-mai-2026.html"),
-  BLOGG_90_PROSENT_USYNLIGE_HTML: await applyBlogCta("/workspace/synlig-site/blogg/90-prosent-usynlige-i-ai-sok.html"),
-  BLOGG_GOOGLE_SPAM_POLICY_AEO_HTML: await applyBlogCta("/workspace/synlig-site/blogg/google-spam-policy-aeo-mai-2026.html"),
-  BLOGG_93_PROSENT_AI_MODE_NULL_KLIKK_HTML: await applyBlogCta("/workspace/synlig-site/blogg/93-prosent-ai-mode-null-klikk.html"),
-  BLOGG_AI_PRODUKSJON_RELIABILITY_GAP_HTML: await applyBlogCta("/workspace/synlig-site/blogg/ai-produksjon-reliability-gap.html"),
-  BLOGG_ROBINHOOD_AI_AGENTER_HTML: await applyBlogCta("/workspace/synlig-site/blogg/robinhood-ai-agenter-norske-merkevarer.html"),
-  BLOGG_VIBESEC_AI_GENERERT_KODE_HTML: await applyBlogCta("/workspace/synlig-site/blogg/vibesec-ai-generert-kode-sikkerhet.html"),
-  BLOGG_SOK_FRAGMENTERES_2026_HTML: await applyBlogCta("/workspace/synlig-site/blogg/sok-fragmenteres-2026.html"),
-  BLOGG_EY_FALSKE_AI_KILDER_HTML: await applyBlogCta("/workspace/synlig-site/blogg/ey-falske-ai-kilder.html"),
-  BLOGG_LLM_SMELLS_AEO_HTML: await applyBlogCta("/workspace/synlig-site/blogg/llm-smells-aeo-synlighet.html"),
-  BLOGG_CHECKOUT_AGENTIC_COMMERCE_TILLIT_GAP_HTML: await applyBlogCta("/workspace/synlig-site/blogg/checkout-agentic-commerce-tillit-gap-2026.html"),
-  BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML: await Bun.file("/workspace/synlig-site/blogg/google-search-profiles-61-prosent-ctr-fall.html").text(),
-  BLOGG_AEO_LITE_FAQPAGE_HTML: await Bun.file("/workspace/synlig-site/blogg/aeo-lite-faqpage-990-kr.html").text(),
-  BLOGG_B2B_FINTECH_AGENT_HTML: await Bun.file("/workspace/synlig-site/blogg/b2b-fintech-agent-discoverability.html").text(),
+  BLOGG_DIGITAL_MARKEDSFORING_STAVANGER_HTML: await applyBlogCta("digital-markedsforing-stavanger"),
+  BLOGG_CHATGPT_ANNONSER_OG_AEO_HTML: await applyBlogCta("chatgpt-annonser-og-aeo-april-2026"),
+  BLOGG_AUTOMATISERT_AEO_VS_RADGIVING_HTML: await applyBlogCta("automatisert-aeo-vs-radgiving"),
+  BLOGG_STAVANGER_KLINIKK_AEO_ANALYSE_HTML: await applyBlogCta("stavanger-klinikk-aeo-analyse"),
+  BLOGG_NORGES_AEO_LEADERBOARD_2026_04_HTML: await applyBlogCta("norges-aeo-leaderboard-2026-04"),
+  BLOGG_EU_AI_ACT_NORSKE_BEDRIFTER_HTML: await applyBlogCta("eu-ai-act-norske-bedrifter"),
+  BLOGG_AEO_BUDSJETT_45X_HTML: await applyBlogCta("aeo-budsjett-45x-okonomi"),
+  BLOGG_AEO_SJEKKLISTE_2026_HTML: await applyBlogCta("aeo-sjekkliste-2026"),
+  BLOGG_GA4_AI_ASSISTANT_2026_HTML: await applyBlogCta("ga4-ai-assistant-2026"),
+  BLOGG_CHATGPT_KONVERTERER_9X_HTML: await applyBlogCta("chatgpt-konverterer-9x"),
+  BLOGG_GOOGLE_SOK_REDESIGN_MAI_2026_HTML: await applyBlogCta("google-sok-redesign-mai-2026"),
+  BLOGG_90_PROSENT_USYNLIGE_HTML: await applyBlogCta("90-prosent-usynlige-i-ai-sok"),
+  BLOGG_GOOGLE_SPAM_POLICY_AEO_HTML: await applyBlogCta("google-spam-policy-aeo-mai-2026"),
+  BLOGG_93_PROSENT_AI_MODE_NULL_KLIKK_HTML: await applyBlogCta("93-prosent-ai-mode-null-klikk"),
+  BLOGG_AI_PRODUKSJON_RELIABILITY_GAP_HTML: await applyBlogCta("ai-produksjon-reliability-gap"),
+  BLOGG_ROBINHOOD_AI_AGENTER_HTML: await applyBlogCta("robinhood-ai-agenter-norske-merkevarer"),
+  BLOGG_VIBESEC_AI_GENERERT_KODE_HTML: await applyBlogCta("vibesec-ai-generert-kode-sikkerhet"),
+  BLOGG_SOK_FRAGMENTERES_2026_HTML: await applyBlogCta("sok-fragmenteres-2026"),
+  BLOGG_EY_FALSKE_AI_KILDER_HTML: await applyBlogCta("ey-falske-ai-kilder"),
+  BLOGG_LLM_SMELLS_AEO_HTML: await applyBlogCta("llm-smells-aeo-synlighet"),
+  BLOGG_CHECKOUT_AGENTIC_COMMERCE_TILLIT_GAP_HTML: await applyBlogCta("checkout-agentic-commerce-tillit-gap-2026"),
+  BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/google-search-profiles-61-prosent-ctr-fall/index.html").text(),
+  BLOGG_AEO_LITE_FAQPAGE_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/aeo-lite-faqpage-990-kr/index.html").text(),
+  BLOGG_B2B_FINTECH_AGENT_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/b2b-fintech-agent-discoverability/index.html").text(),
   LEADERBOARD_HTML: await Bun.file("/workspace/synlig-site/leaderboard.html").text(),
   LEADERBOARD_JSON: await Bun.file("/workspace/synlig-site/leaderboard.json").text(),
   CONTEXT_MD: await Bun.file("/workspace/synlig-site/context.md").text(),
@@ -351,6 +365,31 @@ const VISIT_BEACON_SCRIPT = `<script>
 </script>
 `;
 
+/**
+ * Index of the `</head>` that actually terminates the <head> element.
+ *
+ * `src.replace("</head>", …)` hits the FIRST literal occurrence, and on this
+ * site that is not always the real one: /blogg/aeo-lite-faqpage-990-kr sells
+ * FAQPage markup, so one of its FAQ answers reads "limer du inn koden mellom
+ * <head>...</head>" — inside a <script type="application/ld+json"> string, in
+ * the head, ABOVE the real close. The beacon was therefore spliced into the
+ * middle of the JSON, truncating it. Measured live 2026-08-09: that page served
+ * an unterminated JSON-LD block, so its FAQPage — 7 Questions, 7 Answers, the
+ * entire product the page sells — parsed as nothing for every crawler and
+ * assistant. Found by pairing live JSON-LD against the new dist artifacts.
+ *
+ * Fix at the anchor rather than by escaping the prose: any future page that
+ * quotes </head> (likely — we teach people to paste JSON-LD into their head)
+ * would re-break otherwise. Script and style bodies are blanked length-
+ * preservingly first, so offsets in the blanked copy are valid in the original.
+ */
+function headCloseIndex(html: string): number {
+  const blanked = html
+    .replace(/<script[\s\S]*?<\/script>/gi, (m) => " ".repeat(m.length))
+    .replace(/<style[\s\S]*?<\/style>/gi, (m) => " ".repeat(m.length));
+  return blanked.indexOf("</head>");
+}
+
 function injectBeacon(record: Record<string, string>, predicate: (k: string) => boolean): { hit: number; skip: number } {
   let hit = 0, skip = 0;
   for (const key of Object.keys(record)) {
@@ -361,8 +400,9 @@ function injectBeacon(record: Record<string, string>, predicate: (k: string) => 
     if (src.includes("/api/v1/visit")) { skip++; continue; }
     // Require </head> — admin/utility pages without it (dashboard, etc.) are
     // tracked or not based on whether they're real user surfaces.
-    if (!src.includes("</head>")) { skip++; continue; }
-    record[key] = src.replace("</head>", VISIT_BEACON_SCRIPT + "</head>");
+    const at = headCloseIndex(src);
+    if (at === -1) { skip++; continue; }
+    record[key] = src.slice(0, at) + VISIT_BEACON_SCRIPT + src.slice(at);
     hit++;
   }
   return { hit, skip };
@@ -372,6 +412,58 @@ const staticHit = injectBeacon(files as Record<string, string>, (k) => k.endsWit
 // Vertical landings live in their own map — same _HTML naming convention.
 const verticalHit = injectBeacon(verticalFiles, (k) => k.endsWith("_HTML"));
 console.log(`[build] visit-beacon injected into ${staticHit.hit + verticalHit.hit} HTML surface(s) (static=${staticHit.hit}/skip=${staticHit.skip}, vertical=${verticalHit.hit}/skip=${verticalHit.skip}).`);
+
+// ─────────────────────────────────────────────────────────────────────────────
+// JSON-LD PARSE GATE — every <script type="application/ld+json"> on every
+// surface must be valid JSON, checked AFTER all injection steps.
+//
+// Why after: the structured data is correct in src/ and correct in dist/. It
+// was the beacon injection that broke it, by splicing a <script> into the
+// middle of a JSON string on the one page that quotes "</head>" in prose.
+// A gate that ran on the source would have been green for the 60+ days that
+// page shipped an unparseable FAQPage. Measure the artifact that ships.
+//
+// This is the whole point of the migration: JSON-LD is the citation surface.
+// A block that does not parse is not degraded, it is absent — the assistant
+// sees no FAQPage at all.
+// ─────────────────────────────────────────────────────────────────────────────
+{
+  const LD_RE = /<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi;
+  const bad: string[] = [];
+  let blocks = 0, surfaces = 0;
+  for (const record of [files as Record<string, string>, verticalFiles]) {
+    for (const [key, src] of Object.entries(record)) {
+      if (!key.endsWith("_HTML") || typeof src !== "string") continue;
+      surfaces++;
+      LD_RE.lastIndex = 0;
+      let m: RegExpExecArray | null;
+      while ((m = LD_RE.exec(src)) !== null) {
+        blocks++;
+        try {
+          JSON.parse(m[1]);
+        } catch (e) {
+          bad.push(`${key}: ${String(e).split("\n")[0]} — starts ${JSON.stringify(m[1].slice(0, 90))}`);
+        }
+      }
+    }
+  }
+  // Minimum-expected-input floor: a regex that stops matching would report
+  // "0 invalid" and pass. 39 migrated pages plus the front page and verticals
+  // carried 100+ blocks at the time of the fase-3 port.
+  if (blocks < 60) {
+    console.error(`\n[BUILD FAIL] JSON-LD parse gate found only ${blocks} blocks across ${surfaces} surfaces (floor 60).`);
+    console.error(`The extractor stopped matching — the gate is blind, not the site clean.`);
+    process.exit(1);
+  }
+  if (bad.length > 0) {
+    console.error(`\n[BUILD FAIL] ${bad.length} unparseable JSON-LD block(s) in the shipped artifact:`);
+    for (const b of bad) console.error(`  - ${b}`);
+    console.error(`\nMost likely cause: an injection step anchored on a literal string that also`);
+    console.error(`appears inside JSON-LD prose (e.g. "</head>"). Fix the anchor, not the prose.`);
+    process.exit(1);
+  }
+  console.log(`  ✅ JSON-LD parse gate: ${blocks} blocks across ${surfaces} surfaces, all valid.`);
+}
 
 // Sitemap assertion: every ACTIVE vertical in VERTICAL_LANDINGS must appear in
 // sitemap.xml. Adding a new vertical without updating sitemap.xml fails the
@@ -403,7 +495,10 @@ for (const v of VERTICAL_LANDINGS) {
 //      anchor lived only at /sjekk thank-you + cold emails. Buyers researching
 //      on the blog never saw a buy path. This gate enforces blog-layer parity.
 //   3. Markers must NOT survive into rendered output (would indicate render failure).
-const bloggDir = "/workspace/synlig-site/blogg";
+// fase 3: the blog SOURCE is the content collection. Both the CTA-coverage
+// gate (which files must exist in the files map) and the fact-source gate read
+// from here; the rendered artifact they check is still dist/.
+const bloggDir = "/workspace/synlig-site/src/content/blogg";
 const ctaViolations: string[] = [];
 const blogFileMap: Record<string, string> = {
   "hva-er-aeo.html": files.BLOGG_HVA_ER_AEO_HTML,
@@ -443,7 +538,7 @@ const blogFileMap: Record<string, string> = {
   "aeo-lite-faqpage-990-kr.html": files.BLOGG_AEO_LITE_FAQPAGE_HTML,
   "b2b-fintech-agent-discoverability.html": files.BLOGG_B2B_FINTECH_AGENT_HTML,
 };
-const allBlogFiles = readdirSync(bloggDir).filter(f => f.endsWith(".html") && f !== "index.html");
+const allBlogFiles = readdirSync(bloggDir).filter(f => f.endsWith(".html"));
 for (const fname of allBlogFiles) {
   const rendered = blogFileMap[fname];
   if (!rendered) {
@@ -537,7 +632,7 @@ if (sitemapViolations.length > 0) {
 // Source: /workspace/synlig-site/_partials/fact-source-gate.ts
 // ─────────────────────────────────────────────────────────────────────────────
 {
-  const factResult = runFactSourceGate("/workspace/synlig-site/blogg", "enforce");
+  const factResult = runFactSourceGate("/workspace/synlig-site/src/content/blogg", "enforce");
   if (factResult.violations.length > 0) {
     console.error(`\n[BUILD FAIL] fact-source gate: ${factResult.violations.length} unverified claim(s) in blogg/`);
     for (const v of factResult.violations) {
@@ -785,8 +880,8 @@ const TIER_SURFACE_REGISTRY: Record<string, TierSurface> = {
       // ships, not at src/pages/index.astro: the needle must survive the
       // build, and only dist/ proves that.
       "/workspace/synlig-site/dist/index.html",
-      "/workspace/synlig-site/nordic-lithium-case.html",
-      "/workspace/synlig-site/pierstop-case.html",
+      "/workspace/synlig-site/dist/case/nordic-lithium/index.html",
+      "/workspace/synlig-site/dist/case/pierstop/index.html",
       "/workspace/synlig-site/en-case-nordic-lithium.html",
       "/workspace/synlig-site/tjenester/aeo-for-tannleger.html",
       "/workspace/synlig-site/tjenester/aeo-for-saas-bedrifter.html",
@@ -898,24 +993,53 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
   // funnel-wide-launch principle, every page surfacing pricing must surface the
   // entry tier — extend the same gate to those directories rather than
   // creating parallel registries.
+  //
+  // fase 3 (2026-08-09): /blogg and the three case pages became Astro content
+  // collections, so the authored surface moved to src/content/{blogg,case}.
+  // The komplett-aeo-analyse.html push below moved with it — that pillar is now
+  // src/content/case/komplett-aeo.html and is covered by the case dir.
+  // Parity measured before the switch: OLD 56 files / 22 pricing-mentioning / 0
+  // violations, NEW 57 / 24 / 0. The two extra are pierstop + nordic-lithium,
+  // which the old root-file push never reached; blogg/index.html dropped out and
+  // never tripped pricingPattern in the first place.
   const PRICING_GATED_DIRS = [
-    "/workspace/synlig-site/blogg",
+    "/workspace/synlig-site/src/content/blogg",
+    "/workspace/synlig-site/src/content/case",
     "/workspace/synlig-site/tjenester",
     "/workspace/synlig-site/rapport",
   ];
+  // Minimum expected files per dir. `catch {}` below turns a renamed or deleted
+  // directory into a silent zero-file scan and the gate would still print
+  // nothing and pass — the exact false-CLEAN-on-absent-input failure the
+  // fact-source gate hit the same day. Floors are the count at the time of the
+  // fase-3 port minus nothing: these dirs only grow.
+  const PRICING_DIR_FLOOR: Record<string, number> = {
+    "/workspace/synlig-site/src/content/blogg": 36,
+    "/workspace/synlig-site/src/content/case": 3,
+    "/workspace/synlig-site/tjenester": 11,
+    "/workspace/synlig-site/rapport": 7,
+  };
   const pricingPattern = /4 900|14 900|Handlingsplan|Fundament/;
   const litePattern = /Synlig Lite|990 NOK|990 kr/;
   const pricingViolations: string[] = [];
   const scanFiles: string[] = [];
   for (const dir of PRICING_GATED_DIRS) {
+    let entries: string[] = [];
     try {
-      const entries = readdirSync(dir).filter(f => f.endsWith(".html"));
-      for (const f of entries) scanFiles.push(join(dir, f));
-    } catch {}
+      entries = readdirSync(dir).filter(f => f.endsWith(".html"));
+    } catch {
+      console.error(`\n[BUILD FAIL] pricing-mention gate cannot read ${dir}.`);
+      console.error(`A gated directory that disappears makes this gate pass by scanning nothing.`);
+      process.exit(1);
+    }
+    const floor = PRICING_DIR_FLOOR[dir] ?? 1;
+    if (entries.length < floor) {
+      console.error(`\n[BUILD FAIL] pricing-mention gate: ${dir} has ${entries.length} HTML files, floor is ${floor}.`);
+      console.error(`Either pages were deleted (update the floor deliberately) or the gate just went blind.`);
+      process.exit(1);
+    }
+    for (const f of entries) scanFiles.push(join(dir, f));
   }
-  // Also include the long-form pillar at the root (komplett-aeo-analyse.html)
-  // which lives outside /blogg but mentions Fundament in its CTA.
-  scanFiles.push("/workspace/synlig-site/komplett-aeo-analyse.html");
   for (const filePath of scanFiles) {
     let text = "";
     try { text = readFileSync(filePath, "utf-8"); } catch { continue; }
@@ -933,7 +1057,7 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
     console.error(`lowest entry point. Pattern caught 7× on 2026-06-05 + 3× on 2026-06-06`);
     console.error(`(Stavanger geo-landing, state-of-aeo-2026 rapport, komplett-aeo-analyse).`);
     console.error(`\nFix: add Synlig Lite mention to the CTA or pricing section.`);
-    console.error(`Gated dirs: ${PRICING_GATED_DIRS.join(", ")} + komplett-aeo-analyse.html`);
+    console.error(`Gated dirs: ${PRICING_GATED_DIRS.join(", ")}`);
     process.exit(1);
   }
 }
@@ -1034,8 +1158,9 @@ try {
     // surface in the outreach funnel. A lead opening their own audit report is
     // the strongest engagement signal between "received cold email" and "started
     // checkout", and previously invisible to the operator.
-    if (html.includes("</head>") && !html.includes("/api/v1/visit")) {
-      html = html.replace("</head>", VISIT_BEACON_SCRIPT + "</head>");
+    if (!html.includes("/api/v1/visit")) {
+      const at = headCloseIndex(html);
+      if (at !== -1) html = html.slice(0, at) + VISIT_BEACON_SCRIPT + html.slice(at);
     }
     reportEntries.push({ hash, html });
     console.log(`  Loaded report: ${hash} (${html.length} bytes)`);

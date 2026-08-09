@@ -206,6 +206,14 @@ const SHARED_STYLE = `<style>
   display: inline-block;
 }
 .audit-cta__btn:hover { opacity: 0.88; }
+/* The dual-tier buttons carry a price AND a detail span ("Full handlingsplan
+   — 4 900 NOK (5 virkedager) →"), which is wider than the CTA card on a phone.
+   nowrap (correct for the short primary button) clipped both labels mid-word
+   on every migrated blog post. Let these wrap; they are the paid-offer click. */
+.lead-form--dual .audit-cta__btn {
+  white-space: normal;
+  text-align: center;
+}
 .audit-cta__btn--link { color: var(--bg, #0a0a0b); }
 .audit-cta__btn--secondary {
   background: transparent;
@@ -302,7 +310,10 @@ const SHARED_STYLE = `<style>
 }
 @media (max-width: 600px) {
   .audit-cta__row { flex-direction: column; }
-  .audit-cta__input, .audit-cta__btn { width: 100%; }
+  /* The row's main axis is now vertical, so the 200px flex-basis above would
+     size the input's HEIGHT, not its width — a 200px-tall empty text field on
+     every phone. Basis must be content-driven once the axis flips. */
+  .audit-cta__input, .audit-cta__btn { width: 100%; flex-basis: auto; }
 }
 .lead-form {
   display: flex;

@@ -1,0 +1,27 @@
+---
+/**
+ * All three case/analysis pages render here. The public URLs differ
+ * (/case/pierstop, /case/nordic-lithium, /analyse/komplett-aeo) but the URL
+ * mapping lives in build.ts's ROUTES table, not in Astro's file layout —
+ * build.ts reads dist/case/<slug>/index.html and mounts it wherever the route
+ * table says. canonical comes from each page's own frontmatter, so the head
+ * is right regardless of where the artifact sits on disk.
+ */
+import { getCollection, render } from "astro:content";
+import Article from "../../layouts/Article.astro";
+
+export async function getStaticPaths() {
+  const pages = await getCollection("case");
+  return pages.map((page) => ({ params: { slug: page.id }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+const parent = page.data.canonical.includes("/analyse/")
+  ? { href: "/blogg", label: "Analyse" }
+  : { href: "/blogg", label: "Case" };
+---
+
+<Article fm={page.data} parent={parent}>
+  <Content />
+</Article>

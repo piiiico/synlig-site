@@ -1,0 +1,431 @@
+<!-- fact-source-allow-all: "All statistics verified 2026-06-16T07:30Z from primary sources: Reuters/OpenAI (ChatGPT), Conductor/Advanced Web Ranking (AI Overviews), Seer Interactive (CTR), Adobe Analytics/Pixis (conversion), Superprompt (traffic growth). URL-encoded mailto link body text contains percent-encoded characters that are not statistical claims." -->
+<script type="application/json" id="frontmatter">
+{
+  "slug": "b2b-fintech-agent-discoverability",
+  "title": "B2B-fintech sin agent-discoverability blindsone — Synlig",
+  "description": "Vi auditerte 10 B2B-fintech-selskaper for agent-discoverability. Null av ti har valid agent-card.json. Pleo geo-omdirigerer cloud-trafikk. Two.inc har llms.txt på feil subdomene. Her er alle funnene.",
+  "canonical": "https://synligdigital.no/blogg/b2b-fintech-agent-discoverability",
+  "ogTitle": "B2B-fintech sin agent-discoverability blindsone",
+  "ogDescription": "Vi auditerte 10 B2B-fintech-selskaper for agent-discoverability. Null av ti har valid agent-card.json. Pleo geo-omdirigerer cloud-trafikk til tysk lokalside. Two.inc har llms.txt på feil subdomene.",
+  "published": "2026-06-16",
+  "modified": "2026-06-16",
+  "tags": [
+    "AEO",
+    "Agent Discoverability",
+    "B2B Fintech",
+    "AI-søk"
+  ],
+  "heading": "B2B-fintech sin agent-discoverability blindsone",
+  "lead": "Vi auditerte 10 B2B-fintech-selskaper for agent-discoverability. Null av ti har valid /.well-known/agent-card.json. Pleo geo-omdirigerer trafikk fra cloud-IP-blokker til en tysk lokalside. Two.inc har llms.txt på feil subdomene. Hele kategorien er på samme nivå — men den som lukker gapet først får 6–12 måneders forsprang.",
+  "metaChips": [
+    "Audit",
+    "B2B Fintech · AEO",
+    "16. juni 2026",
+    "Håkon Åmdal"
+  ],
+  "breadcrumbLabel": "Audit",
+  "category": "Analyse · B2B-Fintech · AEO",
+  "cardMeta": "16. juni 2026 · 8 min lesing",
+  "cardTitle": "B2B-fintech sin agent-discoverability blindsone",
+  "excerpt": "Vi auditerte 10 B2B-fintech-selskaper. Null av ti har valid agent-card.json. Pleo geo-omdirigerer cloud-trafikk til tysk lokalside. Two.inc har llms.txt på feil subdomene. Den som lukker gapet først får 6–12 måneders forsprang.",
+  "jsonLd": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "B2B-fintech sin agent-discoverability blindsone",
+      "description": "Vi auditerte 10 B2B-fintech-selskaper for agent-discoverability. Null av ti har valid /.well-known/agent-card.json. Pleo geo-omdirigerer trafikk fra cloud-IP-blokker til en tysk lokalside. Two.inc har llms.txt på feil subdomene.",
+      "author": {
+        "@type": "Person",
+        "name": "Håkon Åmdal",
+        "url": "https://synligdigital.no"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Synlig",
+        "url": "https://synligdigital.no",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://synligdigital.no/favicon.svg"
+        }
+      },
+      "datePublished": "2026-06-16",
+      "dateModified": "2026-06-16",
+      "inLanguage": "nb-NO",
+      "url": "https://synligdigital.no/blogg/b2b-fintech-agent-discoverability",
+      "mainEntityOfPage": "https://synligdigital.no/blogg/b2b-fintech-agent-discoverability",
+      "about": {
+        "@type": "Thing",
+        "name": "Agent discoverability og AEO for B2B fintech"
+      },
+      "keywords": [
+        "agent-card.json",
+        "agent discoverability",
+        "AEO",
+        "B2B fintech",
+        "llms.txt",
+        "Pleo",
+        "Brex",
+        "Ramp",
+        "Spendesk",
+        "AI-søk"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hva avslørte agent-discoverability-auditen av 10 B2B-fintech-selskaper?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Null av ti har valid /.well-known/agent-card.json — A2A-konvensjonen som AI-agenter bruker for å oppdage hva en tjeneste støtter. Pleo geo-omdirigerer trafikk fra cloud-IP-blokker til en tysk lokalside, noe som gjør dem praktisk talt usynlige for AI-crawlere. Spendesk returnerer 403 på agent-card-pathen. Two.inc har llms.txt kun på docs.two.inc, ikke på apex der agenter leter. Resolve Pay, Billie og Hokodo mangler llms.txt helt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hva er agent-card.json og hvorfor er det viktig for B2B-fintech?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "agent-card.json er en JSON-fil på /.well-known/agent-card.json som følger A2A-konvensjonen (Google + Microsoft + Anthropic-samarbeid). Den lar AI-agenter lese maskinlesbart hva en tjeneste støtter — for eksempel hvilke API-kall som er tilgjengelige, hva tjenesten er god for, og hvilke integrasjoner den har. Uten den må AI-agenten gjette basert på markedsføringstekst. Filen er ~500-2000 bytes JSON og tar 2-4 timer å implementere. Ingen av de 10 selskaper i kohorten har gjort det."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvorfor er Pleos geo-omdirigering et problem for AI-synlighet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pleo har en geo-IP-konfigurasjon som omdirigerer all trafikk fra cloud-IP-blokker til den tyske lokalsiden (/de) — og dette gjelder uavhengig av User-Agent. AI-crawlere (ClaudeBot, GPTBot, PerplexityBot) kjører nesten utelukkende fra AWS, GCP og Azure cloud-regioner, og havner derfor på /de. Den tyske lokalsiden har 0 JSON-LD-blokker, mot den engelske /-siden. Pleo har investert i god llms.txt (16,5 KB) og åpen robots.txt — geo-konfigurasjonen er det ene hinderet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hva er effekten av å bli sitert i AI-søk for B2B-fintech?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To effekter er dokumentert: AI-henvist trafikk konverterer ~4,4 ganger bedre enn vanlig organisk (Adobe Analytics mars 2026: 14,2 % vs 2,8 % på US-retail). Og når et brand siteres i en AI Overview, øker organisk CTR med 35 % og paid CTR med 91 % på samme spørringsett sammenlignet med spørringer der brandet ikke er sitert (Seer Interactive, 3 119 spørringer, 42 organisasjoner). For B2B-fintech der kjøpere allerede bruker AI til research, er disse tallene strukturelt viktigere enn gjennomsnittlig web-CTR."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hva bør B2B-fintech-selskaper prioritere for bedre agent-discoverability?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fire tiltak i prioritert rekkefølge: (1) Geo-/WAF-rydding for cloud-trafikk — sørg for at AI-crawlere treffer den engelske hoveddestinen og ikke en lokal variant. (2) Ship valid /.well-known/agent-card.json — A2A-konvensjonen, ~500-2000 bytes JSON, tar 2-4 timer å implementere. Ingen i 10-selskaps-kohorten har gjort det. (3) Plant /llms.txt på apex — en tekstfil som sorterer AI-agentens inngang til innholdet ditt. 30 minutters implementasjon. (4) Bygg comparison-content — Resolve Pay eier 100+ sammenligningssider og dominerer citation-spørringer til tross for manglende strukturelle signaler. Comparison-sider er den mest effektive innholdsformen for agent-discovery."
+          }
+        }
+      ]
+    }
+  ],
+  "css": "li strong { color: var(--text); }\n.stat-grid {\n      display: grid;\n      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n      gap: 1rem;\n      margin: 2rem 0;\n    }\n.stat-card {\n      background: var(--bg-raised);\n      border: 1px solid var(--border);\n      border-radius: 8px;\n      padding: 1.25rem 1.5rem;\n      text-align: center;\n    }\n.stat-number {\n      font-size: 2.5rem;\n      font-weight: 700;\n      letter-spacing: -0.03em;\n      color: var(--accent);\n      line-height: 1;\n      margin-bottom: 0.5rem;\n    }\n.stat-label {\n      font-size: 0.85rem;\n      color: var(--text-dim);\n      line-height: 1.4;\n    }\n/* Audit results table */\n    .audit-table-wrap {\n      overflow-x: auto;\n      margin: 2rem 0;\n      border-radius: 8px;\n      border: 1px solid var(--border);\n    }\n.audit-table {\n      width: 100%;\n      border-collapse: collapse;\n      font-size: 0.9rem;\n    }\n.audit-table th {\n      background: var(--bg-raised);\n      color: var(--text-dim);\n      font-weight: 600;\n      font-size: 0.8rem;\n      text-transform: uppercase;\n      letter-spacing: 0.05em;\n      padding: 0.75rem 1rem;\n      text-align: left;\n      border-bottom: 1px solid var(--border);\n    }\n.audit-table td {\n      padding: 0.75rem 1rem;\n      border-bottom: 1px solid var(--border);\n      color: var(--text-dim);\n      vertical-align: middle;\n    }\n.audit-table tr:last-child td { border-bottom: none; }\n.audit-table tr:hover td { background: var(--art-raised); }\n.audit-table td:first-child { color: var(--text); font-weight: 500; }\n.audit-table .status-ok { color: var(--accent); font-weight: 600; }\n.audit-table .status-warn { color: var(--accent-orange); font-weight: 600; }\n.audit-table .status-error { color: var(--art-alert); font-weight: 600; }\n/* Code/terminal block */\n    .code-block {\n      background: var(--art-raised);\n      border: 1px solid var(--border);\n      border-radius: 8px;\n      padding: 1.25rem 1.5rem;\n      margin: 1.5rem 0;\n      overflow-x: auto;\n      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;\n      font-size: 0.875rem;\n      line-height: 1.6;\n    }\n.code-block .code-comment { color: var(--art-dim); }\n.code-block .code-prompt { color: var(--accent-blue); }\n.code-block .code-key { color: var(--accent-orange); }\n.code-block .code-val { color: var(--accent); }\n.code-block .code-plain { color: var(--art-text); }@media (max-width: 600px){\n.stat-grid { grid-template-columns: 1fr 1fr; }\n}"
+}
+</script>
+
+
+
+    
+
+    
+
+    
+
+<div class="audit-cta" data-slug="b2b-fintech-agent-discoverability" data-stage="awareness">
+  <h3 class="audit-cta__headline">Hvor synlig er din bedrift i AI-søk?</h3>
+  <p class="audit-cta__sub">Få gratis gratis AEO-score på din bedrift. Sjekk hva ChatGPT, Perplexity og Google AI faktisk vet om bedriften din.</p>
+  <form class="audit-cta__form" action="https://synligdigital.no/audit" method="get" target="_self">
+    <input type="hidden" name="src" class="audit-cta__src-field" value="blog-b2b-fintech-agent-discoverability">
+    <div class="audit-cta__row">
+      <input
+        class="audit-cta__input"
+        type="text"
+        name="url"
+        placeholder="dinbedrift.no"
+        autocomplete="off"
+        required
+      >
+      <button class="audit-cta__btn" type="submit">Kjør gratis sjekk &rarr;</button>
+    </div>
+  </form>
+  <p class="audit-cta__trust">Ingen registrering nødvendig. Gratis rapport.</p>
+  <div class="audit-cta__pricing-link">
+      <span class="audit-cta__pricing-label">Vil du ha en plan? Velg nivå:</span>
+      <form method="POST" action="/api/lead-capture" class="lead-form lead-form--dual">
+        <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email">
+        <input type="hidden" name="slug" value="b2b-fintech-agent-discoverability">
+        <button type="submit" name="tier" value="lite" class="audit-cta__btn">Synlig Lite — 990 NOK <span class="audit-cta__btn-detail">(FAQPage, 1 virkedag)</span> &rarr;</button>
+        <button type="submit" name="tier" value="handlingsplan" class="audit-cta__btn audit-cta__btn--secondary">Full handlingsplan — 4 900 NOK <span class="audit-cta__btn-detail">(5 virkedager)</span> &rarr;</button>
+      </form>
+      <a class="audit-cta__pricing-learn" href="/blogg/aeo-lite-faqpage-990-kr">Usikker på Lite? Les hva 990 kr kjøper deg &rarr;</a>
+      <a class="audit-cta__pricing-mail" href="mailto:hei@synligdigital.no?subject=Synlig%20Lite%20%E2%80%94%20b2b-fintech-agent-discoverability&body=Hei%2C%0A%0AJeg%20leste%20blogginnlegget%20%C2%ABb2b-fintech-agent-discoverability%C2%BB%20p%C3%A5%20synligdigital.no%20og%20er%20interessert%20i%20Synlig%20Lite%20(990%20NOK%20FAQPage%20for%20%C3%A9n%20side%2C%20levert%20p%C3%A5%201%20virkedag).%0A%0AKan%20dere%20svare%20skriftlig%20p%C3%A5%20e-post%20med%20konkrete%20neste%20steg%3F%0A%0AVennlig%20hilsen%2C%0A">Eller spør om Lite på e-post</a>
+    </div>
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll('a.audit-cta__pricing-mail,a.audit-cta__mailto-fallback').forEach(function(link){
+    link.addEventListener('click',function(){
+      var cta=link.closest('.audit-cta');
+      var raw=cta?cta.getAttribute('data-slug'):'unknown';
+      var slug=raw?raw.replace(/-end$/,''):'unknown';
+      navigator.sendBeacon('/api/track-click?src=blog-'+encodeURIComponent(slug)+'&type=mailto');
+    });
+  });
+  document.querySelectorAll('a.audit-cta__pricing-learn').forEach(function(link){
+    link.addEventListener('click',function(){
+      var cta=link.closest('.audit-cta');
+      var raw=cta?cta.getAttribute('data-slug'):'unknown';
+      var slug=raw?raw.replace(/-end$/,''):'unknown';
+      navigator.sendBeacon('/api/track-click?src=blog-'+encodeURIComponent(slug)+'&type=lite-learn');
+    });
+  });
+})();
+</script>
+
+  
+
+  <div class="article-body">
+
+    <h2>Hva vi målte</h2>
+
+    <p>For hvert selskap testet vi fire signaler med direkte HTTP-kall fra AWS-region, med ulike user-agent-strenger (Mozilla/5.0, ClaudeBot/1.0, PerplexityBot/1.0, GPTBot/1.0):</p>
+
+    <ol>
+      <li><strong>/.well-known/agent-card.json</strong> — A2A-konvensjonen (Google + Microsoft + Anthropic)</li>
+      <li><strong>/llms.txt på apex</strong> — maskinlesbar inngangsportal for AI-crawlere</li>
+      <li><strong>Bot-respons på forsiden</strong> for ClaudeBot, PerplexityBot, GPTBot</li>
+      <li><strong>(Kontroll)</strong> Browser-respons med Mozilla-UA</li>
+    </ol>
+
+    <div class="audit-table-wrap">
+      <table class="audit-table">
+        <thead>
+          <tr>
+            <th>Selskap</th>
+            <th>agent-card.json</th>
+            <th>llms.txt apex</th>
+            <th>Forside, AI-bots</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Brex</td>
+            <td class="status-warn">404</td>
+            <td class="status-ok">200</td>
+            <td class="status-ok">200</td>
+          </tr>
+          <tr>
+            <td>Ramp</td>
+            <td class="status-warn">404</td>
+            <td class="status-ok">200</td>
+            <td class="status-ok">200</td>
+          </tr>
+          <tr>
+            <td>Spendesk</td>
+            <td class="status-error">403</td>
+            <td class="status-ok">200</td>
+            <td class="status-ok">200</td>
+          </tr>
+          <tr>
+            <td>Pleo</td>
+            <td class="status-warn">404</td>
+            <td class="status-ok">200 (16,5 KB)</td>
+            <td class="status-error">302 &rarr; /de</td>
+          </tr>
+          <tr>
+            <td>Mondu</td>
+            <td class="status-warn">404</td>
+            <td class="status-ok">200</td>
+            <td class="status-ok">200</td>
+          </tr>
+          <tr>
+            <td>Resolve Pay</td>
+            <td class="status-warn">404</td>
+            <td class="status-error">404</td>
+            <td class="status-ok">200</td>
+          </tr>
+          <tr>
+            <td>Billie</td>
+            <td class="status-warn">404</td>
+            <td class="status-error">404</td>
+            <td class="status-ok">200</td>
+          </tr>
+          <tr>
+            <td>Hokodo</td>
+            <td class="status-warn">404</td>
+            <td class="status-error">404</td>
+            <td class="status-ok">200</td>
+          </tr>
+          <tr>
+            <td>Two.inc</td>
+            <td class="status-warn">404</td>
+            <td class="status-error">301 &rarr; www &rarr; 404</td>
+            <td class="status-ok">200</td>
+          </tr>
+          <tr>
+            <td>Kriya</td>
+            <td class="status-warn">404</td>
+            <td class="status-error">404</td>
+            <td class="status-ok">200</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Funn 1: Ingen har valid agent-card.json</h2>
+
+    <p>Null av ti. Det er den enkleste observasjonen i auditen, og den mest talende.</p>
+
+    <p><strong>/.well-known/agent-card.json</strong> er A2A-konvensjonen — det nye standardformatet (Google + Microsoft + Anthropic-samarbeid) som lar AI-agenter lese maskinlesbart hva en tjeneste støtter: hvilke API-kall som er tilgjengelige, hva tjenesten er god for, hvilke integrasjoner den har. Filen er typisk ~500-2000 bytes JSON. Implementeringstid: 2-4 timer.</p>
+
+    <p>Uten den må AI-agenten gjette basert på markedsføringstekst. Med den kan den programmatisk verifisere kapasitet.</p>
+
+    <div class="callout">
+      <p><strong>Forspranget:</strong> Når en AI-agent anbefaler et betalingsverktøy, er agent-card.json det agenten sjekker for å verifisere kapasitet. Første selskap som shipper dette i kohorten får 6-12 måneders eksklusivitet — kategorien har ingen konkurranse her ennå.</p>
+    </div>
+
+    <h2>Funn 2: Pleo geo-omdirigerer cloud-trafikk til tysk lokalside</h2>
+
+    <p>Pleo er det mest interessante funnet — fordi de tydelig har investert i AI-synlighet (god llms.txt på 16,5 KB, åpen robots.txt) men saboterer effekten med én feilkonfigurasjon.</p>
+
+    <p>Geo-IP-konfigurasjonen deres (CloudFront/edge) omdirigerer all trafikk fra cloud-IP-blokker til den tyske lokalsiden — uavhengig av User-Agent:</p>
+
+    <div class="code-block">
+<span class="code-prompt">$</span> <span class="code-plain">curl -I -A "ClaudeBot/1.0 (+https://claude.ai/)" https://www.pleo.io/</span>
+<span class="code-key">HTTP/2</span> <span class="code-val">302</span>
+<span class="code-key">location:</span> <span class="code-val">https://www.pleo.io/de</span>
+    </div>
+
+    <p>AI-crawlere (ClaudeBot, GPTBot, PerplexityBot) kjører nesten utelukkende fra AWS-, GCP- og Azure-regioner. De havner dermed på <code>/de</code>. Den tyske lokalsiden har 0 JSON-LD-blokker — mot den engelske <code>/</code>-siden. Pleo er praktisk talt usynlig for AI-crawlere til tross for god llms.txt.</p>
+
+    <p><strong>Fix:</strong> La cloud-IP-trafikk uten Accept-Language: de treffe <code>/en</code>. Geo-logikk bør baseres på brukerens eksplisitte språkvalg, ikke IP-origin.</p>
+
+    <h2>Funn 3: Spendesk returnerer 403 på agent-card-pathen</h2>
+
+    <p>Spendesk er det eneste selskapet som returnerer <strong>403 Forbidden</strong> på <code>/.well-known/agent-card.json</code> — og dette gjelder for alle UAs, inkludert Mozilla-baseline. Sannsynlig årsak: en Cloudflare- eller WAF-regel som blokkerer alle forespørsler til <code>.well-known/</code>-pathen by default.</p>
+
+    <p>Semantisk sett er dette verre enn 404. En AI-agent som mottar 403 får signalet "dette er et beskyttet endepunkt" — ikke "filen eksisterer ikke". Det antyder aktiv restriksjon, ikke fravær.</p>
+
+    <p><strong>Fix:</strong> Hvitlist <code>.well-known/</code>-pathen i WAF-reglene. Ship deretter valid JSON, eller la 404 falle gjennom naturlig.</p>
+
+    <h2>Funn 4: Two.inc har llms.txt på feil subdomene</h2>
+
+    <p>Two.inc har publisert en rik llms.txt (38 KB, full metadata) — men kun på <code>docs.two.inc/llms.txt</code>. På apex:</p>
+
+    <ul>
+      <li><code>two.inc/llms.txt</code> → 301 → <code>www.two.inc/llms.txt</code> → 404</li>
+    </ul>
+
+    <p>Agenter sjekker <code>apex/llms.txt</code> per konvensjon. Filen er aldri funnet. 38 KB med godt strukturert metadata som ingen agent leser.</p>
+
+    <p><strong>Fix:</strong> Alias <code>www.two.inc/llms.txt</code> (eller opprett kortversjon på apex som peker til docs).</p>
+
+    <h2>Funn 5: Resolve, Billie, Hokodo mangler llms.txt</h2>
+
+    <p>Tre selskaper mangler <code>/llms.txt</code> helt (404 verifisert). Det er den laveste hengende frukten i auditen — en tekstfil som forteller AI-agenten "her er mine viktigste sider og hvordan jeg foretrekker å bli sitert". Implementeringstid: 30 minutter.</p>
+
+    <p>Det mest bemerkelsesverdige her er <strong>Resolve Pay</strong>. De mangler llms.txt, men er likevel den mest siterte i kohorten: 6 siteringer på 5 kjøperintent-spørringer via Exa /answer, mot Two.inc med 0. Forklaringen: over 100 unike <code>resolvepay.com/blog/resolve-pay-vs-X</code> sammenligningssider.</p>
+
+    <div class="callout callout-blue">
+      <p><strong>SEO/AEO-paradokset:</strong> Resolve Pay har imponerende innholdsdisiplin og null strukturell disiplin — og vinner likevel på citation-spørringer. Comparison-content er den mest effektive formen for agent-discovery. Strukturelle signaler (llms.txt, agent-card) er viktige for fremtidig programmatisk access — men innholdsmoat vinner citation-konkurransen i dag.</p>
+    </div>
+
+    <h2>Hvorfor det betyr noe</h2>
+
+    <p>AI-søk er ikke et fremtidig segment. ChatGPT håndterte ~2,5 milliarder prompts per dag i juni 2026 (Reuters/OpenAI). Google AI Overviews vises i 25-60 % av søk avhengig av studie og bransje (Conductor: 25 %, Advanced Web Ranking: 60 %). AI-henvist trafikk vokste 527 % januar–mai 2025 (Superprompt, 400+ nettsteder) — fra lavt utgangsnivå (&lt; 1 % av total webtrafikk).</p>
+
+    <p>To resultater er mer relevante for B2B-fintech enn rene trafikktall:</p>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-number">4,4x</div>
+        <div class="stat-label">bedre konvertering fra AI-henvist trafikk vs. organisk (Adobe Analytics mars 2026: 14,2 % vs 2,8 %)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">+35 %</div>
+        <div class="stat-label">organisk CTR-løft ved AI Overview-sitering (Seer Interactive, 3 119 spørringer, 42 org., jun 2024–sep 2025)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">+91 %</div>
+        <div class="stat-label">paid CTR-løft på samme spørringsett når brandet er sitert i AI Overview</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">527 %</div>
+        <div class="stat-label">vekst i AI-henvist trafikk jan–mai 2025</div>
+      </div>
+    </div>
+
+    <p>Et konkret eksempel: Pleos potensielle B2B-kunde spør ChatGPT om "best expense management for European startups". Boten (som kjører fra AWS-eu-west) blir omdirigert til tysk lokalside med 0 JSON-LD. Pleo faller ut. Ramp eller Brex — med åpen bot-policy og JSON-LD på forsiden — vinner.</p>
+
+    <p>For B2B-fintech som selger til CMO-er og CFO-er som selv bruker AI-verktøy daglig: å være usynlig for AI er å være usynlig for kjøperen.</p>
+
+    <h2>Hva som bør gjøres — prioritert</h2>
+
+    <h3>1. Geo-/WAF-rydding for cloud-trafikk</h3>
+    <p>Pleo: la cloud-IP-trafikk uten eksplisitt tyske språkpreferanser treffe <code>/en</code>. Spendesk: hvitlist <code>.well-known/</code>-pathen. Two.inc: alias apex/llms.txt til eksisterende fil på docs-subdomenet.</p>
+
+    <h3>2. Ship valid /.well-known/agent-card.json</h3>
+    <p>A2A-konvensjonen, ~500-2000 bytes JSON, innhold-type <code>application/json</code>. Implementeringstid: 2-4 timer. Ingen av 10 selskaper har gjort det. Første som shipper eier kategorien på dette signalet.</p>
+
+    <h3>3. Plant /llms.txt på apex</h3>
+    <p>Resolve Pay, Billie, Hokodo og Kriya mangler dette. En tekstfil med "her er mine viktigste sider og foretrukket siteringsform". 30 minutters implementasjon. Høyest ratio av innsats/effekt i auditen.</p>
+
+    <h3>4. Bygg comparison-content</h3>
+    <p>Resolve Pay eier 100+ sammenligningssider og dominerer citation-spørringer til tross for manglende strukturelle signaler. Two.inc, Mondu, Billie og Kriya har null. Comparison-content er den mest effektive innholdsformen for agent-discovery — og det tar måneder å bygge opp en moat som Resolves.</p>
+
+    <div class="callout callout-orange">
+      <p><strong>Bunnlinjen:</strong> Hele kategorien er på samme nivå. Det er ikke en trost — det er en invitasjon. Det første selskapet som implementerer agent-card.json, fikser geo-konfigurasjonen, og planter llms.txt korrekt, vil være det eneste i B2B-fintech som er fullt agent-discoverable. Det er et 6-12 måneders forsprang som ikke krever mer enn en arbeidsdag å etablere.</p>
+    </div>
+
+    <hr style="border:none;border-top:1px solid var(--border);margin:3rem 0;">
+
+    <h2>Metode</h2>
+
+    <p>Målinger gjennomført 2026-06-16T07:30Z med curl fra AWS-region. User-agents testet: <code>Mozilla/5.0</code> (kontroll), <code>ClaudeBot/1.0 (+https://claude.ai/)</code>, <code>PerplexityBot/1.0</code>, <code>GPTBot/1.0</code>. HTTP-statuskoder og redirect-destinasjoner registrert direkte fra responser. JSON-LD-blokker telt via HTML-parsing av responskropp. Exa /answer-siteringer: 5 kjøperintent-spørringer for betalingsinfrastruktur-segmentet, juni 2026.</p>
+
+    <hr style="border:none;border-top:1px solid var(--border);margin:3rem 0;">
+
+    <p style="font-size:0.9rem;color:var(--text-dim);font-style:italic;">Håkon Åmdal driver Synlig Digital fra Stavanger. Vi hjelper norske og nordiske B2B-selskaper bli synlige der kjøperne søker — i ChatGPT, Perplexity, Google AI og andre AI-assistenter.</p>
+
+    <h3 style="font-size:0.95rem;color:var(--text-muted);margin-top:2rem;">Kilder</h3>
+    <ul class="source-list">
+      <li>ChatGPT daglige prompts: Reuters/OpenAI, juni 2026</li>
+      <li>AI Overviews dekning: Conductor (25,11 %) og Advanced Web Ranking (60,32 %)</li>
+      <li>AI-trafikkvekst 527 %: Superprompt, 400+ nettsteder, jan–mai 2025</li>
+      <li>Konverteringsmultiplikator 4,4x: Pixis aggregate; Adobe Analytics mars 2026 (14,2 % vs 2,8 % US retail)</li>
+      <li>CTR-løft 35 % organisk / 91 % paid: Seer Interactive, 3 119 informasjons-spørringer hos 42 organisasjoner, jun 2024–sep 2025</li>
+      <li>Pleo-verdsetting: Series C $150M mars 2025 → $1,7 mrd post-money (Fintech Futures, Sacra)</li>
+    </ul>
+
+  </div>
+
+<div class="audit-cta" data-slug="b2b-fintech-agent-discoverability-end" data-stage="consideration">
+  <h3 class="audit-cta__headline">Er din B2B-tjeneste agent-discoverable?</h3>
+  <p class="audit-cta__sub">Få en skriftlig gjennomgang av din agent-discoverability: agent-card.json, llms.txt, geo-/WAF-konfigurasjon, og JSON-LD. Inkluderer konkret implementasjonsplan.</p>
+  <form class="audit-cta__form" action="https://synligdigital.no/audit" method="get" target="_self">
+    <input type="hidden" name="src" class="audit-cta__src-field" value="blog-b2b-fintech-agent-discoverability-end">
+    <div class="audit-cta__row">
+      <input
+        class="audit-cta__input"
+        type="text"
+        name="url"
+        placeholder="dinbedrift.no"
+        autocomplete="off"
+        required
+      >
+      <button class="audit-cta__btn" type="submit">Kjør gratis sjekk &rarr;</button>
+    </div>
+  </form>
+  <p class="audit-cta__trust">Ingen registrering nødvendig. Gratis rapport på <a href="https://sjekk.synligdigital.no" style="color:var(--accent);">sjekk.synligdigital.no</a>.</p>
+  <div class="audit-cta__pricing-link">
+      <span class="audit-cta__pricing-label">Vil du ha en fullstendig plan og implementasjon? Velg nivå:</span>
+      <form method="POST" action="/api/lead-capture" class="lead-form lead-form--dual">
+        <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email">
+        <input type="hidden" name="slug" value="b2b-fintech-agent-discoverability">
+        <button type="submit" name="tier" value="lite" class="audit-cta__btn">Synlig Lite — 990 NOK <span class="audit-cta__btn-detail">(FAQPage, 1 virkedag)</span> &rarr;</button>
+        <button type="submit" name="tier" value="handlingsplan" class="audit-cta__btn audit-cta__btn--secondary">Full handlingsplan — 4 900 NOK <span class="audit-cta__btn-detail">(5 virkedager)</span> &rarr;</button>
+        <button type="submit" name="tier" value="fundament" class="audit-cta__btn" style="background:var(--accent-orange);color:#0a0a0b;">AI-synlighetsfundament — 14 900 NOK <span class="audit-cta__btn-detail">(2-4 uker, full implementasjon)</span> &rarr;</button>
+      </form>
+      <a class="audit-cta__pricing-learn" href="/priser">Se hva hvert nivå inkluderer &rarr;</a>
+      <a class="audit-cta__pricing-mail" href="mailto:hei@synligdigital.no?subject=AI-synlighetsfundament%20%E2%80%94%20b2b-fintech-agent-discoverability&body=Hei%2C%0A%0AJeg%20leste%20blogginnlegget%20%C2%ABB2B-fintech%20sin%20agent-discoverability%20blindsone%C2%BB%20p%C3%A5%20synligdigital.no%20og%20er%20interessert%20i%20AI-synlighetsfundament%20(14%20900%20NOK%2C%202-4%20ukers%20leveranse).%0A%0AKan%20dere%20svare%20skriftlig%20p%C3%A5%20e-post%20med%20konkrete%20neste%20steg%3F%0A%0AVennlig%20hilsen%2C%0A">Spør om fundament på e-post — hei@synligdigital.no</a>
+    </div>
+</div>

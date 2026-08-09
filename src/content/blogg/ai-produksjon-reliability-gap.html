@@ -1,0 +1,272 @@
+<!-- fact-source-allow: ["30 prosentpoeng","30 pp","12 millioner","12M","100 oppgaver","80","20","åtte rammeverk","39","10 kritiske","0 kritiske","22 dager","12 dager"] -->
+<!-- fact-source-allow-reason: "30pp drop = Dente/Satriani/Papotti (arXiv 2605.06445). 12M Cork exploit = protos.com/jack-sanford-x-post May 2026. 100 tasks/80+20/8 frameworks/39 researchers/10 vs 0 critical vulns/22/12 days = same paper + Sherlock/Cork post-mortems." -->
+<script type="application/json" id="frontmatter">
+{
+  "slug": "ai-produksjon-reliability-gap",
+  "title": "AI-agenter taper 30 pp i produksjon — og ingen oppdager det — Synlig",
+  "description": "Ny forskning: AI-agenter mister 30 prosentpoeng i produksjonsmiljøer. Cork Protocols 12 millioner dollar-hack viser hva som skjer når ingen verifiserer. Hva betyr dette for norske bedrifter?",
+  "canonical": "https://synligdigital.no/blogg/ai-produksjon-reliability-gap",
+  "ogTitle": "AI-agenter taper 30 pp i produksjon — og ingen oppdager det",
+  "ogDescription": "Constraint Decay-studien viser 30 pp fall i produksjonsmiljøer. Cork Protocol-hacket (12M USD) viser hva som skjer uten løpende verifisering. Les hva norske bedrifter bør gjøre.",
+  "published": "2026-05-24",
+  "modified": "2026-05-24",
+  "tags": [
+    "AI",
+    "AI-agenter",
+    "produksjon",
+    "pålitelighet",
+    "AEO"
+  ],
+  "heading": "AI-agenter taper 30 pp i produksjon — og ingen oppdager det",
+  "lead": "En ny studie fra arXiv dokumenterer noe mange allerede mistenker men ingen tør si høyt: AI-agenter som ser ut til å fungere i demo, degraderer systematisk under produksjonsbetingelser. Gjennomsnittlig fall: 30 prosentpoeng. Årsaken er ikke modellene — det er miljøet rundt dem. Og Cork Protocol-saken viser hva som skjer i praksis når ingen sjekker løpende.",
+  "metaChips": [
+    "Analyse",
+    "AI-pålitelighet",
+    "24. mai 2026",
+    "Håkon Åmdal"
+  ],
+  "breadcrumbLabel": "Analyse",
+  "category": "Analyse · AI-pålitelighet",
+  "cardMeta": "24. mai 2026 · 5 min lesing",
+  "cardTitle": "AI-agenter taper 30 pp i produksjon — og ingen oppdager det",
+  "excerpt": "Ny forskning: AI-agenter mister 30 prosentpoeng under produksjonsbetingelser. Cork Protocols 12M dollar-hack viser hva som skjer uten løpende verifisering.",
+  "jsonLd": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "AI-agenter taper 30 pp i produksjon — og ingen oppdager det",
+      "description": "Constraint Decay-studien (arXiv 2605.06445) dokumenterer at AI-agenter mister 30 prosentpoeng i assertion pass rate under produksjonsbetingelser. Cork Protocols 12M USD-hack illustrerer hva som skjer uten løpende verifisering. Hva betyr dette for norske bedrifter som implementerer AI?",
+      "author": {
+        "@type": "Person",
+        "name": "Håkon Åmdal",
+        "url": "https://synligdigital.no"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Synlig",
+        "url": "https://synligdigital.no",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://synligdigital.no/favicon.svg"
+        }
+      },
+      "datePublished": "2026-05-24",
+      "dateModified": "2026-05-24",
+      "inLanguage": "nb-NO",
+      "url": "https://synligdigital.no/blogg/ai-produksjon-reliability-gap",
+      "mainEntityOfPage": "https://synligdigital.no/blogg/ai-produksjon-reliability-gap",
+      "about": {
+        "@type": "Thing",
+        "name": "AI-pålitelighet i produksjonsmiljøer"
+      },
+      "citation": [
+        {
+          "@type": "ScholarlyArticle",
+          "name": "Constraint Decay: The Fragility of LLM Agents in Backend Code Generation",
+          "author": "Francesco Dente, Dario Satriani, Paolo Papotti",
+          "identifier": "arXiv:2605.06445",
+          "datePublished": "2026"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Cork Protocol Post-Mortem: May 2025 Exploit",
+          "url": "https://www.cork.tech/blog/post-mortem",
+          "datePublished": "2025"
+        }
+      ],
+      "keywords": [
+        "AI-agenter",
+        "produksjon",
+        "pålitelighet",
+        "constraint decay",
+        "AEO",
+        "verifisering",
+        "norsk bedrift"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hva er Constraint Decay?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Constraint Decay er et fenomen beskrevet i en 2026-studie (arXiv 2605.06445) der AI-agenter mister opptil 30 prosentpoeng i korrekthet når de opererer i produksjonsmiljøer med realistiske tekniske begrensninger — som databaselag, rammeverk og eksisterende kodestrukturer. I kontrollerte tester ser AI-en ut til å fungere. Under virkelige betingelser degraderer ytelsen dramatisk."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvorfor oppdages ikke AI-svikten i testing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standardtesting av AI-systemer skjer i isolerte miljøer uten de strukturelle begrensningene som finnes i produksjon — eksisterende databasemodeller, ORM-lag, rammeverkskonvensjoner. Studien fant at AI-agenter klarte seg godt i minimale rammeverk (Flask), men feilet i konvensjonstunge miljøer (FastAPI, Django). Testresultater fra demo-miljøet predikerer ikke påliteligheten i det virkelige systemet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hva har Cork Protocol med norske bedrifter å gjøre?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cork Protocol-hacket (12M USD) er et ekstremt eksempel på hva som skjer når punkt-i-tid revisjoner erstatter løpende verifisering. Tre av fem revisjonsfirmaer fant null kritiske sårbarheter på et system som hadde en åpenbar tilgangskontrollfeil. Prinsippet gjelder i alle bransjer: engangsjekker av AI-systemer fanger ikke degradering over tid eller under reelle driftsbetingelser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hva bør norske bedrifter gjøre med AI-implementasjoner?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tre tiltak: (1) Test AI-systemet under virkelige produksjonsbetingelser, ikke bare i demo-miljøet. (2) Sett opp løpende ytelseslogging — ikke bare om systemet svarer, men om det svarer riktig. (3) Vurder uavhengig verifikasjon for AI-systemer som håndterer kundekommunikasjon, rådgivning eller kritiske forretningsprosesser. Synlig Digitals AEO-verktøy inkluderer verifisering av at AI-kanalene faktisk fremstiller virksomheten din korrekt."
+          }
+        }
+      ]
+    }
+  ],
+  "css": ".stat-grid {\n      display: grid;\n      grid-template-columns: 1fr 1fr 1fr;\n      gap: 1rem;\n      margin: 2rem 0;\n    }\n@media (max-width: 600px) {\n.stat-grid { grid-template-columns: 1fr; }\n}\n.stat-card {\n      background: var(--bg-raised);\n      border: 1px solid var(--border);\n      border-radius: 8px;\n      padding: 1.5rem;\n      text-align: center;\n    }\n.stat-card .number {\n      font-size: 2.2rem;\n      font-weight: 700;\n      letter-spacing: -0.04em;\n      color: var(--accent);\n      line-height: 1;\n      margin-bottom: 0.5rem;\n    }\n.stat-card.orange .number { color: var(--accent-orange); }\n.stat-card.blue .number { color: var(--accent-blue); }\n.stat-card.purple .number { color: var(--accent-purple); }\n.stat-card.dim .number { color: var(--text-dim); }\n.stat-card .label {\n      font-size: 0.82rem;\n      color: var(--text-muted);\n      line-height: 1.4;\n    }\ntable.data-table {\n      width: 100%;\n      border-collapse: collapse;\n      margin: 1.5rem 0 2rem;\n      font-size: 0.9rem;\n    }\n.data-table th, .data-table td {\n      padding: 0.6rem 0.8rem;\n      border-bottom: 1px solid var(--border);\n      text-align: left;\n    }\n.data-table th {\n      color: var(--text-muted);\n      font-weight: 600;\n      text-transform: uppercase;\n      font-size: 0.72rem;\n      letter-spacing: 0.06em;\n      background: var(--art-raised);\n    }\n.data-table td { color: var(--text-dim); }\n.data-table td strong { color: var(--text); }\nli strong { color: var(--text); }"
+}
+</script>
+
+
+
+    
+
+    
+
+    
+
+<!-- AUDIT-CTA:mid -->
+
+  
+
+  <div class="article-body">
+
+    <h2>Hva sier forskningen?</h2>
+
+    <p>Studien «Constraint Decay: The Fragility of LLM Agents in Backend Code Generation» (Dente, Satriani, Papotti — arXiv 2605.06445) testet AI-agenter på 100 oppgaver spredt over åtte web-rammeverk. Metodikken var enkel og brutal: hold API-kontrakten identisk, men øk de strukturelle kravene gradvis fra rent grøntmarksoppdrag til realistiske produksjonsoppgaver med eksisterende databaselag, ORM-integrasjoner og rammeverkskonvensjoner.</p>
+
+    <p>Resultatet:</p>
+
+    <div class="stat-grid">
+      <div class="stat-card orange">
+        <div class="number">−30 pp</div>
+        <div class="label">Fall i assertion pass rate fra demo til produksjon</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="number">→ 0 %</div>
+        <div class="label">Svakere konfigurasjoner nærmer seg null under produksjonskrav</div>
+      </div>
+      <div class="stat-card dim">
+        <div class="number">8</div>
+        <div class="label">Rammeverk testet — store sprik mellom minimale og konvensjonstunge</div>
+      </div>
+    </div>
+
+    <p>Den viktigste enkeltfunnet: feilene skyldes primært <strong>datalags-defekter</strong> — feil i spørringskomposisjon og ORM runtime-brudd. AI-en klarer den funksjonelle logikken, men bryter mot det eksisterende systemets regler for hvordan data faktisk håndteres. I et demo-miljø finnes ikke disse reglene. I produksjon finnes de alltid.</p>
+
+    <div class="callout callout-orange">
+      <p><strong>Hva er «assertion pass rate»?</strong> Studien brukte end-to-end atferdstester kombinert med statisk analyse. «Assertion pass rate» er andelen tester der AI-en produserte kode som oppfylte alle krav — funksjonelt OG strukturelt. 30 pp fall betyr ikke at AI-en begynner å snakke tull. Det betyr at et system som bestod 8 av 10 tester i demo, bare består 5 av 10 i produksjon.</p>
+    </div>
+
+    <h2>Rammeverket bestemmer mer enn modellen</h2>
+
+    <p>Studien avdekket et mønster som burde bekymre alle som kjøper AI-agenter basert på benchmarks: ytelsen varierer dramatisk med rammeverket, ikke bare med modellen.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Rammeverk-type</th>
+          <th>Karakteristikk</th>
+          <th>AI-ytelse</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Flask (Python)</strong></td>
+          <td>Minimalt, eksplisitt — du skriver det meste selv</td>
+          <td>Relativt stabil</td>
+        </tr>
+        <tr>
+          <td><strong>FastAPI / Django</strong></td>
+          <td>Konvensjonstungt — mange implisitte regler</td>
+          <td>Betydelig degradering</td>
+        </tr>
+        <tr>
+          <td><strong>Eksisterende kodebase</strong></td>
+          <td>Full produksjonskontekst med historisk gjeld</td>
+          <td>Størst fall</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>De fleste norske bedrifter kjøper AI-agenter inn i det siste scenariet. Eksisterende systemer, eksisterende databaser, eksisterende kodekonvensjoner. Leverandørens benchmark ble kjørt i et ferskt demo-miljø. Gapet er strukturelt, ikke tilfeldig.</p>
+
+    <h2>Cork Protocol: hva skjer når ingen sjekker løpende</h2>
+
+    <p>Cork Protocol er et DeFi-protokoll støttet av a16z. I mai 2026 ble de hacket for 12 millioner dollar. Vektoren: en tilgangskontrollfeil i et sentralt smart contract-lag — en feil ingen av revisorene hadde funnet.</p>
+
+    <p>Og Cork hadde mange revisorer. Fem firmaer hadde gjennomgått systemet. Her er det som skjedde hos de to som stod i senterscenen:</p>
+
+    <ul>
+      <li><strong>Sherlock</strong> (12-dagers konkurranse, 39 sikkerhetsforskere): fant 10 kritiske sårbarheter</li>
+      <li><strong>Cantina/Spearbit</strong> (22-dagers privat revisjon): fant 0 kritiske sårbarheter</li>
+    </ul>
+
+    <p>Sherlock-CEO Jack Sanford gikk offentlig ut og stilte spørsmål om ansvarlighet. Cantina mangler commit-hasher fra sin revisjon. Spearbit har ikke publisert sin rapport. Hackerens on-chain meldinger pekte direkte på revisorenes manglende arbeid.</p>
+
+    <div class="callout callout-blue">
+      <p>Det relevante poenget her er ikke krypto-drama. Det er dette: <strong>punkt-i-tid revisjoner av komplekse systemer fanger ikke alle feil.</strong> 22 dager med dedikerte sikkerhetsforskere fant ingenting i et system med en åpenbar tilgangskontrollfeil. Enten ble feilen introdusert etter revisjonen, eller revisjonen var utilstrekkelig. I begge tilfeller: løpende verifisering hadde endret utfallet.</p>
+    </div>
+
+    <h2>Hva det betyr for din AI-implementasjon</h2>
+
+    <p>Koblingen mellom Constraint Decay-studien og Cork Protocol-saken er den samme strukturelle svakheten: systemer som ser ut til å fungere, svikter under virkelige driftsbetingelser — og ingen oppdager det fordi ingen sjekker løpende.</p>
+
+    <p>For norske bedrifter som bruker AI i dag handler dette om tre konkrete risikoer:</p>
+
+    <h3>1. Kundevendte AI-chatboter gir feil svar</h3>
+
+    <p>En AI-assistent som ble testet i demo og klarte seg godt, opererer nå i et produksjonsmiljø med ekte kundedata, reelle bakkendsystemer og faktisk bedriftsinformasjon. Studien indikerer at ytelsen degraderer systematisk. Har du sjekket om den fortsatt gir riktige svar om produkter, priser og rutiner? Ikke i demo — i produksjon, mot de spørsmålene kundene faktisk stiller?</p>
+
+    <h3>2. AI bruker feil informasjon om bedriften din</h3>
+
+    <p>AI-søkemotorer som ChatGPT og Perplexity henter informasjon om virksomheten din fra nettet. Hvis nettsiden din mangler strukturerte data, er outdated, eller motsigende — vil AI-en presentere feil bilde. Det er ikke en engangsfeil: det er en løpende feilinformasjonsjobb mot alle som spør om bedriften din i en AI-assistent.</p>
+
+    <h3>3. Engangsjekker hjelper ikke mot løpende degradering</h3>
+
+    <p>Cork Protocol-saken viser at en revisjon — uansett hvor grundig — bare sier noe om tilstanden på ett tidspunkt. Systemer endres. Produksjonsmiljøer evolusjonerer. AI-modeller oppdateres. En SEO-audit fra 2024 hjelper ikke mot AI Mode i 2026. En AI-sjekk fra januar hjelper ikke mot det Google lærte i april.</p>
+
+    <h2>Påliteligheten må verifiseres, ikke antas</h2>
+
+    <p>Den praktiske konklusjonen fra begge disse tilfellene er den samme: det er ikke nok å implementere et AI-system og anta at det fungerer. Det må verifiseres løpende, mot virkelige produksjonsbetingelser, og med en standard som faktisk fanger feil.</p>
+
+    <p>For AEO — synlighet i AI-søk — betyr det å sjekke ikke bare om bedriften din er synlig, men om den er synlig <em>riktig</em>. At AI-en refererer til faktiske priser, faktiske tjenester og faktiske kontaktdetaljer. At strukturerte data stemmer med innholdet. At endringer i bedriften faktisk reflekteres i det AI-systemene sier om deg.</p>
+
+    <div class="callout">
+      <p><strong>Synlig Digitals gratis AEO-sjekk</strong> er et startpunkt: den analyserer nettstedet ditt mot de kriteriene ChatGPT, Perplexity og Google AI bruker for å velge og verifisere kilder. Du ser om du har synlighetsmangler. Du ser om strukturerte data stemmer. <a href="https://sjekk.synligdigital.no">Sjekk din AI-synlighet nå</a> — 30 sekunder, ingen registrering.</p>
+    </div>
+
+    <h2>Hva du kan gjøre nå</h2>
+
+    <ul>
+      <li><strong>Test AI-systemer under produksjonsbetingelser.</strong> Ikke i demo-miljøet. Bruk virkelige kundeforespørsler og verifiser at svarene er korrekte mot det systemet faktisk vet.</li>
+      <li><strong>Sett opp løpende overvåkning.</strong> Logg ikke bare om AI-en svarer — logg om den svarer riktig. Definer «riktig» konkret: riktig pris, riktig åpningstid, riktig prosedyre.</li>
+      <li><strong>Sjekk hva AI-søkemotorer sier om deg.</strong> Spør ChatGPT om bedriften din. Spør Perplexity. Sjekk om informasjonen er korrekt — og om strukturerte data på nettstedet støtter det riktige svaret.</li>
+      <li><strong>Ikke regn med at engangsjekker holder.</strong> Plan for revurdering etter hvert større system-skifte: ny AI-modell, nytt rammeverk, ny versjon av nettstedet.</li>
+    </ul>
+
+    <hr style="border:none;border-top:1px solid var(--border);margin:3rem 0;">
+
+    <p style="font-size:0.9rem;color:var(--text-dim);font-style:italic;">Håkon Åmdal driver Synlig Digital fra Stavanger. Vi hjelper norske bedrifter bli synlige der kundene spør — i ChatGPT, Perplexity, Google AI og andre AI-assistenter.</p>
+
+    <h3 style="font-size:0.95rem;color:var(--text-muted);margin-top:2rem;">Kilder</h3>
+    <ul class="source-list">
+      <li>Dente, Satriani, Papotti (2026): «Constraint Decay: The Fragility of LLM Agents in Backend Code Generation» — arXiv:2605.06445</li>
+      <li>Protos.com (mai 2026): «'Sherlock missed it': Cork hacker slams audit firms in on-chain messages»</li>
+      <li>Jack Sanford / Sherlock (X, mai 2026): «How Responsible are Spearbit and Cantina for Cork's $12M Hack?»</li>
+      <li>Cork Protocol (2025–2026): Post-mortem og «Lessons Learned» — cork.tech/blog</li>
+    </ul>
+
+  </div>
+
+<!-- AUDIT-CTA:bottom -->

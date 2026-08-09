@@ -1,0 +1,153 @@
+---
+/**
+ * /blogg — regenerated from the content collections.
+ *
+ * The card copy (category chip, excerpt, "date · N min lesing") is EDITORIAL
+ * and was lifted verbatim into each page's frontmatter by
+ * tools/migrate-to-collections.ts. The section grouping is equally editorial
+ * and lives in src/data/blog-index.ts. Nothing here is re-written; this file
+ * only lays the same words out on the design system.
+ *
+ * Two deliberate differences from the hand-written index, both omissions
+ * being repaired rather than decisions being reversed:
+ *   - five pages that are in sitemap.xml but had no card at all (four posts
+ *     plus /case/pierstop) now appear;
+ *   - the Komplett and Nordic Lithium cards render from their pages' own
+ *     frontmatter. The hand-written cards still said "Komplett.no er usynlig
+ *     for AI" and "fra 67/B til 85/A" — both retracted on the pages
+ *     themselves (August re-measurement; 67/C is what the case page says 8×).
+ */
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import {
+  BLOG_INDEX_HEADER,
+  BLOG_INDEX_JSONLD,
+  BLOG_INDEX_SECTIONS,
+} from "../../data/blog-index";
+
+const posts = await getCollection("blogg");
+const cases = await getCollection("case");
+
+type Card = {
+  href: string;
+  category: string;
+  title: string;
+  excerpt: string;
+  meta: string;
+};
+
+const byRoute = new Map<string, Card>();
+for (const p of posts) {
+  byRoute.set(`/blogg/${p.id}`, {
+    href: `/blogg/${p.id}`,
+    category: p.data.category,
+    title: p.data.cardTitle,
+    excerpt: p.data.excerpt,
+    meta: p.data.cardMeta,
+  });
+}
+for (const c of cases) {
+  const href = c.data.canonical.replace("https://synligdigital.no", "");
+  byRoute.set(href, {
+    href,
+    category: c.data.category,
+    title: c.data.cardTitle,
+    excerpt: c.data.excerpt,
+    meta: c.data.cardMeta,
+  });
+}
+
+// Empty-input floor: a section that silently loses its cards would ship a blank
+// index and every gate downstream would still be green.
+const sections = BLOG_INDEX_SECTIONS.map((s) => {
+  const cards = s.routes.map((r) => byRoute.get(r)).filter((c): c is Card => !!c);
+  const missing = s.routes.filter((r) => !byRoute.has(r));
+  if (missing.length) {
+    throw new Error(
+      `/blogg: section "${s.title}" references routes with no collection entry: ${missing.join(", ")}`,
+    );
+  }
+  return { title: s.title, cards };
+});
+const total = sections.reduce((n, s) => n + s.cards.length, 0);
+if (total !== byRoute.size) {
+  throw new Error(
+    `/blogg: ${byRoute.size} collection pages but ${total} cards rendered — a page would be orphaned from the index`,
+  );
+}
+---
+
+<Base
+  title={BLOG_INDEX_HEADER.title}
+  description={BLOG_INDEX_HEADER.description}
+  canonical={BLOG_INDEX_HEADER.canonical}
+  ogTitle={BLOG_INDEX_HEADER.ogTitle}
+  ogDescription={BLOG_INDEX_HEADER.ogDescription}
+  jsonLd={BLOG_INDEX_JSONLD}
+>
+  <main id="main-content" class="container pb-4 pt-12 sm:pt-16">
+    <header>
+      <p class="section-label">{BLOG_INDEX_HEADER.label}</p>
+      <h1 class="text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+        {BLOG_INDEX_HEADER.heading}
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
+        {BLOG_INDEX_HEADER.sub}
+      </p>
+    </header>
+
+    <div class="audit-promo" data-slug="blog-index">
+      <p class="audit-promo__label">Mest brukte verktøy</p>
+      <h2 class="audit-promo__headline">
+        Få gratis AEO-score på 2–5 sekunder
+      </h2>
+      <p class="audit-promo__sub">
+        Sjekk hva ChatGPT, Perplexity og Google AI faktisk vet om bedriften din.
+        Ingen registrering nødvendig.
+      </p>
+      <form
+        class="audit-promo__form"
+        action="https://synligdigital.no/audit"
+        method="get"
+        target="_self"
+      >
+        <input type="hidden" name="src" value="blog-index" />
+        <div class="audit-promo__row">
+          <input
+            class="audit-promo__input"
+            type="text"
+            name="url"
+            placeholder="dinbedrift.no"
+            autocomplete="off"
+            required
+          />
+          <button class="audit-promo__btn" type="submit"
+            >Kjør gratis sjekk →</button
+          >
+        </div>
+      </form>
+    </div>
+
+    {
+      sections.map((section) => (
+        <section class="mt-14">
+          <p class="section-label">{section.title}</p>
+          <div class="grid gap-5 sm:grid-cols-2">
+            {section.cards.map((card) => (
+              <a href={card.href} class="blog-card">
+                <span class="blog-tag">{card.category}</span>
+                <h2 class="mt-3 text-xl font-semibold tracking-tight text-ink">
+                  {card.title}
+                </h2>
+                <p class="mt-2 text-base leading-relaxed text-muted">
+                  {card.excerpt}
+                </p>
+                <span class="blog-meta">{card.meta}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </main>
+</Base>

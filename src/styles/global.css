@@ -405,3 +405,330 @@ body {
     @apply text-muted no-underline hover:text-ink;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ARTICLE SURFACE — blog posts + case pages (fase 3, 2026-08-09)
+
+   Before this block, each of the 36 posts and 3 case pages carried its own
+   ~700-line inline <style>. Measured: 323 115 B across the 39 files, 190 309 B
+   of it (59 %) byte-identical chrome. That is what lives here now, once.
+
+   The old pages were DARK (#0a0a0b paper, #6ee7b7 mint) and declared their
+   palette in a :root block. tools/migrate-to-collections.ts dropped those
+   :root blocks along with the rest of the shared chrome — so the aliases below
+   are load-bearing, not cosmetic: without them every bespoke rule that
+   survived the sweep (and every var() fallback inside
+   _partials/render-audit-cta.ts) silently falls back to the dark palette on a
+   white page.
+
+   Mapping is by ROLE, not by hue: bg→paper, raised→wash, text→ink, dim→muted,
+   accent→deep emerald (mint has no contrast on paper).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* names the hand-written pages and render-audit-cta.ts read */
+  --bg: var(--color-paper);
+  --bg-raised: var(--color-wash);
+  --border: var(--color-line);
+  --text: var(--color-ink);
+  --text-dim: var(--color-muted);
+  --text-muted: var(--color-muted);
+  --accent: var(--color-brand-ink);
+  --accent-dim: oklch(0.88 0.06 163);
+  --accent-blue: oklch(0.52 0.16 255);
+  --accent-purple: oklch(0.5 0.19 295);
+  --accent-orange: oklch(0.58 0.14 70);
+  --accent-red: var(--color-alert);
+  --blue: var(--accent-blue);
+  --red: var(--color-alert);
+  --red-dim: oklch(0.9 0.05 27);
+  --yellow: var(--accent-orange);
+  --yellow-dim: oklch(0.91 0.06 85);
+  --grade-a: var(--color-brand-ink);
+  --grade-b: oklch(0.55 0.15 130);
+  --grade-c: var(--accent-orange);
+  --grade-d: oklch(0.6 0.17 45);
+  --grade-e: var(--color-alert);
+  --grade-f: var(--color-alert);
+  --lv0: var(--color-alert);
+  --lv1: oklch(0.6 0.17 45);
+  --lv2: var(--accent-orange);
+  --lv3: var(--color-brand-ink);
+  --lv4: var(--accent-blue);
+  --lv5: var(--accent-purple);
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Consolas,
+    monospace;
+  --sans: var(--font-sans);
+
+  /* aliases emitted by the dark→light re-theme in the migration */
+  --art-bg: var(--bg);
+  --art-raised: var(--bg-raised);
+  --art-border: var(--border);
+  --art-text: var(--text);
+  --art-dim: var(--text-dim);
+  --art-accent: var(--accent);
+  --art-accent-soft: var(--accent-dim);
+  --art-blue: var(--accent-blue);
+  --art-purple: var(--accent-purple);
+  --art-warn: var(--accent-orange);
+  --art-alert: var(--color-alert);
+  --art-ok: var(--grade-b);
+}
+
+@layer components {
+  /* ── Article chrome (rendered by Article.astro, never by the content) ──── */
+  .breadcrumb {
+    @apply flex flex-wrap items-center gap-2 text-sm text-muted;
+  }
+  .breadcrumb a {
+    @apply text-muted no-underline hover:text-ink;
+  }
+  .breadcrumb [aria-current="page"] {
+    @apply text-ink;
+  }
+  .article-header {
+    @apply mt-8 border-b border-line pb-8;
+  }
+  .article-tag {
+    @apply text-xs font-semibold uppercase tracking-[0.12em] text-brand-ink;
+  }
+  .article-title {
+    @apply mt-3 text-4xl font-bold leading-[1.1] tracking-tight text-ink sm:text-[2.85rem];
+  }
+  .article-lead {
+    @apply mt-5 text-xl leading-relaxed text-muted;
+  }
+  .article-meta {
+    @apply mt-6 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm text-muted;
+  }
+  .meta-chip {
+    @apply rounded-full border border-line px-2.5 py-0.5 text-xs;
+  }
+
+  /* ── Prose body ─────────────────────────────────────────────────────────
+     @tailwindcss/typography does the rhythm; the overrides below only bind it
+     to the design tokens so it cannot drift from the rest of the site. */
+  .article-surface {
+    @apply prose prose-lg mt-10 max-w-none;
+    --tw-prose-body: var(--color-muted);
+    --tw-prose-headings: var(--color-ink);
+    --tw-prose-lead: var(--color-muted);
+    --tw-prose-links: var(--color-brand-ink);
+    --tw-prose-bold: var(--color-ink);
+    --tw-prose-counters: var(--color-muted);
+    --tw-prose-bullets: var(--color-line);
+    --tw-prose-hr: var(--color-line);
+    --tw-prose-quotes: var(--color-ink);
+    --tw-prose-quote-borders: var(--color-brand);
+    --tw-prose-captions: var(--color-muted);
+    --tw-prose-code: var(--color-ink);
+    --tw-prose-pre-code: var(--color-ink);
+    --tw-prose-pre-bg: var(--color-wash);
+    --tw-prose-th-borders: var(--color-line);
+    --tw-prose-td-borders: var(--color-line);
+  }
+  .article-surface h2 {
+    @apply mt-14 scroll-mt-24 text-[1.75rem] font-bold tracking-tight;
+  }
+  .article-surface h3 {
+    @apply mt-10 scroll-mt-24 text-xl font-semibold tracking-tight;
+  }
+  .article-surface table {
+    @apply block w-full overflow-x-auto text-base sm:table;
+  }
+  .article-surface pre {
+    @apply rounded-card border border-line;
+  }
+  .article-surface code {
+    font-family: var(--mono);
+  }
+  .article-surface :where(code):not(pre code)::before,
+  .article-surface :where(code):not(pre code)::after {
+    content: "";
+  }
+
+  /* ── Callouts ───────────────────────────────────────────────────────────
+     31 of 39 pages use these. Colour carries meaning (neutral / caution /
+     context / alert), so the variants keep their roles on paper. */
+  .article-surface .callout {
+    @apply my-8 rounded-card border border-line border-l-[3px] border-l-brand bg-wash px-6 py-5;
+  }
+  .article-surface .callout > :first-child {
+    @apply mt-0;
+  }
+  .article-surface .callout > :last-child {
+    @apply mb-0;
+  }
+  .article-surface .callout-title {
+    @apply mb-2 font-semibold text-ink;
+  }
+  .article-surface .callout-orange {
+    border-left-color: var(--accent-orange);
+    background: color-mix(in oklab, var(--accent-orange) 7%, var(--color-paper));
+  }
+  .article-surface .callout-blue {
+    border-left-color: var(--accent-blue);
+    background: color-mix(in oklab, var(--accent-blue) 6%, var(--color-paper));
+  }
+  .article-surface .callout-red {
+    border-left-color: var(--color-alert);
+    background: color-mix(in oklab, var(--color-alert) 6%, var(--color-paper));
+  }
+  .article-surface .key-answer {
+    @apply my-8 rounded-card border border-brand/40 bg-brand-wash px-6 py-5 text-ink;
+  }
+  .article-surface .key-answer > :last-child {
+    @apply mb-0;
+  }
+
+  /* ── Table of contents ──────────────────────────────────────────────── */
+  .article-surface .toc {
+    @apply my-8 rounded-card border border-line bg-wash px-6 py-5;
+  }
+  .article-surface .toc-title {
+    @apply m-0 text-xs font-semibold uppercase tracking-[0.12em] text-muted;
+  }
+  .article-surface .toc ol,
+  .article-surface .toc ul {
+    @apply mb-0 mt-3 space-y-1.5 text-base;
+  }
+  .article-surface .toc a {
+    @apply text-muted no-underline hover:text-ink;
+  }
+
+  /* ── Source lists ───────────────────────────────────────────────────── */
+  .article-surface .source-list {
+    @apply mt-4 space-y-2 text-sm text-muted;
+  }
+  .article-surface .source-list a {
+    @apply break-words;
+  }
+
+  /* ── In-body CTA blocks written into the content (not the injected one) ─ */
+  .article-surface .cta-block,
+  .article-surface .cta-box,
+  .article-surface .cta-section {
+    @apply my-10 rounded-card border border-line bg-wash px-7 py-7 text-center;
+  }
+  .article-surface .cta-block h2,
+  .article-surface .cta-block h3,
+  .article-surface .cta-title {
+    @apply mt-0 text-xl font-bold tracking-tight text-ink;
+  }
+  .article-surface .cta-desc {
+    @apply mt-2 text-base text-muted;
+  }
+  .article-surface .cta-btn,
+  .article-surface .btn-primary {
+    @apply mt-5 inline-block rounded-md bg-brand-ink px-5 py-3 text-base font-semibold !text-paper no-underline hover:opacity-85;
+  }
+  .article-surface .cta-btn-secondary {
+    @apply mt-3 inline-block rounded-md border border-line px-5 py-3 text-base font-semibold !text-ink no-underline hover:bg-paper;
+  }
+
+  /* ── "Les også" ─────────────────────────────────────────────────────── */
+  .article-surface .related-posts,
+  .article-surface .related {
+    @apply mt-16 border-t border-line pt-8;
+  }
+  .article-surface .related-posts h3 {
+    @apply mt-0 text-xs font-semibold uppercase tracking-[0.12em] text-muted;
+  }
+  .article-surface .related-grid {
+    @apply mt-5 grid gap-4 sm:grid-cols-3;
+  }
+  .article-surface .related-card {
+    @apply block rounded-card border border-line p-5 no-underline transition-colors hover:border-ink/30;
+  }
+  .article-surface .related-card-tag {
+    @apply text-xs font-semibold uppercase tracking-[0.1em] text-brand-ink;
+  }
+  .article-surface .related-card-title {
+    @apply mt-2 text-base font-semibold leading-snug text-ink;
+  }
+  .article-surface .related-links {
+    @apply mt-4 space-y-2;
+  }
+
+  /* ── FAQ inside articles ────────────────────────────────────────────────
+     Different markup from the front page's: a .faq-arrow span carries the
+     indicator and the toggle is inline onclick. Kill the global ::after so
+     the two indicators do not both render. */
+  .article-surface .faq-section {
+    @apply mt-12;
+  }
+  .article-surface .faq-item {
+    @apply border-b border-line;
+  }
+  .article-surface .faq-question {
+    @apply flex w-full cursor-pointer items-center justify-between gap-4 bg-transparent py-5 text-left text-lg font-medium text-ink;
+  }
+  .article-surface .faq-question::after {
+    content: none;
+  }
+  .article-surface .faq-arrow {
+    @apply shrink-0 text-muted transition-transform;
+  }
+  .article-surface .faq-item.open .faq-arrow {
+    @apply rotate-180;
+  }
+  .article-surface .faq-answer {
+    @apply hidden pb-6 text-base leading-relaxed text-muted;
+  }
+  .article-surface .faq-item.open .faq-answer {
+    @apply block;
+  }
+
+  /* ── The injected audit CTA ─────────────────────────────────────────────
+     _partials/render-audit-cta.ts ships its own <style> using var(--accent),
+     var(--bg-raised) … with DARK fallbacks. The :root aliases above already
+     re-theme it; these rules only stop prose from re-flowing the form. */
+  .article-surface .audit-cta {
+    @apply not-italic;
+  }
+  .article-surface .audit-cta p,
+  .article-surface .audit-cta h3 {
+    @apply my-0;
+  }
+  .article-surface .audit-cta .lead-form {
+    @apply mt-3 flex flex-wrap gap-2;
+  }
+  .article-surface .audit-cta .lead-form-input {
+    /* No flex-1/basis-56 here. The widget owns .lead-form and stacks it with
+       flex-direction:column, so a flex-basis sizes the field's HEIGHT — that
+       shipped a 224px-tall email box. These rules also live in a Tailwind
+       @layer, which loses to the widget's unlayered CSS whatever the
+       specificity, so "just override the direction" does not work either.
+       Width already comes from the widget's .lead-form-input{width:100%}. */
+    @apply mt-0 bg-paper;
+  }
+  .article-surface .audit-cta a {
+    @apply no-underline;
+  }
+  .article-surface .audit-cta__trust {
+    @apply mt-3 text-sm text-muted;
+  }
+
+  /* ── /blogg index promo ─────────────────────────────────────────────── */
+  .audit-promo {
+    @apply mt-10 rounded-card border border-line border-l-[3px] border-l-brand bg-wash px-7 py-6;
+  }
+  .audit-promo__label {
+    @apply text-xs font-semibold uppercase tracking-[0.12em] text-muted;
+  }
+  .audit-promo__headline {
+    @apply mt-2 text-xl font-bold tracking-tight text-ink;
+  }
+  .audit-promo__sub {
+    @apply mt-2 max-w-2xl text-base text-muted;
+  }
+  .audit-promo__row {
+    @apply mt-4 flex flex-wrap gap-2;
+  }
+  .audit-promo__input {
+    @apply flex-1 basis-56 rounded-md border border-line bg-paper px-3 py-2.5 text-sm text-ink outline-none focus:border-ink;
+  }
+  .audit-promo__btn {
+    @apply rounded-md bg-ink px-4 py-2.5 text-sm font-semibold text-paper hover:opacity-85;
+  }
+}
