@@ -8,8 +8,9 @@
 
 import { readdirSync, readFileSync, statSync } from "fs";
 import { join, basename, resolve } from "path";
-import { applyMarkers, MID_MARKER, BOTTOM_MARKER, LEAD_CAPTURE_PATH, CHECKOUT_HREF_PREFIX, MAILTO_PREFIX, type Stage } from "./_partials/render-audit-cta";
+import { applyMarkers, MID_MARKER, BOTTOM_MARKER, LEAD_CAPTURE_PATH, CHECKOUT_HREF_PREFIX, MAILTO_PREFIX, LIVE_PRICE_ANCHORS, type Stage } from "./_partials/render-audit-cta";
 import { runFactSourceGate } from "./_partials/fact-source-gate";
+import { stripHtmlComments, STRIP_KEEP_PREFIXES } from "./_partials/strip-html-comments";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // DUPLICATE-WRITER GUARD — single-writer invariant for synlig-worker/worker.ts
@@ -224,6 +225,12 @@ const files = {
   // Front page: Astro output. The hand-written root index.html was deleted
   // 2026-08-08 so "/" has exactly one source of truth.
   INDEX_HTML: await Bun.file("/workspace/synlig-site/dist/index.html").text(),
+  // /metode — Astro-side, lagt til 2026-08-09 (redesign-planen §5, prioritet 3):
+  // protokoll + «hva vi ikke påstår», for kjøperen som skal si nei på faglig
+  // grunnlag. Fire wiring-steder for enhver ny side, alle må gjøres samtidig:
+  // (1) denne fil-lastingen, (2) const-deklen i den genererte workeren,
+  // (3) routes-oppføringene, (4) sitemap.xml.
+  METODE_HTML: await Bun.file("/workspace/synlig-site/dist/metode/index.html").text(),
   EN_HTML: await Bun.file("/workspace/synlig-site/en.html").text(),
   PRISER_HTML: await Bun.file("/workspace/synlig-site/priser.html").text(),
   FAKTURA_HTML: await Bun.file("/workspace/synlig-site/faktura.html").text(),
@@ -490,10 +497,16 @@ for (const v of VERTICAL_LANDINGS) {
 //   1. Every blog post must surface class="audit-cta" at least twice (mid+bottom).
 //      History: chatgpt-konverterer-9x.html shipped with only mid CTA (2026-05-19),
 //      caught manually during a blog->buy walk. This gate prevents silent regression.
-//   2. Every blog post must surface the "4 900 NOK" pricing anchor at least once.
+//   2. Every blog post must surface at least one LIVE paid-price anchor.
 //      History: 2026-05-19 — blog layer surfaced only free-audit CTA; pricing
 //      anchor lived only at /sjekk thank-you + cold emails. Buyers researching
 //      on the blog never saw a buy path. This gate enforces blog-layer parity.
+//      2026-08-12 — the gate hard-coded "4 900 NOK", so when that tier was
+//      discontinued the gate demanded the dead price on all 36 posts: it had
+//      stopped enforcing "a buyer sees a price" and started enforcing "a buyer
+//      sees THIS price". Anchors now come from LIVE_PRICE_ANCHORS in the
+//      renderer — the single writer of the copy being checked — and the list
+//      is itself checked against that file's source below.
 //   3. Markers must NOT survive into rendered output (would indicate render failure).
 // fase 3: the blog SOURCE is the content collection. Both the CTA-coverage
 // gate (which files must exist in the files map) and the fact-source gate read
@@ -538,6 +551,21 @@ const blogFileMap: Record<string, string> = {
   "aeo-lite-faqpage-990-kr.html": files.BLOGG_AEO_LITE_FAQPAGE_HTML,
   "b2b-fintech-agent-discoverability.html": files.BLOGG_B2B_FINTECH_AGENT_HTML,
 };
+// Self-check the gate's own vocabulary before trusting it. If a price is
+// renamed in render-audit-cta.ts and LIVE_PRICE_ANCHORS is not updated, every
+// anchor stops matching anything and the loop below would fail 36 posts with
+// a misleading message — or, if the check were "≥0", pass all of them while
+// checking nothing. Fail here instead, naming the real cause.
+{
+  const rendererSrc = readFileSync("/workspace/synlig-site/_partials/render-audit-cta.ts", "utf8");
+  const stale = LIVE_PRICE_ANCHORS.filter(([re]) => !re.test(rendererSrc));
+  if (stale.length > 0) {
+    console.error(`\n[BUILD FAIL] LIVE_PRICE_ANCHORS is out of sync with the renderer it describes:`);
+    for (const [re, label] of stale) console.error(`  ${label} — ${re} matches nothing in render-audit-cta.ts`);
+    console.error(`\nA price was changed without updating LIVE_PRICE_ANCHORS in that same file.`);
+    process.exit(1);
+  }
+}
 const allBlogFiles = readdirSync(bloggDir).filter(f => f.endsWith(".html"));
 for (const fname of allBlogFiles) {
   const rendered = blogFileMap[fname];
@@ -547,8 +575,10 @@ for (const fname of allBlogFiles) {
   }
   const ctaCount = (rendered.match(/class="audit-cta"/g) || []).length;
   if (ctaCount < 2) ctaViolations.push(`  blogg/${fname}: class="audit-cta" found ${ctaCount}, expected >=2`);
-  if (!/4\s*900\s*NOK/.test(rendered))
-    ctaViolations.push(`  blogg/${fname}: missing pricing anchor "4 900 NOK"`);
+  if (!LIVE_PRICE_ANCHORS.some(([re]) => re.test(rendered)))
+    ctaViolations.push(
+      `  blogg/${fname}: no live paid-price anchor (expected one of: ${LIVE_PRICE_ANCHORS.map(([, l]) => l).join(", ")})`,
+    );
   // Buyer-journey "PAY" link: every blog post must carry the lead-capture entry point
   // (which then 302s to Stripe Checkout with customer_email pre-filled).
   // History: 2026-05-19 — pricing anchor was TEXT-ONLY (mailto only); buyer hit "pay"
@@ -971,20 +1001,28 @@ if (tierViolations.length > 0) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// UNIVERSAL PRICING-MENTION GATE — any blog post referencing Synlig Digital
-// pricing (4 900, 14 900, Handlingsplan, Fundament) must ALSO mention Synlig
-// Lite (990 NOK / 990 kr / "Synlig Lite") or the build fails.
+// DEAD-TIER GATE — no content surface may quote a discontinued price tier.
+// Live offer set: Sitert-måling 9 900 kr (invoiced) + Synlig Lite 990 kr.
+// Analyse/Handlingsplan (4 900), Fundament (14 900) and Løpende (4 900/mnd)
+// were discontinued 2026-08-08 on measured zeros.
 //
-// Why this gate exists: the Synlig Lite 990 NOK tier was launched 2026-06-05.
-// Blog posts that mention higher-tier pricing without mentioning Lite create a
-// vacuum — visitors who cannot afford 4 900 kr have no visible entry point.
-// This pattern recurred 7× in one day (2026-06-05) across different surface
-// types. Per self-awareness rule: text rule failed twice → escalate to a code
-// gate on the default execution path. Any future blog authored with old
-// pricing references will fail here until Lite is surfaced.
+// The predecessor gate (2026-06-05 → 2026-08-12) enforced the opposite: a page
+// quoting the ladder had to ALSO offer Lite, so nobody met a price they could
+// not pay. That invariant died with the ladder.
 //
 // Opt-out: BUILD_GATE_NEGATIVE_TEST env var (same as tier gate, for testing).
 // ─────────────────────────────────────────────────────────────────────────────
+// Shared by the HTML-dir gate below AND the AI-discovery-surface gate further
+// down. One writer: a tier retired here is retired on both, so the two gates
+// can never again demand opposite things about the same string — they did, for
+// four days: llms.txt was REQUIRED to advertise 4 900 while src/content BANNED
+// it, because the 08-12 flip rewrote one gate and not its sibling in this file.
+const DEAD_TIER_PATTERNS: Array<[RegExp, string]> = [
+  [/4[  ]900/, "Analyse/Handlingsplan 4 900 — discontinued 2026-08-08"],
+  [/14[  ]900/, "Fundament 14 900 — discontinued 2026-08-08"],
+  [/\$1,400|\$460/, "Foundation/Analysis USD mirror — discontinued 2026-08-08"],
+  [/value="(handlingsplan|fundament|lopende)"/, "checkout button for a discontinued tier"],
+];
 if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
   // Extended 2026-06-06 (10th occurrence — Stavanger geo-local + state-of-aeo-2026
   // research report + komplett-aeo-analyse stub): the gate originally scanned
@@ -1007,6 +1045,19 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
     "/workspace/synlig-site/src/content/case",
     "/workspace/synlig-site/tjenester",
     "/workspace/synlig-site/rapport",
+    // 2026-08-12: reports/ added AFTER it was cleaned. This dir was outside
+    // every pricing gate for the whole life of the gate, and that is exactly
+    // where the damage was: 192 of 193 prospect reports still advertised 4 900,
+    // and 133 shipped a WORKING Stripe checkout button for handlingsplan — four
+    // days after the tier was discontinued. Each of these pages is generated for
+    // one named prospect and emailed to them, so this was the highest-intent
+    // surface we own, taking card payment for a product we no longer deliver.
+    // The gate scanned 57 files and reported "all clear" the entire time.
+    // Lesson (this is the generalisable part): the gate's SCOPE is a claim that
+    // needs verifying, not a given. A clean gate over the wrong file set is
+    // false-CLEAN by construction — same class as a guard that passes on absent
+    // input. When adding a pricing surface, add it here in the same commit.
+    "/workspace/synlig-site/reports",
   ];
   // Minimum expected files per dir. `catch {}` below turns a renamed or deleted
   // directory into a silent zero-file scan and the gate would still print
@@ -1018,69 +1069,133 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
     "/workspace/synlig-site/src/content/case": 3,
     "/workspace/synlig-site/tjenester": 11,
     "/workspace/synlig-site/rapport": 7,
+    // 193 reports exist today; floor at 180 leaves room for deliberate pruning
+    // while still failing loudly if the dir is emptied or the path rots.
+    "/workspace/synlig-site/reports": 180,
   };
-  const pricingPattern = /4 900|14 900|Handlingsplan|Fundament/;
-  const litePattern = /Synlig Lite|990 NOK|990 kr/;
-  const pricingViolations: string[] = [];
-  const scanFiles: string[] = [];
+  // Per-file exemptions inside a BAN dir. Dated, counterparty-specific PROPOSAL
+  // documents: their prices record what we actually quoted, embedded in argument
+  // ("…ikke en 14 900 kr Fundament"). Rewriting them would falsify a document
+  // the counterparty holds. Neither carries a checkout button, so neither can
+  // take money for a dead tier — the reason a ban is inappropriate here is
+  // honesty about the past, not convenience. Keep this set SMALL and dated; an
+  // exemption is how a gate goes quietly blind.
+  const DEAD_TIER_FILE_EXEMPT = new Set([
+    "visionmedia-northug-week1.html", // Visionmedia pilot proposal, 2026-06
+    "visionmedia-pilot.html",         // Visionmedia pilot proposal, 2026-06
+  ]);
+  // 2026-08-12 — THE INVARIANT FLIPPED, and that is the whole point of this
+  // rewrite. Handlingsplan/Analyse (4 900), Fundament (14 900) and Løpende
+  // (4 900/mnd) were discontinued 2026-08-08 on measured zeros. "A page quoting
+  // this ladder must also offer Lite" protected nothing after that date — the
+  // ladder itself became the defect, and it kept shipping for four more days on
+  // 21 blog posts, both case pages, and their FAQPage JSON-LD answers (the
+  // strings assistants quote verbatim; we are the most-cited host in this
+  // category, so the machine layer is the product).
+  //
+  // Two regimes, because the surfaces are in two different states:
+  //   BAN     — Astro-authored dirs. Any dead tier fails the build.
+  //   RATCHET — legacy dirs not yet migrated. The count of offending files may
+  //             only shrink. A ratchet cannot rot the way a hard-coded number
+  //             can: it never asserts today's value is correct, only that we
+  //             do not go backwards.
+  const BAN_DIRS = new Set([
+    "/workspace/synlig-site/src/content/blogg",
+    "/workspace/synlig-site/src/content/case",
+    // reports/ is BAN, not RATCHET, because it is now clean (1 475 replacements
+    // across 190 files, patch-reports-one-price.ts, 2026-08-12) and because it
+    // is the surface where a dead price costs the most: a prospect who was
+    // emailed this exact page clicking a checkout for a product we retired.
+    "/workspace/synlig-site/reports",
+  ]);
+  // Baseline measured 2026-08-12 with the same patterns, after the Astro sweep.
+  // Lower it when a legacy dir is cleaned; never raise it.
+  const DEAD_TIER_RATCHET: Record<string, number> = {
+    "/workspace/synlig-site/tjenester": 10,
+    "/workspace/synlig-site/rapport": 1,
+  };
+  const deadTierViolations: string[] = [];
+  const ratchetCounts: Record<string, number> = {};
+  let scanned = 0;
   for (const dir of PRICING_GATED_DIRS) {
     let entries: string[] = [];
     try {
       entries = readdirSync(dir).filter(f => f.endsWith(".html"));
     } catch {
-      console.error(`\n[BUILD FAIL] pricing-mention gate cannot read ${dir}.`);
+      console.error(`\n[BUILD FAIL] dead-tier gate cannot read ${dir}.`);
       console.error(`A gated directory that disappears makes this gate pass by scanning nothing.`);
       process.exit(1);
     }
     const floor = PRICING_DIR_FLOOR[dir] ?? 1;
     if (entries.length < floor) {
-      console.error(`\n[BUILD FAIL] pricing-mention gate: ${dir} has ${entries.length} HTML files, floor is ${floor}.`);
+      console.error(`\n[BUILD FAIL] dead-tier gate: ${dir} has ${entries.length} HTML files, floor is ${floor}.`);
       console.error(`Either pages were deleted (update the floor deliberately) or the gate just went blind.`);
       process.exit(1);
     }
-    for (const f of entries) scanFiles.push(join(dir, f));
-  }
-  for (const filePath of scanFiles) {
-    let text = "";
-    try { text = readFileSync(filePath, "utf-8"); } catch { continue; }
-    if (pricingPattern.test(text) && !litePattern.test(text)) {
-      pricingViolations.push(
-        `page references pricing but lacks Synlig Lite mention: ${filePath}`
-      );
+    let offenders = 0;
+    scanned += entries.length;
+    for (const f of entries) {
+      if (DEAD_TIER_FILE_EXEMPT.has(f)) continue;
+      const filePath = join(dir, f);
+      let text = "";
+      try { text = readFileSync(filePath, "utf-8"); } catch { continue; }
+      const hits = DEAD_TIER_PATTERNS.filter(([re]) => re.test(text));
+      if (hits.length === 0) continue;
+      offenders++;
+      if (BAN_DIRS.has(dir)) {
+        for (const [, why] of hits) deadTierViolations.push(`${filePath}: ${why}`);
+      }
+    }
+    ratchetCounts[dir] = offenders;
+    if (!BAN_DIRS.has(dir)) {
+      const allowed = DEAD_TIER_RATCHET[dir];
+      if (allowed === undefined) {
+        console.error(`\n[BUILD FAIL] dead-tier gate: ${dir} is gated but has no ratchet baseline.`);
+        process.exit(1);
+      }
+      if (offenders > allowed) {
+        deadTierViolations.push(
+          `${dir}: ${offenders} files quote a discontinued tier, ratchet allows ${allowed} — a new one was added`
+        );
+      }
     }
   }
-  if (pricingViolations.length > 0) {
-    console.error(`\n[BUILD FAIL] pricing-mention gate violated (${pricingViolations.length} issue(s)):`);
-    for (const v of pricingViolations) console.error(`  - ${v}`);
-    console.error(`\nWhy: any page mentioning Synlig Digital pricing (4 900/14 900 kr,`);
-    console.error(`Handlingsplan, Fundament) must also surface Synlig Lite (990 NOK) as the`);
-    console.error(`lowest entry point. Pattern caught 7× on 2026-06-05 + 3× on 2026-06-06`);
-    console.error(`(Stavanger geo-landing, state-of-aeo-2026 rapport, komplett-aeo-analyse).`);
-    console.error(`\nFix: add Synlig Lite mention to the CTA or pricing section.`);
-    console.error(`Gated dirs: ${PRICING_GATED_DIRS.join(", ")}`);
+  if (deadTierViolations.length > 0) {
+    console.error(`\n[BUILD FAIL] dead-tier gate violated (${deadTierViolations.length} issue(s)):`);
+    for (const v of deadTierViolations) console.error(`  - ${v}`);
+    console.error(`\nWhy: Analyse (4 900), Fundament (14 900) and Løpende (4 900/mnd) were`);
+    console.error(`discontinued 2026-08-08. A page quoting one advertises a product we do not`);
+    console.error(`deliver, and a checkout button for one takes money for it. Live offer set:`);
+    console.error(`Sitert-måling 9 900 kr (invoiced) + Synlig Lite 990 kr (Stripe/faktura).`);
+    console.error(`\nFix: rewrite the copy, or run tools/retire-dead-price-tiers.ts.`);
     process.exit(1);
   }
+  const ratchetLine = Object.entries(ratchetCounts)
+    .map(([d, n]) => `${d.split("/").pop()}=${n}`)
+    .join(" ");
+  console.log(`  dead-tier gate: ${scanned} files scanned, legacy remainder ${ratchetLine}`);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// AI-DISCOVERY-SURFACE GATE — files explicitly served as machine-readable
-// pricing/service catalogues to AI assistants (llms.txt, priser.md, context.md,
-// agent-card.json) must mention every active tier. These are the surfaces
-// ChatGPT/Perplexity/Google AI fetch first when answering "what does Synlig
-// offer?" and "what's the cheapest option?" — stale pricing here propagates
-// directly into AI citations.
+// AI-DISCOVERY-SURFACE GATE — the machine-readable catalogues (llms.txt,
+// priser.md, context.md, agent-card.json, agent-skills) must name every LIVE
+// offer and no discontinued one. These are the files ChatGPT/Perplexity/Google
+// AI fetch first when answering "what does Synlig offer?" and "what does it
+// cost?", and we are the most-cited host in this category — the machine layer
+// is the product, not decoration. Stale pricing here becomes the citation.
 //
-// Why this gate exists: 2026-06-05 funnel-wide-launch sweep shipped Synlig
-// Lite 990 NOK to ~10 HTML surfaces, 7 frozen reports, and 7 blog posts via
-// three prior code gates — but llms.txt, priser.md, context.md and
-// agent-card.json (the canonical AI-discovery files) were missed entirely.
-// Found 9th occurrence by curl-walking AI-discovery surfaces. Per self-
-// awareness rule: 9 occurrences in 24h across 5 distinct surface CATEGORIES
-// (HTML source, frozen reports, blogs, skill text, AI-discovery files) — text
-// rules failed; gate added on default execution path.
-//
-// Each tier MUST be assertable by substring match in each surface. Surface
-// list and tier needles are intent — the build compares intent vs. state.
+// Why this gate exists, twice over:
+//   2026-06-05 — a funnel-wide launch reached ~10 HTML surfaces, 7 reports and
+//   7 blog posts but missed these six files entirely (9th occurrence in 24h
+//   across 5 surface CATEGORIES; text rules had failed, so it became a gate).
+//   2026-08-12 — the gate itself rotted. It was pinned to the four-tier INSTANCE
+//   ("lite/analyse/fundament/lopende must each appear"), so after the ladder was
+//   discontinued 2026-08-08 it FORCED six machine surfaces to keep advertising
+//   990/4 900/14 900 and to never mention the 9 900 sitert-måling that every
+//   HTML page had been selling for four days. Measured live 2026-08-12:
+//   llms.txt/priser.md/context.md/agent-skills carried 0 hits of "Sitert-måling"
+//   and 0 of "9 900". The needles below are now the INVARIANT — the live offer
+//   set — and dead tiers are banned via the shared DEAD_TIER_PATTERNS.
 //
 // Opt-out: BUILD_GATE_NEGATIVE_TEST env var (same as other gates, for testing).
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1095,17 +1210,23 @@ const AI_DISCOVERY_SURFACES = [
   "/workspace/synlig-site/.well-known/agent-skills/aeo-implementation-SKILL.md",
   "/workspace/synlig-site/.well-known/agent-skills/index.json",
 ];
-// Each tier needle is a set of alternates — the build passes if ANY alternate
+// Each offer needle is a set of alternates — the build passes if ANY alternate
 // appears. This tolerates language differences (English in agent-card.json,
 // Norwegian in the .txt/.md files) without forcing a single canonical phrase.
 const AI_DISCOVERY_TIER_NEEDLES: Record<string, string[]> = {
-  lite:        ["Synlig Lite", "990 NOK", "990 kr"],
-  analyse:     ["Analyse", "4 900 NOK", "4 900 kr"],
-  fundament:   ["Fundament", "14 900 NOK", "14 900 kr"],
-  lopende:     ["Løpende", "4 900 NOK/mnd", "4 900 NOK/month", "4 900 kr/mnd"],
+  "sitert-maaling": ["Sitert-måling", "sitert-måling", "Sitert-m%C3%A5ling", "9 900"],
+  lite:             ["Synlig Lite", "990 NOK", "990 kr"],
 };
 if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
   const aiSurfaceViolations: string[] = [];
+  // Floor: an empty or unreadable surface list makes this gate pass by checking
+  // nothing — the false-CLEAN-on-absent-input failure the sibling gate above
+  // already guards against with PRICING_DIR_FLOOR.
+  if (AI_DISCOVERY_SURFACES.length < 6) {
+    console.error(`\n[BUILD FAIL] AI-discovery gate: ${AI_DISCOVERY_SURFACES.length} surfaces registered, floor is 6.`);
+    console.error(`A shrunken surface list makes this gate blind rather than green.`);
+    process.exit(1);
+  }
   for (const path of AI_DISCOVERY_SURFACES) {
     let text = "";
     try { text = readFileSync(path, "utf-8"); } catch (err) {
@@ -1118,22 +1239,27 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
       const matched = alternates.some(n => text.includes(n));
       if (!matched) {
         aiSurfaceViolations.push(
-          `tier="${tier}" missing from AI-discovery surface: ${path}\n      alternates (any one suffices): ${alternates.join(" | ")}`
+          `live offer "${tier}" missing from AI-discovery surface: ${path}\n      alternates (any one suffices): ${alternates.join(" | ")}`
         );
       }
+    }
+    for (const [re, why] of DEAD_TIER_PATTERNS) {
+      if (re.test(text)) aiSurfaceViolations.push(`${path} advertises a discontinued tier: ${why}`);
     }
   }
   if (aiSurfaceViolations.length > 0) {
     console.error(`\n[BUILD FAIL] AI-discovery-surface gate violated (${aiSurfaceViolations.length} issue(s)):`);
     for (const v of aiSurfaceViolations) console.error(`  - ${v}`);
-    console.error(`\nWhy: llms.txt, priser.md, context.md and agent-card.json are the canonical`);
-    console.error(`machine-readable surfaces AI assistants fetch when answering "what does Synlig`);
-    console.error(`offer?" and "what's the cheapest option?" Stale pricing here propagates into`);
-    console.error(`citations and silently filters out price-sensitive prospects.`);
-    console.error(`\nFix: add the missing tier (or one of its alternates) to the listed surface.`);
-    console.error(`Registry: synlig-site/build.ts AI_DISCOVERY_TIER_NEEDLES.`);
+    console.error(`\nWhy: llms.txt, priser.md, context.md, agent-card.json and the agent-skills`);
+    console.error(`catalogue are what AI assistants fetch when answering "what does Synlig offer?"`);
+    console.error(`and "what does it cost?" We are the most-cited host in this category, so what`);
+    console.error(`stands here is what gets quoted back. Live offer set: Sitert-måling 9 900 kr`);
+    console.error(`(invoiced) + Synlig Lite 990 kr.`);
+    console.error(`\nFix: name the missing live offer, or delete the discontinued one.`);
+    console.error(`Registries: build.ts AI_DISCOVERY_TIER_NEEDLES + DEAD_TIER_PATTERNS.`);
     process.exit(1);
   }
+  console.log(`  AI-discovery gate: ${AI_DISCOVERY_SURFACES.length} surfaces carry the live offer set, 0 dead tiers`);
 }
 
 // Load reports from /workspace/synlig-site/reports/
@@ -1256,43 +1382,57 @@ for (const name of FONT_FILES) {
 //     TIER_SURFACE_REGISTRY», «et prissett vi hadde lagt ned» — names our
 //     internal gates and narrates an abandoned strategy.
 //   • "/leaderboard": an OG post-mortem dated today.
-// Second cost, the quieter one: those comments plant dead strings ("4 900",
-// "14 900", "fonts.googleapis.com") inside a production artifact, so every
-// future defect-sweep grep false-POSITIVES on a page that is genuinely clean.
+//   • "/r/<hash>": «TOP CTA — primary conversion surface at peak attention…»
+//     and similar internal CTA strategy — visible to the cold prospect
+//     the report was written for (2026-08-09: verified live on 193 reports).
+//   • "/tjenester/*": «Pricing — 4 tiers with Synlig Lite as entry point» —
+//     a dead pricing tier narrated publicly (2026-08-09: 8 verticals).
+// Second cost: comments plant dead strings inside the production artifact, so
+// future defect-sweep greps false-positive on pages that are genuinely clean.
 //
-// This runs AFTER every gate and BEFORE embedding, on purpose. The fact-source
-// gate reads `<!-- fact-source-allow: [...] -->` markers out of these same
-// strings (line ~508); stripping at read-time would silently disarm it. Gates
-// analyse source, the worker ships the artifact — two different documents.
-// deploy.ts's scaffold gate and audit-scope-honesty.test.ts also key off HTML
-// comments, but both read from OTHER inputs (the REPORTS map, report-html.ts),
-// so neither is touched — checked, not assumed.
+// This runs AFTER every gate and BEFORE embedding. The fact-source gate reads
+// `<!-- fact-source-allow: [...] -->` markers from blog HTMLs BEFORE this
+// stripping runs — gates analyse source, the worker ships the artifact.
+//
+// Reports: deploy.ts scaffold gate keys on `<!-- DIAGNOSIS: WHY NOT MENTIONED -->`
+// to find scaffold fill-in problems. That marker is preserved via keepPrefixes.
 //
 // <script>/<style> bodies pass through verbatim: a `<!--` inside JS or CSS is
-// not an HTML comment, and cutting there would corrupt the page.
+// not an HTML comment and cutting there would corrupt the page.
+//
+// Shared implementation: _partials/strip-html-comments.ts (importable by tests).
 // ─────────────────────────────────────────────────────────────────────────────
-function stripHtmlComments(html: string): string {
-  return html
-    .split(/(<script\b[\s\S]*?<\/script>|<style\b[\s\S]*?<\/style>)/i)
-    .map((part, i) => (i % 2 === 1 ? part : part.replace(/<!--[\s\S]*?-->/g, "")))
-    .join("");
-}
-
 {
-  const htmlKeys = Object.keys(files).filter(k => k.endsWith("_HTML"));
-  // Empty-input floor: if the key set ever collapses (rename, refactor), fail
-  // loud rather than shipping a silently un-stripped site.
-  if (htmlKeys.length < 40) {
-    console.error(`\n[BUILD FAIL] comment-strip: only ${htmlKeys.length} *_HTML keys found (expected ≥40).`);
+  // Gather ALL html surfaces into one flat array so the floor and loop cover
+  // every registry. Adding a new registry: push into allSurfaces here.
+  type Surface = { key: string; html: string; keepPrefixes?: string[] };
+  const allSurfaces: Surface[] = [];
+
+  // 1) Main files object — 59 *_HTML keys
+  for (const key of Object.keys(files).filter(k => k.endsWith("_HTML"))) {
+    allSurfaces.push({ key, html: (files as Record<string, string>)[key] });
+  }
+  // 2) verticalFiles — 8 /tjenester/* pages
+  for (const key of Object.keys(verticalFiles)) {
+    allSurfaces.push({ key, html: verticalFiles[key] });
+  }
+  // 3) reportEntries — 193 /r/<hash> pages; preserve DIAGNOSIS marker for deploy gate
+  for (const r of reportEntries) {
+    allSurfaces.push({ key: `REPORT_${r.hash}`, html: r.html, keepPrefixes: [STRIP_KEEP_PREFIXES.DIAGNOSIS] });
+  }
+
+  // Empty-input floor: covers ALL registries, not just `files`.
+  // Minimum = 59 files + 8 verticals + 193 reports = 260. Floor set to 250.
+  if (allSurfaces.length < 250) {
+    console.error(`\n[BUILD FAIL] comment-strip: only ${allSurfaces.length} surfaces (expected ≥250 — did a registry stop loading?).`);
     process.exit(1);
   }
+
   let removedBytes = 0;
-  for (const key of htmlKeys) {
-    const before = (files as Record<string, string>)[key];
-    const after = stripHtmlComments(before);
-    // Invariant, not a measured value: stripping may only DELETE, and may never
-    // touch executable or style content. A regex that eats a <script> would
-    // otherwise ship a dead page past every gate that already ran.
+  for (const surface of allSurfaces) {
+    const before = surface.html;
+    const after = stripHtmlComments(before, surface.keepPrefixes ?? []);
+    // Invariant: stripping may only DELETE, never touch executable/style content.
     const countTags = (s: string, re: RegExp) => (s.match(re) ?? []).length;
     for (const [label, re] of [
       ["<script", /<script\b/gi],
@@ -1301,18 +1441,28 @@ function stripHtmlComments(html: string): string {
       ["ld+json", /application\/ld\+json/gi],
     ] as const) {
       if (countTags(before, re) !== countTags(after, re)) {
-        console.error(`\n[BUILD FAIL] comment-strip changed ${label} count in ${key}.`);
+        console.error(`\n[BUILD FAIL] comment-strip changed ${label} count in ${surface.key}.`);
         process.exit(1);
       }
     }
     if (after.length > before.length) {
-      console.error(`\n[BUILD FAIL] comment-strip grew ${key} — the regex is wrong.`);
+      console.error(`\n[BUILD FAIL] comment-strip grew ${surface.key} — the regex is wrong.`);
       process.exit(1);
     }
     removedBytes += before.length - after.length;
-    (files as Record<string, string>)[key] = after;
+    // Write back to the respective registry
+    if (surface.key.startsWith("REPORT_")) {
+      const hash = surface.key.slice("REPORT_".length);
+      const entry = reportEntries.find(r => r.hash === hash);
+      if (entry) entry.html = after;
+    } else if (surface.key in verticalFiles) {
+      verticalFiles[surface.key] = after;
+    } else {
+      (files as Record<string, string>)[surface.key] = after;
+    }
   }
-  console.log(`  ✅ Comment-strip: ${htmlKeys.length} HTML surfaces, ${removedBytes} bytes of source comments withheld from the public artifact.`);
+  const filesCount = allSurfaces.filter(s => !s.key.startsWith("REPORT_") && !(s.key in verticalFiles) && s.key.endsWith("_HTML")).length;
+  console.log(`  ✅ Comment-strip: ${allSurfaces.length} surfaces (${filesCount} files + ${Object.keys(verticalFiles).length} verticals + ${reportEntries.length} reports), ${removedBytes} bytes withheld.`);
 }
 
 // Escape backticks and dollar signs for template literals
@@ -1353,6 +1503,8 @@ import { handleCheckoutRequest, handleFundamentCheckout, handleLiteCheckout, han
 import { handleFakturaSubmit } from "./faktura-handler";
 
 const INDEX_HTML = \`${escape(files.INDEX_HTML)}\`;
+
+const METODE_HTML = \`${escape(files.METODE_HTML)}\`;
 
 const EN_HTML = \`${escape(files.EN_HTML)}\`;
 
@@ -1578,6 +1730,9 @@ const TRACKING_GIF_B64 = "R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRA
 const routes = {
   "/": { body: INDEX_HTML, contentType: "text/html; charset=utf-8" },
   "/index.html": { body: INDEX_HTML, contentType: "text/html; charset=utf-8" },
+  "/metode": { body: METODE_HTML, contentType: "text/html; charset=utf-8" },
+  "/metode/": { body: METODE_HTML, contentType: "text/html; charset=utf-8" },
+  "/metode.html": { body: METODE_HTML, contentType: "text/html; charset=utf-8" },
   "/en": { body: EN_HTML, contentType: "text/html; charset=utf-8" },
   "/en/": { body: EN_HTML, contentType: "text/html; charset=utf-8" },
   "/en/index.html": { body: EN_HTML, contentType: "text/html; charset=utf-8" },

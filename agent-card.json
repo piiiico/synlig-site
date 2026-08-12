@@ -1,9 +1,9 @@
 {
   "name": "Synlig AEO Service",
-  "description": "Answer Engine Optimization (AEO) service for Norwegian B2B SaaS and software companies — accounting SaaS, HR SaaS, healthcare SaaS, fintech, marketing SaaS and vertical SaaS. We help Norwegian SaaS get cited when buyers ask ChatGPT, Perplexity and Google AI Overview for software recommendations, through SoftwareApplication schema.org markup, alternative-to and integration pages, and AI-optimized content.",
+  "description": "Answer Engine Optimization (AEO) measurement for Norwegian brands. Our main product is a citation measurement (sitert-måling, 9 900 NOK ex. VAT): five buying-intent questions from your market, at least nine runs over several days with byte-identical prompts, and the names of whoever gets cited when you are not. Written report with raw data by email, invoiced with 14-day terms, no meetings. Implementation is sold separately and small: Synlig Lite (990 NOK) adds FAQPage JSON-LD to one page.",
   "url": "https://synligdigital.no",
-  "version": "1.1.0",
-  "documentationUrl": "https://synligdigital.no/tjenester/aeo-for-saas-bedrifter",
+  "version": "2.0.0",
+  "documentationUrl": "https://synligdigital.no/metode",
   "iconUrl": "https://synligdigital.no/favicon.svg",
   "capabilities": {
     "streaming": false,
@@ -30,12 +30,12 @@
     },
     {
       "id": "aeo-implementation",
-      "name": "AEO Implementation for B2B SaaS",
-      "description": "Full AEO implementation for Norwegian B2B SaaS and software companies: SoftwareApplication schema.org markup, alternative-to and integration pages, AI-optimized buyer-question content, and ongoing monitoring. Pricing (four tiers): Synlig Lite 990 NOK (one-time, FAQPage JSON-LD for one page, 1 business day delivery), Analyse 4 900 NOK (one-time, full AEO audit + written action plan, 5 business days), Fundament 14 900 NOK (one-time, Analyse + full implementation, 2–4 weeks), Løpende overvåking 4 900 NOK/month (subscription, monthly citation tracking, requires Fundament in place). Order directly via Stripe or web form, EHF invoice within 24h.",
-      "tags": ["aeo", "schema.org", "saas", "b2b", "software", "norwegian", "implementation"],
+      "name": "AI Citation Measurement (Sitert-måling)",
+      "description": "Measures whether AI assistants cite a Norwegian brand in its own market, and names who gets cited instead. Method: five buying-intent questions, at least nine runs over several days, byte-identical prompts, written report with raw data by email. Pricing (two packages, ex. VAT): Sitert-måling 9 900 NOK one-time (invoice, 14-day terms, no meetings) and Synlig Lite 990 NOK one-time (FAQPage JSON-LD for one page, 1 business day). A measurement is a measurement — we do not promise a ranking improvement. Method and its limits: https://synligdigital.no/metode. Order a measurement by email to hei@synligdigital.no with subject 'Sitert-måling', stating company, market/category and competitors.",
+      "tags": ["aeo", "ai-citation", "measurement", "schema.org", "norwegian", "brand-visibility"],
       "inputModes": ["text/html"],
       "outputModes": ["text/html"],
-      "endpoint": "https://synligdigital.no/faktura?slug=agent-card-saas-implementation",
+      "endpoint": "mailto:hei@synligdigital.no?subject=Sitert-m%C3%A5ling",
       "endpointMethod": "HTTPS"
     }
   ],
@@ -53,13 +53,13 @@
     },
     {
       "type": "HTTPS",
-      "url": "https://synligdigital.no/tjenester/aeo-for-saas-bedrifter",
-      "description": "B2B SaaS vertical landing page. Describes the AEO playbook for Norwegian SaaS, with three pricing tiers and inline lead-capture forms."
+      "url": "https://synligdigital.no/metode",
+      "description": "Method page for the citation measurement: how the five questions are chosen, why at least nine runs over several days, what byte-identical prompts mean, and what we explicitly do not claim."
     },
     {
       "type": "HTTPS",
       "url": "https://synligdigital.no/faktura",
-      "description": "Web order form. Accepts ?slug=<tier-key> to preselect a package. Norwegian EHF invoice within 24h. No payment-up-front required."
+      "description": "Web order form for Synlig Lite. Accepts ?slug=priser-lite. Norwegian EHF invoice within 24h. No payment-up-front required. The citation measurement is ordered by email, not through this form."
     }
   ]
 }

@@ -276,15 +276,28 @@
        reach the recommendations wall still see the next step. -->
   <div class="top-cta">
     <div class="top-cta-headline">20 høy-prioritets tiltak gjenstår</div>
-    <div class="top-cta-sub">Vi leverer komplett handlingsplan på 5 virkedager. Faktura eller kort.</div>
-    <form method="POST" action="https://synligdigital.no/api/lead-capture" style="display:inline;margin:0;padding:0">
+    <div class="top-cta-sub">Sitert-måling 9 900 NOK på faktura, Synlig Lite 990 NOK med kort eller faktura.</div>
+    <form method="POST" action="https://synligdigital.no/api/lead-capture" style="display:flex;flex-direction:column;gap:6px;align-items:stretch;max-width:340px;margin:0 auto 14px;padding:0">
       <input type="hidden" name="email" value="knutkristian@kampanje.com">
-      <input type="hidden" name="tier" value="handlingsplan">
       <input type="hidden" name="slug" value="outreach-i7bkbc29">
-      <button type="submit" style="display:inline-block;background:#22c55e;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;box-shadow:0 4px 12px rgba(34,197,94,.3);margin-bottom:14px;border:0;cursor:pointer;font-family:inherit">Bestill handlingsplan — 4 900 NOK →</button>
-    </form><br>
-    <a href="mailto:hei@synligdigital.no?subject=AEO-hjelp%20for%20Kampanje%20(57%2F100)&body=Hei%20Synlig%20Digital%2C%0A%0AJeg%20har%20akkurat%20f%C3%A5tt%20AEO-rapport%20for%20Kampanje%20(score%3A%2057%2F100%2C%20karakter%3A%20C).%0A%0AJeg%20vil%20gjerne%20h%C3%B8re%20om%20hvordan%20dere%20kan%20hjelpe%20oss%20%C3%A5%20forbedre%20AI-synligheten.%0A%0AMin%20kontaktinfo%3A%20%5Bnavn%2C%20telefon%5D%0A%0ATakk!" class="top-cta-secondary">eller ta en uforpliktende prat →</a>
+      <button type="submit" name="tier" value="lite" style="display:inline-block;background:#22c55e;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;box-shadow:0 4px 12px rgba(34,197,94,.3);border:0;cursor:pointer;font-family:inherit">Bestill Synlig Lite — 990 NOK →</button>
+      <div style="font-size:12px;color:var(--text-muted, #94a3b8);line-height:1.4;margin:6px auto 6px;max-width:340px">FAQPage for én side · 1 virkedag · engangsbetaling</div>
+      <a href="mailto:hei@synligdigital.no?subject=Sitert-m%C3%A5ling&body=Hei%20Synlig%2C%0A%0AVi%20fikk%20AEO-rapporten%20og%20vil%20bestille%20en%20sitert-m%C3%A5ling%20(9%20900%20NOK%20eks.%20mva%2C%20engangsbel%C3%B8p).%0A%0AMed%20vennlig%20hilsen%2C%0A" style="display:inline-block;background:transparent;color:#22c55e;text-decoration:none;padding:12px 26px;border-radius:8px;font-weight:600;font-size:14px;border:1px solid #22c55e;cursor:pointer;font-family:inherit">Eller sitert-måling — 9 900 NOK →</a>
+    </form>
+    <a href="https://synligdigital.no/faktura?slug=outreach-i7bkbc29&email=knutkristian%40kampanje.com&pakke=priser-lite" onclick="try{var f=new FormData();f.append('email','knutkristian@kampanje.com');f.append('slug','outreach-i7bkbc29');f.append('intent','faktura');if(navigator.sendBeacon){navigator.sendBeacon('https://synligdigital.no/api/lead-capture',f);}else if(typeof fetch==='function'){fetch('https://synligdigital.no/api/lead-capture',{method:'POST',body:f,keepalive:true}).catch(function(){});}}catch(e){}" style="display:inline-block;background:transparent;color:var(--indigo-light);border:1px solid var(--indigo);text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px;margin-bottom:14px">Få faktura — 14 dagers betalingsfrist →</a><br>
+    <a href="mailto:hei@synligdigital.no?subject=AEO-hjelp%20for%20Kampanje%20(57%2F100)&body=Hei%20Synlig%20Digital%2C%0A%0AJeg%20har%20akkurat%20f%C3%A5tt%20AEO-rapport%20for%20Kampanje%20(score%3A%2057%2F100%2C%20karakter%3A%20C).%0A%0AJeg%20vil%20gjerne%20h%C3%B8re%20skriftlig%20p%C3%A5%20e-post%20hvordan%20dere%20kan%20hjelpe%20oss%20%C3%A5%20forbedre%20AI-synligheten.%0A%0ATakk!" class="top-cta-secondary">eller få skriftlig gjennomgang →</a>
   </div>
+
+  <!-- TRUST ANCHOR — third-party verified credibility, added 2026-05-27. See patch-reports-trust-anchor.ts. -->
+  <div data-trust-anchor="agent-readiness" style="background:#0c1426;border:1px solid #334155;border-radius:10px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+    <div style="font-size:32px;font-weight:800;color:#22c55e;line-height:1;min-width:50px;text-align:center">5/5</div>
+    <div style="flex:1;min-width:200px">
+      <div style="font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:3px">synligdigital.no scorer Agent-Native (toppnivå) hos Cloudflare</div>
+      <div style="font-size:12px;color:#94a3b8">Uavhengig skanner. Vi har optimalisert vår egen side først.</div>
+    </div>
+    <a href="/bevis/agent-readiness" rel="noopener" style="font-size:13px;color:#818cf8;text-decoration:underline;white-space:nowrap">Verifiser →</a>
+  </div>
+
 
   <!-- COMPONENT SCORES -->
   <div class="card">
@@ -339,6 +352,16 @@
     <div class="card-header">
       <div class="card-title">🎯 Anbefalinger</div>
       <div class="score-chip">20 tiltak</div>
+    </div>
+    <div style="background:linear-gradient(135deg,rgba(99,102,241,0.12) 0%,rgba(99,102,241,0.03) 100%);border-left:3px solid var(--indigo);padding:18px 20px;margin-bottom:24px;border-radius:0 8px 8px 0">
+      <div style="font-size:12px;color:var(--indigo-light);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Start her — 3 tiltak med høyest effekt</div>
+      <div style="font-size:14px;color:var(--text-muted);margin-bottom:14px">Svakeste komponent: <strong style="color:var(--text)">Strukturerte data 5/25</strong>. Disse tre løfter scoren mest.</div>
+      <ol style="list-style:decimal;margin:0 0 16px 22px;padding:0">
+        <li style="padding:6px 0;font-size:14px;line-height:1.5">Legg til schema med @type som matcher bransjen (Dentist, AutoRepair, etc.)</li><li style="padding:6px 0;font-size:14px;line-height:1.5">Legg til AggregateRating for å vise stjernerating i søk og AI-svar</li><li style="padding:6px 0;font-size:14px;line-height:1.5">Legg til openingHours i schema</li>
+      </ol>
+      <div style="font-size:13px;color:var(--text-muted);border-top:1px solid var(--surface2);padding-top:12px;margin-top:4px">
+        Vil dere ha den viktigste siden rettet, koster Synlig Lite <strong style="color:var(--text)">990 NOK</strong> og leveres på én virkedag. Vil dere først vite om AI-assistentene faktisk siterer dere i deres marked, er sitert-måling <strong style="color:var(--text)">9 900 NOK</strong>. <a href="https://synligdigital.no/faktura?slug=outreach-i7bkbc29&email=knutkristian%40kampanje.com&pakke=priser-lite" style="color:var(--indigo-light);text-decoration:underline">Bestill →</a>
+      </div>
     </div>
 
     
@@ -448,92 +471,7 @@
   </div>
 
   
-  <!-- DIAGNOSIS: WHY NOT MENTIONED -->
-  <div class="card" style="border-left: 4px solid var(--red)">
-    <div class="card-header">
-      <div class="card-title">🔍 Diagnose: Kvifor er du ikkje nemnt?</div>
-      <div class="score-chip" style="color:var(--red)">5/5 ikkje nemnt</div>
-    </div>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px">
-      For bedriftar i din by — dette er spørsmål AI-assistentar faktisk svarar på. Her er kvifor du ikkje dukkar opp.
-    </p>
-    <table class="check-table" style="margin-bottom:16px">
-      <tr style="font-weight:600"><td>AI-spørsmål</td><td style="width:80px">Status</td><td style="width:70px">Impact</td></tr>
-      
-      <tr>
-        <td style="font-style:italic;color:var(--text-muted)">«beste bedrift din by»</td>
-        <td><span class="icon-fail">✗ Ikkje nemnt</span></td>
-        <td><span style="font-size:11px;background:#fee2e2;color:#dc2626;padding:2px 6px;border-radius:4px">Høg</span></td>
-      </tr>
-      
-      <tr>
-        <td colspan="3" style="padding-left:16px;padding-bottom:8px">
-          <div style="font-size:12px;color:#dc2626;margin-bottom:4px">▸ Adresse er ikkje synleg på nettsida — AI kan ikkje kople dykk til ein by</div>
-          <div style="font-size:12px;color:var(--text-muted)">→ Legg adresse i footer på alle sider, og legg til geo-koordinatar i LocalBusiness-schema</div>
-        </td>
-      </tr>
-      
-      <tr>
-        <td style="font-style:italic;color:var(--text-muted)">«bedrift pris din by»</td>
-        <td><span class="icon-fail">✗ Ikkje nemnt</span></td>
-        <td><span style="font-size:11px;background:#fee2e2;color:#dc2626;padding:2px 6px;border-radius:4px">Høg</span></td>
-      </tr>
-      
-      <tr>
-        <td colspan="3" style="padding-left:16px;padding-bottom:8px">
-          <div style="font-size:12px;color:#dc2626;margin-bottom:4px">▸ Ingen prisinformasjon på nettsida — AI kan ikkje svare på prissøk</div>
-          <div style="font-size:12px;color:var(--text-muted)">→ Legg til konkrete prisar eller prisintervall på ei dedikert prisside, og legg til priceRange i schema</div>
-        </td>
-      </tr>
-      
-      <tr>
-        <td style="font-style:italic;color:var(--text-muted)">«hva koster bedrift»</td>
-        <td><span class="icon-fail">✗ Ikkje nemnt</span></td>
-        <td><span style="font-size:11px;background:#fee2e2;color:#dc2626;padding:2px 6px;border-radius:4px">Høg</span></td>
-      </tr>
-      
-      <tr>
-        <td colspan="3" style="padding-left:16px;padding-bottom:8px">
-          <div style="font-size:12px;color:#dc2626;margin-bottom:4px">▸ Manglar FAQPage-schema — AI-assistentar siterer FAQ direkte i svar</div>
-          <div style="font-size:12px;color:var(--text-muted)">→ Skriv eit FAQ-svar på nettsida: «hva koster bedrift» og legg til FAQPage JSON-LD schema-markup</div>
-        </td>
-      </tr>
-      
-      <tr>
-        <td style="font-style:italic;color:var(--text-muted)">«bedrift åpen nå din by»</td>
-        <td><span class="icon-fail">✗ Ikkje nemnt</span></td>
-        <td><span style="font-size:11px;background:#fef9c3;color:#92400e;padding:2px 6px;border-radius:4px">Medium</span></td>
-      </tr>
-      
-      <tr>
-        <td colspan="3" style="padding-left:16px;padding-bottom:8px">
-          <div style="font-size:12px;color:#dc2626;margin-bottom:4px">▸ Adresse er ikkje synleg på nettsida — AI kan ikkje kople dykk til ein by</div>
-          <div style="font-size:12px;color:var(--text-muted)">→ Legg adresse i footer på alle sider, og legg til geo-koordinatar i LocalBusiness-schema</div>
-        </td>
-      </tr>
-      
-      <tr>
-        <td style="font-style:italic;color:var(--text-muted)">«bedrift din by»</td>
-        <td><span class="icon-fail">✗ Ikkje nemnt</span></td>
-        <td><span style="font-size:11px;background:#fee2e2;color:#dc2626;padding:2px 6px;border-radius:4px">Høg</span></td>
-      </tr>
-      
-      <tr>
-        <td colspan="3" style="padding-left:16px;padding-bottom:8px">
-          <div style="font-size:12px;color:#dc2626;margin-bottom:4px">▸ Adresse er ikkje synleg på nettsida — AI kan ikkje kople dykk til ein by</div>
-          <div style="font-size:12px;color:var(--text-muted)">→ Legg adresse i footer på alle sider, og legg til geo-koordinatar i LocalBusiness-schema</div>
-        </td>
-      </tr>
-      
-    </table>
-    
-    <div class="section-title">🚀 Raskaste tiltak</div>
-    <ul class="issue-list">
-      <li>Legg til LocalBusiness (eller bransjespesifikk type) JSON-LD på alle sider</li><li>Legg adresse i footer på alle sider, og legg til geo-koordinatar i LocalBusiness-schema</li><li>Legg til konkrete prisar eller prisintervall på ei dedikert prisside, og legg til priceRange i schema</li>
-    </ul>
-  </div>
 
-  
   <!-- ISSUES -->
   <div class="card">
     <div class="card-header">
@@ -548,16 +486,18 @@
   <!-- CTA -->
   <div class="cta-card">
     <h2>Klar for å øke AI-synligheten?</h2>
-    <p>Synlig hjelper norske bedrifter med å bli anbefalte av ChatGPT, Perplexity og Google AI Overviews. Ta kontakt for en uforpliktende prat.</p>
-    <form method="POST" action="https://synligdigital.no/api/lead-capture" style="display:inline;margin:0;padding:0">
+    <p>Synlig hjelper norske bedrifter med å bli anbefalte av ChatGPT, Perplexity og Google AI Overviews. Send oss en e-post — vi svarer skriftlig innen én arbeidsdag.</p>
+    <form method="POST" action="https://synligdigital.no/api/lead-capture" style="display:flex;flex-direction:column;gap:6px;align-items:stretch;max-width:340px;margin:0 auto 14px;padding:0">
       <input type="hidden" name="email" value="knutkristian@kampanje.com">
-      <input type="hidden" name="tier" value="handlingsplan">
       <input type="hidden" name="slug" value="outreach-i7bkbc29">
-      <button type="submit" style="display:inline-block;background:#22c55e;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;box-shadow:0 4px 12px rgba(34,197,94,.3);margin-bottom:14px;border:0;cursor:pointer;font-family:inherit">Bestill handlingsplan — 4 900 NOK →</button>
-    </form><br>
-    <a href="mailto:hei@synligdigital.no?subject=AEO-hjelp%20for%20Kampanje%20(57%2F100)&body=Hei%20Synlig%20Digital%2C%0A%0AJeg%20har%20akkurat%20f%C3%A5tt%20AEO-rapport%20for%20Kampanje%20(score%3A%2057%2F100%2C%20karakter%3A%20C).%0A%0AJeg%20vil%20gjerne%20h%C3%B8re%20om%20hvordan%20dere%20kan%20hjelpe%20oss%20%C3%A5%20forbedre%20AI-synligheten.%0A%0AMin%20kontaktinfo%3A%20%5Bnavn%2C%20telefon%5D%0A%0ATakk!" class="btn-secondary">📧 Få hjelp med AEO →</a>
+      <button type="submit" name="tier" value="lite" style="display:inline-block;background:#22c55e;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;box-shadow:0 4px 12px rgba(34,197,94,.3);border:0;cursor:pointer;font-family:inherit">Bestill Synlig Lite — 990 NOK →</button>
+      <div style="font-size:12px;color:var(--text-muted, #94a3b8);line-height:1.4;margin:6px auto 6px;max-width:340px">FAQPage for én side · 1 virkedag · engangsbetaling</div>
+      <a href="mailto:hei@synligdigital.no?subject=Sitert-m%C3%A5ling&body=Hei%20Synlig%2C%0A%0AVi%20fikk%20AEO-rapporten%20og%20vil%20bestille%20en%20sitert-m%C3%A5ling%20(9%20900%20NOK%20eks.%20mva%2C%20engangsbel%C3%B8p).%0A%0AMed%20vennlig%20hilsen%2C%0A" style="display:inline-block;background:transparent;color:#22c55e;text-decoration:none;padding:12px 26px;border-radius:8px;font-weight:600;font-size:14px;border:1px solid #22c55e;cursor:pointer;font-family:inherit">Eller sitert-måling — 9 900 NOK →</a>
+    </form>
+    <a href="https://synligdigital.no/faktura?slug=outreach-i7bkbc29&email=knutkristian%40kampanje.com&pakke=priser-lite" onclick="try{var f=new FormData();f.append('email','knutkristian@kampanje.com');f.append('slug','outreach-i7bkbc29');f.append('intent','faktura');if(navigator.sendBeacon){navigator.sendBeacon('https://synligdigital.no/api/lead-capture',f);}else if(typeof fetch==='function'){fetch('https://synligdigital.no/api/lead-capture',{method:'POST',body:f,keepalive:true}).catch(function(){});}}catch(e){}" style="display:inline-block;background:transparent;color:var(--indigo-light);border:1px solid var(--indigo);text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px;margin-bottom:14px">Få faktura — 14 dagers betalingsfrist →</a><br>
+    <a href="mailto:hei@synligdigital.no?subject=AEO-hjelp%20for%20Kampanje%20(57%2F100)&body=Hei%20Synlig%20Digital%2C%0A%0AJeg%20har%20akkurat%20f%C3%A5tt%20AEO-rapport%20for%20Kampanje%20(score%3A%2057%2F100%2C%20karakter%3A%20C).%0A%0AJeg%20vil%20gjerne%20h%C3%B8re%20skriftlig%20p%C3%A5%20e-post%20hvordan%20dere%20kan%20hjelpe%20oss%20%C3%A5%20forbedre%20AI-synligheten.%0A%0ATakk!" class="btn-secondary">📧 Få hjelp med AEO →</a>
     <a href="https://synligdigital.no" class="btn-secondary">Les mer om AEO →</a>
-    <p style="font-size:13px;color:var(--text-muted);margin-top:20px;padding-top:16px;border-top:1px solid rgba(99,102,241,0.2);margin-bottom:0">Full handlingsplan fra 4 900 NOK. <a href="https://synligdigital.no/priser" style="color:var(--indigo-light);text-decoration:underline;font-weight:500">Se priser →</a></p>
+    <p style="font-size:13px;color:var(--text-muted);margin-top:20px;padding-top:16px;border-top:1px solid rgba(99,102,241,0.2);margin-bottom:0">Sitert-måling 9 900 NOK, Synlig Lite 990 NOK. <a href="https://synligdigital.no/priser?ref=cold-report&utm_source=cold-report&utm_medium=html-report&utm_campaign=i7bkbc29" style="color:var(--indigo-light);text-decoration:underline;font-weight:500">Se priser →</a></p>
   </div>
 
   <!-- METHODOLOGY -->

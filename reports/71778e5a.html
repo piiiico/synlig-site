@@ -276,15 +276,28 @@
        reach the recommendations wall still see the next step. -->
   <div class="top-cta">
     <div class="top-cta-headline">11 høy-prioritets tiltak gjenstår</div>
-    <div class="top-cta-sub">Vi leverer komplett handlingsplan på 5 virkedager. Faktura eller kort.</div>
-    <form method="POST" action="https://synligdigital.no/api/lead-capture" style="display:inline;margin:0;padding:0">
+    <div class="top-cta-sub">Sitert-måling 9 900 NOK på faktura, Synlig Lite 990 NOK med kort eller faktura.</div>
+    <form method="POST" action="https://synligdigital.no/api/lead-capture" style="display:flex;flex-direction:column;gap:6px;align-items:stretch;max-width:340px;margin:0 auto 14px;padding:0">
       <input type="hidden" name="email" value="info@tannforum.no">
-      <input type="hidden" name="tier" value="handlingsplan">
       <input type="hidden" name="slug" value="outreach-71778e5a">
-      <button type="submit" style="display:inline-block;background:#22c55e;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;box-shadow:0 4px 12px rgba(34,197,94,.3);margin-bottom:14px;border:0;cursor:pointer;font-family:inherit">Bestill handlingsplan — 4 900 NOK →</button>
-    </form><br>
-    <a href="mailto:hei@synligdigital.no?subject=AEO-rapport for Tannforum" class="top-cta-secondary">eller ta en uforpliktende prat →</a>
+      <button type="submit" name="tier" value="lite" style="display:inline-block;background:#22c55e;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;box-shadow:0 4px 12px rgba(34,197,94,.3);border:0;cursor:pointer;font-family:inherit">Bestill Synlig Lite — 990 NOK →</button>
+      <div style="font-size:12px;color:var(--text-muted, #94a3b8);line-height:1.4;margin:6px auto 6px;max-width:340px">FAQPage for én side · 1 virkedag · engangsbetaling</div>
+      <a href="mailto:hei@synligdigital.no?subject=Sitert-m%C3%A5ling&body=Hei%20Synlig%2C%0A%0AVi%20fikk%20AEO-rapporten%20og%20vil%20bestille%20en%20sitert-m%C3%A5ling%20(9%20900%20NOK%20eks.%20mva%2C%20engangsbel%C3%B8p).%0A%0AMed%20vennlig%20hilsen%2C%0A" style="display:inline-block;background:transparent;color:#22c55e;text-decoration:none;padding:12px 26px;border-radius:8px;font-weight:600;font-size:14px;border:1px solid #22c55e;cursor:pointer;font-family:inherit">Eller sitert-måling — 9 900 NOK →</a>
+    </form>
+    <a href="https://synligdigital.no/faktura?slug=outreach-71778e5a&email=info%40tannforum.no&pakke=priser-lite" onclick="try{var f=new FormData();f.append('email','info@tannforum.no');f.append('slug','outreach-71778e5a');f.append('intent','faktura');if(navigator.sendBeacon){navigator.sendBeacon('https://synligdigital.no/api/lead-capture',f);}else if(typeof fetch==='function'){fetch('https://synligdigital.no/api/lead-capture',{method:'POST',body:f,keepalive:true}).catch(function(){});}}catch(e){}" style="display:inline-block;background:transparent;color:var(--indigo-light);border:1px solid var(--indigo);text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px;margin-bottom:14px">Få faktura — 14 dagers betalingsfrist →</a><br>
+    <a href="mailto:hei@synligdigital.no?subject=AEO-rapport for Tannforum" class="top-cta-secondary">eller få skriftlig gjennomgang →</a>
   </div>
+
+  <!-- TRUST ANCHOR — third-party verified credibility, added 2026-05-27. See patch-reports-trust-anchor.ts. -->
+  <div data-trust-anchor="agent-readiness" style="background:#0c1426;border:1px solid #334155;border-radius:10px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+    <div style="font-size:32px;font-weight:800;color:#22c55e;line-height:1;min-width:50px;text-align:center">5/5</div>
+    <div style="flex:1;min-width:200px">
+      <div style="font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:3px">synligdigital.no scorer Agent-Native (toppnivå) hos Cloudflare</div>
+      <div style="font-size:12px;color:#94a3b8">Uavhengig skanner. Vi har optimalisert vår egen side først.</div>
+    </div>
+    <a href="/bevis/agent-readiness" rel="noopener" style="font-size:13px;color:#818cf8;text-decoration:underline;white-space:nowrap">Verifiser →</a>
+  </div>
+
 
   <!-- COMPONENT SCORES -->
   <div class="card">
@@ -339,6 +352,16 @@
     <div class="card-header">
       <div class="card-title">🎯 Anbefalinger</div>
       <div class="score-chip">13 tiltak</div>
+    </div>
+    <div style="background:linear-gradient(135deg,rgba(99,102,241,0.12) 0%,rgba(99,102,241,0.03) 100%);border-left:3px solid var(--indigo);padding:18px 20px;margin-bottom:24px;border-radius:0 8px 8px 0">
+      <div style="font-size:12px;color:var(--indigo-light);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Start her — 3 tiltak med høyest effekt</div>
+      <div style="font-size:14px;color:var(--text-muted);margin-bottom:14px">Svakeste komponent: <strong style="color:var(--text)">Innhold & siterbarhet 9/25</strong>. Disse tre løfter scoren mest.</div>
+      <ol style="list-style:decimal;margin:0 0 16px 22px;padding:0">
+        <li style="padding:6px 0;font-size:14px;line-height:1.5">Bruk H2 for tjenester, om oss, FAQ etc.</li><li style="padding:6px 0;font-size:14px;line-height:1.5">Legg til FAQ-seksjon med vanlige spørsmål — AI-modeller siterer FAQ direkte</li><li style="padding:6px 0;font-size:14px;line-height:1.5">Legg til H2/H3-overskrifter i spørsmålsformat ("Hva koster...", "Hvordan fungerer...") — AI siterer spørsmålsbaserte overskrifter 3x hyppigere</li>
+      </ol>
+      <div style="font-size:13px;color:var(--text-muted);border-top:1px solid var(--surface2);padding-top:12px;margin-top:4px">
+        Vil dere ha den viktigste siden rettet, koster Synlig Lite <strong style="color:var(--text)">990 NOK</strong> og leveres på én virkedag. Vil dere først vite om AI-assistentene faktisk siterer dere i deres marked, er sitert-måling <strong style="color:var(--text)">9 900 NOK</strong>. <a href="https://synligdigital.no/faktura?slug=outreach-71778e5a&email=info%40tannforum.no&pakke=priser-lite" style="color:var(--indigo-light);text-decoration:underline">Bestill →</a>
+      </div>
     </div>
 
     
@@ -465,16 +488,18 @@
   <!-- CTA -->
   <div class="cta-card">
     <h2>Klar for å øke AI-synligheten?</h2>
-    <p>Synlig hjelper norske bedrifter med å bli anbefalte av ChatGPT, Perplexity og Google AI Overviews. Ta kontakt for en uforpliktende prat.</p>
-    <form method="POST" action="https://synligdigital.no/api/lead-capture" style="display:inline;margin:0;padding:0">
+    <p>Synlig hjelper norske bedrifter med å bli anbefalte av ChatGPT, Perplexity og Google AI Overviews. Send oss en e-post — vi svarer skriftlig innen én arbeidsdag.</p>
+    <form method="POST" action="https://synligdigital.no/api/lead-capture" style="display:flex;flex-direction:column;gap:6px;align-items:stretch;max-width:340px;margin:0 auto 14px;padding:0">
       <input type="hidden" name="email" value="info@tannforum.no">
-      <input type="hidden" name="tier" value="handlingsplan">
       <input type="hidden" name="slug" value="outreach-71778e5a">
-      <button type="submit" style="display:inline-block;background:#22c55e;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;box-shadow:0 4px 12px rgba(34,197,94,.3);margin-bottom:14px;border:0;cursor:pointer;font-family:inherit">Bestill handlingsplan — 4 900 NOK →</button>
-    </form><br>
+      <button type="submit" name="tier" value="lite" style="display:inline-block;background:#22c55e;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;box-shadow:0 4px 12px rgba(34,197,94,.3);border:0;cursor:pointer;font-family:inherit">Bestill Synlig Lite — 990 NOK →</button>
+      <div style="font-size:12px;color:var(--text-muted, #94a3b8);line-height:1.4;margin:6px auto 6px;max-width:340px">FAQPage for én side · 1 virkedag · engangsbetaling</div>
+      <a href="mailto:hei@synligdigital.no?subject=Sitert-m%C3%A5ling&body=Hei%20Synlig%2C%0A%0AVi%20fikk%20AEO-rapporten%20og%20vil%20bestille%20en%20sitert-m%C3%A5ling%20(9%20900%20NOK%20eks.%20mva%2C%20engangsbel%C3%B8p).%0A%0AMed%20vennlig%20hilsen%2C%0A" style="display:inline-block;background:transparent;color:#22c55e;text-decoration:none;padding:12px 26px;border-radius:8px;font-weight:600;font-size:14px;border:1px solid #22c55e;cursor:pointer;font-family:inherit">Eller sitert-måling — 9 900 NOK →</a>
+    </form>
+    <a href="https://synligdigital.no/faktura?slug=outreach-71778e5a&email=info%40tannforum.no&pakke=priser-lite" onclick="try{var f=new FormData();f.append('email','info@tannforum.no');f.append('slug','outreach-71778e5a');f.append('intent','faktura');if(navigator.sendBeacon){navigator.sendBeacon('https://synligdigital.no/api/lead-capture',f);}else if(typeof fetch==='function'){fetch('https://synligdigital.no/api/lead-capture',{method:'POST',body:f,keepalive:true}).catch(function(){});}}catch(e){}" style="display:inline-block;background:transparent;color:var(--indigo-light);border:1px solid var(--indigo);text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px;margin-bottom:14px">Få faktura — 14 dagers betalingsfrist →</a><br>
     <a href="mailto:hei@synligdigital.no?subject=AEO-rapport for Tannforum" class="btn-secondary">📧 Ta kontakt</a>
     <a href="https://synligdigital.no" class="btn-secondary">Les mer om AEO →</a>
-    <p style="font-size:13px;color:var(--text-muted);margin-top:20px;padding-top:16px;border-top:1px solid rgba(99,102,241,0.2);margin-bottom:0">Full handlingsplan fra 4 900 NOK. <a href="https://synligdigital.no/priser" style="color:var(--indigo-light);text-decoration:underline;font-weight:500">Se priser →</a></p>
+    <p style="font-size:13px;color:var(--text-muted);margin-top:20px;padding-top:16px;border-top:1px solid rgba(99,102,241,0.2);margin-bottom:0">Sitert-måling 9 900 NOK, Synlig Lite 990 NOK. <a href="https://synligdigital.no/priser?ref=cold-report&utm_source=cold-report&utm_medium=html-report&utm_campaign=71778e5a" style="color:var(--indigo-light);text-decoration:underline;font-weight:500">Se priser →</a></p>
   </div>
 
   <!-- METHODOLOGY -->

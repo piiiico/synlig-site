@@ -31,16 +31,16 @@
     },
     {
       "id": "aeo-implementation",
-      "name": "AEO Implementation for B2B SaaS",
-      "description": "Full AEO implementation for Norwegian B2B SaaS: SoftwareApplication schema.org markup, alternative-to and integration pages, AI-optimized buyer-question content, ongoing monitoring. Pricing (four tiers): Synlig Lite 990 NOK (one-time, FAQPage JSON-LD for one page, 1 business day), AI-synlighetsanalyse 4 900 NOK (one-time), AI-synlighetsfundament 14 900 NOK (one-time, includes implementation), Løpende overvåking 4 900 NOK/month (3-month minimum). Order via web form, EHF invoice within 24h.",
+      "name": "AI Citation Measurement (Sitert-måling)",
+      "description": "Measures whether AI assistants cite a Norwegian brand in its own market, and names who gets cited instead. Five buying-intent questions, at least nine runs over several days, byte-identical prompts, written report with raw data by email. Pricing (two packages, ex. VAT): Sitert-måling 9 900 NOK one-time (invoice, 14-day terms, no meetings) and Synlig Lite 990 NOK one-time (FAQPage JSON-LD for one page, 1 business day). A measurement is a measurement — no ranking promise. Method and limits: https://synligdigital.no/metode",
       "url": "https://synligdigital.no/.well-known/agent-skills/aeo-implementation/SKILL.md",
-      "tags": ["aeo", "schema.org", "saas", "b2b", "norwegian", "implementation"],
+      "tags": ["aeo", "ai-citation", "measurement", "schema.org", "norwegian", "brand-visibility"],
       "endpoints": [
         {
           "type": "https",
-          "url": "https://synligdigital.no/faktura?slug=agent-card-saas-implementation",
+          "url": "https://synligdigital.no/faktura?slug=priser-lite",
           "method": "GET",
-          "description": "Order form, preselects the AI-synlighetsfundament tier"
+          "description": "Order form for Synlig Lite. The citation measurement is ordered by email to hei@synligdigital.no with subject 'Sitert-måling'."
         }
       ]
     }

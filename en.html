@@ -18,7 +18,7 @@
 <meta property="og:url" content="https://synligdigital.no/en/">
 <meta property="og:site_name" content="Synlig Digital">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://synligdigital.no/og.png">
+<meta property="og:image" content="https://synligdigital.no/og-2026-08.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -31,8 +31,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- JSON-LD Structured Data — Block 1: LocalBusiness (Organization, full)
-     Mirrors the Norwegian / block 1 with English copy, English-priced
-     OfferCatalog (4 tiers visible on this page), geo + opening hours,
+     Mirrors the Norwegian / block 1 with English copy, an OfferCatalog
+     carrying exactly the tiers this page can sell, geo + opening hours,
      and the named employee (Håkon Åmdal). Shipped 2026-06-15 idle-mode
      after dogfooding /en/ showed only 1 JSON-LD block vs / having 7 —
      a glaring AEO-dogfooding failure on the page we route international
@@ -47,8 +47,8 @@
   "legalName": "Synlig Digital",
   "description": "Synlig Digital is a small Answer Engine Optimization (AEO) consultancy in Stavanger, Norway. We help businesses become visible in answers from ChatGPT, Perplexity, Google AI Overview, and other AI assistants — through schema.org markup, structured data, canonical entity definition, agent-readable metadata, and AI-targeted content.",
   "url": "https://synligdigital.no/en/",
-  "logo": "https://synligdigital.no/og.png",
-  "image": "https://synligdigital.no/og.png",
+  "logo": "https://synligdigital.no/og-2026-08.png",
+  "image": "https://synligdigital.no/og-2026-08.png",
   "email": "hei@synligdigital.no",
   "foundingDate": "2026",
   "address": {
@@ -114,55 +114,21 @@
       },
       {
         "@type": "Offer",
-        "name": "AEO Analysis — written audit",
-        "description": "Written report with a 0–100 AEO score, a categorized gap list, and a prioritized fix sequence. Includes live tests of what ChatGPT, Claude, and Google AI currently say about your business. One-off.",
-        "price": "460",
-        "priceCurrency": "USD",
+        "name": "Citation measurement — do AI assistants cite you?",
+        "description": "Five buying-intent questions from your market, each run at least nine times across several days with byte-identical prompts. Written answer on whether AI assistants cite you, the names of who gets cited instead, and the raw data so you can re-run the measurement yourself. Invoiced in NOK with 14-day terms; no card rail.",
+        "price": "9900",
+        "priceCurrency": "NOK",
         "url": "https://synligdigital.no/en/",
         "itemOffered": {
           "@type": "Service",
-          "name": "AEO Analysis",
-          "serviceType": "AEO Audit and Advisory",
-          "provider": { "@id": "https://synligdigital.no/#organization" }
-        }
-      },
-      {
-        "@type": "Offer",
-        "name": "AEO Foundation — full implementation",
-        "description": "Schema.org markup, content structure, machine-readable metadata, canonical entity, business profile, llms.txt, agent-card. Includes the Analysis. Documented internal methodology case (related party — common ownership): Nordic Lithium moved from AEO score 67/C to 90/A in approximately two weeks. See /en/case/nordic-lithium for ownership disclosure.",
-        "price": "1400",
-        "priceCurrency": "USD",
-        "url": "https://synligdigital.no/en/",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "AEO Foundation",
-          "serviceType": "AEO Implementation",
-          "provider": { "@id": "https://synligdigital.no/#organization" }
-        }
-      },
-      {
-        "@type": "Offer",
-        "name": "Continuous AEO — monthly monitoring",
-        "description": "Monthly visibility tracking, content updates, and quarterly review of what shifted in the AI assistants you care about. Cancel any time.",
-        "price": "460",
-        "priceCurrency": "USD",
-        "priceSpecification": {
-          "@type": "UnitPriceSpecification",
-          "price": "460",
-          "priceCurrency": "USD",
-          "unitText": "per month",
-          "billingIncrement": 1
-        },
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Continuous AEO monitoring",
-          "serviceType": "AEO Monitoring and Reporting",
+          "name": "AI citation measurement",
+          "serviceType": "AEO Measurement",
           "provider": { "@id": "https://synligdigital.no/#organization" }
         }
       }
     ]
   },
-  "priceRange": "USD 92–1400",
+  "priceRange": "USD 92 – NOK 9900",
   "employee": {
     "@type": "Person",
     "name": "Håkon Åmdal",
@@ -222,7 +188,7 @@
       "name": "Who is Synlig Digital and what do you do?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Synlig Digital is a small Answer Engine Optimization consultancy based in Stavanger, Norway. We help businesses become visible in ChatGPT, Perplexity, Google AI Overview, and other AI assistants. We offer a free AEO score on synligdigital.no/en/, AEO Lite — FAQPage schema for one page (USD 92), a written Analysis (USD 460), full Foundation implementation (USD 1,400), and Continuous monitoring (USD 460/month)."
+        "text": "Synlig Digital is a small Answer Engine Optimization consultancy based in Stavanger, Norway. We help businesses become visible in ChatGPT, Perplexity, Google AI Overview, and other AI assistants. We offer a free AEO score on synligdigital.no/en/, AEO Lite — FAQPage schema for one page (USD 92) — and a citation measurement (NOK 9,900) that tests whether AI assistants cite you by name and reports who gets cited instead."
       }
     },
     {
@@ -238,7 +204,7 @@
       "name": "How much does AEO cost at Synlig Digital?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Free AEO score on synligdigital.no/en/ (runs live, no email). AEO Lite — FAQPage schema for one page: USD 92, one-off, delivery in one business day. AEO Analysis: USD 460, written report and prioritized fix list. AEO Foundation: USD 1,400, full implementation including the Analysis. Continuous AEO: USD 460/month, monthly monitoring with cancel-anytime. Card payment in USD at Stripe checkout. Email hei@synligdigital.no for a NOK invoice instead."
+        "text": "Two packages. Free AEO score on synligdigital.no/en/ (runs live, no email). AEO Lite — FAQPage schema for one page: USD 92, one-off, delivery in one business day, card payment in USD at Stripe checkout. Citation measurement: NOK 9,900 excl. VAT, one-off — five buying-intent questions from your market, each run at least nine times over several days with byte-identical prompts, with a written answer on whether AI assistants cite you, the names of who gets cited instead, and the raw data so you can re-run it yourself. Invoiced with 14-day terms. Email hei@synligdigital.no to order it."
       }
     },
     {
@@ -374,7 +340,7 @@
     {
       "@type": "HowToStep",
       "position": 3,
-      "name": "AEO Foundation implementation",
+      "name": "Implementation",
       "text": "Implementation of schema.org markup tuned to your vertical: SoftwareApplication for SaaS (with alternative-to and integration lists); Product, Brand, and Organization for retail and e-commerce. FAQPage and Service for all. Business profile cleanup and relevant aggregator presence.",
       "url": "https://synligdigital.no/en/"
     },
@@ -610,7 +576,24 @@
     <li><strong>Monthly monitoring.</strong> Visibility tracking, content updates, and quarterly review of what shifted in the AI assistants you care about.</li>
   </ul>
 
+  <!-- 2026-08-12: the EN ladder was four cards; three of them sold tiers
+       discontinued 2026-08-08 through a live Stripe rail, so an international
+       buyer could pay by card for something we no longer deliver. Live EN
+       offer set is now exactly two, and this comment names only those two on
+       purpose: the next defect sweep greps source, and a correction that
+       quotes a retired price is itself a carrier of it.
+         Citation measurement  NOK 9,900  — invoiced, flagship, no card rail
+                                            (/api/lead-capture needs an email
+                                            a mailto click cannot supply, so
+                                            it is an anchor, not a submit)
+         AEO Lite              USD 92     — Stripe card rail -->
   <div class="services">
+    <div class="service-card service-card-primary">
+      <h3>Citation measurement</h3>
+      <div class="price">NOK 9,900</div>
+      <p>Five buying-intent questions from your market, each run at least nine times over several days with byte-identical prompts. You get a written answer on whether AI assistants cite you, the names of who gets cited instead, and the raw data so you can re-run it yourself. Invoiced, 14-day terms.</p>
+      <a class="service-card-cta" href="mailto:hei@synligdigital.no?subject=Citation%20measurement%20%E2%80%94%20en-home&amp;body=Hi%2C%0A%0AWe%20would%20like%20to%20request%20a%20citation%20measurement%20(NOK%209%2C900%20excl.%20VAT%2C%20one-off).%0A%0ACould%20you%20reply%20by%20email%20with%20five%20suggested%20questions%20from%20our%20market%20and%20when%20the%20measurement%20can%20run%3F%0A%0ABest%20regards%2C%0A">Request a citation measurement — NOK 9,900 →</a>
+    </div>
     <div class="service-card">
       <h3>AEO Lite</h3>
       <div class="price">USD 92</div>
@@ -621,42 +604,6 @@
         <input type="hidden" name="tier" value="lite">
         <input type="hidden" name="slug" value="en-home-lite">
         <button type="submit" class="service-card-cta">Order with card — $92 →</button>
-      </form>
-    </div>
-    <div class="service-card">
-      <h3>AEO Analysis</h3>
-      <div class="price">USD 460</div>
-      <p>Written report with score, gaps, and a prioritized fix list. One-off.</p>
-      <form method="POST" action="/api/lead-capture" class="service-card-form" aria-label="Order AEO Analysis">
-        <label for="lead-en-home-analysis">Enter your email to start →</label>
-        <input type="email" id="lead-en-home-analysis" name="email" class="service-card-input" placeholder="you@company.com" required autocomplete="email" maxlength="254">
-        <input type="hidden" name="tier" value="handlingsplan">
-        <input type="hidden" name="slug" value="en-home-analysis">
-        <button type="submit" class="service-card-cta service-card-cta-outline">Order with card — $460 →</button>
-      </form>
-    </div>
-    <div class="service-card">
-      <h3>AEO Foundation</h3>
-      <div class="price">USD 1,400</div>
-      <p>Full implementation. Schema, structure, profile, agent metadata, content adjustments. Includes the analysis.</p>
-      <form method="POST" action="/api/lead-capture" class="service-card-form" aria-label="Order AEO Foundation">
-        <label for="lead-en-home-foundation">Enter your email to start →</label>
-        <input type="email" id="lead-en-home-foundation" name="email" class="service-card-input" placeholder="you@company.com" required autocomplete="email" maxlength="254">
-        <input type="hidden" name="tier" value="fundament">
-        <input type="hidden" name="slug" value="en-home-foundation">
-        <button type="submit" class="service-card-cta service-card-cta-outline">Order with card — $1,400 →</button>
-      </form>
-    </div>
-    <div class="service-card">
-      <h3>Continuous AEO</h3>
-      <div class="price">USD 460 / month</div>
-      <p>Monthly monitoring, content updates, quarterly review. Cancel any time.</p>
-      <form method="POST" action="/api/lead-capture" class="service-card-form" aria-label="Start Continuous AEO subscription">
-        <label for="lead-en-home-continuous">Enter your email to start →</label>
-        <input type="email" id="lead-en-home-continuous" name="email" class="service-card-input" placeholder="you@company.com" required autocomplete="email" maxlength="254">
-        <input type="hidden" name="tier" value="lopende">
-        <input type="hidden" name="slug" value="en-home-continuous">
-        <button type="submit" class="service-card-cta service-card-cta-outline">Start subscription — $460 / month →</button>
       </form>
     </div>
     <p class="service-card-stripe-note">Stripe charges in USD on card. Norwegian-registered company — NOK invoice available on request: email <a href="mailto:hei@synligdigital.no?subject=Invoice%20request&amp;body=Hi%2C%20I%27d%20like%20an%20invoice%20for%3A%0A%0A%5Btier%5D%0A%0AThanks!">hei@synligdigital.no</a>.</p>
@@ -813,19 +760,26 @@ async function runAudit(ev) {
     // on checkout.session.expired. slug=audit-en-direct differentiates English-funnel
     // self-audit traffic from the Norwegian audit-direct slug in analytics.
     //
-    // Dual-tier (Lite primary + Analysis secondary) ship 2026-06-06: mirrors
-    // the Norwegian /audit dual-tier (report-html.ts) and the case-page
-    // dual-tier pattern. Lite (NOK 990) is the impulse-buy default — first
-    // submit button so Enter-key activates Lite. Analysis (NOK 4,900) is the
-    // step-up for buyers who want the full written write-up. tier is carried
-    // by button.name="tier" — no hidden tier input (would conflict).
+    // Dual-tier ship 2026-06-06: mirrors the Norwegian /audit dual-tier
+    // (report-html.ts) and the case-page dual-tier pattern. Lite (USD 92) is
+    // the impulse-buy default — first and ONLY submit button, so the Enter key
+    // activates Lite. tier is carried by button.name="tier" — no hidden tier
+    // input (would conflict).
+    //
+    // 2026-08-12: the secondary button sold a tier retired 2026-08-08. Its
+    // replacement is the citation measurement, and it is deliberately an
+    // <a href="mailto:"> rather than a second submit: that tier is invoiced
+    // and has no card rail, and /api/lead-capture requires an email address
+    // a mailto click cannot supply — routing it through the form would drop
+    // the order on the floor. Anchor sits outside the form for the same
+    // reason (a click must never submit).
     const formHtml =
-      '<form method="POST" action="/api/lead-capture" class="audit-result-form" aria-label="Order Synlig Lite or AEO Analysis">' +
+      '<form method="POST" action="/api/lead-capture" class="audit-result-form" aria-label="Order Synlig Lite">' +
         '<input type="email" name="email" class="audit-result-email" placeholder="you@company.com" required autocomplete="email" maxlength="254" aria-label="Your email">' +
         '<input type="hidden" name="slug" value="audit-en-direct">' +
         '<button type="submit" name="tier" value="lite" class="audit-result-cta">Order Synlig Lite — $92 →</button>' +
-        '<button type="submit" name="tier" value="handlingsplan" class="audit-result-cta audit-result-cta-secondary">Or full write-up — $460 →</button>' +
-      '</form>';
+      '</form>' +
+      '<a class="audit-result-cta audit-result-cta-secondary" href="mailto:hei@synligdigital.no?subject=Citation%20measurement%20%E2%80%94%20en-audit&amp;body=Hi%2C%0A%0AWe%20just%20ran%20the%20free%20check%20on%20our%20site%20and%20would%20like%20to%20request%20a%20citation%20measurement%20(NOK%209%2C900%20excl.%20VAT%2C%20one-off).%0A%0ABest%20regards%2C%0A">Or a citation measurement — NOK 9,900 →</a>';
     result.innerHTML =
       '<div class="audit-result-head">' +
         '<div class="audit-result-score">' + score + '<span class="audit-result-score-max">/100</span></div>' +
@@ -842,7 +796,7 @@ async function runAudit(ev) {
       '<p class="audit-result-issues-label">Top gaps we found</p>' +
       issuesHtml +
       '<p style="font-size:0.88rem;color:var(--gray-600);margin-bottom:12px">' +
-        'Synlig Lite ships a FAQPage JSON-LD block for one page (3–5 Q&amp;A pairs) by email within one business day — USD 92, one-off. The full Analysis tests what ChatGPT, Claude, and Google AI actually say about you when asked, and ships a prioritized fix list — USD 460, one-off. Card payment in USD at Stripe checkout.' +
+        'Synlig Lite ships a FAQPage JSON-LD block for one page (3–5 Q&amp;A pairs) by email within one business day — USD 92, one-off, card payment at Stripe checkout. A citation measurement runs five buying-intent questions from your market at least nine times each and reports whether AI assistants cite you by name, who gets cited instead, and the raw data — NOK 9,900 excl. VAT, one-off, invoiced.' +
       '</p>' +
       formHtml +
       '<p style="margin-top:10px"><button type="button" class="audit-result-redo" onclick="resetAudit()">Try another domain</button></p>';
@@ -930,18 +884,17 @@ function resetAudit() {
     function sanitize(s){ return String(s || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 120); }
     const slug = sanitize(params.get('slug') || '');
 
-    // Tier inference from slug substring. Mirrors the /priser tier-mapping
-    // (worker.ts ~4510) but uses English tier names + maps to the
-    // priser-* pakke values the /faktura dropdown expects.
-    // Outreach slugs (no tier substring) sell priser-analyse exclusively
-    // per /api/handlingsplan-checkout, matching the Norwegian alias.
+    // Tier inference from slug substring. Only tiers we can still deliver get
+    // a branch here: naming a retired tier in the banner would promise
+    // something we cannot sell, and pre-selecting its pakke would land the
+    // buyer on a dropdown with no such option (the dangling-alias failure).
+    // Legacy slugs fall through with an empty pakke — the ?slug= we forward is
+    // resolved by /faktura's own alias table, which is the single source of
+    // truth for what a retired slug now maps to.
     let tierLabel = '';
     let pakke = '';
-    if (slug.indexOf('foundation') !== -1 || slug.indexOf('fundament') !== -1) { tierLabel = 'AEO Foundation'; pakke = 'priser-fundament'; }
-    else if (slug.indexOf('continuous') !== -1 || slug.indexOf('lopende') !== -1) { tierLabel = 'Continuous AEO'; pakke = 'priser-lopende'; }
-    else if (slug.indexOf('lite') !== -1) { tierLabel = 'AEO Lite'; pakke = 'priser-lite'; }
-    else if (slug.indexOf('analysis') !== -1 || slug.indexOf('analyse') !== -1 || slug.indexOf('handlingsplan') !== -1) { tierLabel = 'AEO Analysis'; pakke = 'priser-analyse'; }
-    else if (slug.indexOf('outreach') !== -1) { tierLabel = 'AEO Analysis'; pakke = 'priser-analyse'; }
+    if (slug.indexOf('lite') !== -1) { tierLabel = 'AEO Lite'; pakke = 'priser-lite'; }
+    else if (slug.indexOf('citation') !== -1 || slug.indexOf('sitert') !== -1) { tierLabel = 'Citation measurement'; pakke = 'priser-sitert'; }
 
     if (tierLabel) {
       const title = document.getElementById('recovery-banner-title');

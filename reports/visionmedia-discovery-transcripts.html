@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Synlig × Visionmedia — AI-synlighet transkripsjoner (12 tester, 10 klienter)</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface2: #334155;
+    --border: #475569;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --indigo: #6366f1;
+    --indigo-light: #818cf8;
+    --green: #22c55e;
+    --yellow: #f59e0b;
+    --orange: #fb923c;
+    --red: #ef4444;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+  a { color: var(--indigo-light); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 24px 16px; }
+  .header {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 0;
+    margin-bottom: 32px;
+  }
+  .header-inner { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+  .logo { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .logo span { color: var(--indigo-light); font-weight: 600; }
+  h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { color: var(--text-muted); font-size: 14px; }
+  .meta-row { display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap; }
+  .meta-item { font-size: 13px; color: var(--text-muted); }
+  .meta-item strong { color: var(--text); }
+
+  .lede {
+    background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
+    border: 1px solid var(--indigo);
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 24px;
+  }
+  .lede h2 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .lede p { font-size: 14px; color: var(--text); line-height: 1.55; }
+  .lede p + p { margin-top: 10px; }
+  .lede strong { color: #fef3c7; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .card-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+  .card-title { font-size: 16px; font-weight: 700; }
+  .chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .chip-win { background: rgba(34,197,94,.12); color: #84cc16; border-color: rgba(34,197,94,.35); }
+  .chip-mid { background: rgba(245,158,11,.12); color: var(--yellow); border-color: rgba(245,158,11,.35); }
+  .chip-miss { background: rgba(239,68,68,.12); color: #f87171; border-color: rgba(239,68,68,.35); }
+
+  .query {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+  .query strong { color: var(--text); }
+  .query em { color: var(--indigo-light); font-style: italic; }
+
+  blockquote {
+    background: var(--surface2);
+    border-left: 3px solid var(--indigo);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 8px 0 14px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  blockquote strong { color: #fef3c7; }
+  blockquote em { color: var(--text-muted); }
+
+  .verdict {
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 8px 0 6px;
+  }
+  .verdict-mark { font-weight: 800; font-size: 15px; }
+  .v-miss { color: #f87171; }
+  .v-mid { color: var(--yellow); }
+  .v-win { color: #22c55e; }
+
+  .why {
+    background: rgba(99,102,241,.06);
+    border: 1px dashed rgba(99,102,241,.35);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+  .why strong { color: var(--text); }
+
+  table.summary {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  table.summary th, table.summary td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+  table.summary th {
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  table.summary tr:last-child td { border-bottom: 0; }
+  table.summary .count { font-weight: 700; font-size: 16px; }
+
+  .insight {
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 12px 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .insight-title { font-weight: 700; color: var(--indigo-light); font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+
+  ul.bullet { padding-left: 18px; font-size: 14px; }
+  ul.bullet li { margin-bottom: 6px; }
+
+  .toc {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 18px;
+    font-size: 13px;
+    margin-top: 8px;
+  }
+  .toc a { color: var(--text-muted); display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px dotted var(--border); }
+  .toc a:hover { color: var(--indigo-light); }
+  .toc .toc-mark { font-weight: 700; }
+
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 0 8px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+  .footer strong { color: var(--text); }
+  .footer-note { font-size: 12px; margin-top: 8px; }
+
+  @media (max-width: 600px) {
+    .toc { grid-template-columns: 1fr; }
+    .meta-row { flex-direction: column; gap: 8px; }
+  }
+
+  @media print {
+    body { background: white; color: black; font-size: 11pt; }
+    .header { background: white; border-bottom: 2px solid #333; padding: 16px 0; color: black; }
+    .logo { color: #555; }
+    .logo span { color: #333; }
+    .subtitle, .meta-item, .text-muted { color: #555; }
+    .card, .lede, .insight { background: white; border-color: #ccc; color: black; }
+    .lede { background: #f4f4ff; }
+    .lede strong { color: #d97706; }
+    blockquote { background: #f8f9fc; border-left-color: #4338ca; color: black; }
+    blockquote strong { color: #d97706; }
+    a { color: #1d4ed8; }
+    .chip { background: white; border-color: #999; }
+    .why { background: #f8f9fc; border-color: #aaa; color: #555; }
+    .footer { color: #555; }
+  }
+</style>
+</head>
+<body>
+<img src="https://synligdigital.no/track?h=visionmedia-discovery-transcripts" width="1" height="1" alt="" style="position:absolute;width:1px;height:1px;opacity:0;" />
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">Forberedt av <span>Synlig Digital</span> — supplement til kaffe-samtale med Visionmedia</div>
+    <h1>AI-synlighet: 12 transkripsjoner, 10 klienter</h1>
+    <div class="subtitle">Fullstendige svar fra spørringene oppsummert i pilot-briefen</div>
+    <div class="meta-row">
+      <div class="meta-item">🗓️ <strong>Kjørt 30. mai 2026</strong></div>
+      <div class="meta-item">👤 <strong>Håkon Åmdal, Synlig Digital</strong></div>
+      <div class="meta-item">🔬 <strong>Metode:</strong> primær AI-svar-flate, norsk/engelsk språkblanding</div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="lede">
+    <h2>Hvorfor dette dokumentet</h2>
+    <p>Pilot-briefen (<a href="https://synligdigital.no/r/visionmedia-pilot">/r/visionmedia-pilot</a>) oppsummerer hvilke klienter som vinner, blir nevnt eller er usynlige når AI svarer en kjøper. Det er tabellen. <strong>Dette dokumentet er kvitteringen</strong> — alle 12 spørringer med fullstendige svar, sitatene som ligger bak verdiktene, og hva hver case faktisk innebærer for klienten.</p>
+    <p>Bruk det som: (a) backup-data på selve kaffe-møtet, (b) noe Visionmedia kan videresende til Dynamic Brands eller andre klienter som ber om bevis, (c) referanse-mønster for «slik måler vi AI-synlighet» når dere skal forklare det selv.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📑 Innhold</div>
+      <div class="chip">12 tester · 10 klienter</div>
+    </div>
+    <div class="toc">
+      <a href="#t1"><span>Test 1 — Northug i sin kategori</span><span class="toc-mark v-miss">✕</span></a>
+      <a href="#t2"><span>Test 2 — Northug ved navn</span><span class="toc-mark v-mid">⚠</span></a>
+      <a href="#t3"><span>Test 3 — Tufte bred kategori</span><span class="toc-mark v-miss">✕</span></a>
+      <a href="#t4"><span>Test 4 — Tufte smalere segment</span><span class="toc-mark v-mid">⚠</span></a>
+      <a href="#t5"><span>Test 5 — Snekkern i sin kategori</span><span class="toc-mark v-mid">⚠</span></a>
+      <a href="#t6"><span>Test 6 — Samskip i sin kategori</span><span class="toc-mark v-mid">⚠</span></a>
+      <a href="#t7"><span>Test 7 — Vi i Villa i sin kategori</span><span class="toc-mark v-miss">✕</span></a>
+      <a href="#t8"><span>Test 8 — Sikkerhetsledelse</span><span class="toc-mark v-mid">⚠</span></a>
+      <a href="#t9"><span>Test 9 — Kärcher globalt</span><span class="toc-mark v-win">✅</span></a>
+      <a href="#t10"><span>Test 10 — NAF i sin kategori</span><span class="toc-mark v-win">✅</span></a>
+      <a href="#t11"><span>Test 11 — Porsche Norge</span><span class="toc-mark v-miss">✕</span></a>
+      <a href="#t12"><span>Test 12 — Street Art Norge</span><span class="toc-mark v-miss">✕</span></a>
+    </div>
+  </div>
+
+  <div class="card" id="t1">
+    <div class="card-header">
+      <div class="card-title">Test 1 — Northug i sin egen kategori</div>
+      <div class="chip chip-miss">✕ Ikke nevnt</div>
+    </div>
+    <div class="query"><strong>Spørsmål:</strong> <em>«best Norwegian cross country ski clothing brand»</em></div>
+    <blockquote>
+      AI nevnte: Dæhlie (named after Norwegian cross-country legend Bjørn Dæhlie) · Kari Traa · Odlo · Aclima · Helly Hansen · Rottefella · Amundsen Sports · Bergans
+    </blockquote>
+    <div class="verdict"><span class="verdict-mark v-miss">✕ Northug: ikke nevnt.</span> Petter Northugs eget brand er usynlig i sin egen disiplin når AI svarer en kjøper.</div>
+    <div class="why"><strong>Hvorfor det betyr noe:</strong> Når AEO-scoren sier 20/F, er dette den faktiske konsekvensen — en 4× OL-medaljørs brand kommer ikke engang med i kategoriens svar. Scoren kvantifiserer det tekniske gapet; transkriptet kvantifiserer salgs-tapet.</div>
+  </div>
+
+  <div class="card" id="t2">
+    <div class="card-header">
+      <div class="card-title">Test 2 — Northug ved direkte navn</div>
+      <div class="chip chip-mid">⚠ Nevnt, men funnel lekker</div>
+    </div>
+    <div class="query"><strong>Spørsmål:</strong> <em>«Northug ski sportswear brand collection price»</em></div>
+    <blockquote>
+      «Northug is the Nordic skiing accessories brand of Norwegian Petter Northug, a four-time Olympic medallist and double Crystal globe winner. The brand focuses on Nordic ski glasses and gloves... Unfortunately, the search results don't provide specific pricing information for Northug products. While one source notes they won't be cheap, speculating about the exact price is difficult. <strong>For current pricing details, you may want to visit retailers like Glisshop or check the official Northug website directly.</strong>»
+    </blockquote>
+    <div class="verdict"><span class="verdict-mark v-mid">⚠ Northug: nevnt, men funnel-en lekker.</span> AI omdirigerer til tredjepartsforhandler (Glisshop) i stedet for brand-sitet. Kjøperens hensikt fanges av mellomledd.</div>
+    <div class="why"><strong>Hvorfor det betyr noe:</strong> Selv når en kjøper søker etter Northug ved navn, klarer ikke AI-svaret å levere brand-direkte prising — det ruter oppmerksomhet bort til en grossist. Dette er et full-funnel discovery-problem, ikke bare et kategori-discovery-problem.</div>
+  </div>
+
+  <div class="card" id="t3">
+    <div class="card-header">
+      <div class="card-title">Test 3 — Tufte i bred kategori</div>
+      <div class="chip chip-miss">✕ Ikke nevnt</div>
+    </div>
+    <div class="query"><strong>Spørsmål:</strong> <em>«best Norwegian merino wool brands hiking outdoor 2026»</em></div>
+    <blockquote>
+      AI nevnte: Devold (founded 1853) · Janus · Aclima · Kari Traa (women's) · Swix · Helly Hansen · Stormberg (budget) · Dale of Norway · Fjällräven (Swedish, cross-border)
+    </blockquote>
+    <div class="verdict"><span class="verdict-mark v-miss">✕ Tufte Wear: ikke nevnt.</span> Til tross for T3-infrastruktur (Shopify UCP + MCP aktiv), klarer Tufte ikke å komme med i AIs kategori-svar.</div>
+    <div class="why"><strong>Hvorfor det betyr noe:</strong> Dette er discovery-gap-påstanden gjort konkret. Tufte har allerede agent-betalings-infrastruktur (et skritt foran de fleste norske aktører) — men det betyr lite hvis AI aldri nevner dem. Pitchen er ikke «vi setter opp <code>llms.txt</code>», den er «vi lukker discovery-gapet så agent-laget dere allerede har bygget faktisk får trafikk.»</div>
+  </div>
+
+  <div class="card" id="t4">
+    <div class="card-header">
+      <div class="card-title">Test 4 — Tufte i smalere segment</div>
+      <div class="chip chip-mid">⚠ Nevnt, generisk</div>
+    </div>
+    <div class="query"><strong>Spørsmål:</strong> <em>«top Norwegian wool clothing brands base layers women»</em></div>
+    <blockquote>
+      AI nevnte: Kari Traa · Devold · <strong>Tufte Wear</strong> · Brynje of Norway
+      <br><br>
+      <em>Tufte-beskrivelse fra AI:</em> «Tufte Wear - A merino wool specialist creating sustainable base layers and outdoor clothing using Norwegian wool heritage and modern technical design.»
+    </blockquote>
+    <div class="verdict"><span class="verdict-mark v-mid">⚠ Tufte: nevnt på 3. plass av 4 — generisk beskrivelse uten differensiering.</span> Til sammenlikning fikk Kari Traa 80+ ord om spesifikke produkter («Rose» base layer), grunnlegger-historie, etc.</div>
+    <div class="why"><strong>Hvorfor det betyr noe:</strong> Synlig i 1 av 3 høy-intensjons-spørringer, i sist-nevnte posisjon med generisk copy. AEO-fix-prioritet: brand-schema med Founder/Award-entiteter, product-schema med navngitte SKUer, signatur-produkt-FAQ — konverterer «også nevnt» til «først nevnt med substans».</div>
+  </div>
+
+  <div class="card" id="t5">
+    <div class="card-header">
+      <div class="card-title">Test 5 — Snekkern i sin egen kategori</div>
+      <div class="chip chip-mid">⚠ Nevnt, men konkurrenten eier svaret</div>
+    </div>
+    <div class="query"><strong>Spørsmål:</strong> <em>«Snekkern Norge snekker tjenester pris»</em></div>
+    <blockquote>
+      AI svarte ~250 ord, strukturert som:<br>
+      • «Carpenter Prices in Norway» — generisk norsk snekkerpris<br>
+      • «Prices by Region» — Oslo, Bergen, Stavanger, Trondheim<br>
+      • «Common Services and Prices» — bad, kjøkken, etc.<br>
+      • <strong>«About Snekker'n»</strong> — nøyaktig én avsnitt på bunnen: «Snekker'n is a chain of specialty stores across Norway that sells products for houses and cabins, with a focus on expertise and service level. They offer a price calculator where you can get a quick, non-binding estimate for your project.»
+      <br><br>
+      Mest siterte kilde gjennomgående: <strong>Snekkerguiden.no</strong> — en konkurrent-informasjonsside som rangerer Snekkern sammen med andre.
+    </blockquote>
+    <div class="verdict"><span class="verdict-mark v-mid">⚠ Snekkern: nevnt, men attentionen går til en konkurrent.</span> Kjøperen forlater AI-svaret med kunnskap om norske snekkerpriser generelt — ikke om Snekkern spesifikt.</div>
+    <div class="why"><strong>Hvorfor det betyr noe:</strong> Snekkern har høyest AEO-score i Visionmedias portefølje (68/C, øverst) — og selv med det blir de overrangert i sin egen brand-navn-spørring. Dette er en content-depth-fix: Snekkern trenger den kanoniske svar-siden som blir AIs primær-sitering, ellers gir også høy-score-brands fra seg svaret til informasjons-aggregatorer.</div>
+  </div>
+
+  <div class="card" id="t6">
+    <div class="card-header">
+      <div class="card-title">Test 6 — Samskip i sin kategori</div>
+      <div class="chip chip-mid">⚠ Nevnt som postscript</div>
+    </div>
+    <div class="query"><strong>Spørsmål:</strong> <em>«beste shipping containerselskap Nord-Europa Samskip Maersk DFDS 2026»</em></div>
+    <blockquote>
+      «Copenhagen-based Maersk operates 4,630,676 TEU and covers multiple brands including Maersk A/S, Hamburg Süd, Aliança, and Sealand across Asia, Americas, and Europe & Med, with a 14.2% market share. MSC, based in Geneva, tops the global and European charts with 6,800,658 TEU. <strong>Rotterdam's Samskip operates around 40,000 TEU and focuses on multimodal services in Northern Europe, prioritizing sustainability.</strong>»
+    </blockquote>
+    <div class="verdict"><span class="verdict-mark v-mid">⚠ Samskip: nevnt, men som postscript.</span> Maersk + MSC eier ~95% av svar-oppmerksomheten. Samskips posisjonering («multimodal Nord-Europa, bærekraft») er korrekt, men under-vektet relativt til deres faktiske kategori-lederskap innen short-sea + multimodal Europa.</div>
+    <div class="why"><strong>Hvorfor det betyr noe:</strong> Samskip har allerede T2-agent-infrastruktur (Yoast <code>llms.txt</code>). AEO-scoren (61/C) plasserer dem mid-tier. Men på en kategori-spørring behandles de som «opererer også» heller enn «leder på multimodal». Fixen er posisjonerings-innhold: AI trenger eksplisitt «Samskip leder X»-copy med siteringer, ellers defaulter den til TEU-volum-sortering hvor Maersk alltid vinner.</div>
+  </div>
+
+  <div class="card" id="t7">
+    <div class="card-header">
+      <div class="card-title">Test 7 — Vi i Villa i sin egen kategori</div>
+      <div class="chip chip-miss">✕ Ikke nevnt</div>
+    </div>
+    <div class="query"><strong>Spørsmål:</strong> <em>«beste nettsteder hytter hjem renovering Norge boligmagasin»</em></div>
+    <blockquote>
+      AI nevnte: BoligPluss · InteriørMagasinet · Boligmappa · Mestergruppen · Hyttemagasinet · «Gjør det selv» · Boligmesse
+    </blockquote>
+    <div class="verdict"><span class="verdict-mark v-miss">✕ Vi i Villa: ikke nevnt.</span> Norges største bolig- og hytte-innholdsforlag, med tiår av merkevarekapital, kommer ikke med i AIs liste når en kjøper spør om de beste renoverings-sitene på norsk. BoligPluss (nyere, mindre publisher) nevnes først.</div>
+    <div class="why"><strong>Hvorfor det betyr noe:</strong> Vi i Villa har 61/C AEO-score (mid-tier), men er usynlig i sin egen publisher-kategori. Innholds-publishers er avhengige av at AI siterer dem som autoriteten — når AI siterer BoligPluss i stedet, taper Vi i Villa long-tail-discovery permanent. 73-av-75-manglende-alt-tekst er nå kontekstualisert: manglende alt-tekst = AI kan ikke ekstrahere bildekontekst = AI kan ikke sitere artikler = Vi i Villa fraværende fra publisher-svar. Fix-en har sammensatt oppside.</div>
+  </div>
+
+  <div class="card" id="t8">
+    <div class="card-header">
+      <div class="card-title">Test 8 — Sikkerhetsledelse i sin kategori</div>
+      <div class="chip chip-mid">⚠ Nevnt #2/4</div>
+    </div>
+    <div class="query"><strong>Spørsmål:</strong> <em>«HMS rådgivning bedrifter Norge sikkerhetsledelse risikovurdering byrå»</em></div>
+    <blockquote>
+      AI nevnte (rangering):<br>
+      1. <strong>Kiwa Norge</strong> (leder) — «frameworks, guidelines and tools for risk management»<br>
+      2. <strong>Sikkerhetsledelse AS</strong> — «total supplier of solutions within security, emergency preparedness and crisis management»<br>
+      3. Mime Rådgivning AS<br>
+      4. Avonova
+    </blockquote>
+    <div class="verdict"><span class="verdict-mark v-mid">⚠ Sikkerhetsledelse: nevnt på 2.-plass av 4.</span> Beskrivelsen er korrekt — men Kiwa får førstemention med sterkere innramming.</div>
+    <div class="why"><strong>Hvorfor det betyr noe:</strong> Sikkerhetsledelse er den 2.-nevnte i sin egen brand-navn-spørring (spørsmålet inneholder bokstavelig talt ordet «sikkerhetsledelse»). De burde være #1 for det. AEO-fixen: brand-schema med eksplisitt «grunnlagt år + spesialisering», FAQPage med HMS-vokabular-spørsmål, sørg for at Sikkerhetsledelse over-rangerer Kiwa for branded queries. AEO-score 56/C er konsistent med dette — de eksisterer i AI-svar, men har avgitt kategori-lederskap til en mer aggressivt-optimalisert konkurrent.</div>
+  </div>
+
+  <div class="card" id="t9">
+    <div class="card-header">
+      <div class="card-title">Test 9 — Kärcher i global kategori</div>
+      <div class="chip chip-win">✅ Vinner globalt</div>
+    </div>
+    <div class="query"><strong>Spørsmål:</strong> <em>«best industrial cleaning equipment brand Karcher Nilfisk pressure washer»</em></div>
+    <blockquote>
+      «Kärcher is a German company that has sold over 50 million pressure washers worldwide over the past 60 years and established itself as <strong>the world leader in high-quality cleaning systems</strong>. Nilfisk supplies professional cleaning equipment to commercial, industrial and consumer markets... <strong>For most home buyers, Kärcher is recommended.</strong>»
+    </blockquote>
+    <div class="verdict"><span class="verdict-mark v-win">✅ Kärcher: vinner.</span> Featured som verdensleder og anbefalt valg.</div>
+    <div class="why"><strong>Hvorfor det betyr noe (caveat):</strong> Kärcher vinner globalt — men AIs siteringer er UK/US-forumer (Pistonheads, Detailing World, Which?). Ingen norske kilder. For karcher.com/no spesifikt betyr dette at norske kjøpere som søker norske spørringer (f.eks. «beste høytrykksvasker») sannsynligvis får ikke-norsk sammenligningsinnhold, ikke norsk-pris eller norsk-tilgjengelighet-innhold fra karcher.com. 49/D-scoren reflekterer dette norsk-kontekst-gapet. Fix-prioritet: norsk innhold med norske brand-siteringer (Elkjøp, Power, Coop OBS BYGG) så AI siterer Kärchers norske side for norske spørringer.</div>
+  </div>
+
+  <div class="card" id="t10">
+    <div class="card-header">
+      <div class="card-title">Test 10 — NAF i sin kategori</div>
+      <div class="chip chip-win">✅ Vinner</div>
+    </div>
+    <div class="query"><strong>Spørsmål:</strong> <em>«beste medlemskap bilforening Norge 2026 NAF Falck»</em></div>
+    <blockquote>
+      «<strong>NAF, eller Norges Automobil-Forbund, er Norges største medlemsorganisasjon for bilister</strong>, grunnlagt for nesten 100 år siden. Som NAF-medlem får du 24/7 veihjelp i Europa, advokathjelp, over 60 medlemsfordeler og objektive biltester. For de under 24 år tilbyr NAF et rimelig medlemskap...»
+    </blockquote>
+    <div class="verdict"><span class="verdict-mark v-win">✅ NAF: vinner svaret med substans.</span> Featured som leder med konkrete fordeler og segmentering (under-24-medlemskap). Falck nevnes kun som konkurrent — NAF får substansen.</div>
+    <div class="why"><strong>Hvorfor det betyr noe (den viktigste klient-innsikten i hele skannet):</strong> NAF har 55/C AEO-score — midt i Visionmedias portefølje. Likevel vinner de en reell kjøper-spørring desisivt, med substans, på sitt eget språk. Dette bryter «AEO-score = AI-synlighet»-antakelsen. Scoren måler teknisk fundament; query-posisjon måler hva AI faktisk sier. NAF vinner til tross for det tekniske gapet på grunn av brand-dybde + alder + norsk-språk-innholdstetthet. <strong>Pitch-implikasjon:</strong> AEO er ikke én-dimensjonal. Noen klienter har sterk query-posisjon til tross for mid-score (NAF). Noen har svak query-posisjon til tross for mid-score (Vi i Villa). Den diagnostiske-per-query-modellen er mer ærlig enn score-alene, og det er metodologien Synlig bringer.</div>
+  </div>
+
+  <div class="card" id="t11">
+    <div class="card-header">
+      <div class="card-title">Test 11 — Porsche Norge i sin kategori</div>
+      <div class="chip chip-miss">✕ Ikke navngitt</div>
+    </div>
+    <div class="query"><strong>Spørsmål:</strong> <em>«beste norske bilforhandlere Porsche sportsbil 2026»</em></div>
+    <blockquote>
+      AI nevnte forhandlere: Møller Bil · Autozentrum Holding · Autostrada · IT-Sentralen · Porsche Center Kristiansand · Bilweb
+    </blockquote>
+    <div class="verdict"><span class="verdict-mark v-miss">✕ Porsche Norge (porsche.no): ikke navngitt.</span> AI siterer forhandler-brands og foreldregruppen Møller Bil, men Porsche Norge-korporatesitet vises ikke. Kjøper-attention rutes til forhandlere (hvor konvertering skjer for dem) — men Porsche Norges eget brand-innholdslag er usynlig.</div>
+    <div class="why"><strong>Hvorfor det betyr noe:</strong> Porsche Norge har 36/E AEO-score — allerede svak. Discovery-gapet er nå konkret: selv når en kjøper søker etter norske Porsche-forhandlere, vises ikke sentral-porsche.no. Korporatesitet legger ingen AI-synlig verdi over forhandler-økosystemet. To fixer: (a) Porsche.no burde rangere for «Porsche Norge» som det kanoniske, (b) brand-historier som AI kan sitere (arv, modellhistorikk, norsk-marked-kontekst) så korporatesitet blir en del av svaret heller enn fraværende fra det.</div>
+  </div>
+
+  <div class="card" id="t12">
+    <div class="card-header">
+      <div class="card-title">Test 12 — Street Art Norge i sin kategori</div>
+      <div class="chip chip-miss">✕ Ikke navngitt</div>
+    </div>
+    <div class="query"><strong>Spørsmål:</strong> <em>«best Norwegian street art murals public art studios»</em></div>
+    <blockquote>
+      AI nevnte sites/lokasjoner: Tøyen &amp; Grünerløkka (Oslo) · NUART Festival (Stavanger) · Måløy · Utsira island · Lofoten (Dolk + Pøbel) · Gategalleriet (Bergen)
+    </blockquote>
+    <div class="verdict"><span class="verdict-mark v-miss">✕ Street Art Norge (streetart.no): ikke navngitt.</span> AI siterer destinasjoner og artister, men ikke streetart.no-domenet. Turist-guider (blocal-travel, justinpluslauren, scandinaviastandard) eier svaret — streetart.no er ikke en del av samtalen.</div>
+    <div class="why"><strong>Hvorfor det betyr noe:</strong> Street Art Norge har 17/F AEO-score — den laveste i Visionmedias portefølje. Discovery-gapet er totalt: når noen søker på engelsk (deres største turistsegment) etter norsk gatekunst, er domenet usynlig. Dette er den enkleste «transformasjons-casen» — selv basis AEO-fundament-arbeid (schema, <code>llms.txt</code>, engelsk innhold med destinasjons-kryss-linker) ville 5-10× deres AI-synlighet fra en ~null base.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📊 Oppsummering — 12 spørringer, 10 klienter</div>
+    </div>
+    <table class="summary">
+      <thead>
+        <tr>
+          <th>Utfall</th>
+          <th>Antall</th>
+          <th>Klienter</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="verdict-mark v-win">✅ Vinner</span> (featured/leder)</td><td class="count">2</td><td>NAF, Kärcher (global)</td></tr>
+        <tr><td><span class="verdict-mark v-mid">⚠ Nevnt</span> (mid-rank / svak posisjon)</td><td class="count">5</td><td>Tufte (smal), Snekkern, Northug (direkte), Samskip, Sikkerhetsledelse</td></tr>
+        <tr><td><span class="verdict-mark v-miss">✕ Usynlig</span> (ikke navngitt)</td><td class="count">5</td><td>Northug (kategori), Tufte (bred), Vi i Villa, Porsche Norge, Street Art Norge</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px;color:var(--text-muted);margin-top:10px">Northug og Tufte telt på tvers av flere spørringer. <strong>7 av 10 klienter har svak eller fraværende AI-tilstedeværelse på minst én kjerne-kjøperspørring.</strong></p>
+
+    <div class="insight">
+      <div class="insight-title">Innsikt 1 — Score ≠ AI-posisjon</div>
+      NAF (55/C) vinner sin kategori. Vi i Villa (61/C) er usynlig i sin. AEO-scoren er nødvendig, men ikke tilstrekkelig — query-posisjon er det reelle målet. Synligs verdi er ikke «fix scoren din»; det er «sørg for at AI sier navnet ditt i riktig svar». Det er en mer forsvarbar tjeneste enn en teknisk audit.
+    </div>
+
+    <div class="insight">
+      <div class="insight-title">Innsikt 2 — To pitch-former i porteføljen</div>
+      <strong>Northug (20/F)</strong> er teknisk-gap-historien (Vue SPA uten SSR, <code>Disallow: /</code>, kanonisk peker bort fra eget domene). <strong>Vi i Villa (61/C, usynlig)</strong> er strategi-gap-historien — en publisher med mid-tier teknisk fundament som likevel taper publisher-kategori-svaret. To distinkte pitch-former, to ulike pilot-konverteringer. Hvis Dynamic Brands ikke er aktiv klient, er Vi i Villa det nest-sterkeste startpunktet.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">🔬 Metode &amp; replikerbarhet</div>
+    </div>
+    <ul class="bullet">
+      <li><strong>Søkegrensesnitt:</strong> primær AI-svar-flate (svar-stil med siteringer, ingen leverandør-spesifikk binding) — speiler det norske kjøpere ser når de spør ChatGPT, Perplexity, Brave AI eller Google AI Overviews om kategori-brands.</li>
+      <li><strong>Språkblanding:</strong> norsk + engelsk for å fange begge kjøper-språk-mønstre.</li>
+      <li><strong>Når kjørt:</strong> Test 1–5 ble kjørt 2026-05-30 ~06:35 UTC. Test 6–12 kjørt samme dag ~13:40 UTC.</li>
+      <li><strong>Re-kjøring:</strong> alle spørringer kan re-kjøres før 3. juni-møtet for å bekrefte at resultatet ikke har skiftet. Hvis et resultat skifter materielt (f.eks. NAF mister sin posisjon), oppdaterer vi pilot-briefen før møtet.</li>
+      <li><strong>Repeterbart:</strong> samme metode kan gjenbrukes for enhver fremtidig Visionmedia-pitch — dette er nå en repeterbar discovery-gap-prosedyre.</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <strong>Håkon Åmdal</strong> · Synlig Digital · <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> · <a href="https://synligdigital.no">synligdigital.no</a>
+    <div class="footer-note">Transkripsjoner generert 2026-05-30 · Supplement til pilot-briefen for kaffe-samtale 3. juni 2026.</div>
+  </div>
+</div>
+</body>
+</html>

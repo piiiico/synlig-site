@@ -1,13 +1,13 @@
 # Synlig Digital — Selskapsoversikt
 
-> Norsk AEO-byrå spesialisert på AI-synlighet og Answer Engine Optimization for norske SMB-ar.
+> Norsk AEO-byrå som måler om AI-assistentar siterer merkevaren din — og namngjev kven dei siterer i staden.
 
 **Selskap:** Synlig Digital  
 **Adresse:** 4006 Stavanger, Rogaland, Noreg  
 **E-post:** hei@synligdigital.no  
 **Nettstad:** https://synligdigital.no  
 **Dagleg leiar:** Håkon Åmdal  
-**Sist oppdatert:** 2026-06-06
+**Sist oppdatert:** 2026-08-12
 
 ---
 
@@ -21,16 +21,16 @@ AEO er optimalisering for AI-genererte svar — ikkje berre søkemotorrangeringa
 
 ## Tenester
 
-Fire faste pakker for AEO og digital markedsføring. Alle prisar er eks. MVA.
+To pakkar. Alle prisar er eks. MVA.
 
 | Teneste | Pris | Type | Levering |
 |---------|------|------|----------|
+| Sitert-måling (måler om AI siterer merkevaren din) | 9 900 NOK | Eingong | Skriftleg rapport på e-post |
 | Synlig Lite (FAQPage for éi side) | 990 NOK | Eingong | 1 virkedag |
-| Analyse (full AEO-audit + handlingsplan) | 4 900 NOK | Eingong | 5 virkedagar |
-| Fundament (Analyse + full implementering) | 14 900 NOK | Eingong | 2–4 veker |
-| Løpende overvåking | 4 900 NOK/mnd | Abonnement | Månedleg rapport |
 
-Synlig Lite er inngangspunktet for bedrifter som vil teste AEO-effekten på éi kritisk side. Analyse og Fundament er hovudleveransane våre. Løpande overvåking forutset at fundamentet er på plass.
+Sitert-måling er hovudleveransen: fem kjøpsnære spørsmål, minst ni kjøringar over fleire dagar med byte-identiske prompt, og namn på kven AI siterer i staden. Faktura med 14 dagars frist, ingen møte. Synlig Lite er det minste steget — ho endrar éi side slik at ho er lettare å sitere, men måler ingenting.
+
+Metode og grenser: https://synligdigital.no/metode
 
 Full prisinformasjon: https://synligdigital.no/priser.md
 

@@ -1,66 +1,55 @@
-# AEO Implementation for B2B SaaS
+# AI Citation Measurement (Sitert-måling)
 
-**Purpose:** Full AEO implementation for Norwegian B2B SaaS companies, so their
-products get cited when buyers ask ChatGPT, Claude, Perplexity, or Google AI
-Overview for software recommendations.
+**Purpose:** Measure whether AI assistants — ChatGPT, Claude, Perplexity, Google
+AI Overview — cite a Norwegian brand when buyers ask about its market, and name
+who gets cited instead.
 
 **Provider:** Synlig Digital (https://synligdigital.no)
-**Market:** Norwegian B2B SaaS — accounting, HR, healthcare, fintech,
-marketing, vertical SaaS
-**Order form:** https://synligdigital.no/faktura
-**Invoice:** Norwegian EHF, within 24h of order, no payment up front
+**Method page:** https://synligdigital.no/metode
+**Contact:** hei@synligdigital.no
 
 ## Packages
 
+Two packages. Prices ex. VAT.
+
 | Package | Price | Type | What you get |
 |---|---|---|---|
-| Synlig Lite | 990 NOK | One-time | FAQPage JSON-LD for one page you choose (3–5 Q&A pairs), delivered by email within 1 business day. Impulse-buy entry point — test AEO impact on one critical page before committing to a full engagement. |
-| Analyse (AI-synlighetsanalyse) | 4 900 NOK | One-time | Detailed audit, 10–15-page PDF, prioritized recommendations |
-| Fundament (AI-synlighetsfundament) | 14 900 NOK | One-time | Audit + implementation: SoftwareApplication schema, alternative-to + integration pages, AI-optimized content for top 5 buyer questions |
-| Løpende overvåking | 4 900 NOK/mo | Subscription (3-mo min) | Monthly AEO scan, content updates, ranking tracking across ChatGPT/Claude/Perplexity |
+| Sitert-måling | 9 900 NOK | One-time | Five buying-intent questions from your market, at least nine runs over several days, byte-identical prompts. Written report with raw data by email, naming who is cited when you are not. Invoice with 14-day terms, no meetings, no lock-in. |
+| Synlig Lite | 990 NOK | One-time | FAQPage JSON-LD for one page you choose (3–5 Q&A pairs), delivered by email within 1 business day. Changes one page so it is easier to cite — it measures nothing. |
+
+Measurement and change are different things, and we sell them separately.
+
+## What we do not claim
+
+A measurement is a measurement. We do not promise a ranking improvement, we do
+not bundle an action plan into the price, and we do not claim a single run tells
+you anything — that is why the floor is nine runs over several days with
+byte-identical prompts. The limits are written out on
+https://synligdigital.no/metode
 
 ## Order paths
 
-### Web form (Stripe checkout)
+### Citation measurement (email)
+Send email to `hei@synligdigital.no` with subject `Sitert-måling`, stating:
+- Company
+- Market/category you want measured in
+- Competitors you are compared against
+
+Reply within 4h on business days. Invoice, 14-day terms.
+
+### Synlig Lite (web form)
 ```
-GET https://synligdigital.no/faktura?slug=<tier-key>
+GET https://synligdigital.no/faktura?slug=priser-lite
 ```
 
-Slugs:
-- `priser-lite` (Synlig Lite, 990 NOK — fastest path, 1 business day)
-- `ai-synlighetsanalyse`
-- `ai-synlighetsfundament` (recommended default)
-- `lopende-overvaking`
-- `agent-card-saas-implementation` (preselects fundament with SaaS-specific scope)
+## Free first step
 
-### Direct contact
-Email hei@synligdigital.no with company name + URL. Reply within 4h on business days.
-
-## What an implementation includes
-
-1. **Schema.org markup** — SoftwareApplication, AggregateRating, Offer, FAQPage
-2. **Alternative-to pages** — One per major competitor (e.g., "alternative to
-   Visma", "alternative to PowerOffice")
-3. **Integration pages** — One per top 5 integrations
-4. **Buyer-question content** — 5–10 long-form answers to the questions buyers
-   actually ask AI assistants
-5. **llms.txt + agent-card.json** — Machine-readable company overview
-6. **Verification** — Re-audit after deploy, score uplift report
-
-## Typical results
-
-- Audit → fundament uplift: typically 25–40 points on the 0–100 score
-- Time to first ChatGPT citation: 2–6 weeks after deploy
-- Reporting: monthly scan included with Løpende overvåking
-
-## Out of scope
-
-- Translation services (we work in Norwegian + English)
-- Paid media (Google Ads, ChatGPT Ads)
-- Generic SEO (we focus on AEO; SEO is a separate engagement)
+`https://sjekk.synligdigital.no/?url=<website>` returns a technical AEO score
+(0–100, grade A–F) and prioritized recommendations, free, no signup. It measures
+whether the page is machine-readable — not whether AI actually cites you.
 
 ## Related
 
-- Audit first: https://synligdigital.no/sjekk
 - Pricing detail: https://synligdigital.no/priser
-- Selskapsoversikt: https://synligdigital.no/context.md
+- Public leaderboard of Norwegian companies by AI visibility: https://synligdigital.no/leaderboard
+- Company overview: https://synligdigital.no/context.md
