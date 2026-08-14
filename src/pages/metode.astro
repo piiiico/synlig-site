@@ -1,0 +1,439 @@
+---
+/**
+ * /metode — protokollen bak en sitert-måling, og hva målingen IKKE påstår.
+ *
+ * Hvorfor denne siden finnes (redesign-planen §5, prioritet 3): kjøperen er en
+ * navngitt fagperson som klikker fra en e-post og allerede er skeptisk. Han
+ * kjøper ikke et tall, han kjøper at tallet er etterprøvbart. Forsiden har en
+ * tre-stegs metode-seksjon; den selger. Denne siden er den du kan lime inn i
+ * en e-post til noen som skal si nei eller ja på faglig grunnlag.
+ *
+ * ETT DATASETT, OG DET REGNES UT — DET SKRIVES IKKE:
+ * Alle måletall på siden kommer fra ni kjøringer 6.–8.8.2026,
+ * /workspace/money/aeo/leaderboard-score-vs-citation-2026-08-08.json (rådata i
+ * .sourceFiles). Tabellen, overskriften over den og totalene i Rettinger leses
+ * ved bygg av ../../_partials/metode-measurements.ts. AEO-skårene i notClaims
+ * står fortsatt for hånd, med kildehenvisning i kommentaren rett over dem.
+ * Skriv aldri et måletall inn her: 2026-08-12 sto overskriften «To av fem svar
+ * holdt» over en tabell der TRE holdt — invertert mot sin egen tabell, mot
+ * primærkilden og mot vår egen setning på /leaderboard, i en fil som allerede
+ * påsto at ingen tall ble skrevet for hånd. Nå er den påstanden sann.
+ * Seks-kjørings-tallene (7.–8.8.) hører til /analyse/komplett-aeo og skal ikke
+ * opptre her: protokollen på denne siden sier minst ni.
+ *
+ * KLASSEKONTRAKT: denne siden bruker med vilje IKKE .service-card,
+ * .service-price eller .faq-answer-inner. De tre leses som strenger av
+ * build.ts sin pricing-parity-gate og av deploy.ts sin live-rute-gate for "/",
+ * og en ny side som låner dem utvider gatens flate uten å utvide dens dekning.
+ * Prisen står som prosa med samme tall som forsiden.
+ */
+import Base from "../layouts/Base.astro";
+import { TIERS } from "../../../bin/cross-border-invoice";
+import {
+  loadMetodeMeasurements,
+  numWord,
+  numWordCap,
+} from "../../_partials/metode-measurements";
+
+const M = loadMetodeMeasurements();
+const heldRows = M.rows.filter((r) => r.held);
+/** Spørsmålet der en kjøring feilet — nevnes eksplisitt, ellers ser Y-en gal ut. */
+const failedRow = M.rows.find((r) => r.runs < M.totalRuns);
+
+const MAILTO =
+  "mailto:hei@synligdigital.no?subject=Sitert-m%C3%A5ling&body=Selskap%3A%20%0AMarked%2Fkategori%20vi%20vil%20m%C3%A5les%20i%3A%20%0AKonkurrenter%20vi%20sammenlignes%20med%3A%20";
+
+const TITLE = "Slik måler vi — og hva vi ikke påstår | Synlig";
+const DESCRIPTION =
+  "Protokollen bak en sitert-måling: fem spørsmål dere godkjenner, byte-identiske prompt, minst ni kjøringer over flere dager, og bare det som holdt i hver eneste kjøring. Med de fire tingene målingen ikke svarer på.";
+
+const steps = [
+  {
+    h: "Fem kjøpsnære spørsmål, godkjent av dere",
+    p: "Vi foreslår fem spørsmål slik en kunde faktisk skriver dem på norsk. Dere bytter eller godkjenner før vi kjører. Merkenavnet holdes utenfor der poenget er å se hvem AI velger når ingen er nevnt — et spørsmål som nevner dere måler noe annet, og vi kjører gjerne begge panel når det er relevant.",
+  },
+  {
+    h: "Byte-identiske prompt",
+    p: "Samme tegn, samme rekkefølge, hver eneste gang. Ingen personalisering, ingen samtalehistorikk, ingen oppfølgingsspørsmål som dytter svaret. Endrer vi ett ord, er det en ny måling.",
+  },
+  {
+    h: "Minst ni kjøringer fordelt over flere dager",
+    p: "Motoren er stokastisk: samme spørsmål gir ulike svar. Én kjøring er ikke en svak måling, det er ingen måling. Vi sprer kjøringene over flere dager fordi indeksen endrer seg mellom dem.",
+  },
+  {
+    h: "Vi teller bare det som holdt i hver eneste kjøring",
+    p: "En kilde regnes som «alltid lenket» bare hvis den ble lenket i alle vellykkede kjøringer. Det som varierte, oppgis som variert — med antallet. En feilet kjøring teller ikke som fravær; den teller ikke i det hele tatt.",
+  },
+  {
+    h: "Rådataene følger med",
+    p: "Spørsmål, modell, tidsstempel per kjøring, hvem som ble lenket og hvem som ble nevnt uten lenke. Dere kan kjøre målingen om igjen selv, og dere skal kunne felle den. Det er poenget med å sende den.",
+  },
+];
+
+/**
+ * Kilde: leaderboard-score-vs-citation-2026-08-08.json.
+ * perQuestion[0].tracked["elkjop.no"] = 9 av 9 okRuns,
+ * perQuestion[1].tracked["elkjop.no"] = 0 av 9 okRuns.
+ * aeoScores: proshop.no 40 (D), power.no 34 (E).
+ */
+const notClaims = [
+  {
+    h: "Det er ikke en AEO-skår.",
+    p: "Skåren måler om forsiden er maskinlesbar. Den svarer ikke på siteringsspørsmålet, og det har vi målt på oss selv: proshop.no skårer 40 av 100 (karakter D) og ble lenket i alle ni kjøringene på «Hvor kjøper jeg PC billig i Norge?». power.no skårer 34 (E) og ble lenket null ganger, på tvers av alle fem spørsmålene. Skåren rangerte dem som nesten like.",
+  },
+  {
+    h: "Det er ett spørsmål om gangen, ikke ett tall for hele merkevaren.",
+    p: "elkjop.no ble lenket i 9 av 9 kjøringer på «Hvor kjøper jeg PC billig i Norge?» og i 0 av 9 på «Beste nettbutikk for elektronikk i Norge?» — samme domene, samme uke, samme motor. Én score per forside kan ikke beskrive begge. Derfor rapporterer vi per spørsmål.",
+  },
+  {
+    h: "Det er én motor, ikke «AI».",
+    p: "Standardmålingen kjøres mot Perplexity (Sonar) via OpenRouter, fordi den oppgir kildene sine og kan etterprøves. Vi skriver aldri «AI-en siterer dere» når vi mener «denne motoren, disse dagene». Andre motorer kan avtales, men da står det hvilke.",
+  },
+  {
+    h: "Det er ingen årsaksforklaring og ingen garanti.",
+    p: "Målingen sier hvem som eier plassen i svaret. Den sier ikke hvorfor, og den lover ikke at plassen flytter seg hvis dere gjør noe. Vi selger heller ikke implementeringsarbeidet etterpå — det er et annet oppdrag, og det gjør oss til en dårlig dommer over vår egen måling.",
+  },
+];
+
+const faqs = [
+  {
+    q: "Hvorfor ni kjøringer? Er ikke én nok?",
+    a: `Nei. Motoren svarer ulikt på identisk spørsmål. Vår egen elektronikk-måling viste det: av fem spørsmål ga bare ${numWord(M.heldCount)} samme utfall i alle ${numWord(M.totalRuns)} kjøringene. De øvrige ${numWord(M.variedCount)} svingte — og det gjaldt også et nullresultat, som holdt i ${numWord(M.zeroThatBroke.zeroRuns)} kjøringer over to dager før en kjøring på en tredje dag brøt det. Enkeltkjøringene rapporterte alt fra ${numWord(M.perRunMin)} til ${numWord(M.perRunMax)} av fem spørsmål som sitert. Med én kjøring hadde vi rapportert støy som funn.`,
+  },
+  {
+    q: "Hvilken AI-motor måler dere mot?",
+    a: "Perplexity (Sonar) via OpenRouter i standardmålingen, fordi den oppgir kildene sine slik at påstanden kan etterprøves. Datoer, modellnavn og kjøringstall står i leveransen.",
+  },
+  {
+    q: "Kan vi velge spørsmålene selv?",
+    a: "Ja. Vi foreslår fem, dere bytter det dere vil. Det eneste vi holder på er at spørsmålene skal være kjøpsnære og skrevet slik en kunde skriver dem — ikke slik en markedsavdeling skriver dem.",
+  },
+  {
+    q: "Hva om vi mener målingen tar feil?",
+    a: "Send oss motmålingen, så kjører vi på nytt og publiserer rettingen på samme URL. Det har skjedd: vi publiserte i februar 2026 at Komplett var usynlig for AI, Komplett bestred det, vi målte på nytt i august, og de hadde delvis rett. Siden står i dag med begge målingene og med rettingene våre — vi sletter dem ikke.",
+  },
+  {
+    q: "Hva koster en sitert-måling?",
+    a: "9 900 kr eks. mva, engangs. Faktura fra AS Åmdal Invest med 14 dagers frist. Levering på e-post, ingen møter, ingen abonnement.",
+  },
+];
+
+const JSONLD = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Slik måler vi — og hva vi ikke påstår",
+    description: DESCRIPTION,
+    url: "https://synligdigital.no/metode",
+    inLanguage: "nb-NO",
+    isPartOf: { "@type": "WebSite", name: "Synlig", url: "https://synligdigital.no" },
+    about: { "@type": "Service", name: "Sitert-måling", provider: { "@type": "Organization", name: "Synlig Digital" } },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Hjem", item: "https://synligdigital.no/" },
+      { "@type": "ListItem", position: 2, name: "Metode", item: "https://synligdigital.no/metode" },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "Slik kjøres en sitert-måling",
+    description:
+      "Protokollen bak en sitert-måling fra Synlig Digital: fem godkjente kjøpsnære spørsmål, byte-identiske prompt, minst ni kjøringer fordelt over flere dager, claim-safe telling og rådata i leveransen.",
+    totalTime: "P7D",
+    // Prisen leses fra fakturaskinnen (TIERS), aldri skrevet her: 2026-08-14
+    // shippet /en/ en estimatedCost på USD 1400 for et produkt hver knapp på
+    // samme side solgte til 1100 — et pengefelt ingen leser med øynene.
+    estimatedCost: { "@type": "MonetaryAmount", currency: "NOK", value: String(TIERS.sitert.nok / 100) },
+    step: steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.h,
+      text: s.p,
+      url: `https://synligdigital.no/metode#steg-${i + 1}`,
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  },
+];
+---
+
+<Base
+  title={TITLE}
+  description={DESCRIPTION}
+  canonical="https://synligdigital.no/metode"
+  ogTitle="Slik måler vi — og hva vi ikke påstår"
+  ogDescription={DESCRIPTION}
+  jsonLd={JSONLD}
+  published="2026-08-09T15:00:00Z"
+  modified="2026-08-09T15:00:00Z"
+>
+  <main id="main-content">
+    <section class="hero border-b border-line py-16 sm:py-20">
+      <div class="container">
+        <div class="hero-badge">Metode</div>
+        <h1
+          class="mt-6 max-w-3xl text-4xl font-bold leading-[1.1] tracking-tight text-ink sm:text-5xl"
+        >
+          Slik måler vi. Og hva vi <span class="text-brand-ink">ikke</span> påstår.
+        </h1>
+        <p class="hero-sub">
+          En måling du ikke kan etterprøve er en påstand med tall på. Her er hele
+          protokollen, tallene fra våre egne kjøringer, og de fire tingene en
+          sitert-måling ikke svarer på.
+        </p>
+        <p class="hero-note">
+          Siden er skrevet for å bli lest av noen som skal si nei på faglig
+          grunnlag. Finner du et hull, send det til <a
+            href="mailto:hei@synligdigital.no?subject=Innvending%20mot%20metoden"
+            class="hero-tool-link">hei@synligdigital.no</a
+          > — vi retter på samme URL.
+        </p>
+      </div>
+    </section>
+
+    <!-- Protokollen. Speiles av HowTo-noden i frontmatter — endrer du et steg
+         her, endrer du noden i samme redigering. -->
+    <section class="how rule bg-wash py-20" id="protokollen">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Protokollen</div>
+          <h2>Fem steg, ingen av dem hemmelige.</h2>
+          <p>
+            Hele verdien i en sitert-måling ligger i at mottakeren kan felle den.
+            Derfor står metoden ute, ikke i et vedlegg etter signering.
+          </p>
+        </div>
+        <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            steps.map((s, i) => (
+              <div class="step" id={`steg-${i + 1}`}>
+                <div class="step-number">{i + 1}</div>
+                <h3>{s.h}</h3>
+                <p>{s.p}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Bevislaget for steg 3 og 4. Ingen tall er skrevet inn her: rader,
+         overskrift og totaler regnes ut fra ni-kjøringssettet i
+         _partials/metode-measurements.ts, som er det samme settet
+         /leaderboard publiserer og CTA-en under peker til. -->
+    <section class="evidence rule py-20" id="stokastisk">
+      <div class="container">
+        <div class="section-label">Hvorfor ni kjøringer</div>
+        <h2
+          class="max-w-3xl text-3xl font-bold leading-tight tracking-tight text-ink sm:text-[2.1rem]"
+        >
+          {M.headline}
+        </h2>
+        <p class="mt-4 max-w-3xl text-lg leading-relaxed text-muted">
+          {numWordCap(M.rows.length)} kjøpsnære elektronikk-spørsmål til Perplexity
+          (Sonar), stilt {numWord(M.totalRuns)} ganger fordelt på {M.runDayLabel}
+          2026 — byte-identiske hver gang. Antall kjøringer med direkte lenke til
+          komplett.no:
+        </p>
+
+        <ul class="measure-rows mt-8 max-w-3xl">
+          {
+            M.rows.map((r) => (
+              <li class={`measure-row${r.linked / r.runs < 0.25 ? " is-miss" : ""}`}>
+                <span class="measure-q">«{r.q}»</span>
+                <span class="measure-verdict">Lenket i {r.linked} av {r.runs}</span>
+                <span class="measure-others">
+                  {r.held ? "Holdt i hver eneste kjøring" : "Varierte mellom kjøringene"}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+        {
+          failedRow && (
+            <p class="mt-3 max-w-3xl text-sm text-muted">
+              Én kjøring feilet på «{failedRow.q}». Den teller ikke som fravær; den
+              teller ikke i det hele tatt — derfor {failedRow.runs} og ikke{" "}
+              {M.totalRuns} der.
+            </p>
+          )
+        }
+
+        <p class="mt-8 max-w-3xl text-base leading-relaxed text-muted">
+          {numWordCap(M.heldCount)} av spørsmålene ga samme utfall i hver eneste av
+          de {numWord(M.totalRuns)} kjøringene: komplett.no ble{" "}
+          {heldRows
+            .map((r) => `${r.linked === 0 ? "aldri" : "alltid"} lenket på «${r.q}»`)
+            .join(", ")}. Det er den eneste påstanden herfra som tåler å bli
+          sitert alene. Og nullene svinger også: på «{M.zeroThatBroke.q}» ga alle{" "}
+          {numWord(M.zeroThatBroke.zeroRuns)} kjøringene {M.zeroThatBroke.zeroDayLabel}
+          {" "}null lenke, mens kjøringen {M.zeroThatBroke.hitDayLabel} ga én. Et
+          nullresultat som holdt over to dager holdt altså ikke over tre.
+          Enkeltkjøringene her rapporterte alt fra {numWord(M.perRunMin)} til{" "}
+          {numWord(M.perRunMax)} av {numWord(M.rows.length)} spørsmål som «sitert
+          med lenke». Det er hele grunnen til at vi ikke selger enkeltmålinger.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href="/analyse/komplett-aeo" class="btn-solid"
+            >Komplett-analysen: begge målingene og rettingen →</a
+          >
+          <a href="/leaderboard#skaar-mot-sitering" class="btn-outline"
+            >Ni kjøringer publisert på leaderboardet →</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <section class="how rule bg-wash py-20" id="ikke-paastand">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Grensene</div>
+          <h2>Fire ting målingen ikke svarer på.</h2>
+          <p>
+            Et byrå som ikke kan si hva produktet ikke gjør, har ikke målt noe.
+            Dette er listen vi selv leser før vi sender en leveranse.
+          </p>
+        </div>
+        <div class="mt-10 grid gap-6 lg:grid-cols-2">
+          {
+            notClaims.map((n) => (
+              <div class="finding">
+                <h3 class="finding-h">{n.h}</h3>
+                <p class="finding-p">{n.p}</p>
+              </div>
+            ))
+          }
+        </div>
+        <p class="source-note mt-8 max-w-3xl">
+          Tallene over er fra vår egen måling 6.–8. august 2026: fem spørsmål,
+          ni byte-identiske kjøringer mot Perplexity (Sonar), og AEO-skår kjørt
+          på domenene som eide lenkene. Hele datasettet ligger åpent på <a
+            href="/leaderboard#skaar-mot-sitering">leaderboardet</a
+          >.
+        </p>
+      </div>
+    </section>
+
+    <section class="about py-20" id="retting">
+      <div class="container-narrow copy">
+        <div class="section-label">Rettinger</div>
+        <h2 class="mb-6 mt-3 text-3xl font-bold tracking-tight text-ink sm:text-[2.1rem]">
+          Vi retter i skrift, på samme URL.
+        </h2>
+        <p>
+          I februar 2026 publiserte vi at Komplett var usynlig for AI. Komplett
+          bestred det. Vi målte på nytt i august, med protokollen over — og de
+          hadde delvis rett: komplett.no er nevnt eller lenket i {M.answersPresent} av
+          de {M.answersOk} svarene som gikk gjennom, men har direkte lenke i bare
+          {" "}{M.answersLinked}. Spørsmålet er ikke om de nevnes, men hvor lenken
+          går.
+        </p>
+        <p>
+          Analysesiden står i dag med <em>begge</em> målingene og med rettingen
+          øverst. Vi sletter ikke gamle tall, og vi flytter ikke en påstand til
+          en ny URL for å bli kvitt den. En leverandør som bare publiserer
+          målingene som gikk sin vei, har ikke en metode — den har et
+          markedsføringsbudsjett.
+        </p>
+        <p>
+          <a href="/analyse/komplett-aeo">Les analysen med rettingen →</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="how rule bg-wash py-20" id="bestill">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Leveransen</div>
+          <h2>Ett dokument, én pris, ingen møter.</h2>
+        </div>
+        <div class="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
+          <div class="copy">
+            <p>
+              Dere får et skriftlig dokument dere kan sende videre internt: fem
+              spørsmål, resultat per spørsmål per kjøring, navn på hvem som ble
+              sitert i stedet, hvilke kilder svaret bygget på, og hva målingen
+              ikke påstår. Rådataene ligger ved.
+            </p>
+            <p>
+              <strong>9 900 kr eks. mva</strong>, engangs. Faktura fra AS Åmdal
+              Invest (Stavanger) med 14 dagers frist. Kjøringene går over flere
+              dager, og dokumentet kommer på e-post når alle er inne — normalt
+              innen en uke fra dere har godkjent spørsmålene.
+            </p>
+            <p>
+              Målingene kjøres av <strong>Pico</strong>, AI-agenten som driver
+              Synlig Digital. Håkon Åmdal eier selskapet og har det faglige og
+              juridiske ansvaret. Du får vite det før du kjøper, ikke etterpå.
+              <a href="/pico">Mer om Pico →</a>
+            </p>
+          </div>
+          <aside class="measure-panel self-start">
+            <div class="measure-head">
+              <div class="measure-title">Bestill på e-post</div>
+              <p class="measure-meta">
+                Ingen skjema, ingen demo, ingen oppfølgingssamtale.
+              </p>
+            </div>
+            <p class="measure-foot">
+              Skriv selskap, hvilket marked dere vil måles i, og hvem dere
+              sammenlignes med. Vi svarer med fem forslag til spørsmål.
+            </p>
+            <!-- Wrapper er ikke pynt: .measure-panel har overflow-hidden og
+                 NULL padding — all innrykk ligger på barna (px-5). En naken
+                 knapp her ble målt 2026-08-09 flush mot venstre kant og
+                 klippet av bunnen på 1440 px. Panelet har aldri båret en
+                 knapp før; forsiden bruker det bare til rader. -->
+            <div class="px-5 pb-5">
+              <a href={MAILTO} class="hero-cta block w-full text-center"
+                >Be om en sitert-måling →</a
+              >
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq py-20" id="sporsmal">
+      <div class="container-narrow">
+        <div class="section-header">
+          <div class="section-label">Spørsmål om metoden</div>
+          <h2>Det folk spør om før de bestiller.</h2>
+        </div>
+        <div class="mt-8">
+          {
+            faqs.map((f, i) => (
+              <div class="faq-item">
+                <button
+                  class="faq-question"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls={`metode-faq-${i}`}
+                  onclick="toggleFaq(this)"
+                >
+                  {f.q}
+                </button>
+                <div class="faq-answer" id={`metode-faq-${i}`} aria-hidden="true">
+                  <div class="pb-6 text-base leading-relaxed text-muted">
+                    {f.a}
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

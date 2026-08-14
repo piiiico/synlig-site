@@ -307,15 +307,14 @@
 }
 </script>
 
-<!-- JSON-LD Structured Data — Block 7: HowTo — AEO process -->
+<!-- JSON-LD Block 7: HowTo — serialised from _partials/en-cited-howto.ts (steps + price derived from TIERS). Edit the module, not this block: build.ts fails on any drift. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
   "@id": "https://synligdigital.no/en/#howto-aeo",
-  "name": "How to become visible in ChatGPT and Perplexity",
-  "description": "Synlig Digital's AEO process for increasing visibility in AI assistants. Based on documented AEO audits of 30+ businesses across nine verticals.",
-  "totalTime": "P14D",
+  "name": "How the Cited package runs: baseline, changes, re-measurement",
+  "description": "How Synlig Digital's Cited package runs end to end: a baseline measurement on five buying-intent questions with at least nine byte-identical runs, the changes written out for up to ten pages, and a re-measurement 30 days after you publish — with a written outcome criterion and the raw data included.",
   "inLanguage": "en",
   "estimatedCost": {
     "@type": "MonetaryAmount",
@@ -326,29 +325,22 @@
     {
       "@type": "HowToStep",
       "position": 1,
-      "name": "Free AEO score",
-      "text": "Score your site on synligdigital.no/en/. See exactly what AI assistants currently know — and don't know — about your business. Runs live in your browser.",
+      "name": "Baseline measurement",
+      "text": "Five buying-intent questions from your market, written the way a buyer types them. You approve or replace them before anything runs. Each question is then run at least nine times over several days with byte-identical prompts — one run is not a measurement, because the same model answers the same question differently. You get how often your domain was cited with a link, and the names of who was cited instead.",
       "url": "https://synligdigital.no/en/"
     },
     {
       "@type": "HowToStep",
       "position": 2,
-      "name": "Technical AEO analysis and report",
-      "text": "Full analysis of schema.org markup, business profile cleanup, aggregator presence, and content quality. Written report with prioritized fix list.",
+      "name": "The changes, written out for up to ten pages",
+      "text": "JSON-LD, citable questions and answers, llms.txt and AI-crawler rules — written out for up to ten pages, ready to paste or delivered as a pull request, within five business days of question approval. You publish them, and they stay in your own pages afterwards.",
       "url": "https://synligdigital.no/en/"
     },
     {
       "@type": "HowToStep",
       "position": 3,
-      "name": "Implementation",
-      "text": "Implementation of schema.org markup tuned to your vertical: SoftwareApplication for SaaS (with alternative-to and integration lists); Product, Brand, and Organization for retail and e-commerce. FAQPage and Service for all. Business profile cleanup and relevant aggregator presence.",
-      "url": "https://synligdigital.no/en/"
-    },
-    {
-      "@type": "HowToStep",
-      "position": 4,
-      "name": "Continuous monitoring and optimization",
-      "text": "Monthly measurement of AI visibility: track how often you're mentioned in AI answers. Continuous adjustment to new AI models and updates.",
+      "name": "Re-measurement 30 days after you publish",
+      "text": "The same five questions, nine new runs, before and after in one document with the raw data: question, model, timestamp per run, who was cited with a link and who was only mentioned. Written outcome criterion — at least one citation of your domain in the follow-up runs. If it is not met, we run another round at no extra charge.",
       "url": "https://synligdigital.no/en/"
     }
   ]

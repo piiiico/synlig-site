@@ -6,11 +6,14 @@
 // invariant enforced below ("DUPLICATE-WRITER GUARD"). If you need to add
 // a route, edit this file — do NOT create a second build script.
 
-import { readdirSync, readFileSync, statSync } from "fs";
+import { readdirSync, readFileSync, statSync, existsSync } from "fs";
 import { join, basename, resolve } from "path";
 import { applyMarkers, MID_MARKER, BOTTOM_MARKER, LEAD_CAPTURE_PATH, CHECKOUT_HREF_PREFIX, MAILTO_PREFIX, LIVE_PRICE_ANCHORS, type Stage } from "./_partials/render-audit-cta";
 import { runFactSourceGate } from "./_partials/fact-source-gate";
 import { runMetodeMeasureGate } from "./_partials/metode-measure-gate";
+import { runEnPriceCorpusGate, faktura_EN_SURFACE, fakturaConfirmation_EN_SURFACE } from "./_partials/en-price-gate";
+import { runNamingProofGate } from "./_partials/naming-proof";
+import { checkEnCitedHowTo } from "./_partials/en-cited-howto";
 import { stripHtmlComments, STRIP_KEEP_PREFIXES } from "./_partials/strip-html-comments";
 import { injectLegalIdentity, hasFooter, LEGAL_MARKER, LEGAL, DEAD_POSTAL_CODES } from "./_partials/legal-identity";
 
@@ -497,6 +500,108 @@ console.log(`[build] visit-beacon injected into ${staticHit.hit + verticalHit.hi
     process.exit(1);
   }
   console.log(`  ✅ /metode måletall-port: ${g.rows} rader avstemt mot primærkilden.`);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EN-PRISPORT — ett tall per produkt på flaten utenlandske kjøpere leser.
+// 2026-08-13 ble kryss-grense-skinnen tatt i bruk utad (Ondo-E1: «USD 1,100»)
+// mens /en/ kvoterte «NOK 9,900» ti steder — samme produkt, to tall, samme
+// leser — og TIERS.lite.usd sto på 110 mot vår egen Stripe-skinne på 92.
+// Porten regner tillatte strenger ut fra TIERS og feiler bygget på gaffel.
+// Renderer: /workspace/synlig-site/_partials/en-price-gate.ts
+// ─────────────────────────────────────────────────────────────────────────────
+{
+  // Omfanget utledes av NØKLENE i `files`, ikke av en håndholdt liste: hver
+  // EN_*_HTML er en flate worker-en serverer, så en ny EN-side kommer inn i
+  // porten i samme øyeblikk den kobles på. Porten globber i tillegg disk selv
+  // og feiler hvis det finnes flere en*.html enn den fikk servert.
+  //
+  // MERK: dette kjører ETTER injectBeacon, altså på de bytene som faktisk
+  // sendes til kjøperen — ikke på fila på disk. Forskjellen er ~750 byte per
+  // side, og en port som leser disk sertifiserer noe ingen serverer.
+  const served: Record<string, string> = {};
+  for (const [k, v] of Object.entries(files)) {
+    if (/^EN_[A-Z0-9_]*HTML$/.test(k) && typeof v === "string") served[k] = v;
+  }
+  // /faktura er ikke en en*.html, men det er DER en utenlandsk kjøper faktisk
+  // bestiller. 2026-08-14: hele en*.html-korpuset var grønt og deployet mens
+  // ordresiden CTA-en peker på fortsatt svarte «NOK 9,900 excl. VAT». Én
+  // bilingval fil, så bare de engelske blokkene sendes inn.
+  served["faktura?lang=en"] = faktura_EN_SURFACE(files.FAKTURA_HTML);
+  // ...og BEKREFTELSES-E-POSTEN. Tredje engelske pristabell, den ingen så på:
+  // EN_PACKAGES i synlig-worker/faktura-handler.ts er kontraktsteksten kjøperen
+  // får tilsendt ETTER at han har bestilt. Den kan ikke importere porten (fila
+  // bundles inn i Cloudflare-workeren, porten leser node:fs), så kollapsen går
+  // andre veien: porten leser tabellen og avstemmer den mot TIERS.
+  served["faktura-bekreftelse?lang=en"] = fakturaConfirmation_EN_SURFACE(
+    readFileSync("/workspace/synlig-worker/faktura-handler.ts", "utf-8"),
+  );
+  const g = runEnPriceCorpusGate(served);
+  if (g.violations.length > 0) {
+    console.error(`\n[BUILD FAIL] EN-flatens priser har gaflet seg fra TIERS (${g.violations.length} avvik):`);
+    for (const v of g.violations) console.error(`  - ${v}`);
+    console.error(`\nPrimærkilde: /workspace/bin/cross-border-invoice.ts → TIERS.`);
+    console.error(`Retter du et tall i en HTML-fil for hånd uten å flytte TIERS, er det feilen, ikke porten.`);
+    process.exit(1);
+  }
+  console.log(`  ✅ EN-prisport: ${g.prices} prisforekomster over ${g.files} flater avstemt mot TIERS.`);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EN-PRODUKTPORT — hva /en/ FORTELLER svarmotorene at vi selger.
+//
+// Prisporten over avstemmer TALLET. 2026-08-14 viste at det ikke er nok: da
+// USD 1400 var rettet til 1100, beskrev den SAMME HowTo-noden fortsatt det
+// nedlagte fire-stegs programmet (Implementation + Continuous monitoring,
+// totalTime P14D) — altså en retainer vi ikke selger, matet til nøyaktig de
+// motorene vi tar betalt for å bli sitert riktig i. Riktig pris, feil produkt.
+// Kilde, invariant og begrunnelse: _partials/en-cited-howto.ts.
+// Kjører på files.EN_HTML, altså etter injectBeacon — de bytene kjøperen får.
+// ─────────────────────────────────────────────────────────────────────────────
+{
+  const v = checkEnCitedHowTo(files.EN_HTML, "/en/ (servert)");
+  if (v.length > 0) {
+    console.error(`\n[BUILD FAIL] EN-flatens HowTo beskriver ikke produktet vi selger (${v.length} avvik):`);
+    for (const x of v) console.error(`  - ${x}`);
+    console.error(`\nPrimærkilde: /workspace/synlig-site/_partials/en-cited-howto.ts`);
+    process.exit(1);
+  }
+  console.log(`  ✅ EN-produktport: HowTo-noden på /en/ er identisk med _partials/en-cited-howto.ts.`);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// NAVNGIVINGSPORT — 2026-08-14
+//
+// 28/28 og 20/28 ble publisert om morgenen og var innen kvelden håndskrevet på
+// seks flater (forsidens hero, /tjenester#navngitt, blogg-CTA-en, patcheren for
+// 193 rapportsider, /priser, og kommentarene i to av dem). To av flatene bar en
+// kommentar som sa «endrer du tallet her, endrer du det der» — koplingen fantes
+// bare som en beskjed til neste menneske. Det er den nøyaktige formen på
+// /metode-saken 08-12 (åtte håndholdte påstandssteder → én utledet kilde) og på
+// Komplett-saken, der overskriftslaget sto igjen med et tilbaketrukket tall.
+//
+// Kilden er nå _partials/naming-proof.ts. Porten fant sitt eget mønster ved å
+// TELLE mot korpuset før den ble skrevet: ankerordet alene traff 208 av 305
+// filer (base rate, ikke defekt), motornavnet i samme vindu tok det til 189
+// med én falsk positiv (leaderboard.html, en robots.txt-linje), og merkenavnet
+// som tredje ledd ga 188 og null falske. Hele målingen står i fila.
+//
+// MERK at denne kommentaren med vilje IKKE staver ut tallparet sammen med de
+// tre ankerordene: da ville build.ts selv blitt talt som en bevisflate, og en
+// historisk merknad om hva som ble målt i august ville feilet porten den dagen
+// tallet med rette endrer seg. En port skal lese produktet, ikke sin egen logg.
+// ─────────────────────────────────────────────────────────────────────────────
+{
+  const n = runNamingProofGate();
+  if (n.violations.length > 0) {
+    console.error(`\n[BUILD FAIL] navngivingsbeviset har gaflet seg (${n.violations.length} avvik):`);
+    for (const v of n.violations) console.error(`  - ${v.file}: ${v.claim || v.why}`);
+    console.error(`\nPrimærkilde: /workspace/synlig-site/_partials/naming-proof.ts → NAMING_PROOF.`);
+    console.error(`Endre tallet DER, kjør bygget, og porten viser deg hver flate som henger igjen.`);
+    console.error(`Kjøpsreisens tre flater (forside, /priser, /tjenester#navngitt) MÅ bære beviset.`);
+    process.exit(1);
+  }
+  console.log(`  ✅ Navngivingsport: ${n.claimFiles} bevisflater av ${n.scanned} filer enige med NAMING_PROOF.`);
 }
 
 // Sitemap assertion: every ACTIVE vertical in VERTICAL_LANDINGS must appear in
@@ -1129,6 +1234,45 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
     "visionmedia-northug-week1.html", // Visionmedia pilot proposal, 2026-06
     "visionmedia-pilot.html",         // Visionmedia pilot proposal, 2026-06
   ]);
+  // 2026-08-14: EXEMPTION NÅ BETINGET, ikke gratis. Begge filene svarer 200 på
+  // /r/ og har gjort det siden juni; fram til i dag betydde unntaket at to live
+  // sider annonserte en nedlagt prisstige uten at noe sa fra. Prisen for
+  // unntaket er et datert utgått-banner: står banneret, er dokumentet ærlig om
+  // fortiden; slettes banneret, faller unntaket og bygget stopper. Et unntak
+  // uten positiv kontroll er nøyaktig måten en port går stille blind på —
+  // formulert i kommentaren over, men ikke håndhevet før nå.
+  const SUPERSEDED_MARKER = "Historisk dokument — bevart uendret.";
+  {
+    const missing: string[] = [];
+    for (const base of DEAD_TIER_FILE_EXEMPT) {
+      let found = 0;
+      for (const dir of PRICING_GATED_DIRS) {
+        const p = join(dir, base);
+        if (!existsSync(p)) continue;
+        found++;
+        let t = "";
+        try { t = readFileSync(p, "utf-8"); } catch {
+          missing.push(`${p}: uleselig — et unntak kan ikke hvile på en fil vi ikke får lest`);
+          continue;
+        }
+        if (!t.includes(SUPERSEDED_MARKER)) {
+          missing.push(`${p}: unntatt fra dead-tier-porten, men mangler utgått-banneret («${SUPERSEDED_MARKER}»)`);
+        }
+      }
+      // Gulv: en oppføring uten fil er en stale konfigurasjon, ikke «ingen avvik».
+      if (found === 0) {
+        missing.push(`${base}: står i DEAD_TIER_FILE_EXEMPT, men finnes ikke i noen gated dir — fjern oppføringen`);
+      }
+    }
+    if (missing.length > 0) {
+      console.error(`\n[BUILD FAIL] dead-tier-unntak uten utgått-banner (${missing.length}):`);
+      for (const m of missing) console.error(`  - ${m}`);
+      console.error(`\nEt unntatt dokument får beholde de døde prisene fordi det er et datert tilbud.`);
+      console.error(`Prisen for det er at leseren ser at tilbudet er utgått, øverst på siden.`);
+      process.exit(1);
+    }
+    console.log(`  ✅ Dead-tier-unntak: ${DEAD_TIER_FILE_EXEMPT.size} filer, alle med datert utgått-banner.`);
+  }
   // 2026-08-12 — THE INVARIANT FLIPPED, and that is the whole point of this
   // rewrite. Handlingsplan/Analyse (4 900), Fundament (14 900) and Løpende
   // (4 900/mnd) were discontinued 2026-08-08 on measured zeros. "A page quoting

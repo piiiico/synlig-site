@@ -22,8 +22,20 @@
  */
 
 import { LEGAL } from "../../_partials/legal-identity";
+import { TIERS } from "../../../bin/cross-border-invoice";
 
 export const ORG_ID = "https://synligdigital.no/#organization";
+
+/**
+ * 2026-08-14: hver kronesum i maskinlaget sto her for hånd — price "9900" i
+ * Offer-noden, "9900" en gang til i estimatedCost, og "990–9900 NOK" i
+ * priceRange. Samme dag ble /en/ tatt i at den solgte USD 1400 i estimatedCost
+ * mens hvert Offer på siden sa 1100: et felt ingen leser med øynene, gaflet fra
+ * resten. De norske feltene var enige med hverandre den dagen — det er alt en
+ * håndholdt kopi noensinne kan love. Nå leses de av samme kilde som fakturaen
+ * kunden faktisk får: TIERS i bin/cross-border-invoice.ts (mindre enheter).
+ */
+const nok = (minor: number): string => String(minor / 100);
 
 // ── Block 1: Organization / LocalBusiness / MarketingAgency ───────────────
 const organization = {
@@ -138,7 +150,7 @@ const organization = {
           // 2026-08-13: produktet er ikke lenger målingen alene (den gir vi bort i
           // /sjekk og i den kalde rapporten) — det er endringene pluss beviset.
           "Vi måler nullpunktet — fem kjøpsnære spørsmål fra ditt marked, ni byte-identiske kjøringer mot Perplexity (Sonar), med navn på hvem som blir sitert i stedet — skriver deretter endringene ferdig for inntil ti sider (JSON-LD, sitatvennlige spørsmål og svar, llms.txt, AI-crawler-regler), og måler på nytt 30 dager etter at dere har publisert dem. Utfallskriterium: minst én sitering av deres domene i etterkjøringene, ellers kjøres én ny runde uten ny faktura. Levering på e-post, faktura med 14 dagers frist, ingen møter.",
-        price: "9900",
+        price: nok(TIERS.sitert.nok),
         priceCurrency: "NOK",
         url: "https://synligdigital.no/#tjenester",
         availability: "https://schema.org/InStock",
@@ -154,7 +166,7 @@ const organization = {
         name: "Synlig Lite — FAQPage AEO",
         description:
           "FAQPage schema for én side du velger. Vi skriver 3–5 spørsmål-svar-par grunnet i innholdet ditt og leverer JSON-LD klar til innliming i <head>. Levering innen 1 virkedag på e-post.",
-        price: "990",
+        price: nok(TIERS.lite.nok),
         priceCurrency: "NOK",
         url: "https://synligdigital.no/priser",
         itemOffered: {
@@ -166,7 +178,7 @@ const organization = {
       },
     ],
   },
-  priceRange: "990–9900 NOK",
+  priceRange: `${nok(TIERS.lite.nok)}–${nok(TIERS.sitert.nok)} NOK`,
   review: [],
   employee: {
     "@type": "Person",
@@ -427,7 +439,7 @@ const howTo = {
   estimatedCost: {
     "@type": "MonetaryAmount",
     currency: "NOK",
-    value: "9900",
+    value: nok(TIERS.sitert.nok),
   },
   step: [
     {
