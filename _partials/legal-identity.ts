@@ -69,9 +69,14 @@ export const LEGAL = {
 /**
  * Postal codes this site has asserted in the past and must never assert again.
  *
- * 2026-08-14: "4006" was claimed in 17 places — including three LocalBusiness
- * JSON-LD blocks and the shipped front page — while Brreg's registered address
- * is 4010. NAP consistency (name/address/phone agreeing everywhere an engine
+ * 2026-08-14: the dead code was claimed in 25 occurrences across 9 tracked
+ * files — including three LocalBusiness JSON-LD `postalCode` fields and the
+ * shipped front page — while Brreg's registered address is 4010. Both numbers
+ * are re-derived from the pre-fix tree (`git show f5d3207^:<file>`), not from
+ * the sweep's own running count: the first two figures written into this
+ * repo (17, then 32) were both wrong in opposite directions, the second
+ * because it counted seven ALREADY-CORRECT 4010s in tjenester/aeo.html as
+ * swaps. A sweep cannot measure itself — only the pre-image can. NAP consistency (name/address/phone agreeing everywhere an engine
  * can look) is a thing this agency SELLS; the Pierstop case study on our own
  * pricing page says in so many words "vi rettet JSON-LD og NAP-konsistens".
  * Our own entity disagreed with the national registry an AI would join against.
