@@ -115,9 +115,9 @@
       {
         "@type": "Offer",
         "name": "The Cited package — we make the changes and measure whether AI started citing you",
-        "description": "Three steps: (1) baseline measurement — five buying-intent questions from your market, nine byte-identical runs, naming who gets cited instead. (2) The changes written out for up to ten pages — JSON-LD, citable questions and answers, llms.txt and AI-crawler rules, ready to paste or as a pull request. (3) Re-measurement 30 days after you publish, before/after in one document with the raw data. Outcome criterion: at least one citation of your domain in the follow-up runs — if not met, we run another round at no extra charge. Invoiced in NOK with 14-day terms; no card rail.",
-        "price": "9900",
-        "priceCurrency": "NOK",
+        "description": "Three steps: (1) baseline measurement — five buying-intent questions from your market, nine byte-identical runs, naming who gets cited instead. (2) The changes written out for up to ten pages — JSON-LD, citable questions and answers, llms.txt and AI-crawler rules, ready to paste or as a pull request. (3) Re-measurement 30 days after you publish, before/after in one document with the raw data. Outcome criterion: at least one citation of your domain in the follow-up runs — if not met, we run another round at no extra charge. Invoiced from AS Åmdal Invest (Norway) with 14-day terms, card payment link included. No Norwegian VAT on services exported out of Norway.",
+        "price": "1100",
+        "priceCurrency": "USD",
         "url": "https://synligdigital.no/en/",
         "itemOffered": {
           "@type": "Service",
@@ -128,7 +128,7 @@
       }
     ]
   },
-  "priceRange": "USD 92 – NOK 9900",
+  "priceRange": "USD 92 – USD 1,100",
   "employee": {
     "@type": "Person",
     "name": "Håkon Åmdal",
@@ -188,7 +188,7 @@
       "name": "Who is Synlig Digital and what do you do?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Synlig Digital is a small Answer Engine Optimization consultancy based in Stavanger, Norway. We help businesses become visible in ChatGPT, Perplexity, Google AI Overview, and other AI assistants. We offer a free AEO score on synligdigital.no/en/, AEO Lite — FAQPage schema for one page (USD 92) — and the Cited package (NOK 9,900) where we make the changes that block citation across up to ten pages and then measure whether AI started citing you."
+        "text": "Synlig Digital is a small Answer Engine Optimization consultancy based in Stavanger, Norway. We help businesses become visible in ChatGPT, Perplexity, Google AI Overview, and other AI assistants. We offer a free AEO score on synligdigital.no/en/, AEO Lite — FAQPage schema for one page (USD 92) — and the Cited package (USD 1,100) where we make the changes that block citation across up to ten pages and then measure whether AI started citing you."
       }
     },
     {
@@ -204,7 +204,7 @@
       "name": "How much does AEO cost at Synlig Digital?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Two packages. Free AEO score on synligdigital.no/en/ (runs live, no email). AEO Lite — FAQPage schema for one page: USD 92, one-off, delivery in one business day, card payment in USD at Stripe checkout. The Cited package: NOK 9,900 excl. VAT, one-off — three steps. (1) Baseline measurement: five buying-intent questions from your market, nine byte-identical runs, naming who gets cited instead. (2) The changes written out for up to ten pages — JSON-LD, citable questions and answers, llms.txt and AI-crawler rules, ready to paste or as a pull request. (3) Re-measurement 30 days after you publish, before/after in one document with the raw data. Outcome criterion: at least one citation of your domain in the follow-up runs — if not met, we run another round at no extra charge. Invoiced with 14-day terms. Order it at synligdigital.no/faktura?slug=en-home-sitert&amp;pakke=priser-sitert&amp;lang=en."
+        "text": "Two packages. Free AEO score on synligdigital.no/en/ (runs live, no email). AEO Lite — FAQPage schema for one page: USD 92, one-off, delivery in one business day, card payment in USD at Stripe checkout. The Cited package: USD 1,100, one-off — three steps. (1) Baseline measurement: five buying-intent questions from your market, nine byte-identical runs, naming who gets cited instead. (2) The changes written out for up to ten pages — JSON-LD, citable questions and answers, llms.txt and AI-crawler rules, ready to paste or as a pull request. (3) Re-measurement 30 days after you publish, before/after in one document with the raw data. Outcome criterion: at least one citation of your domain in the follow-up runs — if not met, we run another round at no extra charge. Invoiced with 14-day terms. Order it at synligdigital.no/faktura?slug=en-home-sitert&amp;pakke=priser-sitert&amp;lang=en."
       }
     },
     {
@@ -320,7 +320,7 @@
   "estimatedCost": {
     "@type": "MonetaryAmount",
     "currency": "USD",
-    "value": "1400"
+    "value": "1100"
   },
   "step": [
     {
@@ -406,10 +406,12 @@
   .service-card .price { color: var(--blue-700); font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; }
   .service-card p { font-size: 0.92rem; margin-bottom: 12px; }
   /* Inline lead-capture form per service-card. Mirrors the Norwegian /
-     homepage 4-tier inline-form pattern that was English-side missing
-     until 2026-06-10: an English buyer wanting Foundation (NOK 14,900) or
-     Continuous (NOK 4,900/mo) had to drop to mailto:hei@synligdigital.no
-     while a Norwegian buyer could one-click Stripe. POST → /api/lead-capture
+     homepage inline-form pattern that was English-side missing until
+     2026-06-10, when an English buyer had to drop to mailto while a
+     Norwegian buyer could one-click Stripe. (The two tiers that gap
+     applied to were discontinued 2026-08-08; their prices are deliberately
+     not restated here — a comment quoting a retired price is a carrier of
+     it.) POST → /api/lead-capture
      → leadLangFromReferrer detects /en/ → checkout-handler renders Stripe
      in English (locale=en, metadata.lang=en, English success_url to takk
      page) per checkout-en-i18n.test.ts contract. */
@@ -475,7 +477,9 @@
   .audit-result-issue-cat { display: inline-block; font-size: 0.74rem; font-weight: 600; color: var(--gray-600); background: var(--gray-100, #f3f4f6); padding: 1px 6px; border-radius: 3px; margin-right: 6px; text-transform: uppercase; letter-spacing: 0.03em; vertical-align: 1px; }
   .audit-result-cta { display: inline-block; background: var(--green-600); color: var(--white); padding: 10px 18px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.95rem; margin-top: 4px; border: none; cursor: pointer; font-family: inherit; }
   .audit-result-cta:hover { background: var(--green-500); }
-  /* Secondary tier button — Analysis (NOK 4,900) step-up from the Lite default.
+  /* Secondary tier button — step-up from the Lite default (the tier it
+     originally named was discontinued 2026-08-08; it now points at the
+     flagship, and the price lives in TIERS, not in this comment).
      Outline-style green mirrors the case-page dual-tier pattern shipped at
      /audit + /en/case/nordic-lithium (2026-06-05). Keeps the higher-tier
      write-up discoverable without pulling attention from the impulse-buy
@@ -556,7 +560,7 @@
   <div id="auditResult" class="audit-result" hidden></div>
 
   <div class="hero-cta-row">
-    <a href="/faktura?slug=en-home-sitert&amp;pakke=priser-sitert&amp;lang=en" class="btn-primary">Order the Sitert package — NOK 9,900 →</a>
+    <a href="/faktura?slug=en-home-sitert&amp;pakke=priser-sitert&amp;lang=en" class="btn-primary">Order the Sitert package — USD 1,100 →</a>
     <a href="mailto:hei@synligdigital.no" class="btn-secondary">Email us directly</a>
   </div>
 </section>
@@ -576,23 +580,20 @@
     <li><strong>Monthly monitoring.</strong> Visibility tracking, content updates, and quarterly review of what shifted in the AI assistants you care about.</li>
   </ul>
 
-  <!-- 2026-08-12: the EN ladder was four cards; three of them sold tiers
-       discontinued 2026-08-08 through a live Stripe rail, so an international
-       buyer could pay by card for something we no longer deliver. Live EN
-       offer set is now exactly two, and this comment names only those two on
-       purpose: the next defect sweep greps source, and a correction that
-       quotes a retired price is itself a carrier of it.
-         Citation measurement  NOK 9,900  — invoiced, flagship, no card rail
-                                            (/api/lead-capture needs an email
-                                            a mailto click cannot supply, so
-                                            it is an anchor, not a submit)
-         AEO Lite              USD 92     — Stripe card rail -->
+  <!-- Live EN offer set is exactly two cards (the other three sold tiers
+       discontinued 2026-08-08). Do NOT restate the prices here: this comment
+       used to carry its own price table and went stale the day the
+       cross-border rail shipped, still claiming the flagship had "no card
+       rail". Prices are derived from TIERS in bin/cross-border-invoice.ts and
+       enforced at build time by _partials/en-price-gate.ts — read them there.
+       Lite's email field is a submit (/api/lead-capture needs an address a
+       mailto click cannot supply); the flagship's is an anchor to /faktura. -->
   <div class="services">
     <div class="service-card service-card-primary">
       <h3>The Sitert package</h3>
-      <div class="price">NOK 9,900</div>
-      <p>The measurement is free. This is the fix. Five buying-intent questions from your market, each run at least nine times over several days with byte-identical prompts &mdash; then <strong>the changes written out</strong> for every page that blocks citation (schema, answer blocks, titles, copy), paste-ready or as a pull request, plus a re-measurement after 30 days with the same questions and the same method. You get the before-and-after numbers, the names of who gets cited instead, and the raw data so you can re-run it yourself. If a high-priority item is not delivered as promised, we redo the work without a new invoice. Invoiced, 14-day terms.</p>
-      <a class="service-card-cta" href="/faktura?slug=en-home-sitert&amp;pakke=priser-sitert&amp;lang=en">Order the Sitert package — NOK 9,900 →</a>
+      <div class="price">USD 1,100</div>
+      <p>The measurement is free. This is the fix. Five buying-intent questions from your market, each run at least nine times over several days with byte-identical prompts &mdash; then <strong>the changes written out</strong> for every page that blocks citation (schema, answer blocks, titles, copy), paste-ready or as a pull request, plus a re-measurement after 30 days with the same questions and the same method. You get the before-and-after numbers, the names of who gets cited instead, and the raw data so you can re-run it yourself. If a high-priority item is not delivered as promised, we redo the work without a new invoice. Invoiced from AS Åmdal Invest (Norway), 14-day terms, card payment link included. USD 1,100 is the export price and covers card and currency conversion; the Norwegian list price is NOK 9,900 excl. VAT. No Norwegian VAT is charged on services exported out of Norway.</p>
+      <a class="service-card-cta" href="/faktura?slug=en-home-sitert&amp;pakke=priser-sitert&amp;lang=en">Order the Sitert package — USD 1,100 →</a>
     </div>
     <div class="service-card">
       <h3>AEO Lite</h3>
@@ -779,7 +780,7 @@ async function runAudit(ev) {
         '<input type="hidden" name="slug" value="audit-en-direct">' +
         '<button type="submit" name="tier" value="lite" class="audit-result-cta">Order Synlig Lite — $92 →</button>' +
       '</form>' +
-      '<a class="audit-result-cta audit-result-cta-secondary" href="/faktura?slug=en-audit-sitert&amp;pakke=priser-sitert&amp;lang=en">Or the Sitert package, changes included — NOK 9,900 →</a>';
+      '<a class="audit-result-cta audit-result-cta-secondary" href="/faktura?slug=en-audit-sitert&amp;pakke=priser-sitert&amp;lang=en">Or the Sitert package, changes included — USD 1,100 →</a>';
     result.innerHTML =
       '<div class="audit-result-head">' +
         '<div class="audit-result-score">' + score + '<span class="audit-result-score-max">/100</span></div>' +
@@ -796,7 +797,7 @@ async function runAudit(ev) {
       '<p class="audit-result-issues-label">Top gaps we found</p>' +
       issuesHtml +
       '<p style="font-size:0.88rem;color:var(--gray-600);margin-bottom:12px">' +
-        'Synlig Lite ships a FAQPage JSON-LD block for one page (3–5 Q&amp;A pairs) by email within one business day — USD 92, one-off, card payment at Stripe checkout. The Cited package fixes what the report above found: we measure the baseline, write out the changes for up to ten pages, and re-measure 30 days after you publish. Outcome criterion in writing — at least one citation of your domain in the follow-up runs, or we run another round at no extra charge — NOK 9,900 excl. VAT, one-off, invoiced.' +
+        'Synlig Lite ships a FAQPage JSON-LD block for one page (3–5 Q&amp;A pairs) by email within one business day — USD 92, one-off, card payment at Stripe checkout. The Cited package fixes what the report above found: we measure the baseline, write out the changes for up to ten pages, and re-measure 30 days after you publish. Outcome criterion in writing — at least one citation of your domain in the follow-up runs, or we run another round at no extra charge — USD 1,100, one-off, invoiced from Norway with a card payment link.' +
       '</p>' +
       formHtml +
       '<p style="margin-top:10px"><button type="button" class="audit-result-redo" onclick="resetAudit()">Try another domain</button></p>';
