@@ -88,6 +88,29 @@ export const EN_PRICES = {
   sitertNok: `NOK ${major(TIERS.sitert.nok)}`,
 } as const;
 
+/**
+ * Every live tier's Norwegian list price, derived from TIERS.
+ *
+ * Arm 3's invariant (header, point 3) is "NOK appears only as the stated
+ * Norwegian list-price basis". The first implementation compared against ONE
+ * string — sitert's — because on 2026-08-14 sitert was the only tier whose NOK
+ * basis appeared anywhere on the EN flat. That is a measured value frozen as a
+ * rule, and it fired the same day: naming Lite's real domestic price (NOK 990,
+ * TIERS.lite.nok) on /en/blog/aeo-agency-norway failed the build as "not the
+ * Norwegian list-price basis" — while a genuinely dead tier (NOK 4,900) fails
+ * for the same reason and for the RIGHT one. Two different verdicts, one
+ * message. (CLAUDE.md: pin the INVARIANT, never the measured VALUE.)
+ *
+ * Derived from the table, so retiring a tier disarms its NOK figure on the next
+ * build; nobody has to remember this set exists.
+ */
+const NOK_BASIS = new Set(
+  Object.values(TIERS)
+    .map((t) => (t as { nok?: number }).nok)
+    .filter((n): n is number => typeof n === "number")
+    .map((n) => `NOK ${major(n)}`),
+);
+
 /** Bare digits a JSON-LD "price" field may carry, derived from the same source. */
 const JSONLD_ALLOWED = new Set([
   String(TIERS.sitert.usd / 100),
@@ -195,9 +218,10 @@ export function runEnPriceGate(
   const nokHits = html.match(/NOK\s?[\d][\d,.]*/g) ?? [];
   for (const raw of nokHits) {
     const norm = raw.replace(/\s+/g, " ").replace(/[.,]$/, "").trim();
-    if (norm !== EN_PRICES.sitertNok) {
+    if (!NOK_BASIS.has(norm)) {
       violations.push(
-        `${label}: "${norm}" is not the Norwegian list-price basis (${EN_PRICES.sitertNok}).`,
+        `${label}: "${norm}" is not a live Norwegian list price ` +
+          `(allowed as stated basis: ${[...NOK_BASIS].join(", ")}; source: TIERS).`,
       );
     }
   }

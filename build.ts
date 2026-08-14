@@ -11,7 +11,7 @@ import { join, basename, resolve } from "path";
 import { applyMarkers, MID_MARKER, BOTTOM_MARKER, LEAD_CAPTURE_PATH, CHECKOUT_HREF_PREFIX, MAILTO_PREFIX, LIVE_PRICE_ANCHORS, type Stage } from "./_partials/render-audit-cta";
 import { runFactSourceGate } from "./_partials/fact-source-gate";
 import { runMetodeMeasureGate } from "./_partials/metode-measure-gate";
-import { runEnPriceCorpusGate, faktura_EN_SURFACE, fakturaConfirmation_EN_SURFACE } from "./_partials/en-price-gate";
+import { runEnPriceCorpusGate, faktura_EN_SURFACE, fakturaConfirmation_EN_SURFACE, EN_PRICES } from "./_partials/en-price-gate";
 import { runNamingProofGate } from "./_partials/naming-proof";
 import { checkEnCitedHowTo } from "./_partials/en-cited-howto";
 import { stripHtmlComments, STRIP_KEEP_PREFIXES } from "./_partials/strip-html-comments";
@@ -1370,6 +1370,46 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
     console.error(`loaded gun pointing at the next fix.)`);
     process.exit(1);
   }
+  // ───────────────────────────────────────────────────────────────────────────
+  // EN-KORPUSET, 2026-08-14 — porten leste fire KATALOGER, og hele den engelske
+  // flaten ligger i ROTEN. Den har altså aldri vært skannet.
+  //
+  // Hva som lå der: /en/blog/aeo-agency-norway solgte fortsatt «four service
+  // levels» — 990 / 4,900 / 14,900 / 4,900 NOK per måned — både i FAQPage-
+  // JSON-LD-en og i fire synlige priskort, seks dager etter at tre av dem ble
+  // lagt ned, inkludert et abonnement vi aldri har hatt i TIERS. Mønstrene
+  // fantes (komma-formene ble lagt til 08-13); det var FILSETTET som var feil.
+  // Nøyaktig samme klasse som prisportens `price`-vs-`value` samme morgen:
+  // en ren port over feil flate er falsk-ren per konstruksjon.
+  //
+  // Egen løkke, ikke en ny PRICING_GATED_DIRS-oppføring: roten inneholder ~20
+  // norske filer (pico.html oppgir en HISTORISK leveranse til 4 900 i mars, som
+  // er en sann kjensgjerning og ikke en pris vi selger). Denne skanner en*.html,
+  // altså akkurat den flaten en utenlandsk kjøper lander på, med BAN-semantikk.
+  {
+    const EN_ROOT = "/workspace/synlig-site";
+    const enFiles = readdirSync(EN_ROOT).filter((f) => /^en.*\.html$/.test(f));
+    if (enFiles.length < 6) {
+      console.error(`\n[BUILD FAIL] dead-tier gate: ${enFiles.length} en*.html at root, floor is 6.`);
+      console.error(`Enten er sider slettet, eller så gikk porten nettopp blind.`);
+      process.exit(1);
+    }
+    const enViolations: string[] = [];
+    for (const f of enFiles) {
+      const text = readFileSync(join(EN_ROOT, f), "utf-8");
+      for (const [re, why] of DEAD_TIER_PATTERNS) {
+        if (re.test(text)) enViolations.push(`${f}: ${why}`);
+      }
+    }
+    if (enViolations.length > 0) {
+      console.error(`\n[BUILD FAIL] dead-tier gate (EN-korpus, ${enViolations.length} avvik):`);
+      for (const v of enViolations) console.error(`  - ${v}`);
+      console.error(`\nLive EN-tilbud: AEO Lite ${EN_PRICES.liteUsd} + the Cited package ${EN_PRICES.sitertUsd}, begge engangs.`);
+      process.exit(1);
+    }
+    scanned += enFiles.length;
+  }
+
   const ratchetLine = Object.entries(ratchetCounts)
     .map(([d, n]) => `${d.split("/").pop()}=${n}`)
     .join(" ");

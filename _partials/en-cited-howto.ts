@@ -143,6 +143,34 @@ function firstDiff(a: unknown, b: unknown, path = ""): string | null {
 const MIN_HTML_BYTES = 5_000;
 
 /**
+ * RETAINER-VOKABULAR — den samme påstanden, ett felt unna.
+ *
+ * Da HowTo-noden var rettet, sto det NEDLAGTE programmet fortsatt i WebPage-
+ * nodens description på samme side: «Free AEO score, written audit, full
+ * implementation, and continuous monitoring». En port bygget rundt ÉN node er
+ * per konstruksjon blind for søskenet i neste blokk — nøyaktig samme form som
+ * prisporten som leste feltet `price` og ikke `value` samme morgen.
+ *
+ * Derfor leses ALLE JSON-LD-blokker på EN-forsiden etter ord som bare kan
+ * beskrive et abonnement. Vi selger ett engangsprodukt; en retainer finnes ikke
+ * i prislisten (TIERS har to engangs-tiers).
+ *
+ * BASISRATE MÅLT FØR PORTEN BLE SKREVET (CLAUDE.md: en «defekt» flertallet har,
+ * er basisraten, ikke en defekt): på en.html traff listen 2 av 2 kjente
+ * defekter og 0 andre steder. På resten av EN-korpuset traff «full
+ * implementation» ÉN blogg-FAQ som beskriver KUNDENS implementeringstid, ikke
+ * vårt tilbud — derfor er porten scoped til forsiden, og derfor står ikke
+ * «written audit» på listen: den er tvetydig (vi leverer skriftlig rapport).
+ */
+const RETAINER_VOCAB = [
+  "continuous monitoring",
+  "monthly measurement",
+  "continuous adjustment",
+  "per month",
+  "/mo",
+];
+
+/**
  * GULV FØRST: tom, kort eller node-løs inngang er FEIL, ikke «ingen avvik».
  * En port som er grønn når HowTo-noden forsvant, sertifiserer en tom flate —
  * og det er nøyaktig feilmodusen (falsk-CLEAN på fraværende input) CLAUDE.md
@@ -201,6 +229,20 @@ export function checkEnCitedHowTo(html: string, label = "en.html"): string[] {
       `${label}: the HowTo node has forked from _partials/en-cited-howto.ts → ${diff}. ` +
         `Change the product in that module; the page is its serialisation, not a second opinion.`,
     );
+  }
+
+  // Samme påstand, andre noder. Leses på hele JSON-LD-laget, ikke bare HowTo-en.
+  for (const [i, b] of blocks.entries()) {
+    const lower = b[1].toLowerCase();
+    for (const dead of RETAINER_VOCAB) {
+      if (lower.includes(dead)) {
+        v.push(
+          `${label}: JSON-LD block ${i + 1} sells a retainer ("${dead}"). ` +
+            `TIERS has two one-off tiers and no subscription — this is the retired programme ` +
+            `surviving in a node nobody reads with their eyes.`,
+        );
+      }
+    }
   }
   return v;
 }
