@@ -114,7 +114,11 @@ const OG_IMAGE = "https://synligdigital.no/og-2026-08.png";
           class="nav-links absolute left-0 right-0 top-16 hidden flex-col gap-4 border-b border-line bg-paper px-6 py-5 sm:static sm:flex sm:flex-row sm:items-center sm:gap-6 sm:border-0 sm:bg-transparent sm:px-0 sm:py-0"
         >
           <li><a href="/leaderboard">Leaderboard</a></li>
-          <li><a href="/case/pierstop">Metode-case</a></li>
+          <!-- 2026-08-09: «Metode-case» pekte på ÉN case-side (/case/pierstop).
+               Begge case-ene ligger fortsatt i footeren og i bevis-seksjonen på
+               forsiden; nav-plassen går nå til /metode, siden en teknisk kjøper
+               trenger før han bestiller. Samme antall lenker. -->
+          <li><a href="/metode">Metode</a></li>
           <li><a href="/blogg">Blogg</a></li>
           <li><a href="/rapport/state-of-aeo-2026">Rapport</a></li>
           <li><a href="/priser">Priser</a></li>
@@ -143,7 +147,13 @@ const OG_IMAGE = "https://synligdigital.no/og-2026-08.png";
           <div class="footer-links">
             <h4>Tjenester</h4>
             <ul>
-              <li><a href="#tjenester">Sitert-måling</a></li>
+              <!-- ABSOLUTT, ikke bar fragment-lenke. Footeren rendres på HVER
+                   Astro-side, og #tjenester finnes bare på forsiden: målt live
+                   2026-08-09 hadde alle 39 porterte sider (36 blogginnlegg +
+                   3 case) to døde footer-lenker — den ene er bestillings-CTA-en.
+                   Det er nøyaktig sidene AI-motorene siterer og som en
+                   AI-henvist leser lander på. -->
+              <li><a href="/#tjenester">Sitert-måling</a></li>
               <li><a href="/leaderboard">Norges AEO-leaderboard</a></li>
               <li><a href="/priser">Selvbetjente pakker</a></li>
             </ul>
@@ -168,9 +178,10 @@ const OG_IMAGE = "https://synligdigital.no/og-2026-08.png";
               <li>
                 <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a>
               </li>
-              <li>4006 Stavanger</li>
+              <li>4010 Stavanger</li>
               <li>Man–fre 09:00–17:00</li>
-              <li><a href="#tjenester">Be om en sitert-måling</a></li>
+              <li><a href="/#tjenester">Be om en sitert-måling</a></li>
+              <li><a href="/metode">Slik måler vi</a></li>
             </ul>
           </div>
         </div>

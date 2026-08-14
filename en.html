@@ -54,7 +54,7 @@
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Stavanger sentrum",
-    "postalCode": "4006",
+    "postalCode": "4010",
     "addressLocality": "Stavanger",
     "addressRegion": "Rogaland",
     "addressCountry": "NO"
@@ -114,15 +114,15 @@
       },
       {
         "@type": "Offer",
-        "name": "Citation measurement — do AI assistants cite you?",
-        "description": "Five buying-intent questions from your market, each run at least nine times across several days with byte-identical prompts. Written answer on whether AI assistants cite you, the names of who gets cited instead, and the raw data so you can re-run the measurement yourself. Invoiced in NOK with 14-day terms; no card rail.",
+        "name": "The Cited package — we make the changes and measure whether AI started citing you",
+        "description": "Three steps: (1) baseline measurement — five buying-intent questions from your market, nine byte-identical runs, naming who gets cited instead. (2) The changes written out for up to ten pages — JSON-LD, citable questions and answers, llms.txt and AI-crawler rules, ready to paste or as a pull request. (3) Re-measurement 30 days after you publish, before/after in one document with the raw data. Outcome criterion: at least one citation of your domain in the follow-up runs — if not met, we run another round at no extra charge. Invoiced in NOK with 14-day terms; no card rail.",
         "price": "9900",
         "priceCurrency": "NOK",
         "url": "https://synligdigital.no/en/",
         "itemOffered": {
           "@type": "Service",
-          "name": "AI citation measurement",
-          "serviceType": "AEO Measurement",
+          "name": "AEO implementation with before/after citation measurement",
+          "serviceType": "AEO Implementation",
           "provider": { "@id": "https://synligdigital.no/#organization" }
         }
       }
@@ -188,7 +188,7 @@
       "name": "Who is Synlig Digital and what do you do?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Synlig Digital is a small Answer Engine Optimization consultancy based in Stavanger, Norway. We help businesses become visible in ChatGPT, Perplexity, Google AI Overview, and other AI assistants. We offer a free AEO score on synligdigital.no/en/, AEO Lite — FAQPage schema for one page (USD 92) — and a citation measurement (NOK 9,900) that tests whether AI assistants cite you by name and reports who gets cited instead."
+        "text": "Synlig Digital is a small Answer Engine Optimization consultancy based in Stavanger, Norway. We help businesses become visible in ChatGPT, Perplexity, Google AI Overview, and other AI assistants. We offer a free AEO score on synligdigital.no/en/, AEO Lite — FAQPage schema for one page (USD 92) — and the Cited package (NOK 9,900) where we make the changes that block citation across up to ten pages and then measure whether AI started citing you."
       }
     },
     {
@@ -204,7 +204,7 @@
       "name": "How much does AEO cost at Synlig Digital?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Two packages. Free AEO score on synligdigital.no/en/ (runs live, no email). AEO Lite — FAQPage schema for one page: USD 92, one-off, delivery in one business day, card payment in USD at Stripe checkout. Citation measurement: NOK 9,900 excl. VAT, one-off — five buying-intent questions from your market, each run at least nine times over several days with byte-identical prompts, with a written answer on whether AI assistants cite you, the names of who gets cited instead, and the raw data so you can re-run it yourself. Invoiced with 14-day terms. Email hei@synligdigital.no to order it."
+        "text": "Two packages. Free AEO score on synligdigital.no/en/ (runs live, no email). AEO Lite — FAQPage schema for one page: USD 92, one-off, delivery in one business day, card payment in USD at Stripe checkout. The Cited package: NOK 9,900 excl. VAT, one-off — three steps. (1) Baseline measurement: five buying-intent questions from your market, nine byte-identical runs, naming who gets cited instead. (2) The changes written out for up to ten pages — JSON-LD, citable questions and answers, llms.txt and AI-crawler rules, ready to paste or as a pull request. (3) Re-measurement 30 days after you publish, before/after in one document with the raw data. Outcome criterion: at least one citation of your domain in the follow-up runs — if not met, we run another round at no extra charge. Invoiced with 14-day terms. Order it at synligdigital.no/faktura?slug=en-home-sitert&amp;pakke=priser-sitert&amp;lang=en."
       }
     },
     {
@@ -556,7 +556,7 @@
   <div id="auditResult" class="audit-result" hidden></div>
 
   <div class="hero-cta-row">
-    <a href="mailto:hei@synligdigital.no?subject=Free%20AEO%20audit&amp;body=Hi%20Synlig%20Digital%2C%0A%0APlease%20run%20a%20free%20AEO%20audit%20on%3A%0A%0A%5Byour%20URL%5D%0A%0AA%20couple%20of%20lines%20about%20what%20the%20business%20does%20would%20also%20help.%0A%0AThanks!" class="btn-primary">Or get a written audit by email →</a>
+    <a href="/faktura?slug=en-home-sitert&amp;pakke=priser-sitert&amp;lang=en" class="btn-primary">Order the Sitert package — NOK 9,900 →</a>
     <a href="mailto:hei@synligdigital.no" class="btn-secondary">Email us directly</a>
   </div>
 </section>
@@ -589,10 +589,10 @@
          AEO Lite              USD 92     — Stripe card rail -->
   <div class="services">
     <div class="service-card service-card-primary">
-      <h3>Citation measurement</h3>
+      <h3>The Sitert package</h3>
       <div class="price">NOK 9,900</div>
-      <p>Five buying-intent questions from your market, each run at least nine times over several days with byte-identical prompts. You get a written answer on whether AI assistants cite you, the names of who gets cited instead, and the raw data so you can re-run it yourself. Invoiced, 14-day terms.</p>
-      <a class="service-card-cta" href="mailto:hei@synligdigital.no?subject=Citation%20measurement%20%E2%80%94%20en-home&amp;body=Hi%2C%0A%0AWe%20would%20like%20to%20request%20a%20citation%20measurement%20(NOK%209%2C900%20excl.%20VAT%2C%20one-off).%0A%0ACould%20you%20reply%20by%20email%20with%20five%20suggested%20questions%20from%20our%20market%20and%20when%20the%20measurement%20can%20run%3F%0A%0ABest%20regards%2C%0A">Request a citation measurement — NOK 9,900 →</a>
+      <p>The measurement is free. This is the fix. Five buying-intent questions from your market, each run at least nine times over several days with byte-identical prompts &mdash; then <strong>the changes written out</strong> for every page that blocks citation (schema, answer blocks, titles, copy), paste-ready or as a pull request, plus a re-measurement after 30 days with the same questions and the same method. You get the before-and-after numbers, the names of who gets cited instead, and the raw data so you can re-run it yourself. If a high-priority item is not delivered as promised, we redo the work without a new invoice. Invoiced, 14-day terms.</p>
+      <a class="service-card-cta" href="/faktura?slug=en-home-sitert&amp;pakke=priser-sitert&amp;lang=en">Order the Sitert package — NOK 9,900 →</a>
     </div>
     <div class="service-card">
       <h3>AEO Lite</h3>
@@ -623,7 +623,7 @@
 <section>
   <h2>If you want to talk</h2>
   <p>The fastest way is email: <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a>. Mention what your business does and the URL. We reply within one working day, usually faster.</p>
-  <p>If you want your own AEO score first, email <a href="mailto:hei@synligdigital.no?subject=Free%20AEO%20audit&amp;body=Hi%2C%20please%20run%20a%20free%20AEO%20audit%20on%3A%0A%0A%5Byour%20URL%5D%0A%0AThanks!">hei@synligdigital.no</a> with the subject "Free AEO audit" and your URL in the body. We reply with a 0–100 score, the structural gaps we found, and a prioritized fix list, typically within one working day. (A Norwegian self-serve version of the same check is at <a href="https://sjekk.synligdigital.no">sjekk.synligdigital.no</a> for Norwegian visitors.)</p>
+  <p>If you want your own AEO score first, don't email us — <a href="#auditBox">run it yourself at the top of this page</a>. Same engine, in English, about 30 seconds, no email required: a 0–100 score and the structural gaps we found. It measures whether your pages are machine-readable. It does not tell you whether AI actually cites you — that needs its own measurement, and the changes are what you pay for.</p>
 
   <div class="tool-callout">
     <p><strong>About the tool you may have come from.</strong> <a href="https://piiiico.github.io/llm-smell-check/">LLM Smell Check</a> is a small open-source thing we put together because we kept seeing AI-shaped marketing copy in the wild and wanted a way to score it. It runs entirely in your browser, nothing is uploaded. Code is on <a href="https://github.com/piiiico/llm-smell-check">GitHub</a>; patches welcome.</p>
@@ -634,8 +634,8 @@
 
 <footer>
   <div class="container">
-    <p>Synlig Digital · Stavanger sentrum, 4006 Stavanger, Norway</p>
-    <p><a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> · <a href="/">Norsk</a> · <a href="mailto:hei@synligdigital.no?subject=Free%20AEO%20audit&amp;body=Hi%2C%20please%20run%20a%20free%20AEO%20audit%20on%3A%0A%0A%5Byour%20URL%5D%0A%0AThanks!">Free AEO audit by email</a></p>
+    <p>Synlig Digital · Stavanger sentrum, 4010 Stavanger, Norway</p>
+    <p><a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> · <a href="/">Norsk</a> · <a href="/en/#auditBox">Free AEO score</a></p>
   </div>
 </footer>
 
@@ -779,7 +779,7 @@ async function runAudit(ev) {
         '<input type="hidden" name="slug" value="audit-en-direct">' +
         '<button type="submit" name="tier" value="lite" class="audit-result-cta">Order Synlig Lite — $92 →</button>' +
       '</form>' +
-      '<a class="audit-result-cta audit-result-cta-secondary" href="mailto:hei@synligdigital.no?subject=Citation%20measurement%20%E2%80%94%20en-audit&amp;body=Hi%2C%0A%0AWe%20just%20ran%20the%20free%20check%20on%20our%20site%20and%20would%20like%20to%20request%20a%20citation%20measurement%20(NOK%209%2C900%20excl.%20VAT%2C%20one-off).%0A%0ABest%20regards%2C%0A">Or a citation measurement — NOK 9,900 →</a>';
+      '<a class="audit-result-cta audit-result-cta-secondary" href="/faktura?slug=en-audit-sitert&amp;pakke=priser-sitert&amp;lang=en">Or the Sitert package, changes included — NOK 9,900 →</a>';
     result.innerHTML =
       '<div class="audit-result-head">' +
         '<div class="audit-result-score">' + score + '<span class="audit-result-score-max">/100</span></div>' +
@@ -796,7 +796,7 @@ async function runAudit(ev) {
       '<p class="audit-result-issues-label">Top gaps we found</p>' +
       issuesHtml +
       '<p style="font-size:0.88rem;color:var(--gray-600);margin-bottom:12px">' +
-        'Synlig Lite ships a FAQPage JSON-LD block for one page (3–5 Q&amp;A pairs) by email within one business day — USD 92, one-off, card payment at Stripe checkout. A citation measurement runs five buying-intent questions from your market at least nine times each and reports whether AI assistants cite you by name, who gets cited instead, and the raw data — NOK 9,900 excl. VAT, one-off, invoiced.' +
+        'Synlig Lite ships a FAQPage JSON-LD block for one page (3–5 Q&amp;A pairs) by email within one business day — USD 92, one-off, card payment at Stripe checkout. The Cited package fixes what the report above found: we measure the baseline, write out the changes for up to ten pages, and re-measure 30 days after you publish. Outcome criterion in writing — at least one citation of your domain in the follow-up runs, or we run another round at no extra charge — NOK 9,900 excl. VAT, one-off, invoiced.' +
       '</p>' +
       formHtml +
       '<p style="margin-top:10px"><button type="button" class="audit-result-redo" onclick="resetAudit()">Try another domain</button></p>';

@@ -10,7 +10,9 @@ import { readdirSync, readFileSync, statSync } from "fs";
 import { join, basename, resolve } from "path";
 import { applyMarkers, MID_MARKER, BOTTOM_MARKER, LEAD_CAPTURE_PATH, CHECKOUT_HREF_PREFIX, MAILTO_PREFIX, LIVE_PRICE_ANCHORS, type Stage } from "./_partials/render-audit-cta";
 import { runFactSourceGate } from "./_partials/fact-source-gate";
+import { runMetodeMeasureGate } from "./_partials/metode-measure-gate";
 import { stripHtmlComments, STRIP_KEEP_PREFIXES } from "./_partials/strip-html-comments";
+import { injectLegalIdentity, hasFooter, LEGAL_MARKER, LEGAL, DEAD_POSTAL_CODES } from "./_partials/legal-identity";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // DUPLICATE-WRITER GUARD — single-writer invariant for synlig-worker/worker.ts
@@ -470,6 +472,31 @@ console.log(`[build] visit-beacon injected into ${staticHit.hit + verticalHit.hi
     process.exit(1);
   }
   console.log(`  ✅ JSON-LD parse gate: ${blocks} blocks across ${surfaces} surfaces, all valid.`);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PÅSTAND-MOT-PRIMÆRKILDE-PORT for måletabellen på /metode.
+//
+// Tredje gang samme klasse ryker på nøyaktig disse tallene, så dette er en
+// kodeport, ikke enda et avsnitt prosa: 2026-08-06 sto case-sidens
+// title/H1/lead igjen med den tilbaketrukne februar-påstanden; 2026-08-06/07
+// ble ett-utvalgs-tallet «sitert i 3 av 5» sitert to ganger eksternt; og
+// 2026-08-12 sto /metode med overskriften «To av fem svar holdt. Tre svingte.»
+// rett over sin egen tabell der TRE rader var merket «Holdt i hver eneste
+// kjøring». Porten leser de SERVERTE bytene og regner om fra primærkilden.
+// Renderer: /workspace/synlig-site/_partials/metode-measure-gate.ts
+// ─────────────────────────────────────────────────────────────────────────────
+{
+  const g = runMetodeMeasureGate(files.METODE_HTML, "dist/metode/index.html");
+  if (g.violations.length > 0) {
+    console.error(`\n[BUILD FAIL] /metode måletall stemmer ikke med primærkilden (${g.violations.length} avvik):`);
+    for (const v of g.violations) console.error(`  - ${v}`);
+    console.error(`\nPrimærkilde: /workspace/money/aeo/leaderboard-score-vs-citation-2026-08-08.json`);
+    console.error(`Rader og overskrift REGNES UT i _partials/metode-measurements.ts — retter du et`);
+    console.error(`tall i src/pages/metode.astro for hånd, er det feilen, ikke porten.`);
+    process.exit(1);
+  }
+  console.log(`  ✅ /metode måletall-port: ${g.rows} rader avstemt mot primærkilden.`);
 }
 
 // Sitemap assertion: every ACTIVE vertical in VERTICAL_LANDINGS must appear in
@@ -1022,6 +1049,24 @@ const DEAD_TIER_PATTERNS: Array<[RegExp, string]> = [
   [/14[  ]900/, "Fundament 14 900 — discontinued 2026-08-08"],
   [/\$1,400|\$460/, "Foundation/Analysis USD mirror — discontinued 2026-08-08"],
   [/value="(handlingsplan|fundament|lopende)"/, "checkout button for a discontinued tier"],
+  // 2026-08-13 — SECOND escape of the same class, so it graduates to a pattern.
+  // The four rules above match how WE write the numbers (thin space, dollar
+  // sign). Two live prospect reports and two EN blog posts wrote the SAME dead
+  // tiers as "NOK 4,900", "USD 460" and "NOK 14,900" — comma-grouped and
+  // currency-prefixed — and every one of them read CLEAN through the gate for
+  // five days while carrying a working order link. A price is a claim, not a
+  // string: match the amount in the separator forms we actually publish.
+  [/\b4[,. ]900\b/, "Analyse/Handlingsplan 4,900 (comma/period form) — discontinued 2026-08-08"],
+  [/\b14[,. ]900\b/, "Fundament 14,900 (comma/period form) — discontinued 2026-08-08"],
+  // Currency approximations of the same dead amounts. USD was the form I
+  // expected; three live cold-reports had been quoting "~€420" the whole time,
+  // and the USD rule read them CLEAN. The load-bearing defense stays the NOK
+  // rule above — every paraphrase so far printed the NOK number beside it —
+  // so this rule lists only forms we have actually published, no invented ranges.
+  [/\b(USD|EUR)[  ]?(460|420|1,?400)\b|€[  ]?420\b/, "Foundation/Analysis foreign-currency paraphrase — discontinued 2026-08-08"],
+  // The tier NAMES, not just their prices: "full Analysis in 5" sold the dead
+  // tier in the EN report template for five days without printing any number.
+  [/full Analysis\b|\(Foundation\b/, "discontinued tier named in prose (Analysis/Foundation)"],
 ];
 if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
   // Extended 2026-06-06 (10th occurrence — Stavanger geo-local + state-of-aeo-2026
@@ -1110,9 +1155,16 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
   ]);
   // Baseline measured 2026-08-12 with the same patterns, after the Astro sweep.
   // Lower it when a legacy dir is cleaned; never raise it.
+  // 2026-08-13: both dirs cleared, so the ratchet closes to 0. It had been
+  // sitting at 10 while only 2 files offended — eight silent slots a future
+  // session could have filled without the build ever complaining. A ratchet
+  // that is not re-tightened when you clear the directory is a gate that only
+  // looks strict. The two remaining offenders were FAQPage JSON-LD on live
+  // /tjenester pages: an AEO company feeding answer engines a price list where
+  // three of four tiers had been discontinued for five days.
   const DEAD_TIER_RATCHET: Record<string, number> = {
-    "/workspace/synlig-site/tjenester": 10,
-    "/workspace/synlig-site/rapport": 1,
+    "/workspace/synlig-site/tjenester": 0,
+    "/workspace/synlig-site/rapport": 0,
   };
   const deadTierViolations: string[] = [];
   const ratchetCounts: Record<string, number> = {};
@@ -1167,7 +1219,11 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
     console.error(`discontinued 2026-08-08. A page quoting one advertises a product we do not`);
     console.error(`deliver, and a checkout button for one takes money for it. Live offer set:`);
     console.error(`Sitert-måling 9 900 kr (invoiced) + Synlig Lite 990 kr (Stripe/faktura).`);
-    console.error(`\nFix: rewrite the copy, or run tools/retire-dead-price-tiers.ts.`);
+    console.error(`\nFix: rewrite the copy. (The 2026-08-12 one-shot sweeps that used to be`);
+    console.error(`recommended here were deleted 2026-08-13: they hard-coded the offer of`);
+    console.error(`their day, so re-running one would have re-injected 271 mailto order rails`);
+    console.error(`the reposition had just removed. A one-shot that outlives its offer is a`);
+    console.error(`loaded gun pointing at the next fix.)`);
     process.exit(1);
   }
   const ratchetLine = Object.entries(ratchetCounts)
@@ -1214,7 +1270,11 @@ const AI_DISCOVERY_SURFACES = [
 // appears. This tolerates language differences (English in agent-card.json,
 // Norwegian in the .txt/.md files) without forcing a single canonical phrase.
 const AI_DISCOVERY_TIER_NEEDLES: Record<string, string[]> = {
-  "sitert-maaling": ["Sitert-måling", "sitert-måling", "Sitert-m%C3%A5ling", "9 900"],
+  // Renamed 2026-08-13 with the offer reposition: we sell the CHANGES plus a
+  // re-measurement, not the report. The old name ("Sitert-måling") named a
+  // deliverable we now give away, so it is NOT an accepted alternate — a
+  // surface still carrying only that string is advertising the retired sale.
+  "sitert-pakken": ["Sitert-pakken", "sitert-pakken"],
   lite:             ["Synlig Lite", "990 NOK", "990 kr"],
 };
 if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
@@ -1253,13 +1313,101 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
     console.error(`\nWhy: llms.txt, priser.md, context.md, agent-card.json and the agent-skills`);
     console.error(`catalogue are what AI assistants fetch when answering "what does Synlig offer?"`);
     console.error(`and "what does it cost?" We are the most-cited host in this category, so what`);
-    console.error(`stands here is what gets quoted back. Live offer set: Sitert-måling 9 900 kr`);
-    console.error(`(invoiced) + Synlig Lite 990 kr.`);
+    console.error(`stands here is what gets quoted back. Live offer set: Sitert-pakken 9 900 kr`);
+    console.error(`(måling + endringene + ny måling, invoiced via /faktura?slug=priser-sitert)`);
+    console.error(`+ Synlig Lite 990 kr.`);
     console.error(`\nFix: name the missing live offer, or delete the discontinued one.`);
     console.error(`Registries: build.ts AI_DISCOVERY_TIER_NEEDLES + DEAD_TIER_PATTERNS.`);
     process.exit(1);
   }
   console.log(`  AI-discovery gate: ${AI_DISCOVERY_SURFACES.length} surfaces carry the live offer set, 0 dead tiers`);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// REFUSED-SALE GATE — 2026-08-13
+//
+// Measured: 4 567 landing impressions, 195 /priser visits, 375 cold emails,
+// 37 replies, 0 purchases, 153 days since the last payment. The free audit
+// created demand for the fix and every buy surface then declined to sell it —
+// the flagship was orderable only by writing us an email, and the pricing page
+// said in as many words that we do not do the implementation.
+//
+// Two shapes, both banned:
+//   (a) any sentence refusing the implementation work
+//   (b) ordering the FLAGSHIP through a mailto: — a rail no funnel stage can
+//       observe, no agent acting for a buyer can complete, and which needs a
+//       human at our end before anything happens. (Support/contact mailtos are
+//       untouched; the pattern requires the flagship in the link.)
+//
+// Written as claims, not as one string: the refusal survived a previous sweep
+// on this site in paraphrase ("Vi selger ikke implementeringsarbeidet etterpå").
+// ─────────────────────────────────────────────────────────────────────────────
+const REFUSED_SALE_PATTERNS: Array<[RegExp, string]> = [
+  [/selger m[åa]lingen,? ikke implementering/i, "refuses the implementation sale"],
+  [/selger ikke implementeringsarbeidet/i, "refuses the implementation sale (paraphrase)"],
+  [/sell the measurement,? not the implementation/i, "refuses the implementation sale (EN)"],
+  [/mailto:[^"'\s]*(?:[Ss]itert-(?:m%C3%A5ling|m[åa]ling|pakke)|Citation%20measurement)/i, "flagship ordered by mailto instead of a structural rail"],
+];
+if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
+  const refusalDirs = [
+    // Root: every hand-written page the worker ships lives here, including the
+    // whole en-*.html surface. Hand-listing files here is what made the gate
+    // false-CLEAN on the day it was written: the pattern for the English
+    // refusal sentence was correct, the file carrying it (en-case-nordic-
+    // lithium.html) was simply never in the target list. Scan the directory.
+    "/workspace/synlig-site",
+    "/workspace/synlig-site/src/content/blogg",
+    "/workspace/synlig-site/src/content/case",
+    "/workspace/synlig-site/tjenester",
+    "/workspace/synlig-site/rapport",
+    "/workspace/synlig-site/reports",
+  ];
+  const refusalFiles = [
+    "/workspace/synlig-site/src/pages/index.astro",
+    "/workspace/synlig-site/src/data/homepage-jsonld.ts",
+    // GENERATORS, not just their output. leaderboard.html is regenerated by a
+    // cron; patching the artifact and leaving the template holding the dead
+    // rail means the next run silently re-ships it — which is exactly what
+    // happened at 09:44 today, minutes after a green build.
+    "/workspace/tools/synlig-leaderboard-html.ts",
+    "/workspace/tools/aeo-audit/src/report-html.ts",
+    ...AI_DISCOVERY_SURFACES,
+  ];
+  const targets: string[] = [...refusalFiles];
+  for (const dir of refusalDirs) {
+    let entries: string[] = [];
+    try {
+      // withFileTypes, not a bare name filter: the site root contains a
+      // DIRECTORY called `.astro`, whose name matches the extension regex.
+      // A bare filter fed it to readFileSync, which threw EISDIR and turned
+      // a clean site into a build failure.
+      entries = readdirSync(dir, { withFileTypes: true })
+        .filter((d) => d.isFile() && /\.(html|astro|md|txt|json)$/.test(d.name))
+        .map((d) => d.name);
+    } catch { entries = []; }
+    for (const f of entries) targets.push(join(dir, f));
+  }
+  // Floor: an empty target list makes this gate pass by scanning nothing.
+  if (targets.length < 250) {
+    console.error(`\n[BUILD FAIL] refused-sale gate: ${targets.length} targets, floor is 250.`);
+    process.exit(1);
+  }
+  const refusalViolations: string[] = [];
+  for (const p of targets) {
+    let text = "";
+    try { text = readFileSync(p, "utf-8"); } catch { refusalViolations.push(`unreadable target: ${p}`); continue; }
+    for (const [re, why] of REFUSED_SALE_PATTERNS) if (re.test(text)) refusalViolations.push(`${p}: ${why}`);
+  }
+  if (refusalViolations.length > 0) {
+    console.error(`\n[BUILD FAIL] refused-sale gate (${refusalViolations.length} issue(s)):`);
+    for (const v of refusalViolations) console.error(`  - ${v}`);
+    console.error(`\nThe free audit exists to create demand for the fix. A surface that refuses`);
+    console.error(`the fix, or sells it through a mailto, converts that demand into nothing.`);
+    console.error(`Order the flagship at /faktura?slug=priser-sitert. Registry: build.ts`);
+    console.error(`REFUSED_SALE_PATTERNS.`);
+    process.exit(1);
+  }
+  console.log(`  Refused-sale gate: ${targets.length} surfaces, 0 refusals, 0 mailto-only flagship rails`);
 }
 
 // Load reports from /workspace/synlig-site/reports/
@@ -1429,6 +1577,8 @@ for (const name of FONT_FILES) {
   }
 
   let removedBytes = 0;
+  let footersInjected = 0;
+  const footerless: string[] = [];
   for (const surface of allSurfaces) {
     const before = surface.html;
     const after = stripHtmlComments(before, surface.keepPrefixes ?? []);
@@ -1450,19 +1600,62 @@ for (const name of FONT_FILES) {
       process.exit(1);
     }
     removedBytes += before.length - after.length;
+
+    // ── LEGAL-IDENTITY INJECTION (2026-08-14, fase 4) ───────────────────────
+    // Runs in this loop on purpose: allSurfaces is the ONLY place that has
+    // every shipped registry in one array behind one empty-input floor. A
+    // separate pass over `files` alone would have missed the 193 reports and
+    // 8 verticals — which is the exact shape of the 2026-08-08 pricing-gate
+    // failure (gate scanned 57 files, reports/ was not one of them).
+    // Injection AFTER the strip, so the marker cannot be eaten as a comment.
+    const shipped = injectLegalIdentity(after);
+    if (hasFooter(after) && !shipped.includes(LEGAL_MARKER)) {
+      console.error(`\n[BUILD FAIL] legal-identity: ${surface.key} has a <footer> but injection produced no marker.`);
+      console.error(`Source: /workspace/synlig-site/_partials/legal-identity.ts`);
+      process.exit(1);
+    }
+    if (hasFooter(after)) footersInjected++;
+    else footerless.push(surface.key);
+
+    // ── DEAD POSTAL CODE BAN ────────────────────────────────────────────────
+    // Same surface set, same loop — so this can never be "clean over the wrong
+    // fileset" the way the pricing gate was for four days. Ban, not swap: 4006
+    // lived in prose, FAQ answer text, three LocalBusiness schema blocks and
+    // two hand-written footers, and a string swept once comes back.
+    for (const dead of DEAD_POSTAL_CODES) {
+      if (shipped.includes(dead)) {
+        console.error(`\n[BUILD FAIL] dead postal code "${dead}" in ${surface.key}.`);
+        console.error(`Brreg-registrert postnummer er ${LEGAL.postalCode}. Kilde: _partials/legal-identity.ts.`);
+        process.exit(1);
+      }
+    }
+
     // Write back to the respective registry
     if (surface.key.startsWith("REPORT_")) {
       const hash = surface.key.slice("REPORT_".length);
       const entry = reportEntries.find(r => r.hash === hash);
-      if (entry) entry.html = after;
+      if (entry) entry.html = shipped;
     } else if (surface.key in verticalFiles) {
-      verticalFiles[surface.key] = after;
+      verticalFiles[surface.key] = shipped;
     } else {
-      (files as Record<string, string>)[surface.key] = after;
+      (files as Record<string, string>)[surface.key] = shipped;
     }
   }
   const filesCount = allSurfaces.filter(s => !s.key.startsWith("REPORT_") && !(s.key in verticalFiles) && s.key.endsWith("_HTML")).length;
   console.log(`  ✅ Comment-strip: ${allSurfaces.length} surfaces (${filesCount} files + ${Object.keys(verticalFiles).length} verticals + ${reportEntries.length} reports), ${removedBytes} bytes withheld.`);
+
+  // Empty-input floor for the legal-identity pass itself. Without this, a
+  // future refactor that stops matching footers would report "0 injected" as
+  // success — false-CLEAN on absent input, the recurring gate failure mode.
+  // 250 surfaces exist; ~30 legacy pages + 193 reports + 1 Astro layout carry
+  // a footer, so anything under 200 means the matcher broke, not that the
+  // pages changed.
+  if (footersInjected < 200) {
+    console.error(`\n[BUILD FAIL] legal-identity: only ${footersInjected} surfaces got the org.nr block (expected ≥200).`);
+    console.error(`Footerless surfaces (${footerless.length}): ${footerless.slice(0, 12).join(", ")}${footerless.length > 12 ? " …" : ""}`);
+    process.exit(1);
+  }
+  console.log(`  ✅ Legal identity: ${LEGAL.entity} (org.nr ${LEGAL.orgnrPlain}) in ${footersInjected} footers; ${footerless.length} surfaces have no <footer>.`);
 }
 
 // Escape backticks and dollar signs for template literals
@@ -1499,7 +1692,7 @@ const worker = `// Auto-generated Cloudflare Worker — do not edit by hand.
 import { handleAuditRequest } from "./audit-handler";
 import { handleBevisRequest } from "./bevis-handler";
 import { handleBrregSearch } from "./brreg-handler";
-import { handleCheckoutRequest, handleFundamentCheckout, handleLiteCheckout, handleLopendeCheckout, handleLeadCapture, handleStripeWebhook, handleTakkPage } from "./checkout-handler";
+import { handleLiteCheckout, handleLeadCapture, handleStripeWebhook, handleTakkPage } from "./checkout-handler";
 import { handleFakturaSubmit } from "./faktura-handler";
 
 const INDEX_HTML = \`${escape(files.INDEX_HTML)}\`;
@@ -2411,26 +2604,20 @@ export default {
       return handleLiteCheckout(request, env);
     }
 
-    // Stripe Checkout entry: GET /api/handlingsplan-checkout?slug=<attribution>[&lead=<token>]
-    // Creates a Stripe Checkout Session (live 4 900 NOK Synlig Handlingsplan AEO)
-    // and 302-redirects to session.url. Source: checkout-handler.ts.
-    if (pathname === "/api/handlingsplan-checkout") {
-      return handleCheckoutRequest(request, env);
-    }
-
-    // Tier 2 — GET /api/fundament-checkout?slug=<attribution>
-    // 14 900 NOK single-payment Synlig Fundament AEO. Source: checkout-handler.ts.
-    // Wired 2026-05-20 after dogfood revealed missing router case (handler existed
-    // but was unimported); /priser shipped same day referenced this route.
-    if (pathname === "/api/fundament-checkout") {
-      return handleFundamentCheckout(request, env);
-    }
-
-    // Tier 3 — GET /api/lopende-checkout?slug=<attribution>
-    // 4 900 NOK/mnd recurring subscription, Synlig Løpende overvåking AEO.
-    // Source: checkout-handler.ts. Wired 2026-05-20 (same dogfood fix as Tier 2).
-    if (pathname === "/api/lopende-checkout") {
-      return handleLopendeCheckout(request, env);
+    // RETIRED RAILS — /api/{handlingsplan,fundament,lopende}-checkout.
+    // The 4 900 / 14 900 / 4 900-per-mnd tiers were retired 2026-08-08. Live
+    // offer is 990 Lite (card) + 9 900 sitert-måling (mailto + /faktura).
+    // The BUTTONS went 08-08; the ROUTES kept minting real cs_live sessions
+    // until 08-13, so anyone holding a shared or bookmarked link from that
+    // window could pay by card for something we no longer deliver. Measured
+    // 08-13: 427 sessions since 08-08, 0 paid — caught before any refund case.
+    // The handlers are DELETED, not merely unrouted, so re-adding a route
+    // cannot silently re-arm the rail. Pinned by dead-tier-rail.test.ts.
+    if (pathname === "/api/handlingsplan-checkout" || pathname === "/api/fundament-checkout" || pathname === "/api/lopende-checkout") {
+      return new Response(null, {
+        status: 302,
+        headers: { "Location": "https://synligdigital.no/priser", "Cache-Control": "no-store" },
+      });
     }
 
     // Stripe webhook: POST /api/stripe-webhook
@@ -2490,6 +2677,22 @@ export default {
       return new Response(null, {
         status: 301,
         headers: { "Location": "https://synligdigital.no/#kontakt", "Cache-Control": "public, max-age=86400" },
+      });
+    }
+    // /om — 2026-08-14 fase 4. Målt live samme morgen: /om svarte 404.
+    // AVGJØRELSEN ER EKSPLISITT: vi bygger IKKE en om-oss-side.
+    // Grunnen: /metode gjør allerede jobben en teknisk kjøper trenger (protokoll,
+    // hva vi ikke påstår, hvordan målingen kjøres), og en tynn om-side er verre
+    // enn ingen. Det /om-siden ville svart på som /metode IKKE svarte på var
+    // «hvilket selskap fakturerer meg, og kan jeg slå det opp?» — og det svaret
+    // hører hjemme i footeren på HVER side, ikke på én side kjøperen må finne.
+    // Det ligger nå i _partials/legal-identity.ts (org.nr + Brreg-lenke, injisert
+    // i ~250 flater med byggeport). Denne 301-en finnes bare for å drepe 404-en
+    // for den som gjetter URL-en. Ikke bygg /om senere uten å lese den fila.
+    if (pathname === "/om" || pathname === "/om/" || pathname === "/om-oss" || pathname === "/om-oss/") {
+      return new Response(null, {
+        status: 301,
+        headers: { "Location": "https://synligdigital.no/metode", "Cache-Control": "public, max-age=86400" },
       });
     }
 

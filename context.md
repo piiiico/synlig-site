@@ -3,7 +3,7 @@
 > Norsk AEO-byrå som måler om AI-assistentar siterer merkevaren din — og namngjev kven dei siterer i staden.
 
 **Selskap:** Synlig Digital  
-**Adresse:** 4006 Stavanger, Rogaland, Noreg  
+**Adresse:** 4010 Stavanger, Rogaland, Noreg  
 **E-post:** hei@synligdigital.no  
 **Nettstad:** https://synligdigital.no  
 **Dagleg leiar:** Håkon Åmdal  
@@ -25,10 +25,10 @@ To pakkar. Alle prisar er eks. MVA.
 
 | Teneste | Pris | Type | Levering |
 |---------|------|------|----------|
-| Sitert-måling (måler om AI siterer merkevaren din) | 9 900 NOK | Eingong | Skriftleg rapport på e-post |
+| Sitert-pakken (måling, endringane, ny måling etter 30 dagar) | 9 900 NOK | Eingong | Endringar + før/etter-dokument på e-post |
 | Synlig Lite (FAQPage for éi side) | 990 NOK | Eingong | 1 virkedag |
 
-Sitert-måling er hovudleveransen: fem kjøpsnære spørsmål, minst ni kjøringar over fleire dagar med byte-identiske prompt, og namn på kven AI siterer i staden. Faktura med 14 dagars frist, ingen møte. Synlig Lite er det minste steget — ho endrar éi side slik at ho er lettare å sitere, men måler ingenting.
+Sitert-pakken er hovudleveransen: (1) nullpunktsmåling — fem kjøpsnære spørsmål, ni byte-identiske kjøringar, og namn på kven AI siterer i staden; (2) endringane skrivne ferdig for inntil ti sider (JSON-LD, sitatvennlege spørsmål og svar, llms.txt, AI-crawler-reglar), klare til innliming; (3) ny måling 30 dagar etter at kunden har publisert, før/etter i eitt dokument med rådata. Utfallskriterium: minst éi sitering av kunden sitt domene i etterkjøringane, elles éin ny runde utan ny faktura. Faktura med 14 dagars frist, ingen møte. Bestilling: https://synligdigital.no/faktura?slug=priser-sitert. Synlig Lite er det minste steget — éi side, utan måling.
 
 Metode og grenser: https://synligdigital.no/metode
 

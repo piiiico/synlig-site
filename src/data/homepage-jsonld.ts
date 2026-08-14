@@ -15,9 +15,13 @@
  *
  * Now: one paid flagship Offer (Sitert-måling, 9 900 NOK) + Synlig Lite (990)
  * kept as the demoted lowest orderable entry point + the free sjekk.
- * 4 900 / 14 900 / løpende still exist on /priser — they are simply no longer
- * what the front page claims to sell.
+ * 2026-08-12: the same ladder was still being sold on 21 blog posts, both
+ * case pages and their FAQPage answers four days later. Retired everywhere
+ * (tools/retire-dead-price-tiers.ts); build.ts DEAD_TIER_PATTERNS now refuses
+ * to embed a page that quotes one. Live offer set is exactly two.
  */
+
+import { LEGAL } from "../../_partials/legal-identity";
 
 export const ORG_ID = "https://synligdigital.no/#organization";
 
@@ -28,20 +32,45 @@ const organization = {
   "@id": ORG_ID,
   name: "Synlig Digital",
   alternateName: ["Synlig", "Synlig AEO", "Synlig Answer Engine Optimization"],
-  legalName: "Synlig Digital",
+  // LEGALNAME + IDENTIFIER, 2026-08-14: sto «Synlig Digital» — som ikke er et
+  // registrert rettssubjekt, bare et virksomhetsnavn. Selskapet som inngår
+  // avtaler og sender faktura er AS Åmdal Invest (Brreg 921058640, primærkilde
+  // lest 2026-08-14). Maskinlaget påsto altså et juridisk navn som ikke finnes
+  // i Enhetsregisteret — på nettstedet til et byrå som selger at nettopp
+  // maskinlaget skal stemme. identifier + Brreg-URL i sameAs gjør entiteten
+  // sammenkoblbar mot registeret, som er den sterkeste entitets-
+  // disambigueringen som finnes for et norsk selskap.
+  // Org.nr står ÉTT sted: _partials/legal-identity.ts.
+  legalName: LEGAL.entity,
+  identifier: {
+    "@type": "PropertyValue",
+    name: "Organisasjonsnummer",
+    value: LEGAL.orgnrPlain,
+  },
+  // MOTORNAVN, 2026-08-09: sto «mot ChatGPT, Perplexity og Google AI Overview».
+  // Vi måler mot ÉN motor — Perplexity Sonar via OpenRouter (tools/aeo-citation/src/
+  // checker.ts, model: "perplexity/sonar"), med Exa som reserve. /leaderboard sier
+  // «én motor» i klartekst, så maskinlaget på forsiden motsa vår egen metodeside og
+  // lovet kjøperen tre motorer for 9 900. Navngi bare motorer vi faktisk spør.
   description:
-    "Synlig Digital måler om AI-assistenter siterer norske merkevarer. Vi kjører fem kjøpsnære spørsmål fra kundens marked minst ni ganger over flere dager mot ChatGPT, Perplexity og Google AI Overview, og dokumenterer hvem som blir sitert i stedet. Vi leverer også Answer Engine Optimization (AEO): strukturerte data, Google Business Profile-optimalisering, aggregator-registrering og AI-tilpasset innhold.",
+    "Synlig Digital måler om AI-assistenter siterer norske merkevarer. Vi kjører fem kjøpsnære spørsmål fra kundens marked minst ni ganger over flere dager mot Perplexity (Sonar), og dokumenterer hvem som blir sitert i stedet. Vi leverer også Answer Engine Optimization (AEO): strukturerte data, Google Business Profile-optimalisering, aggregator-registrering og AI-tilpasset innhold.",
   url: "https://synligdigital.no",
   logo: "https://synligdigital.no/og-2026-08.png",
   image: "https://synligdigital.no/og-2026-08.png",
   email: "hei@synligdigital.no",
   foundingDate: "2026",
+  // ADRESSE, 2026-08-14. To feil, begge målt mot Brreg samme morgen:
+  //   streetAddress: "Stavanger sentrum"  → ikke en gate. Fjernet, ikke erstattet:
+  //     den registrerte adressen er en c/o på privatbolig, og den publiserer vi
+  //     ikke på ~250 sider. PostalAddress er gyldig uten streetAddress.
+  //   postalCode: "4006"                  → registeret sier 4010. Samme tall lå
+  //     i 17 andre påstander (prosa, FAQ-svar, to footere, tre schema-blokker).
+  //     Alle rettet; 4006 er nå bannlyst i build.ts, ikke bare byttet ut.
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Stavanger sentrum",
-    postalCode: "4006",
-    addressLocality: "Stavanger",
-    addressRegion: "Rogaland",
+    postalCode: LEGAL.postalCode,
+    addressLocality: LEGAL.city,
+    addressRegion: LEGAL.region,
     addressCountry: "NO",
   },
   geo: {
@@ -69,7 +98,7 @@ const organization = {
     "AEO",
     "AI-synlighet",
     "AI synlighet norske bedrifter",
-    "Sitert-måling",
+    "Sitert-pakken",
     "Schema.org markup",
     "Google Business Profile optimalisering",
     "Lokal SEO",
@@ -101,17 +130,22 @@ const organization = {
       },
       {
         "@type": "Offer",
-        name: "Sitert-måling",
+        name: "Sitert-pakken",
         description:
-          "Vi måler om AI-svar siterer merkevaren din. Fem kjøpsnære spørsmål fra ditt marked, stilt minst ni ganger over flere dager mot flere modeller, med navn på hvem som blir sitert i stedet for dere. Skriftlig leveranse på e-post, faktura med 14 dagers frist, ingen møter.",
+          // «mot flere modeller» sto her til 2026-08-09. Det er én modell, og det er
+          // selve Offer-noden for produktet vi tar 9 900 for. Se kommentaren over
+          // organization.description: motornavnet skal være det vi faktisk spør.
+          // 2026-08-13: produktet er ikke lenger målingen alene (den gir vi bort i
+          // /sjekk og i den kalde rapporten) — det er endringene pluss beviset.
+          "Vi måler nullpunktet — fem kjøpsnære spørsmål fra ditt marked, ni byte-identiske kjøringer mot Perplexity (Sonar), med navn på hvem som blir sitert i stedet — skriver deretter endringene ferdig for inntil ti sider (JSON-LD, sitatvennlige spørsmål og svar, llms.txt, AI-crawler-regler), og måler på nytt 30 dager etter at dere har publisert dem. Utfallskriterium: minst én sitering av deres domene i etterkjøringene, ellers kjøres én ny runde uten ny faktura. Levering på e-post, faktura med 14 dagers frist, ingen møter.",
         price: "9900",
         priceCurrency: "NOK",
         url: "https://synligdigital.no/#tjenester",
         availability: "https://schema.org/InStock",
         itemOffered: {
           "@type": "Service",
-          name: "Sitert-måling av AI-svar",
-          serviceType: "AI Citation Measurement",
+          name: "Sitert-pakken — måling, endringer og ny måling",
+          serviceType: "AEO implementering med før- og etter-måling",
           provider: { "@id": ORG_ID },
         },
       },
@@ -148,6 +182,11 @@ const organization = {
     ],
   },
   sameAs: [
+    // Brreg-oppslaget er den autoritative entitetskilden for et norsk selskap.
+    // Lagt til 2026-08-14 sammen med identifier (org.nr) — sammen lar de en
+    // motor knytte «Synlig Digital» til et faktisk rettssubjekt i stedet for å
+    // gjette. Dette er produktet vårt brukt på oss selv.
+    LEGAL.brregUrl,
     "https://sjekk.synligdigital.no",
     "https://synligdigital.no/blogg/aeo-byra-norge",
     "https://smithery.ai/server/@pico/aeo-mcp",
@@ -237,15 +276,15 @@ const faqPage = {
       name: "Hva koster AEO-tjenester fra Synlig Digital?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Sitert-måling koster fra 9 900 NOK eks. mva (engangsbetaling, faktura med 14 dagers frist, levering på e-post uten møter). Synlig Lite — FAQPage AEO koster 990 NOK (engangsbetaling, levering innen 1 virkedag) og er det laveste bestillbare inngangspunktet. AI-synlighetssjekken på sjekk.synligdigital.no er gratis. Kontakt hei@synligdigital.no for tilbud.",
+        text: "Sitert-pakken koster 9 900 NOK eks. mva (engangsbetaling, faktura med 14 dagers frist, levering på e-post uten møter): nullpunktsmåling, endringene skrevet ferdig for inntil ti sider, og ny måling 30 dager etter publisering, med skriftlig utfallskriterium. Synlig Lite — FAQPage AEO koster 990 NOK (engangsbetaling, levering innen 1 virkedag) og er det laveste bestillbare inngangspunktet. AI-synlighetssjekken på sjekk.synligdigital.no er gratis. Bestilling: https://synligdigital.no/faktura?slug=priser-sitert",
       },
     },
     {
       "@type": "Question",
-      name: "Hvor lang tid tar det å se resultater fra AEO?",
+      name: "Hvor lang tid tar Sitert-pakken?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "De fleste bedrifter ser første forbedringer innen 4–8 uker etter implementering av schema.org, Google Business Profile og aggregator-registrering. Dokumentert eksempel (nærstående metode-case): Nordic Lithium gikk fra 67/C til 85/A på to uker. AI-svar oppdateres hyppigere enn Google-ranking, og aggregator-registrering kan gi resultater innen 2–3 uker.",
+        text: "Nullpunktsmålingen går over flere dager — minst ni kjøringer, fordi én kjøring ikke er en måling: samme modell svarer ulikt på samme spørsmål. Endringene leveres på e-post innen fem virkedager etter at kunden har godkjent de fem spørsmålene. Ettermålingen kjøres 30 dager etter at kunden melder at endringene er publisert, og leveres som ett før/etter-dokument med rådata.",
       },
     },
     {
@@ -292,8 +331,11 @@ const webPage = {
       "h2",
       ".hero-sub",
       ".service-desc",
-      ".case-intro",
-      ".case-quote",
+      // 2026-08-09: .case-intro/.case-quote pekte på den nedlagte skår-case-en
+      // (tannlegeklinikk 24/100). Seksjonen er borte fra siden; en speakable-
+      // peker til en selektor som ikke finnes er markup som lyver.
+      ".finding-h",
+      ".finding-p",
     ],
   },
   citation: [
@@ -370,10 +412,18 @@ const howTo = {
   "@context": "https://schema.org",
   "@type": "HowTo",
   "@id": "https://synligdigital.no/#howto-aeo",
-  name: "Slik blir norske bedrifter synlige i ChatGPT og Perplexity",
+  // 2026-08-09: noden beskrev den nedlagte implementerings- og retainer-
+  // tjenesten (steg 3 «Implementering av AEO-tiltak», steg 4 «Løpende
+  // overvåking»), pluss et gratis-sjekk-steg som ikke lenger er inngangen.
+  // Det er nøyaktig samme defekt som de tre døde Offer-nodene fase 2 fjernet:
+  // maskinlaget fortsatte å selge et produkt vi har lagt ned. Stegene speiler
+  // nå #metode-seksjonen på forsiden 1:1 — endrer du den, endrer du denne.
+  // 4 → 3 HowToStep er derfor en tilsiktet nodediff, ikke et tap.
+  // totalTime: fjernet. P14D var en leveringstid vi ikke har publisert noe
+  // sted; en frist i markup er et løfte til hver crawler som leser den.
+  name: "Slik kjøres en sitert-måling",
   description:
-    "Synlig Digitals AEO-prosess for å øke AI-synlighet for norske bedrifter — B2B SaaS direkte og merkevareportefølje / e-handel via byråpartnerar (70/30 co-delivery). Basert på dokumentert AEO-audit av 30+ norske bedrifter (Norges AEO-leaderboard).",
-  totalTime: "P14D",
+    "Synlig Digitals metode for å måle om AI-assistenter siterer en norsk merkevare: fem kjøpsnære spørsmål valgt sammen med kunden, minst ni kjøringer over flere dager med byte-identiske prompt, og en skriftlig leveranse med rådataene bak.",
   estimatedCost: {
     "@type": "MonetaryAmount",
     currency: "NOK",
@@ -383,30 +433,23 @@ const howTo = {
     {
       "@type": "HowToStep",
       position: 1,
-      name: "Gratis AI-synlighetssjekk",
-      text: "Sjekk bedriftens nåværende AEO-score på sjekk.synligdigital.no. Se nøyaktig hva AI-assistenter vet — og ikke vet — om bedriften din.",
-      url: "https://sjekk.synligdigital.no",
+      name: "Fem spørsmål, valgt sammen",
+      text: "Vi foreslår fem kjøpsnære spørsmål fra kundens marked, på norsk, slik en kjøper faktisk skriver dem. Kunden godkjenner eller bytter dem før måling. Merkenavn holdes utenfor der poenget er å se hvem AI velger når ingen er nevnt.",
+      url: "https://synligdigital.no/#metode",
     },
     {
       "@type": "HowToStep",
       position: 2,
-      name: "Sitert-måling: måler om AI faktisk lenker til deg",
-      text: "Fem kjøpsnære spørsmål fra ditt marked, stilt minst ni ganger over flere dager mot flere modeller. Du får dokumentert hvor ofte merkevaren siteres, hvem som siteres i stedet, og hvilke kilder AI-svarene henter fra. En AEO-score sier hva siden har på plass; sitert-målingen sier om det virker.",
-      url: "https://synligdigital.no/#tjenester",
+      name: "Minst ni kjøringer over flere dager",
+      text: "Byte-identiske prompt hver gang. Én kjøring er ikke en måling: samme modell svarer ulikt på samme spørsmål, og et enkelt treff skiller ikke eierskap fra tilfeldighet.",
+      url: "https://synligdigital.no/#metode",
     },
     {
       "@type": "HowToStep",
       position: 3,
-      name: "Implementering av AEO-tiltak",
-      text: "Implementering av schema.org-markup tilpassa vertikalen: SoftwareApplication for SaaS (med alternative-to- og integrasjonslister); Product, Brand og Organization for merkevarer og e-handel (med ProductCollection, AggregateRating der relevant). FAQPage og Service for begge. Optimalisering av Google Business Profile og relevante aggregatorar: G2/Capterra for SaaS, finansportalen.no for fintech, byrabasen.no for byrå-portefølje.",
-      url: "https://synligdigital.no",
-    },
-    {
-      "@type": "HowToStep",
-      position: 4,
-      name: "Løpende overvåking og optimalisering",
-      text: "Månedlig måling av AI-synlighet: sjekk hvor mange ganger bedriften nevnes i AI-svar. Løpende tilpasning til nye AI-modeller og oppdateringer.",
-      url: "https://synligdigital.no",
+      name: "Skriftlig leveranse med rådata",
+      text: "Hvor ofte merkevaren ble sitert med lenke, hvem som ble sitert i stedet, hvilke kilder svaret bygget på, og hva målingen ikke påstår. Spørsmål, modell, datoer og kjøringstall følger med, slik at kunden kan kjøre målingen om igjen selv.",
+      url: "https://synligdigital.no/#metode",
     },
   ],
 };
