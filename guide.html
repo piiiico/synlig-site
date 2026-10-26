@@ -13,7 +13,7 @@
   <meta property="og:title" content="Hvordan AI velger hvem den anbefaler">
   <meta property="og:description" content="En praktisk guide til hvordan ChatGPT, Perplexity og Google AI bestemmer hvilke bedrifter de anbefaler — og hva du kan gjøre for å bli en av dem.">
   <meta property="og:url" content="https://synligdigital.no/guide">
-  <meta property="og:image" content="https://synligdigital.no/og.png">
+  <meta property="og:image" content="https://synligdigital.no/og-2026-08.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="Synlig">
@@ -141,6 +141,9 @@
 
     .nav-links a:hover { color: var(--blue-900); }
 
+    /* 2026-08-14: 44px trykkflate, samme rettelse som priser.html (målt der:
+       117×35px på 390px). Overlegget utvider treffområdet uten å endre
+       navhøyden. */
     .nav-cta {
       background: var(--green-600);
       color: var(--white) !important;
@@ -148,6 +151,16 @@
       border-radius: 6px;
       font-weight: 600 !important;
       transition: background 0.2s !important;
+      position: relative;
+    }
+    .nav-cta::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 44px;
     }
 
     .nav-cta:hover {
@@ -862,7 +875,7 @@
 
     <h2>Hvorfor dette haster</h2>
 
-    <p>I 2025 brukte 23% av markedsførere AI-synlighet som en KPI. I 2026 vil det tallet doble seg. Bedriftene som posisjonerer seg nå — de som har strukturerte data, sterke aggregatorprofiler og AI-lesbart innhold — vil dominere i årene som kommer.</p>
+    <p>Bedriftene som posisjonerer seg nå — de som har strukturerte data, sterke aggregatorprofiler og AI-lesbart innhold — vil dominere i årene som kommer.</p>
 
     <p>AI-assistenter har en forsterkende effekt: de anbefaler de som allerede er synlige, noe som gir mer trafikk, flere anmeldelser, og enda sterkere synlighet. Det er en snøballeffekt som premierer tidlig handling.</p>
 
@@ -889,7 +902,7 @@
           <ul>
             <li><a href="/priser#lite">Synlig Lite — 990 kr</a></li>
             <li><a href="/#tjenester">AI-synlighetsanalyse</a></li>
-            <li><a href="/#tjenester">AI-synlighetsfundament</a></li>
+            <li><a href="/#tjenester">Sitert-måling</a></li>
             <li><a href="/#tjenester">Løpende overvåking</a></li>
           </ul>
         </div>

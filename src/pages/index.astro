@@ -14,6 +14,40 @@
  */
 import Base from "../layouts/Base.astro";
 import { HOMEPAGE_JSONLD } from "../data/homepage-jsonld";
+import { getCollection } from "astro:content";
+
+/**
+ * Forsidens blogg-kort DERIVERES fra samlingens frontmatter — de sto håndskrevet
+ * her fram til 2026-09-09, og hadde alt drevet: kortet påsto "10 min lesing" der
+ * hva-er-aeo.html sier 8, og et annet utdrag enn siden selv. Det er nøyaktig
+ * defekten /blogg fikk reparert i august (håndkort som fortsatt solgte
+ * tilbaketrukne tall) — forsiden ble bare stående igjen. Å løfte et innlegg hit
+ * er nå en rute, ikke markup, så tittel/utdrag/dato kan ikke lenger sprike.
+ *
+ * Installatørregisteret står her fordi det er B46s stående publiserte tilbud:
+ * fem brev gikk ut 2026-09-07 UTEN URL (80-ordsporten), så mottakerens faktiske
+ * sti er å skrive domenet. Målt 2026-09-09 fant hun da et AEO-byrå og null spor
+ * av konkursdata. Kill-daten 2026-09-20 leser den kanalen — er tilbudet
+ * uoppdagbart fra rota, måler nullen en utilgjengelig side, ikke etterspørsel.
+ */
+const FORSIDE_BLOGG = ["hva-er-aeo", "installatorregisteret"];
+const bloggById = new Map((await getCollection("blogg")).map((p) => [p.id, p]));
+const forsideKort = FORSIDE_BLOGG.map((id) => {
+  const p = bloggById.get(id);
+  // Tom-inndata-gulv: et kort som forsvinner stille er nettopp hullet denne
+  // endringen lukker, så en manglende rute skal drepe bygget, ikke rendre tomt.
+  if (!p) throw new Error(`forsiden: /blogg/${id} finnes ikke i blogg-samlingen`);
+  return {
+    href: `/blogg/${p.id}`,
+    category: p.data.category,
+    title: p.data.cardTitle,
+    excerpt: p.data.excerpt,
+    meta: p.data.cardMeta,
+  };
+});
+if (forsideKort.length < 2) {
+  throw new Error(`forsiden: ${forsideKort.length} blogg-kort rendret, gulvet er 2`);
+}
 
 // 2026-08-13: skinnen byttet fra mailto: til /faktura. En mailto er ikke en
 // bestilling — den er en forespørsel som forsvinner ut av trakten (usynlig for
@@ -106,7 +140,7 @@ const faqs = [
   },
   {
     q: "Hvilke bedrifter har mest å vinne på AEO?",
-    a: "To segmenter primært. (1) Norske B2B SaaS (regnskaps-SaaS, HR-SaaS, fintech, marketing-SaaS) direkte. AI-assistenter er det første kjøparen spør når de vurderer ny SaaS (&laquo;beste norske regnskaps-SaaS for byrå&raquo;), og ChatGPT-trafikk konverterte 9× bedre enn Google organisk (15,9% vs 1,76%, Seer Interactive 2025). (2) Merkevareportefølje og e-handel (sportsutstyr, lifestyle, retail), typisk levert via byråpartnerar med 70/30 co-delivery-split. Felles for begge: snittscore er 43&ndash;55 av 100 på AI-synlighet, og maskinlesbare signal (schema.org, FAQPage, alternative-to- eller Product-data, llms.txt) manglar hos 80%+ av bedriftene vi har skannet.",
+    a: "To segmenter primært. (1) Norske B2B SaaS (regnskaps-SaaS, HR-SaaS, fintech, marketing-SaaS) direkte. AI-assistenter er det første kjøparen spør når de vurderer ny SaaS (&laquo;beste norske regnskaps-SaaS for byrå&raquo;), og hos én Seer Interactive-klient konverterte ChatGPT-trafikk 9× bedre enn Google organisk (15,9% vs 1,76%, Seer 2025, ett datasett). (2) Merkevareportefølje og e-handel (sportsutstyr, lifestyle, retail), typisk levert via byråpartnerar med 70/30 co-delivery-split. Felles for begge: snittscore er 43&ndash;55 av 100 på AI-synlighet, og maskinlesbare signal (schema.org, FAQPage, alternative-to- eller Product-data, llms.txt) manglar hos 80%+ av bedriftene vi har skannet.",
   },
   {
     q: "Hvor lang tid tar Sitert-pakken?",
@@ -167,6 +201,26 @@ const faqs = [
             class="hero-tool-link">gratis AEO-sjekk av forsiden →</a
           >
         </p>
+        <!-- Bevisstripe. Fram til 2026-08-14 sto Cloudflares agent-skanner her
+             («5/5 Agent-Native»). Den ble byttet ut, ikke supplert, av to
+             grunner: (1) den er en SKÅR PÅ FORSIDEN VÅR, altså nøyaktig det
+             måleinstrumentet bevis-seksjonen tre skjermer ned falsifiserer som
+             svar på kjøpsspørsmålet — heroen skrøt av tallet siden under sier
+             ikke forutsier sitering; (2) den nye linja måler det vi faktisk
+             selger. Agent-readiness-beviset lever videre på /faktura og alle
+             /r/<hash>-rapportene (data-trust-anchor), så siden mister ingen
+             dekning. (/priser sto i denne lista fram til samme kveld: den
+             gjorde nøyaktig det samme byttet, av nøyaktig samme grunn, så
+             lista er rettet her i samme commit i stedet for å bli stående og
+             lyve for neste økt.)
+             KILDE for tallene, ingen skrevet for hånd:
+             tools/peer-field/readings/2026-08-14-notext{,-rep2,-rep3}.json +
+             2026-08-14-rep3-withtext.json (fire kjøringer × sju spørsmål = 28
+             svar, sonar, byte-identiske prompt). Talt på nytt 2026-08-14 av
+             denne økta: navngitt i 28/28 (26 med fullt navn, 2 som «Synlig»
+             med synligdigital.no som kilde), nest mest navngitte norske aktør
+             20/28 (Mementor/Wud/WeAssist). Fullt forbehold på
+             /tjenester#navngitt — endrer du tallet her, endrer du det der. -->
         <div class="hero-proof">
           <svg
             class="hero-proof-check"
@@ -182,11 +236,12 @@ const faqs = [
             ><polyline points="4 10 8 14 16 6"></polyline></svg
           >
           <span
-            >Synlig sin egen AI-synlighet: <strong class="text-ink"
-              >5/5 Agent-Native</strong
-            > (toppnivå) på Cloudflares uavhengige agent-skanner.</span
+            >Perplexity navngir Synlig Digital i <strong class="text-ink"
+              >28 av 28 svar</strong
+            > på sju norske kjøpsintent-spørsmål om AEO. Nest mest navngitte norske
+            aktør: 20 av 28.</span
           >
-          <a href="/bevis/agent-readiness" rel="noopener">Verifiser →</a>
+          <a href="/tjenester#navngitt">Spørsmålene og forbeholdet →</a>
         </div>
        </div>
 
@@ -304,11 +359,11 @@ const faqs = [
           <div class="grid grid-cols-2 gap-x-8 gap-y-8 self-start">
             <div class="aeo-stat">
               <div class="num">800M</div>
-              <div class="label">Ukentlige ChatGPT-brukere</div>
+              <div class="label">Ukentlige ChatGPT-brukere (okt. 2025)</div>
             </div>
             <div class="aeo-stat">
-              <div class="num">60%</div>
-              <div class="label">Av søk ender nå uten klikk</div>
+              <div class="num">58,5%</div>
+              <div class="label">Av Google-søk i USA endte uten klikk (2024)</div>
             </div>
             <div class="aeo-stat">
               <div class="num">1-3</div>
@@ -316,12 +371,12 @@ const faqs = [
             </div>
             <div class="aeo-stat">
               <div class="num">−27%</div>
-              <div class="label">Nedgang i organisk trafikk YoY (HubSpot 2026)</div>
+              <div class="label">Organisk trafikk hos HubSpot-kunder, år over år</div>
             </div>
             <p class="source-note col-span-2">
-              Kilder: OpenAI 2025 (ChatGPT ukentlege brukarar), Seer Interactive
-              2026 (zero-click), HubSpot State of Marketing 2026
-              (organisk-nedgang).
+              Kilder: Sam Altman på OpenAI DevDay, 6. okt. 2025 (<a href="https://techcrunch.com/2025/10/06/sam-altman-says-chatgpt-has-hit-800m-weekly-active-users/" rel="noopener">TechCrunch</a>),
+              <a href="https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/" rel="noopener">SparkToro/Datos 2024</a> (null klikk, USA; EU 59,7%),
+              <a href="https://www.hubspot.com/company-news/spring-2026-spotlight" rel="noopener">HubSpot Spring Spotlight 2026</a> (egne kunders organiske trafikk).
             </p>
           </div>
         </div>
@@ -363,9 +418,9 @@ const faqs = [
           </table>
         </div>
         <p class="source-note">
-          Kilde: Seer Interactive 2025 (case study, 1 370 konverteringar / 11 000
-          sesjonar mot 14 mill. organiske, okt 2024–apr 2025). ChatGPT-trafikk
-          konverterte ca. 9× betre enn Google organisk.
+          Kilde: <a href="https://www.seerinteractive.com/insights/case-study-6-learnings-about-how-traffic-from-chatgpt-converts" rel="noopener">Seer Interactive 2025</a> (case study med éin klient: 1 370 AI-konverteringar, knapt 11 000
+          AI-sesjonar mot nesten 14 mill. organiske over 7 månader). Hos denne
+          klienten konverterte ChatGPT-trafikk ca. 9× betre enn Google organisk.
         </p>
       </div>
     </section>
@@ -462,18 +517,17 @@ const faqs = [
       <div class="container">
         <div class="section-header">
           <h2>Siste fra bloggen</h2>
-          <p>Innsikt, analyser og guider om AEO for norske bedrifter.</p>
+          <p>Guider, analyser og primærkildedata — publisert i sin helhet, med metode.</p>
         </div>
         <div class="mt-8 grid gap-6 sm:grid-cols-2">
-          <a href="/blogg/hva-er-aeo" class="blog-card">
-            <span class="blog-tag">Guide</span>
-            <h3>Hva er AEO? En komplett guide til Answer Engine Optimization</h3>
-            <p>
-              AEO er den nye SEO. Lær hva det er, og hvorfor norske bedrifter
-              trenger det nå i ChatGPT, Perplexity og Google AI Overview.
-            </p>
-            <span class="blog-meta">8. mars 2026 · 10 min lesing</span>
-          </a>
+          {forsideKort.map((k) => (
+            <a href={k.href} class="blog-card">
+              <span class="blog-tag">{k.category}</span>
+              <h3>{k.title}</h3>
+              <p>{k.excerpt}</p>
+              <span class="blog-meta">{k.meta}</span>
+            </a>
+          ))}
         </div>
         <div class="mt-8">
           <a href="/blogg" class="blog-all-link">Se alle artikler →</a>
