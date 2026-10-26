@@ -1,4 +1,5 @@
-<!-- fact-source-allow-all: "Own benchmark — AEO audit run on 13 Stavanger dental clinics (April 2026). Scores reproducible via /audit endpoint at synligdigital.no. Raw rows in /workspace/money/aeo/report-registry.jsonl filtered by company match." -->
+<!-- fact-source-allow: ["70 %","37/100","12/100","9/13","75/100","68/100","40/100","35/100","28/100","26/100","17/100"] -->
+<!-- fact-source-allow-reason: "Own audit scores as published April 2026. UNREPRODUCED: the retired allow-all said rows are in report-registry.jsonl; checked 2026-10-26 they are not (Bjergsted 43 there, 17 here; Stavanger Tann, Tasta Tannklinikk absent). Follow-up task re-audits or dates them." -->
 <script type="application/json" id="frontmatter">
 {
   "slug": "stavanger-klinikk-aeo-analyse",
@@ -8,7 +9,7 @@
   "ogTitle": "Vi analyserte AI-synligheten til 13 Stavanger-klinikker — dette fant vi",
   "ogDescription": "Score fra 12 til 85 av 100. De fleste klinikker i Stavanger er helt usynlige i ChatGPT og Perplexity. Her er de faktiske dataene.",
   "published": "2026-04-23",
-  "modified": "2026-04-23",
+  "modified": "2026-10-23",
   "tags": [
     "AEO",
     "Stavanger",
@@ -29,7 +30,7 @@
   "category": "Case study",
   "cardMeta": "23. april 2026 · 6 min lesing",
   "cardTitle": "Vi analyserte AI-synligheten til 13 Stavanger-klinikker — dette fant vi",
-  "excerpt": "Score fra 12 til 85 av 100. Gjennomsnitt: 37. 9 av 13 klinikker er praktisk talt usynlige i ChatGPT og Perplexity. Her er de faktiske dataene fra vår AEO-audit.",
+  "excerpt": "Score fra 12 til 85 av 100. Gjennomsnitt: 37. 9 av 13 klinikker mangler det meste av det AI-assistenter leser etter. Her er de faktiske dataene fra vår AEO-audit.",
   "jsonLd": [
     {
       "@context": "https://schema.org",
@@ -51,7 +52,7 @@
         }
       },
       "datePublished": "2026-04-23",
-      "dateModified": "2026-04-23",
+      "dateModified": "2026-10-23",
       "inLanguage": "nb-NO",
       "url": "https://synligdigital.no/blogg/stavanger-klinikk-aeo-analyse",
       "mainEntityOfPage": {
@@ -102,7 +103,7 @@
 
     <h2>Resultatene: score fra 12 til 85</h2>
 
-    <p>Spredningen er stor. Beste klinikk scorer 85/100 (karakter A). Svakeste scorer 12/100 (karakter F). Gjennomsnittet er 37/100 — langt under terskelen for konsistent AI-synlighet.</p>
+    <p>Spredningen er stor. Beste klinikk scorer 85/100 (karakter A). Svakeste scorer 12/100 (karakter F). Gjennomsnittet er 37/100. Det er ingen kjent terskelscore som slår AI-synlighet av og på — vi har målt sammenhengen mellom score og sitering på 124 nettsteder, og den er svakere enn skalaen antyder (<a href="/metode#score-vs-sitering">tallene</a>). 37 betyr at de fleste lesbarhetssignalene mangler.</p>
 
     <div class="stat-row">
       <div class="stat-card">
@@ -341,7 +342,7 @@
         <div class="finding-num" style="color:var(--grade-f)">⚠</div>
         <div class="finding-content">
           <h4>9 av 13 klinikker scorer E eller F</h4>
-          <p>Over 70 % av de analyserte klinikkene er svært lite synlige i AI-søk. Dette er ikke et nisje-problem — det er normen.</p>
+          <p>Nesten 70 % (9 av 13) av de analyserte klinikkene er svært lite synlige i AI-søk. Dette er ikke et nisje-problem — det er normen.</p>
         </div>
       </div>
       <div class="finding-item">

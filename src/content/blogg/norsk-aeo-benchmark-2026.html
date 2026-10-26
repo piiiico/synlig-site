@@ -1,4 +1,5 @@
-<!-- fact-source-allow-all: "Own benchmark — Norsk AEO baseline run (Q1 2026), 25 SMEs across verticals. Scores reproducible via /audit endpoint. Aggregated source in /workspace/money/aeo/report-registry.jsonl." -->
+<!-- fact-source-allow: ["48/100","58/100","49/100","43/100","44/100","41/100","18/25","11/20","8/15","6/15","5/25","96/100","60/100"] -->
+<!-- fact-source-allow-reason: "Own audit scores as published Q1 2026. UNREPRODUCED: no per-company rows found for these scores. Follow-up task re-audits or dates them." -->
 <script type="application/json" id="frontmatter">
 {
   "slug": "norsk-aeo-benchmark-2026",
@@ -8,7 +9,7 @@
   "ogTitle": "Norsk AEO-benchmark 2026: Hva ChatGPT svarer om din bransje",
   "ogDescription": "Vi har auditert 35+ norske bedrifter på tvers av 8 bransjer. Gjennomsnittlig AEO-score: 48/100. Se hva ChatGPT svarer om din bransje.",
   "published": "2026-03-09",
-  "modified": "2026-03-09",
+  "modified": "2026-10-23",
   "tags": [
     "AEO",
     "Benchmark",
@@ -52,7 +53,7 @@
         }
       },
       "datePublished": "2026-03-09",
-      "dateModified": "2026-03-09",
+      "dateModified": "2026-10-23",
       "inLanguage": "nb-NO",
       "url": "https://synligdigital.no/blogg/norsk-aeo-benchmark-2026",
       "mainEntityOfPage": {
@@ -93,7 +94,7 @@
           "name": "Hva er en god AEO-score for norske bedrifter?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "AEO-score måles fra 0–100. Under 60 er kritisk — AI-assistenter vil sjelden anbefale en bedrift i denne kategorien. 60–74 er middels, og bedriften kan dukke opp i AI-svar i nisjespørsmål. 75–89 er god, og bedriften er synlig for de fleste relevante spørsmål. 90+ er excellent, og tilsvarer normen for topplasseringer i bransjen. Gjennomsnittet for norske bedrifter vi har auditert er 48/100, som tilsvarer karakteren D."
+            "text": "AEO-score måles fra 0–100 og beskriver hvor lesbar en nettside er for AI-assistenter: strukturerte data, meta, innhold, teknisk fundament og AI-signaler. Under 60 betyr at flere av disse mangler. 60–74 er middels, 75–89 er god, 90+ er excellent. Gjennomsnittet for norske bedrifter vi har auditert er 48/100, karakteren D. Skalaen beskriver hva siden har på plass, ikke hva AI-en gjør: vi målte sammenhengen mellom score og sitering på 124 nettsteder, og konfidensintervallet krysser null (se synligdigital.no/metode#score-vs-sitering)."
           }
         },
         {
@@ -101,7 +102,7 @@
           "name": "Hvorfor scorer norske bedrifter så lavt på AEO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Den viktigste enkeltårsaken er manglende strukturerte data (Schema.org). I vår benchmark scorer de fleste norske bedrifter 0 av 25 mulige poeng på dette området. Schema.org-markup gir AI-assistenter maskinlesbar informasjon om hvem bedriften er, hva den tilbyr, og hvor den holder til. Uten dette er bedriften praktisk talt usynlig for AI."
+            "text": "Den viktigste enkeltårsaken er manglende strukturerte data (Schema.org). I vår benchmark scorer de fleste norske bedrifter 0 av 25 mulige poeng på dette området. Schema.org-markup gir AI-assistenter maskinlesbar informasjon om hvem bedriften er, hva den tilbyr, og hvor den holder til. Uten dette må AI-en gjette seg til det ut fra løpende tekst. Det er en lesbarhetssvakhet, ikke en garanti for at du ikke blir sitert: i vår måling på 124 nettsteder ble flere sider uten maskinlesbar markup likevel sitert (egne data, 6. september 2026)."
           }
         },
         {
@@ -151,7 +152,7 @@
       </div>
       <div class="finding-card">
         <div class="finding-number" style="color: var(--accent);">5×</div>
-        <div class="finding-label">Bedre konvertering fra AI-trafikk enn organisk (14,2% vs 2,8%)</div>
+        <div class="finding-label">Bedre konvertering fra AI-trafikk enn organisk (14,2% vs 2,8%, <a href="https://superprompt.com/blog/ai-search-traffic-conversion-rates-5x-higher-than-google-2025-data">Superprompt</a>)</div>
       </div>
       <div class="finding-card">
         <div class="finding-number" style="color: var(--accent-blue);">35+</div>
@@ -258,7 +259,7 @@
     <p style="font-size:0.8rem;color:var(--text-muted);margin-top:-1rem;">Karaktersystem: A (90+), B (75–89), C (60–74), D (45–59), D− (35–44), F (under 35). Basert på 35+ auditer, mars 2026.</p>
 
     <div class="callout callout-orange">
-      <p><strong>Om konverteringstallet:</strong> Trafikk fra AI-assistenter (ChatGPT, Perplexity) konverterer i gjennomsnitt 14,2% sammenlignet med 2,8% for tradisjonell organisk trafikk — nesten fem ganger høyere. Årsaken er enkel: brukeren som spør AI, har allerede bestemt seg for å kjøpe. De søker ikke informasjon, de bekrefter et valg.</p>
+      <p><strong>Om konverteringstallet:</strong> Trafikk fra AI-assistenter (ChatGPT, Perplexity) konverterer i gjennomsnitt 14,2% sammenlignet med 2,8% for tradisjonell organisk trafikk i <a href="https://superprompt.com/blog/ai-search-traffic-conversion-rates-5x-higher-than-google-2025-data">Superprompts analyse av 12 millioner besøk</a> — nesten fem ganger høyere. Årsaken er enkel: brukeren som spør AI, har allerede bestemt seg for å kjøpe. De søker ikke informasjon, de bekrefter et valg.</p>
     </div>
 
     <h2>Hovedfunnet: Schema.org er den store blindsonen</h2>
@@ -352,7 +353,7 @@
 
     <p>En AEO-score er ikke bare et tall — den representerer sannsynligheten for at AI-assistenter anbefaler deg i de øyeblikkene det betyr mest.</p>
 
-    <p>Under 60/100 betyr at du er praktisk talt usynlig. De fleste norske bedrifter befinner seg her. Det er ikke en dom, men en beskrivelse av tilstanden i markedet — og dermed en mulighet.</p>
+    <p>Under 60/100 betyr at flere av de lesbarhetssignalene AI-assistenter bruker mangler. De fleste norske bedrifter befinner seg her. Det er ikke en spådom om hvorvidt du blir sitert — vi har målt at score og sitering henger svakere sammen enn vi selv trodde (<a href="/metode#score-vs-sitering">tallene</a>) — men det er en beskrivelse av tilstanden i markedet.</p>
 
     <p>AI-trafikk konverterer nesten fem ganger bedre enn organisk trafikk fra Google. En bruker som spør ChatGPT «hvilken rørlegger i Stavanger kan hjelpe meg i dag» og får ditt navn som svar, er ikke «potensielt interessert» — vedkommende er nær kjøpsbeslutning. Kundene du mister via AI-kanalen er ikke de som klikket på et annonseresultat og glemte det igjen. De var klare til å ringe.</p>
 
@@ -371,7 +372,7 @@
           <span class="faq-arrow">▾</span>
         </button>
         <div class="faq-answer">
-          AEO-score måles fra 0–100. Under 60 er kritisk — AI-assistenter vil sjelden anbefale en bedrift i denne kategorien. 60–74 er middels, og bedriften kan dukke opp i AI-svar ved nisjespørsmål. 75–89 er god, og bedriften er synlig for de fleste relevante spørsmål i sin bransje. 90 og over er excellent, og tilsvarer normen for topplasseringer. Gjennomsnittet for norske bedrifter vi har auditert er 48/100, som tilsvarer karakteren D.
+          AEO-score måles fra 0–100 og beskriver hvor lesbar en nettside er for AI-assistenter: strukturerte data, meta, innhold, teknisk fundament og AI-signaler. Under 60 betyr at flere av disse mangler. 60–74 er middels, 75–89 er god, 90 og over er excellent. Gjennomsnittet for norske bedrifter vi har auditert er 48/100, karakteren D. Skalaen beskriver hva siden har på plass, ikke hva AI-en gjør: vi målte sammenhengen mellom score og sitering på 124 nettsteder, og konfidensintervallet krysser null (se synligdigital.no/metode#score-vs-sitering).
         </div>
       </div>
       <div class="faq-item">
@@ -380,8 +381,7 @@
           <span class="faq-arrow">▾</span>
         </button>
         <div class="faq-answer">
-          Den viktigste enkeltårsaken er manglende strukturerte data (Schema.org-markup). I vår benchmark scorer de fleste norske bedrifter 0 av 25 mulige poeng på denne dimensjonen. Schema.org gir AI-assistenter maskinlesbar informasjon om hvem bedriften er, hva den tilbyr, og hva kundene sier om den. Uten det er bedriften praktisk talt usynlig for AI — uavhengig av kvaliteten på selve innholdet.
-        </div>
+          Den viktigste enkeltårsaken er manglende strukturerte data (Schema.org-markup). I vår benchmark scorer de fleste norske bedrifter 0 av 25 mulige poeng på denne dimensjonen. Schema.org gir AI-assistenter maskinlesbar informasjon om hvem bedriften er, hva den tilbyr, og hva kundene sier om den. Uten det må AI-en gjette seg til de opplysningene ut fra løpende tekst. Det er en lesbarhetssvakhet, ikke en garanti for at du ikke blir sitert: i vår måling på 124 nettsteder ble flere sider uten maskinlesbar markup likevel sitert (egne data, 6. september 2026).</div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">

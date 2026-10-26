@@ -1,4 +1,5 @@
-<!-- fact-source-allow-all: "Own data — Norges AEO Leaderboard April 2026, derived from /workspace/synlig-site/leaderboard.json (own audits across Norwegian SMEs). Every score is reproducible at synligdigital.no/audit?url=...." -->
+<!-- fact-source-allow: ["9/25","13/15","0/15","1/25","64/100","14/25","70/100","62/100","61/100","28/100","26/100","15/100"] -->
+<!-- fact-source-allow-reason: "Own audit scores as published April 2026. UNREPRODUCED: no April snapshot of leaderboard.json in git (oldest 2026-05-22: 30 companies, Rema 68). Follow-up task re-audits or dates them." -->
 <script type="application/json" id="frontmatter">
 {
   "slug": "norges-aeo-leaderboard-2026-04",
@@ -8,7 +9,7 @@
   "ogTitle": "Norges AEO-leaderboard: Hvem er synlige i AI — og hvem er usynlige?",
   "ogDescription": "Vi har målt AI-synligheten til 50 norske selskaper. Rema 1000 topper med 70/100. Stavanger Aftenblad og If Forsikring deler 2. plass. DNB scorer 15/F. Utdanning er usynlig.",
   "published": "2026-04-29",
-  "modified": "2026-06-17",
+  "modified": "2026-10-22",
   "tags": [
     "AEO",
     "Leaderboard",
@@ -48,7 +49,7 @@
         }
       },
       "datePublished": "2026-04-29",
-      "dateModified": "2026-06-17",
+      "dateModified": "2026-10-22",
       "inLanguage": "nb-NO",
       "url": "https://synligdigital.no/blogg/norges-aeo-leaderboard-2026-04",
       "mainEntityOfPage": {
@@ -104,7 +105,7 @@
   </p>
 
   <p>
-    Vi bygde et verktøy som måler akkurat det. <strong>61 selskaper i runden. 50 vellykkede auditer.</strong> 11 feilet med tekniske feil eller blokkerte tilgangen vår — noe som i seg selv er et svar.
+    Vi bygde et verktøy som måler akkurat det. <strong>61 selskaper i runden. 50 vellykkede auditer.</strong> 11 feilet med tekniske feil eller blokkerte tilgangen vår. Hva det betyr, målte vi i august — for tre av dem var feilen vår egen (<a href="#blokkering">se nederst</a>).
   </p>
 
   <p>
@@ -223,7 +224,7 @@
   </p>
 
   <p>
-    For retailere som Power er dette særlig paradoksalt: de selger produkter folk aktivt søker råd om. Når noen spør ChatGPT om hvilken TV de bør kjøpe, burde merket ha alt å vinne på god AI-synlighet. Widerøe, Elkjøp og Komplett returnerte HTTP 403 eller 429 i denne runden — de er ikke med i rangeringen i det hele tatt fordi forsidene blokkerte tilgangen vår.
+    For retailere som Power er dette særlig paradoksalt: de selger produkter folk aktivt søker råd om. Når noen spør ChatGPT om hvilken TV de bør kjøpe, burde merket ha alt å vinne på god AI-synlighet. Widerøe, Elkjøp og Komplett returnerte HTTP 403 eller 429 til vår egen klient i denne runden, og er derfor ikke rangert. Det er ikke det samme som at AI ikke slipper inn: da vi målte det i august, svarte Elkjøp 200 til alle tre AI-crawlerne — <a href="#blokkering">se målingen lenger ned</a>.
   </p>
 
   <h2>Metodikken: hva vi faktisk måler</h2>
@@ -342,7 +343,7 @@
   <h2>Det handler ikke om klikk</h2>
 
   <p>
-    Her er det mange misforstår: AI-synlighet handler ikke om å drive trafikk til nettsiden din. Click-through-rate fra AI-siterte merker <strong>falt 61 prosent</strong> i 2025–2026. Når ChatGPT nevner Rema 1000 i et svar om norske dagligvarekjeder, klikker ikke folk videre. De noterer seg svaret og går videre.
+    Her er det mange misforstår: AI-synlighet handler ikke om å drive trafikk til nettsiden din. Seer Interactive målte at organisk klikkrate <strong>falt 61 prosent</strong> på informasjonssøk der Google viser AI Overviews, fra juni 2024 til september 2025 (<a href="https://www.seerinteractive.com/insights/aio-impact-on-google-ctr-september-2025-update">Seer Interactive, 2025</a>). Når ChatGPT nevner Rema 1000 i et svar om norske dagligvarekjeder, klikker ikke folk videre. De noterer seg svaret og går videre.
   </p>
 
   <p>
@@ -359,14 +360,30 @@
     ChatGPT lanserte nylig betalte annonser. De plasseres under AI-svaret, aldri inne i det. <strong>Organisk sitering er det eneste som ikke kan kjøpes.</strong> Det gir økt verdi jo mer annonsemarkedet vokser rundt det.
   </p>
 
-  <h2>11 selskaper som blokkerte seg selv</h2>
+  <h2 id="blokkering">Vi trodde 11 selskaper blokkerte AI. Vi målte to ganger. Svaret er 0 — og 1 som gjør det motsatte</h2>
 
   <p>
-    Vy, SAS, Norwegian, Widerøe, Yara, Elkjøp, Komplett, Universitetet i Stavanger, Oslo Universitetssykehus, Mathiesen Eiendom og SR-Bank-forsiden returnerte HTTP 403, 404 eller 429 da vi forsøkte å hente dem. Det betyr sannsynligvis at de blokkerer AI-crawlere og andre automatiserte verktøy.
+    Vy, SAS, Norwegian, Widerøe, Yara, Elkjøp, Komplett, Universitetet i Stavanger, Oslo Universitetssykehus, Mathiesen Eiendom og SR-Bank-forsiden svarte HTTP 403, 404 eller 429 da vi forsøkte å hente dem. Her sto det opprinnelig at det «sannsynligvis» betyr at de blokkerer AI-crawlere. Det var en slutning, ikke en måling: vår egen klient ble avvist, og vi antok at ChatGPT- og Perplexity-crawlerne fikk samme svar.
   </p>
 
   <p>
-    Det er et valg. Men konsekvensen er at AI-systemer ikke har tilgang til det de publiserer — og da er det vanskeligere for de å bli korrekt sitert i svar som faktisk er relevante for disse selskapene.
+    13. august 2026 spurte vi crawlerne i stedet for å gjette — samme adresser, men med de offisielle signaturene til GPTBot, PerplexityBot og ClaudeBot, og to forsøk før vi kaller noe avvist. Så gjorde vi noe vi burde gjort med én gang: vi kjørte en kontroll med en helt vanlig Chrome-signatur fra samme klient. Uten den kontrollen kan man ikke skille «de avviser AI-crawlere» fra «de avviser alt de ikke kjenner igjen», og vi hadde allerede publisert den forskjellen feil to ganger:
+  </p>
+
+  <ul>
+    <li><strong>Seks avviser alt, ikke AI spesielt:</strong> Vy, SAS, Norwegian, Widerøe, Komplett og Universitetet i Stavanger svarte 403 til alle tre crawler-signaturene — men også 403 til en vanlig Chrome-signatur, og det samme fra to helt urelaterte nettverk. Da måler vi en dør som er lukket for alt ukjent, ikke en AI-regel. Vi påstår derfor <em>ikke</em> at AI ikke ser dem. Det spørsmålet kan bare besvares fra deres egne logger.</li>
+    <li><strong>Elkjøp gjør det motsatte av det vi antok:</strong> www.elkjop.no svarte HTTP 200 til alle tre AI-crawlerne og 429 til vår egen klient. De stenger ikke ute AI — de stenger ute alt de ikke kjenner igjen. Porten er en User-Agent-streng, altså tillit til at klienten sier sant om hvem den er.</li>
+    <li><strong>Tre var vår feil, ikke deres:</strong> Oslo Universitetssykehus og SR-Bank svarer 200 til både oss og crawlerne. Yara svarer 404 til alle — vi hadde feil URL.</li>
+    <li><strong>Mathiesen Eiendom svarer ikke i det hele tatt</strong>, verken oss eller crawlerne. Da har vi ingen måling, og da påstår vi ingenting.</li>
+    <li><strong>Null selskaper er målt som AI-blokkerende.</strong> Det er det ærlige tallet etter to runder. Det vi kan måle utenfra er om en dør er åpen — ikke hvorfor den er lukket.</li>
+  </ul>
+
+  <p>
+    Grunnen til at en 403 ikke kan tolkes som AI-policy er teknisk og verdt å kjenne: Akamai og Cloudflare verifiserer GPTBot på IP og revers-DNS, ikke på tekststrengen i User-Agent. En selverklært GPTBot fra en tilfeldig sky-IP er nettopp det en bot-manager er bygget for å avvise. At vi blir avvist er derfor helt forenlig med at den ekte crawleren slipper inn. Det motsatte er ikke like tvetydig: blir en selverklært crawler <em>sluppet inn</em>, vet vi at porten står på en tekststreng — og det er akkurat det Elkjøp viser.
+  </p>
+
+  <p>
+    Vi lar begge feilslutningene stå synlig, for de er den samme feilen i to størrelser. Først antok vi at vår avviste klient talte for AI-crawlerne. Så antok vi at en avvist crawler-signatur talte for den ekte crawleren. «Vår klient ble avvist», «en crawler-signatur ble avvist» og «AI-crawlere blir avvist» er tre forskjellige påstander, og avstanden mellom dem er én kontrollmåling hver.
   </p>
 
   <h2>Hva skjer videre</h2>

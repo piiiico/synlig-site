@@ -779,13 +779,13 @@ if (sitemapViolations.length > 0) {
 // Scope: blogg/*.html only (landing pages are template-heavy and revisit later if needed).
 // Each numeric claim (percent, large-count with thousand separator, ratio, score-decl) must
 // pass at least one of:
-//   1) within 200 chars of a citation marker (Kilde:, external href, (Org, year), Ifølge X,
+//   1) within 200 chars of a citation marker (Kilde:, (Org, year), Ifølge X, or an external href
+//      whose page the source cache confirms carries the number — tools/verify-source-numbers.ts),
 //      "egne data", Kilder<h*> section)
 //   2) top-of-file allow-list comment <!-- fact-source-allow: ["claim1",…] -->
 //   3) claim row in /workspace/money/aeo/fact-registry.jsonl
 //   4) substring match against /workspace/money/aeo/report-registry.jsonl
 //   5) inside <table class="audit-table" data-source="…">
-//   6) top-of-file file-wide allow <!-- fact-source-allow-all: "non-empty reason" -->
 //
 // Bypass is opt-in (allow-list with explicit reason, OR registry entry with source_url).
 // This is the execution-path-on-default-by-default intervention from CLAUDE.md self-awareness:
@@ -801,10 +801,9 @@ if (sitemapViolations.length > 0) {
       console.error(`  ${v.file} [${v.heading}]: ${v.pattern} "${v.claim}"`);
       console.error(`    ...${v.snippet}...`);
     }
-    console.error(`\nFix: add a citation within 200 chars (Kilde:, external href, (Org, year), egne data),`);
+    console.error(`\nFix: add a citation within 200 chars (Kilde:, (Org, year), egne data), or link the source and run bun tools/verify-source-numbers.ts,`);
     console.error(`  OR add the claim to /workspace/money/aeo/fact-registry.jsonl with source_url,`);
     console.error(`  OR top-of-file <!-- fact-source-allow: ["claim", …] --> (per-claim),`);
-    console.error(`  OR top-of-file <!-- fact-source-allow-all: "non-empty reason" --> (file-wide own-data).`);
     console.error(`Renderer: /workspace/synlig-site/_partials/fact-source-gate.ts`);
     process.exit(1);
   }

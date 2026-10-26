@@ -34,6 +34,9 @@ const MIN_BLOG_FILES = 36;
 
 const REPORT_REGISTRY = "/workspace/money/aeo/report-registry.jsonl";
 const FACT_REGISTRY = "/workspace/money/aeo/fact-registry.jsonl";
+// (url, number) pairs a fetch has confirmed: {url, number, found, status, fetched_at}.
+// Written by tools/verify-source-numbers.ts, never by hand.
+export const SOURCE_CACHE = "/workspace/money/aeo/source-number-cache.jsonl";
 
 export type Claim = {
   raw: string;          // original matched text from the HTML
@@ -41,6 +44,7 @@ export type Claim = {
   pattern: string;      // which CLAIM_PATTERNS rule fired
   position: number;     // byte offset into the cleaned content
   heading: string;      // nearest enclosing h1/h2/h3 text
+  acceptedBy: string | null; // ladder rung that certified it; null = violation
 };
 
 export type Violation = {
@@ -83,7 +87,6 @@ function isLikelyDate(raw: string): boolean {
 
 // Citation styles accepted within PROXIMITY_CHARS of a claim:
 //   - Norwegian "(Kilde: ...)" explicit citation
-//   - External <a href="https://..."> link (not pointing back to synligdigital.no)
 //   - "(OrgName, 2026)" parenthetical with org name + year (e.g. "(Conductor, 2026)")
 //   - "Ifølge OrgName" — Norwegian for "According to"
 //   - "egne data|tal|AEO|benchmark|audit|analyse|undersøkelse" own-data annotation
@@ -91,7 +94,6 @@ function isLikelyDate(raw: string): boolean {
 const PROXIMITY_MARKER = new RegExp(
   [
     "\\(Kilde:",
-    "<a\\s+href=\"https?:\\/\\/(?!(?:www\\.)?synligdigital\\.no)",
     "\\([A-ZÆØÅ][\\w &./-]{2,40}(?:[,.]?\\s*)(?:19|20)\\d{2}\\)",
     "Ifølge\\s+[A-ZÆØÅ]",
     "\\(egne\\s+\\w",
@@ -153,7 +155,63 @@ function frontmatterProse(html: string): string {
   return parts.length ? `<header>${parts.join("")}</header>\n` : "";
 }
 
-function cleanHtml(html: string): string {
+// A bare external href no longer certifies a claim (2026-10-26, task 6848d378):
+// the 10-22 stat trace found claims passing on links to pages that never carry
+// the number. An href within PROXIMITY_CHARS passes only when the source cache
+// records that page containing the claim's number.
+const EXTERNAL_HREF = /href="(https?:\/\/(?!(?:www\.)?synligdigital\.no)[^"]+)"/gi;
+
+// Number keys, format-tolerant: "89,8 %" -> 89.8, "107 011" -> 107011,
+// "2/8" -> [2, 8]. A ratio is carried only if BOTH sides are on the page.
+export function claimNumbers(raw: string): string[] {
+  return (raw.match(/\d[\d\s ]*(?:[.,]\d+)?/g) ?? []).map((t) =>
+    t.replace(/[\s ]+/g, "").replace(",", ".").replace(/\.0+$/, ""),
+  ).filter(Boolean);
+}
+
+// Every reading of every number in a page's text: "107,011" is both 107011
+// and 107.011, "25,11" is 25.11, "1 234" is 1234.
+export function pageNumbers(text: string): Set<string> {
+  const out = new Set<string>();
+  for (const t of text.match(/\d{1,3}(?:[,. \u00a0\u202f]\d{3})+(?:[.,]\d+)?|\d+(?:[.,]\d+)?/g) ?? []) {
+    const strip = (s: string) => s.replace(/\.0+$/, "");
+    out.add(strip(t.replace(/[\s\u00a0\u202f]/g, "").replace(",", ".")));
+    out.add(strip(t.replace(/[\s\u00a0\u202f,]/g, "")));
+    out.add(strip(t.replace(/[\s\u00a0\u202f.]/g, "").replace(",", ".")));
+    out.add(t.replace(/[\s\u00a0\u202f.,]/g, ""));
+  }
+  return out;
+}
+
+export type SourceCache = Map<string, Set<string>>; // url -> numbers confirmed on it
+
+export function loadSourceCache(path = SOURCE_CACHE): SourceCache {
+  const cache: SourceCache = new Map();
+  let txt = "";
+  try { txt = readFileSync(path, "utf8"); } catch { return cache; }
+  for (const line of txt.split("\n")) {
+    if (!line.trim()) continue;
+    try {
+      const r = JSON.parse(line);
+      if (r.found !== true || !r.url || !r.number) continue;
+      if (!cache.has(r.url)) cache.set(r.url, new Set());
+      cache.get(r.url)!.add(String(r.number));
+    } catch { /* malformed row: not a confirmation */ }
+  }
+  return cache;
+}
+
+// External hrefs whose attribute starts within PROXIMITY_CHARS of pos.
+export function hrefsNear(urlText: string, pos: number): string[] {
+  const out: string[] = [];
+  EXTERNAL_HREF.lastIndex = 0;
+  for (const m of urlText.matchAll(EXTERNAL_HREF)) {
+    if (Math.abs(m.index! - pos) <= PROXIMITY_CHARS) out.push(m[1].replace(/&amp;/g, "&"));
+  }
+  return out;
+}
+
+export function cleanHtml(html: string, keepUrlEscapes = false): string {
   let out = frontmatterProse(html) + html;
   out = out.replace(/<head[\s\S]*?<\/head>/gi, (m) => " ".repeat(m.length));
   out = out.replace(/<script[\s\S]*?<\/script>/gi, (m) => " ".repeat(m.length));
@@ -169,6 +227,20 @@ function cleanHtml(html: string): string {
   // spans them. Found by the fase-3 port, which decoded entities into the
   // collection frontmatter and made the gate count jump by one.
   out = out.replace(/&nbsp;/g, "      ");
+  // Blind spot closed 2026-08-12, opposite direction: percent-ENCODING inside a
+  // URL is not a percent CLAIM. Two adjacent encoded characters produce the
+  // literal digits-then-% shape the scanner looks for — "…be%20om%20en%20s…"
+  // contains "20%", and "(9%20900" contains "9%". Retiring the dead price tiers
+  // lengthened the mailto bodies on 33 blog CTAs and manufactured three
+  // "unverified claims" out of an href, on a page whose prose was untouched.
+  //
+  // Scoped to href/src attribute values, not global: the proximity check at
+  // PROXIMITY_PATTERNS reads `<a href="https://…">` to decide whether a nearby
+  // link is external, so the URL itself must survive. Only the %XX escapes are
+  // blanked, length-preserving like every other rule here.
+  if (!keepUrlEscapes) out = out.replace(/\s(?:href|src)="[^"]*"/gi, (attr) =>
+    attr.replace(/%[0-9A-Fa-f]{2}/g, "   "),
+  );
   return out;
 }
 
@@ -197,6 +269,10 @@ function extractAllowList(html: string): Set<string> {
   // Top-of-file allow-list comment (per-claim):
   //   <!-- fact-source-allow: ["89,8 %", "107 011"] -->
   // Only honored in the first 1500 bytes (must be top-of-file).
+  // The file-wide fact-source-allow-all comment is retired (2026-10-26): it
+  // certified a Seer number as "own data" under a leaderboard reason, and a
+  // number-in-named-data-file test still passed it (61 is a leaderboard score).
+  // Own data is attested per claim, here.
   const top = html.slice(0, 1500);
   const m = top.match(/<!--\s*fact-source-allow:\s*(\[[\s\S]*?\])\s*-->/);
   if (!m) return new Set();
@@ -207,19 +283,6 @@ function extractAllowList(html: string): Set<string> {
   } catch {
     return new Set();
   }
-}
-
-function extractAllowAll(html: string): string | null {
-  // Top-of-file file-wide allow comment, used when every numeric claim in a file
-  // is own-data from a single named source (own benchmark JSONL, own audit registry).
-  // The string after the colon is the REQUIRED non-empty reason — forces the author
-  // to name the source. Without a reason the gate ignores the comment.
-  //
-  // Example:
-  //   <!-- fact-source-allow-all: "Own benchmark of 30 Stavanger SMEs (April 2026 scanner run); raw data in /workspace/money/aeo/audits/" -->
-  const top = html.slice(0, 1500);
-  const m = top.match(/<!--\s*fact-source-allow-all:\s*"([^"]{20,})"\s*-->/);
-  return m ? m[1] : null;
 }
 
 function inAuditTableWithSource(html: string, pos: number): boolean {
@@ -275,10 +338,12 @@ export function scanBlog(
   html: string,
   registryCorpus: string,
   factSet: Set<string>,
+  sourceCache: SourceCache = new Map(),
 ): { claims: Claim[]; violations: Violation[] } {
   const cleaned = cleanHtml(html);
+  const urlText = cleanHtml(html, true); // same offsets, hrefs intact
+  if (urlText.length !== cleaned.length) throw new Error(`fact-source gate: offset drift in ${fileName}`);
   const allowList = extractAllowList(html);
-  const allowAllReason = extractAllowAll(html);
   const claims: Claim[] = [];
   const violations: Violation[] = [];
   const seenAt = new Set<string>(); // dedupe per (claim,position)
@@ -297,6 +362,10 @@ export function scanBlog(
       if (isLikelyDate(raw)) continue;
       // Skip the "24/7" availability idiom (means "around the clock", not a measurement)
       if (raw.replace(/\s/g, "") === "24/7") continue;
+      // Skip identifiers: a ≥9-digit number that is the link text of an href
+      // carrying the same digits ("936 525 326" -> brreg.no/…/936525326).
+      const digits = raw.replace(/\D/g, "");
+      if (digits.length >= 9 && hrefsNear(urlText, start).some((u) => u.includes(digits))) continue;
 
       const key = `${start}:${raw}`;
       if (seenAt.has(key)) continue;
@@ -304,41 +373,34 @@ export function scanBlog(
 
       const normalized = normalizeClaim(raw);
       const heading = nearestHeading(cleaned, start);
-      claims.push({ raw, normalized, pattern: name, position: start, heading });
-
-      // Acceptance ladder — pass if any rule fires.
-
-      // (0) File-wide allow-all comment with documented source/reason.
-      if (allowAllReason !== null) continue;
-      // (1) Proximity marker within 200 chars (Kilde:, external href, egne data, Kilder section).
-      if (nearbyHasMarker(cleaned, start, PROXIMITY_MARKER)) continue;
-      // (2) Top-of-file allow-list comment.
-      if (allowList.has(normalized)) continue;
-      // (3) Fact-registry claim row (exact normalized match against "claim" field).
-      if (factSet.has(normalized)) continue;
-      // (4) Numeric token appears in either registry corpus (substring match).
-      //     Use the digits+decimal form (e.g. "89.8") — minimum 3 chars to avoid
-      //     trivial small-number false positives.
+      const nums = claimNumbers(raw);
+      const claim: Claim = { raw, normalized, pattern: name, position: start, heading, acceptedBy: null };
+      claims.push(claim);
       const numericOnly = normalized.replace(/[^\d.]/g, "");
-      if (numericOnly.length >= 3 && registryCorpus.includes(numericOnly)) continue;
-      // Also match the raw form for cases like "89,8" or "107 011" appearing
-      // literally in a registry row.
-      if (raw.trim().length >= 3 && registryCorpus.includes(raw.trim())) continue;
-      // (5) Inside <table class="audit-table" data-source="..."> (own-data table).
-      if (inAuditTableWithSource(html, start)) continue;
 
-      // No acceptance rule fired — this is an unverified claim.
+      // Acceptance ladder — first rung that fires is recorded.
+      claim.acceptedBy =
+        // (1) Attribution text within 200 chars (Kilde:, (Org, year), Ifølge, egne data, Kilder).
+        nearbyHasMarker(cleaned, start, PROXIMITY_MARKER) ? "marker"
+        // (2) A nearby external href whose page the source cache confirms carries the number.
+        : hrefsNear(urlText, start).some((u) => nums.length > 0 && nums.every((n) => sourceCache.get(u)?.has(n))) ? "href-verified"
+        // (3) Top-of-file per-claim allow-list comment.
+        : allowList.has(normalized) ? "allow-list"
+        // (4) Fact-registry claim row (exact normalized match against "claim" field).
+        : factSet.has(normalized) ? "fact-registry"
+        // (5) Number in a registry corpus (≥3 chars, digits form or raw form).
+        : (numericOnly.length >= 3 && registryCorpus.includes(numericOnly)) ||
+          (raw.trim().length >= 3 && registryCorpus.includes(raw.trim())) ? "registry-corpus"
+        // (6) Inside <table class="audit-table" data-source="..."> (own-data table).
+        : inAuditTableWithSource(html, start) ? "audit-table"
+        : null;
+      if (claim.acceptedBy) continue;
+
       const snippet = cleaned
         .slice(Math.max(0, start - 80), Math.min(cleaned.length, end + 80))
         .replace(/\s+/g, " ")
         .trim();
-      violations.push({
-        file: fileName,
-        claim: raw,
-        pattern: name,
-        heading,
-        snippet,
-      });
+      violations.push({ file: fileName, claim: raw, pattern: name, heading, snippet });
     }
   }
   return { claims, violations };
@@ -346,9 +408,13 @@ export function scanBlog(
 
 export type RunMode = "enforce" | "report";
 
-export function runFactSourceGate(bloggDir: string, mode: RunMode = "enforce"): GateResult {
+export function runFactSourceGate(
+  bloggDir: string,
+  mode: RunMode = "enforce",
+): GateResult & { all: Array<Claim & { file: string }> } {
   const { corpus, rowCount } = loadRegistryCorpus();
   const factSet = loadFactRegistry();
+  const cache = loadSourceCache();
   const files = readdirSync(bloggDir).filter((f) => f.endsWith(".html") && f !== "index.html");
   if (files.length < MIN_BLOG_FILES) {
     throw new Error(
@@ -357,76 +423,27 @@ export function runFactSourceGate(bloggDir: string, mode: RunMode = "enforce"): 
         `deliberately) or the gate is pointed at the wrong directory.`,
     );
   }
-  let claimCount = 0;
+  const all: Array<Claim & { file: string }> = [];
   const allViolations: Violation[] = [];
   for (const f of files) {
-    const full = join(bloggDir, f);
-    const html = readFileSync(full, "utf8");
-    const { claims, violations } = scanBlog(f, html, corpus, factSet);
-    claimCount += claims.length;
+    const { claims, violations } = scanBlog(f, readFileSync(join(bloggDir, f), "utf8"), corpus, factSet, cache);
+    all.push(...claims.map((c) => ({ ...c, file: f })));
     allViolations.push(...violations);
   }
-  return { files: files.length, claims: claimCount, registryRows: rowCount, violations: allViolations };
+  return { files: files.length, claims: all.length, registryRows: rowCount, violations: allViolations, all };
 }
 
 // CLI: `bun fact-source-gate.ts [--report]`
-// `--report` prints all extracted claims (not just violations) for seeding the registry.
+// `--report` prints every claim with the ladder rung that certified it.
 if (import.meta.main) {
   // fase 3 (2026-08-09): source of truth is the Astro content collection.
-  // build.ts passes this path explicitly; the CLI default follows it so
-  // `bun fact-source-gate.ts --report` keeps scanning what actually ships.
   const bloggDir = "/workspace/synlig-site/src/content/blogg";
-  const reportMode = process.argv.includes("--report");
-  if (reportMode) {
-    // Report mode: dump every extracted claim with file, heading, snippet, acceptance status.
-    const { corpus, rowCount } = loadRegistryCorpus();
-    const factSet = loadFactRegistry();
-    const files = readdirSync(bloggDir).filter((f) => f.endsWith(".html") && f !== "index.html");
-    console.log(`# fact-source-gate REPORT mode`);
-    console.log(`# blogs: ${files.length}, registry rows: ${rowCount}`);
-    console.log(`# format: STATUS\tfile\tpattern\tclaim\theading`);
-    for (const f of files) {
-      const full = join(bloggDir, f);
-      const html = readFileSync(full, "utf8");
-      const { claims, violations } = scanBlog(f, html, corpus, factSet);
-      // Index violations by snippet (unique per position) so that two claims with
-      // identical (file, pattern, claim, heading) but different surrounding context
-      // get classified independently — otherwise an FAQ question + answer that share
-      // a heading collapse to a single key and both show UNVERIFIED.
-      const violationSnippets = new Set(violations.map((v) => v.snippet));
-      for (const c of claims) {
-        // Recompute snippet identically to scanBlog so the lookup matches.
-        // (We do not strip styles here because cleanHtml was applied inside scanBlog;
-        // we just compute a position-aware key from the heading + first 40 chars
-        // of the raw text. This is good enough for human-readable reports.)
-        // Simpler approach: mark UNVERIFIED if any violation has the same heading
-        // AND the same exact claim AND any unmatched violation remains. Fall back
-        // by popping from a Map of (key -> remaining violation count).
-        // Use a per-position counter instead.
-      }
-      // Position-aware mapping: rebuild violation map keyed by (claim, position).
-      const violationPositions = new Set<string>();
-      for (const v of violations) violationPositions.add(`${v.file}\t${v.pattern}\t${v.claim}\t${v.snippet}`);
-      for (const c of claims) {
-        // Recompute the snippet identical to scanBlog's logic so we can do a
-        // position-accurate lookup.
-        const cleaned = html
-          .replace(/<head[\s\S]*?<\/head>/gi, (m) => " ".repeat(m.length))
-          .replace(/<script[\s\S]*?<\/script>/gi, (m) => " ".repeat(m.length))
-          .replace(/<style[\s\S]*?<\/style>/gi, (m) => " ".repeat(m.length))
-          .replace(/\sstyle="[^"]*"/gi, (m) => " ".repeat(m.length));
-        const snippet = cleaned
-          .slice(Math.max(0, c.position - 80), Math.min(cleaned.length, c.position + c.raw.length + 80))
-          .replace(/\s+/g, " ")
-          .trim();
-        const k = `${f}\t${c.pattern}\t${c.raw}\t${snippet}`;
-        const status = violationPositions.has(k) ? "UNVERIFIED" : "OK";
-        console.log(`${status}\t${f}\t${c.pattern}\t${c.raw}\t${c.heading}`);
-      }
-    }
+  const result = runFactSourceGate(bloggDir, "enforce");
+  if (process.argv.includes("--report")) {
+    console.log(`# format: RUNG\tfile\tpattern\tclaim\theading`);
+    for (const c of result.all) console.log(`${c.acceptedBy ?? "UNVERIFIED"}\t${c.file}\t${c.pattern}\t${c.raw}\t${c.heading}`);
     process.exit(0);
   }
-  const result = runFactSourceGate(bloggDir, "enforce");
   if (result.violations.length === 0) {
     console.log(`fact-source: ${result.claims} claims across ${result.files} blogs, ${result.registryRows} registry rows, 0 unverified`);
     process.exit(0);
