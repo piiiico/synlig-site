@@ -59,13 +59,11 @@ const organization = {
     name: "Organisasjonsnummer",
     value: LEGAL.orgnrPlain,
   },
-  // MOTORNAVN, 2026-08-09: sto «mot ChatGPT, Perplexity og Google AI Overview».
-  // Vi måler mot ÉN motor — Perplexity Sonar via OpenRouter (tools/aeo-citation/src/
-  // checker.ts, model: "perplexity/sonar"), med Exa som reserve. /leaderboard sier
-  // «én motor» i klartekst, så maskinlaget på forsiden motsa vår egen metodeside og
-  // lovet kjøperen tre motorer for 9 900. Navngi bare motorer vi faktisk spør.
+  // MOTORNAVN: navngi bare motorer vi faktisk spør. Fra 2026-10-27 er det
+  // GPT, Gemini og Claude med leverandørens websøk via API
+  // (tools/engine-panel/measure.ts); Perplexity (0,9 % av trafikken) er tatt ut.
   description:
-    "Synlig Digital måler om AI-assistenter siterer norske merkevarer. Vi kjører fem kjøpsnære spørsmål fra kundens marked minst ni ganger over flere dager mot Perplexity (Sonar), og dokumenterer hvem som blir sitert i stedet. Vi leverer også Answer Engine Optimization (AEO): strukturerte data, Google Business Profile-optimalisering, aggregator-registrering og AI-tilpasset innhold.",
+    "Synlig Digital måler om AI-assistenter siterer norske merkevarer. Vi kjører fem kjøpsnære spørsmål fra kundens marked minst ni ganger over flere dager mot GPT, Gemini og Claude med leverandørenes eget websøk, og dokumenterer hvem som blir nevnt i stedet. Vi leverer også Answer Engine Optimization (AEO): strukturerte data, Google Business Profile-optimalisering, aggregator-registrering og AI-tilpasset innhold.",
   url: "https://synligdigital.no",
   logo: "https://synligdigital.no/og-2026-08.png",
   image: "https://synligdigital.no/og-2026-08.png",
@@ -116,7 +114,7 @@ const organization = {
     "Lokal SEO",
     "Strukturerte data",
     "ChatGPT synlighet",
-    "Perplexity synlighet",
+    "Gemini synlighet",
     "Google AI Overview",
     "llms.txt",
     "Norsk aggregator-registrering",
@@ -149,7 +147,7 @@ const organization = {
           // organization.description: motornavnet skal være det vi faktisk spør.
           // 2026-08-13: produktet er ikke lenger målingen alene (den gir vi bort i
           // /sjekk og i den kalde rapporten) — det er endringene pluss beviset.
-          "Vi måler nullpunktet — fem kjøpsnære spørsmål fra ditt marked, ni byte-identiske kjøringer mot Perplexity (Sonar), med navn på hvem som blir sitert i stedet — skriver deretter endringene ferdig for inntil ti sider (JSON-LD, sitatvennlige spørsmål og svar, llms.txt, AI-crawler-regler), og måler på nytt 30 dager etter at dere har publisert dem. Utfallskriterium: minst én sitering av deres domene i etterkjøringene, ellers kjøres én ny runde uten ny faktura. Levering på e-post, faktura med 14 dagers frist, ingen møter.",
+          "Vi måler nullpunktet — fem kjøpsnære spørsmål fra ditt marked, ni byte-identiske kjøringer mot GPT, Gemini og Claude med websøk, med navn på hvem som blir nevnt i stedet — skriver deretter endringene ferdig for inntil ti sider (JSON-LD, sitatvennlige spørsmål og svar, llms.txt, AI-crawler-regler), og måler på nytt 30 dager etter at dere har publisert dem. Utfallskriterium: minst én sitering av deres domene i etterkjøringene, ellers kjøres én ny runde uten ny faktura. Levering på e-post, faktura med 14 dagers frist, ingen møter.",
         price: nok(TIERS.sitert.nok),
         priceCurrency: "NOK",
         url: "https://synligdigital.no/#tjenester",
@@ -248,7 +246,7 @@ const faqPage = {
       name: "Hva er Answer Engine Optimization (AEO)?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "AEO (Answer Engine Optimization) er optimalisering av en bedrifts digitale tilstedeværelse slik at AI-assistenter som ChatGPT, Perplexity og Google AI Overview finner, forstår og anbefaler bedriften. Det inkluderer schema.org-markup, Google Business Profile, aggregator-registrering, innholdsoptimalisering og anmeldelsesstrategi. Målet er å bli det svaret AI gir — ikke bare å rangere på Google.",
+        text: "AEO (Answer Engine Optimization) er optimalisering av en bedrifts digitale tilstedeværelse slik at AI-assistenter som ChatGPT, Gemini og Google AI Overviews finner, forstår og anbefaler bedriften. Det inkluderer schema.org-markup, Google Business Profile, aggregator-registrering, innholdsoptimalisering og anmeldelsesstrategi. Målet er å bli det svaret AI gir — ikke bare å rangere på Google.",
       },
     },
     {

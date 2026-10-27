@@ -15,6 +15,7 @@
 import Base from "../layouts/Base.astro";
 import { HOMEPAGE_JSONLD } from "../data/homepage-jsonld";
 import { getCollection } from "astro:content";
+import { ENGINE_HEADLINE, ENGINE_ROWS, ENGINE_PANEL, ENGINE_CAVEAT } from "../../_partials/naming-proof";
 
 /**
  * Forsidens blogg-kort DERIVERES fra samlingens frontmatter — de sto håndskrevet
@@ -60,53 +61,10 @@ const DESCRIPTION =
   "Vi måler om AI-svar siterer merkevaren din, skriver endringene som skal til, og måler på nytt 30 dager etter. Skriftlig utfallskriterium. Sitert-pakken 9 900 kr.";
 
 /**
- * Utdrag fra en ekte sitert-måling, kjørt på OSS SELV.
- * Kilde: /workspace/money/aeo/synlig-aeo-norge-3runs-2026-08-08.json
- *   brand=Synlig Digital, panel=aeo-norge, runCount=3,
- *   measuredAt=2026-08-08T16:15:08.343Z, motor=perplexity/sonar via OpenRouter.
- * Hver rad er kopiert fra perQuestion[]: urlRuns/absentRuns og
- * stableCompetitorHosts. Ingen tall skrevet for hånd. Raden vi TAPER
- * (absentRuns 3/3) står med vilje — det er beviset på at leveransen ikke
- * er en brosjyre. Endrer du et tall her, endrer du kildefila først.
+ * Heroen leser motorpanelet 2026-10-27 (GPT/Claude/Gemini med websøk) fra
+ * _partials/naming-proof.ts, som teller fra rådata. Fram til 2026-10-27 sto
+ * en Perplexity-måling her; Perplexity er 0,9 % av assistent-trafikken.
  */
-const sampleMeasurement = {
-  measuredAt: "8. august 2026",
-  engine: "Perplexity (Sonar)",
-  runs: 3,
-  rows: [
-    {
-      q: "Hvem tilbyr AI-synlighetsanalyse i Norge?",
-      cited: true,
-      verdict: "Sitert med lenke i 3 av 3",
-      others: "synlig.ai, sikte.ai",
-    },
-    {
-      q: "Hvilket norsk byrå jobber med AEO?",
-      cited: true,
-      verdict: "Sitert med lenke i 3 av 3",
-      others: "sikte.ai, salesup.no",
-    },
-    {
-      q: "Beste norske konsulent for synlighet i AI-svar",
-      cited: true,
-      verdict: "Sitert med lenke i 3 av 3",
-      others: "sikte.ai, wud.no",
-    },
-    {
-      q: "Hvem kan hjelpe en norsk bedrift med å bli synlig i AI-søk?",
-      cited: true,
-      verdict: "Sitert med lenke i 3 av 3",
-      others: "synlig.ai, treffsikker.no",
-    },
-    {
-      q: "Hvordan får bedriften min bli nevnt av ChatGPT og Perplexity?",
-      cited: false,
-      verdict: "Ikke nevnt i det hele tatt — 0 av 3",
-      others: "leadex.no, amicited.com, ekorn.ai",
-    },
-  ],
-};
-
 /**
  * Bevislaget. Alle fire funnene er publisert i sin helhet på
  * /leaderboard#skaar-mot-sitering (5 spørsmål, Perplexity Sonar, 9 kjøringer
@@ -132,7 +90,7 @@ const findings = [
 const faqs = [
   {
     q: "Hva er Answer Engine Optimization (AEO)?",
-    a: "AEO handler om å optimalisere bedriftens digitale tilstedeværelse slik at AI-assistenter som ChatGPT, Perplexity og Google AI Overview finner, forstår og anbefaler dere. Det inkluderer strukturerte data (schema.org), Google Business Profile, innholdsoptimalisering og anmeldelsesstrategi. Målet er å være det svaret AI gir, ikke bare å rangere på Google.",
+    a: "AEO handler om å optimalisere bedriftens digitale tilstedeværelse slik at AI-assistenter som ChatGPT, Gemini og Google AI Overviews finner, forstår og anbefaler dere. Det inkluderer strukturerte data (schema.org), Google Business Profile, innholdsoptimalisering og anmeldelsesstrategi. Målet er å være det svaret AI gir, ikke bare å rangere på Google.",
   },
   {
     q: "Hvordan er AEO forskjellig fra vanlig SEO?",
@@ -184,8 +142,8 @@ const faqs = [
         </h1>
         <p class="hero-sub">
           En AEO-score sier hva siden din har på plass. Den sier ikke om
-          Perplexity faktisk lenker til deg når noen spør om ditt marked. Vi
-          måler det siste.
+          ChatGPT, Gemini og Claude faktisk nevner deg når noen spør om ditt
+          marked. Vi måler det siste.
         </p>
         <a href={BESTILL} class="hero-cta">Bestill Sitert-pakken →</a>
         <p class="hero-note">
@@ -201,26 +159,9 @@ const faqs = [
             class="hero-tool-link">gratis AEO-sjekk av forsiden →</a
           >
         </p>
-        <!-- Bevisstripe. Fram til 2026-08-14 sto Cloudflares agent-skanner her
-             («5/5 Agent-Native»). Den ble byttet ut, ikke supplert, av to
-             grunner: (1) den er en SKÅR PÅ FORSIDEN VÅR, altså nøyaktig det
-             måleinstrumentet bevis-seksjonen tre skjermer ned falsifiserer som
-             svar på kjøpsspørsmålet — heroen skrøt av tallet siden under sier
-             ikke forutsier sitering; (2) den nye linja måler det vi faktisk
-             selger. Agent-readiness-beviset lever videre på /faktura og alle
-             /r/<hash>-rapportene (data-trust-anchor), så siden mister ingen
-             dekning. (/priser sto i denne lista fram til samme kveld: den
-             gjorde nøyaktig det samme byttet, av nøyaktig samme grunn, så
-             lista er rettet her i samme commit i stedet for å bli stående og
-             lyve for neste økt.)
-             KILDE for tallene, ingen skrevet for hånd:
-             tools/peer-field/readings/2026-08-14-notext{,-rep2,-rep3}.json +
-             2026-08-14-rep3-withtext.json (fire kjøringer × sju spørsmål = 28
-             svar, sonar, byte-identiske prompt). Talt på nytt 2026-08-14 av
-             denne økta: navngitt i 28/28 (26 med fullt navn, 2 som «Synlig»
-             med synligdigital.no som kilde), nest mest navngitte norske aktør
-             20/28 (Mementor/Wud/WeAssist). Fullt forbehold på
-             /tjenester#navngitt — endrer du tallet her, endrer du det der. -->
+        <!-- Bevisstripe: motorpanelet, avledet fra rådata (_partials/naming-proof.ts).
+             Perplexity 28/28 (14.8.2026) lever videre som historisk rad på
+             /tjenester#navngitt, aldri som overskrift. -->
         <div class="hero-proof">
           <svg
             class="hero-proof-check"
@@ -235,43 +176,32 @@ const faqs = [
             stroke-linejoin="round"
             ><polyline points="4 10 8 14 16 6"></polyline></svg
           >
-          <span
-            >Perplexity navngir Synlig Digital i <strong class="text-ink"
-              >28 av 28 svar</strong
-            > på sju norske kjøpsintent-spørsmål om AEO. Nest mest navngitte norske
-            aktør: 20 av 28.</span
-          >
+          <span>{ENGINE_HEADLINE}</span>
           <a href="/tjenester#navngitt">Spørsmålene og forbeholdet →</a>
         </div>
        </div>
 
-        <aside class="measure-panel" aria-label="Utdrag fra en sitert-måling">
+        <aside class="measure-panel" aria-label="Motorpanelet målt på oss selv">
           <div class="measure-head">
-            <div class="measure-title">Utdrag fra en sitert-måling</div>
+            <div class="measure-title">Målt på oss selv</div>
             <p class="measure-meta">
-              Kjørt på oss selv, {sampleMeasurement.measuredAt} · {
-                sampleMeasurement.engine
-              } · {sampleMeasurement.runs} kjøringer per spørsmål
+              {ENGINE_PANEL.measuredAt} · {ENGINE_PANEL.engines.map((e) => e.name).join(", ")} · navngitt i x av {ENGINE_PANEL.runs} kjøringer
             </p>
           </div>
           <ul class="measure-rows">
             {
-              sampleMeasurement.rows.map((r) => (
-                <li class={r.cited ? "measure-row" : "measure-row is-miss"}>
+              ENGINE_ROWS.map((r) => (
+                <li class={r.counts.some((c) => c.n === 0) ? "measure-row is-miss" : "measure-row"}>
                   <span class="measure-q">«{r.q}»</span>
-                  <span class="measure-verdict">{r.verdict}</span>
-                  <span class="measure-others">
-                    {r.cited ? "Også sitert: " : "Sitert i stedet: "}
-                    {r.others}
+                  <span class="measure-verdict">
+                    {r.counts.map((c) => `${c.name.replace("OpenAIs ", "")} ${c.n}/${c.of}`).join(" · ")}
                   </span>
                 </li>
               ))
             }
           </ul>
           <p class="measure-foot">
-            Vi publiserer spørsmålet vi taper. Leveransen din har samme format
-            og samme regel: minst ni kjøringer over flere dager, og rådataene
-            følger med.
+            Vi publiserer spørsmålene vi taper. {ENGINE_CAVEAT}
           </p>
         </aside>
       </div>
@@ -402,7 +332,7 @@ const faqs = [
               <tr>
                 <td>Kanal</td>
                 <td>Søkemotor</td>
-                <td>ChatGPT, Perplexity, AI Overviews</td>
+                <td>ChatGPT, Gemini, Claude, AI Overviews</td>
               </tr>
               <tr>
                 <td>Teknologi</td>
@@ -433,7 +363,7 @@ const faqs = [
         </h2>
         <p>
           Synlig Digital holder til i Stavanger og måler AI-synlighet for norske
-          merkevarer: om ChatGPT, Perplexity og Google AI Overview siterer dere
+          merkevarer: om ChatGPT, Gemini og Claude nevner dere
           når kundene spør — eller siterer noen andre.
         </p>
         <!-- AI-attribusjon. Håkons stående regel fra 2026-06-19: det skal alltid
