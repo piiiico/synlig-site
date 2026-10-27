@@ -1,0 +1,47 @@
+<!doctype html><html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>C — Kildeliste</title>
+<style>
+@font-face{font-family:F;src:url(fonts/fraunces-latin-400-normal.woff2)}
+@font-face{font-family:F;font-weight:900;src:url(fonts/fraunces-latin-900-normal.woff2)}
+@font-face{font-family:F;font-weight:600;src:url(fonts/fraunces-latin-600-normal.woff2)}
+@font-face{font-family:J;src:url(fonts/jetbrains-mono-latin-400-normal.woff2)}
+:root{--paper:#eef0ea;--ink:#0d2a20;--fjord:#0f3d2e;--mute:#4f5f57;--line:#b9c4bc;--hi:#e8b931;--serif:F,Georgia,serif;--mono:J,ui-monospace,monospace}
+*{box-sizing:border-box;margin:0}
+body{background:var(--paper);color:var(--ink);font:400 18px/1.55 var(--serif)}
+.w{max-width:1200px;margin:0 auto;padding:0 32px}
+header .w{display:flex;justify-content:space-between;align-items:center;padding:24px 32px}
+.logo{font:900 24px/1 var(--serif);color:var(--fjord);text-decoration:none}
+.logo::before{content:"«";color:var(--hi);margin-right:1px}.logo::after{content:"»";color:var(--hi);margin-left:1px}
+nav a{font:400 13px var(--mono);color:var(--ink);text-decoration:none;margin-left:22px}
+.hero{background:var(--fjord);color:var(--paper);padding:80px 0 90px}
+.hero .w{display:grid;grid-template-columns:7fr 5fr;gap:48px;align-items:end}
+h1{font:900 88px/.95 var(--serif);letter-spacing:-.035em}
+h1 mark{background:none;color:var(--hi)}
+.lead{font-size:21px;margin:30px 0 34px;max-width:28em;color:#d9e3dc}
+.cta{display:inline-block;font:400 15px var(--mono);background:var(--hi);color:var(--ink);padding:16px 24px;text-decoration:none}
+.card{background:var(--paper);color:var(--ink);padding:26px 26px 18px;font-size:15px}
+.card h2{font:400 12px var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--mute);border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:6px}
+.card ol{list-style:none;padding:0}
+.card li{display:grid;grid-template-columns:48px 1fr;padding:12px 0;border-bottom:1px solid var(--line)}
+.card li b{font:600 22px/1 var(--serif);color:var(--fjord)}
+.card li small{display:block;font:400 12px var(--mono);color:var(--mute);margin-top:4px}
+.idx{padding:64px 0}
+.idx .w{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.idx h3{font:900 30px/1.05 var(--serif);margin:10px 0}
+.idx span{font:400 13px var(--mono);color:var(--mute)}
+@media(max-width:760px){nav{display:none}.w,header .w{padding-left:20px;padding-right:20px}.hero{padding:44px 0 50px}.hero .w,.idx .w{grid-template-columns:1fr}h1{font-size:50px}.lead{font-size:18px}}
+</style></head><body>
+<header><div class="w"><a class="logo" href="#">Synlig</a><nav><a href="#">Leaderboard</a><a href="#">Metode</a><a href="#">Blogg</a><a href="#">Priser</a></nav></div></header>
+<section class="hero"><div class="w"><div>
+<h1>Blir merkevaren din <mark>sitert</mark> når AI svarer?</h1>
+<p class="lead">En AEO-score sier hva siden din har på plass. Den sier ikke om Perplexity faktisk lenker til deg når noen spør om ditt marked. Vi måler det siste.</p>
+<a class="cta" href="#">Bestill Sitert-pakken →</a></div>
+<div class="card"><h2>Kildeliste · Perplexity · 8. aug. 2026</h2><ol>
+<li><b>3/3</b><div>Hvem tilbyr AI-synlighetsanalyse i Norge?<small>også sitert: synlig.ai, sikte.ai</small></div></li>
+<li><b>3/3</b><div>Hvilket norsk byrå jobber med AEO?<small>også sitert: sikte.ai, salesup.no</small></div></li>
+<li><b>0/3</b><div>Hvordan får bedriften min bli nevnt av ChatGPT og Perplexity?<small>sitert i stedet: leadex.no, amicited.com, ekorn.ai</small></div></li>
+</ol></div></div></section>
+<section class="idx"><div class="w">
+<div><span>§ 1</span><h3>Fem spørsmål, valgt sammen</h3><p>Kjøpsnære, på norsk, slik en kunde faktisk skriver dem.</p></div>
+<div><span>§ 2</span><h3>Minst ni kjøringer</h3><p>Byte-identiske prompt over flere dager. Én kjøring er ikke en måling.</p></div>
+<div><span>§ 3</span><h3>Rådata følger med</h3><p>Spørsmål, modell, datoer og kjøringstall — så dere kan kjøre den om igjen selv.</p></div>
+</div></section></body></html>

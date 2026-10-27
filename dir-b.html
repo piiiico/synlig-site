@@ -1,0 +1,44 @@
+<!doctype html><html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>B — Måleinstrument</title>
+<style>
+@font-face{font-family:G;src:url(fonts/bricolage-grotesque-latin-400-normal.woff2)}
+@font-face{font-family:G;font-weight:800;src:url(fonts/bricolage-grotesque-latin-800-normal.woff2)}
+@font-face{font-family:J;src:url(fonts/jetbrains-mono-latin-400-normal.woff2)}
+@font-face{font-family:J;font-weight:700;src:url(fonts/jetbrains-mono-latin-700-normal.woff2)}
+:root{--bg:#0f0f0d;--fg:#f2f0ea;--mute:#a19e94;--line:#3a3933;--sig:#ff5a1f;--sans:G,system-ui,sans-serif;--mono:J,ui-monospace,monospace}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--fg);font:400 18px/1.5 var(--sans)}
+.w{max-width:1200px;margin:0 auto;padding:0 32px}
+header .w{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;border-bottom:1px solid var(--line)}
+.logo{font:800 22px/1 var(--sans);color:var(--fg);text-decoration:none;letter-spacing:-.02em}
+.logo i{display:inline-block;width:10px;height:10px;background:var(--sig);margin-left:6px;vertical-align:middle;font-style:normal}
+nav a{font:400 13px var(--mono);color:var(--mute);text-decoration:none;margin-left:24px}
+.hero{padding:56px 0 40px}
+.stamp{font:400 13px var(--mono);color:var(--mute);border:1px solid var(--line);display:inline-block;padding:6px 10px}
+.stamp b{color:var(--sig);font-weight:700}
+.big{font:700 clamp(120px,22vw,300px)/.85 var(--mono);letter-spacing:-.06em;margin:28px 0 8px}
+.big span{color:var(--mute)}
+h1{font:800 54px/1.02 var(--sans);letter-spacing:-.03em;max-width:15em;margin-top:24px}
+.lead{color:var(--mute);font-size:20px;max-width:34em;margin:22px 0 32px}
+.cta{display:inline-block;font:700 15px var(--mono);background:var(--sig);color:var(--bg);padding:16px 22px;text-decoration:none}
+.cta+a{font:400 15px var(--mono);color:var(--fg);margin-left:20px}
+table{width:100%;border-collapse:collapse;font:400 14px var(--mono);margin:56px 0 72px}
+th{font-weight:400;color:var(--mute);text-align:left;border-bottom:1px solid var(--fg);padding:10px 8px 10px 0}
+td{border-bottom:1px solid var(--line);padding:14px 8px 14px 0;vertical-align:top}
+td.q{font-family:var(--sans);font-size:16px;width:50%}
+td.r{font-weight:700;white-space:nowrap}
+td.r.z{color:var(--sig)}
+@media(max-width:760px){nav{display:none}.w,header .w{padding-left:20px;padding-right:20px}h1{font-size:34px}.lead{font-size:17px}.cta+a{display:block;margin:14px 0 0}th:nth-child(3),td:nth-child(3){display:none}}
+</style></head><body>
+<header><div class="w"><a class="logo" href="#">Synlig<i></i></a><nav><a href="#">leaderboard</a><a href="#">metode</a><a href="#">blogg</a><a href="#">priser</a></nav></div></header>
+<div class="w"><section class="hero">
+<span class="stamp">Perplexity (Sonar) · 7 kjøpsintent-spørsmål · 28 svar · <b>målt på oss selv</b></span>
+<div class="big">28<span>/28</span></div>
+<h1>Blir merkevaren din sitert når AI svarer?</h1>
+<p class="lead">En AEO-score sier hva siden din har på plass. Den sier ikke om Perplexity faktisk lenker til deg når noen spør om ditt marked. Vi måler det siste.</p>
+<a class="cta" href="#">Bestill Sitert-pakken →</a><a href="#">Se rådataene</a>
+</section>
+<table><tr><th>Spørsmål</th><th>Sitert</th><th>Også sitert</th></tr>
+<tr><td class="q">Hvem tilbyr AI-synlighetsanalyse i Norge?</td><td class="r">3/3</td><td>synlig.ai, sikte.ai</td></tr>
+<tr><td class="q">Hvilket norsk byrå jobber med AEO?</td><td class="r">3/3</td><td>sikte.ai, salesup.no</td></tr>
+<tr><td class="q">Hvordan får bedriften min bli nevnt av ChatGPT og Perplexity?</td><td class="r z">0/3</td><td>leadex.no, amicited.com, ekorn.ai</td></tr>
+</table></div></body></html>

@@ -1,0 +1,50 @@
+<!doctype html><html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A — Fotnote</title>
+<style>
+@font-face{font-family:N;src:url(fonts/newsreader-latin-400-normal.woff2)}
+@font-face{font-family:N;font-weight:600;src:url(fonts/newsreader-latin-600-normal.woff2)}
+@font-face{font-family:N;font-style:italic;src:url(fonts/newsreader-latin-400-italic.woff2)}
+@font-face{font-family:M;src:url(fonts/ibm-plex-mono-latin-400-normal.woff2)}
+@font-face{font-family:M;font-weight:600;src:url(fonts/ibm-plex-mono-latin-600-normal.woff2)}
+:root{--paper:#f3eee4;--ink:#17140f;--mute:#5e574b;--rule:#cfc6b4;--red:#9b2c1f;--serif:N,Georgia,serif;--mono:M,ui-monospace,monospace}
+*{box-sizing:border-box;margin:0}
+body{background:var(--paper);color:var(--ink);font:400 19px/1.55 var(--serif)}
+.w{max-width:1120px;margin:0 auto;padding:0 28px}
+header{border-bottom:1px solid var(--ink);padding:18px 0}
+header .w{display:flex;justify-content:space-between;align-items:baseline}
+.logo{font:600 26px/1 var(--serif);letter-spacing:-.01em;color:var(--ink);text-decoration:none}
+.logo sup{font:600 12px var(--mono);color:var(--red);margin-left:2px}
+nav a{font:400 13px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink);text-decoration:none;margin-left:22px}
+.mast{display:flex;justify-content:space-between;font:400 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute);padding:10px 0;border-bottom:1px solid var(--rule)}
+.hero{display:grid;grid-template-columns:1fr 340px;gap:56px;padding:64px 0 56px;border-bottom:1px solid var(--ink)}
+h1{font:400 76px/1.02 var(--serif);letter-spacing:-.025em}
+h1 em{font-style:italic;color:var(--red)}
+h1 sup,p sup{font:600 .28em var(--mono);color:var(--red);vertical-align:super;letter-spacing:0}
+.lead{font-size:22px;margin:28px 0 30px;max-width:30em}
+.cta{display:inline-block;font:600 14px var(--mono);text-transform:uppercase;letter-spacing:.06em;background:var(--ink);color:var(--paper);padding:15px 22px;text-decoration:none}
+.cta+a{font:400 14px var(--mono);color:var(--ink);margin-left:18px}
+aside{border-left:1px solid var(--rule);padding-left:28px;font-size:15px}
+aside h2{font:600 12px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin-bottom:14px}
+ol.refs{padding-left:0;list-style:none;counter-reset:r}
+ol.refs li{counter-increment:r;padding:10px 0 10px 30px;border-top:1px solid var(--rule);position:relative}
+ol.refs li::before{content:"[" counter(r) "]";position:absolute;left:0;font:600 12px/1.9 var(--mono);color:var(--red)}
+.n{font:600 15px var(--mono)}
+.fig{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--ink)}
+.fig div{padding:34px 28px 30px 0}
+.fig div+div{border-left:1px solid var(--rule);padding-left:28px}
+.fig b{display:block;font:400 64px/1 var(--serif);letter-spacing:-.03em}
+.fig span{font:400 13px/1.4 var(--mono);color:var(--mute);display:block;margin-top:10px}
+@media(max-width:760px){body{font-size:17px}nav{display:none}.hero{grid-template-columns:1fr;gap:32px;padding:36px 0}h1{font-size:44px}.lead{font-size:19px}aside{border-left:0;padding-left:0}.fig{grid-template-columns:1fr}.fig div+div{border-left:0;border-top:1px solid var(--rule);padding-left:0}.cta+a{display:block;margin:14px 0 0}}
+</style></head><body>
+<header><div class="w"><a class="logo" href="#">Synlig<sup>[1]</sup></a><nav><a href="#">Leaderboard</a><a href="#">Metode</a><a href="#">Blogg</a><a href="#">Priser</a></nav></div></header>
+<div class="w"><div class="mast"><span>Stavanger · AI-synlighet, målt</span><span>Utgave 27. oktober 2026</span></div>
+<section class="hero"><div>
+<h1>Blir merkevaren din <em>sitert</em> når AI svarer?<sup>[1]</sup></h1>
+<p class="lead">En AEO-score sier hva siden din har på plass. Den sier ikke om Perplexity faktisk lenker til deg når noen spør om ditt marked. Vi måler det siste.<sup>[2]</sup></p>
+<a class="cta" href="#">Bestill Sitert-pakken</a><a href="#">Se leaderboardet →</a>
+</div><aside><h2>Kilder · målt på oss selv</h2><ol class="refs">
+<li>«Hvem tilbyr AI-synlighetsanalyse i Norge?» — sitert i <span class="n">3 av 3</span></li>
+<li>«Hvilket norsk byrå jobber med AEO?» — sitert i <span class="n">3 av 3</span></li>
+<li>«Hvordan får bedriften min bli nevnt av ChatGPT og Perplexity?» — <span class="n">0 av 3</span>. Vi publiserer spørsmålet vi taper.</li>
+</ol></aside></section>
+<section class="fig"><div><b>≥9</b><span>kjøringer per spørsmål, byte-identiske prompt, over flere dager</span></div><div><b>5</b><span>kjøpsnære spørsmål fra ditt marked, på norsk</span></div><div><b>9 900</b><span>kr eks. mva · faktura, 14 dagers frist · ingen møter</span></div></section>
+</div></body></html>
