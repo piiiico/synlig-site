@@ -7,9 +7,10 @@
    Every colour on the site is one of the tokens below — design-gate.ts counts
    the shipped HTML (≤12 colours, 1 logo, ≤2 font stacks). No alpha variants:
    each `/NN` emits a new literal. */
-@font-face { font-family: "Overpass"; src: url("/fonts/overpass/overpass-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
-@font-face { font-family: "Overpass"; src: url("/fonts/overpass/overpass-700.woff2") format("woff2"); font-weight: 500 700; font-display: swap; }
-@font-face { font-family: "Overpass"; src: url("/fonts/overpass/overpass-800.woff2") format("woff2"); font-weight: 800; font-display: swap; }
+/* U+B7 left out: Overpass classes «·» as a mark (zero advance) — the fallback draws it. */
+@font-face { font-family: "Overpass"; src: url("/fonts/overpass/overpass-400.woff2") format("woff2"); font-weight: 400; font-display: swap; unicode-range: U+0-B6, U+B8-10FFFF; }
+@font-face { font-family: "Overpass"; src: url("/fonts/overpass/overpass-700.woff2") format("woff2"); font-weight: 500 700; font-display: swap; unicode-range: U+0-B6, U+B8-10FFFF; }
+@font-face { font-family: "Overpass"; src: url("/fonts/overpass/overpass-800.woff2") format("woff2"); font-weight: 800; font-display: swap; unicode-range: U+0-B6, U+B8-10FFFF; }
 
 @theme {
   --color-*: initial;

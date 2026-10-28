@@ -99,8 +99,6 @@
   </script>
 
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
       --bg: var(--color-wash);
       --bg-raised: var(--color-paper);
@@ -118,30 +116,14 @@
       --mono: var(--font-mono);
       --sans: var(--font-sans);
     }
-
-    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-sans);
-      line-height: 1.7;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
     .container { max-width: 640px; margin: 0 auto; padding: 0 24px; width: 100%; }
     .container-wide { max-width: 800px; margin: 0 auto; padding: 0 24px; width: 100%; }
-
     main { flex: 1; padding: 0 0 80px; }
-
     /* Hero */
     .hero {
       padding: 80px 0 64px;
       border-bottom: 1px solid var(--border);
     }
-
     .hero-tag {
       display: inline-block;
       font-family: var(--font-mono);
@@ -152,10 +134,7 @@
       padding: 3px 10px;
       border-radius: 3px;
       margin-bottom: 20px;
-      
-      
     }
-
     .hero-title {
       font-size: 2rem;
       font-weight: 700;
@@ -163,12 +142,10 @@
       line-height: 1.2;
       margin-bottom: 20px;
     }
-
     .hero-title em {
       font-style: normal;
       color: var(--accent);
     }
-
     .hero-subtitle {
       font-size: 1rem;
       color: var(--text-dim);
@@ -176,14 +153,12 @@
       margin-bottom: 32px;
       max-width: 520px;
     }
-
     .hero-cta-group {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
       align-items: center;
     }
-
     .btn-primary {
       display: inline-block;
       background: var(--accent);
@@ -195,9 +170,7 @@
       text-decoration: none;
       letter-spacing: -0.01em;
     }
-
     .btn-primary:hover { opacity: 0.9; }
-
     .btn-secondary {
       display: inline-block;
       color: var(--text-dim);
@@ -205,26 +178,21 @@
       padding: 12px 0;
       text-decoration: none;
     }
-
     .btn-secondary:hover { color: var(--text); }
-
     /* Stat bar */
     .stat-bar {
       background: var(--bg-raised);
       border-bottom: 1px solid var(--border);
       padding: 28px 0;
     }
-
     .stat-bar-inner {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
-
     .stat-item {
       text-align: center;
     }
-
     .stat-value {
       font-family: var(--font-mono);
       font-size: 1.8rem;
@@ -233,42 +201,35 @@
       line-height: 1;
       margin-bottom: 6px;
     }
-
     .stat-label {
       font-size: 0.75rem;
       color: var(--text-muted);
       line-height: 1.4;
     }
-
     /* Sections */
     section { padding: 56px 0; border-bottom: 1px solid var(--border); }
     section:last-child { border-bottom: none; }
-
     h2 {
       font-size: 1.25rem;
       font-weight: 600;
       letter-spacing: -0.02em;
       margin-bottom: 20px;
     }
-
     h3 {
       font-size: 0.95rem;
       font-weight: 600;
       margin-bottom: 10px;
       color: var(--text);
     }
-
     p {
       font-size: 0.92rem;
       color: var(--text);
       margin-bottom: 16px;
       line-height: 1.7;
     }
-
     p.muted {
       color: var(--text-dim);
     }
-
     /* Audit data table */
     .audit-table {
       width: 100%;
@@ -276,7 +237,6 @@
       margin: 24px 0;
       font-size: 0.8rem;
     }
-
     .audit-table th {
       text-align: left;
       padding: 8px 12px;
@@ -284,43 +244,34 @@
       font-size: 0.68rem;
       font-weight: 600;
       color: var(--text-muted);
-      
-      
       border-bottom: 1px solid var(--border);
     }
-
     .audit-table td {
       padding: 10px 12px;
       border-bottom: 1px solid var(--color-line);
       color: var(--text-dim);
       vertical-align: top;
     }
-
     .audit-table tr:last-child td { border-bottom: none; }
-
     .audit-table .firm-name {
       color: var(--text);
       font-weight: 500;
     }
-
     .check-ok {
       color: var(--accent);
       font-family: var(--font-mono);
       font-size: 0.72rem;
     }
-
     .check-partial {
       color: var(--yellow);
       font-family: var(--font-mono);
       font-size: 0.72rem;
     }
-
     .check-fail {
       color: var(--red);
       font-family: var(--font-mono);
       font-size: 0.72rem;
     }
-
     .level-badge {
       display: inline-block;
       font-family: var(--font-mono);
@@ -329,19 +280,16 @@
       border-radius: 3px;
       white-space: nowrap;
     }
-
     .level-1 {
       background: var(--color-line);
       border: 1px solid var(--yellow-dim);
       color: var(--yellow);
     }
-
     .level-0 {
       background: var(--color-line);
       border: 1px solid var(--red-dim);
       color: var(--red);
     }
-
     /* Warning block */
     .warning-block {
       margin: 24px 0;
@@ -351,21 +299,15 @@
       border-left: 3px solid var(--red);
       border-radius: 6px;
     }
-
     .warning-label {
       font-family: var(--font-mono);
       font-size: 0.68rem;
-      
-      
       color: var(--red);
       margin-bottom: 8px;
     }
-
     .warning-block p { margin: 0; font-size: 0.88rem; }
-
     /* Steps */
     .steps { margin: 24px 0; }
-
     .step {
       display: flex;
       gap: 16px;
@@ -373,9 +315,7 @@
       padding-bottom: 24px;
       border-bottom: 1px solid var(--border);
     }
-
     .step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-
     .step-num {
       width: 32px;
       height: 32px;
@@ -391,23 +331,19 @@
       justify-content: center;
       flex-shrink: 0;
     }
-
     .step-content {}
-
     .step-title {
       font-weight: 600;
       font-size: 0.92rem;
       margin-bottom: 6px;
       color: var(--text);
     }
-
     .step-desc {
       font-size: 0.83rem;
       color: var(--text-dim);
       line-height: 1.55;
       margin: 0;
     }
-
     .step-code {
       margin-top: 10px;
       padding: 10px 14px;
@@ -420,7 +356,6 @@
       line-height: 1.5;
       overflow-x: auto;
     }
-
     /* Quote block */
     .quote-block {
       margin: 32px 0;
@@ -430,20 +365,17 @@
       border-left: 3px solid var(--accent);
       border-radius: 6px;
     }
-
     .quote-text {
       font-size: 0.95rem;
       font-style: italic;
       color: var(--text);
       margin-bottom: 10px;
     }
-
     .quote-attr {
       font-family: var(--font-mono);
       font-size: 0.72rem;
       color: var(--text-muted);
     }
-
     /* Case link */
     .case-link {
       display: flex;
@@ -457,9 +389,7 @@
       margin: 24px 0;
       transition: border-color 0.15s;
     }
-
     .case-link:hover { border-color: var(--accent-dim); }
-
     .case-icon {
       width: 40px;
       height: 40px;
@@ -472,14 +402,11 @@
       font-size: 1.2rem;
       flex-shrink: 0;
     }
-
     .case-meta {}
     .case-label {
       font-family: var(--font-mono);
       font-size: 0.68rem;
       color: var(--text-muted);
-      
-      
       margin-bottom: 4px;
     }
     .case-title {
@@ -499,14 +426,11 @@
       padding: 1px 5px;
       margin-left: 6px;
       vertical-align: middle;
-      
-      
     }
     .case-desc {
       font-size: 0.8rem;
       color: var(--text-dim);
     }
-
     /* CTA block */
     .cta-block {
       margin-top: 16px;
@@ -516,12 +440,10 @@
       border-radius: 10px;
       text-align: center;
     }
-
     .cta-block h2 {
       font-size: 1.1rem;
       margin-bottom: 12px;
     }
-
     .cta-block p {
       font-size: 0.88rem;
       color: var(--text-dim);
@@ -530,7 +452,6 @@
       margin-left: auto;
       margin-right: auto;
     }
-
     .cta-btn {
       display: inline-block;
       background: var(--accent);
@@ -542,14 +463,11 @@
       text-decoration: none;
       margin-bottom: 16px;
     }
-
     .cta-btn:hover { opacity: 0.9; }
-
     .cta-sub {
       font-size: 0.78rem;
       color: var(--text-muted);
     }
-
     /* Contact form */
     .contact-form {
       margin-top: 28px;
@@ -557,14 +475,12 @@
       border-top: 1px solid var(--border);
       text-align: left;
     }
-
     .contact-form p {
       font-size: 0.85rem;
       color: var(--text-dim);
       margin-bottom: 14px;
       text-align: center;
     }
-
     .contact-link {
       display: block;
       text-align: center;
@@ -573,16 +489,7 @@
       font-family: var(--font-mono);
       font-size: 0.85rem;
     }
-
     .contact-link:hover { opacity: 0.8; }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 0;
-      margin-top: 0;
-    }
-
     footer .container {
       display: flex;
       justify-content: space-between;
@@ -591,10 +498,6 @@
       font-size: 0.72rem;
       color: var(--text-muted);
     }
-
-    footer a { color: var(--text-muted); text-decoration: none; }
-    footer a:hover { color: var(--text-dim); }
-
     /* Pricing block — 2-tier (Sitert-pakken + Synlig Lite), the live ladder
        since 2026-08-12. Added 2026-06-06 as an idle-mode surface-parity fix:
        advokater was on disk as a vertical landing page but had no #priser
@@ -623,8 +526,6 @@
       display: inline-block;
       font-family: var(--font-mono);
       font-size: 0.65rem;
-      
-      
       color: var(--bg);
       background: var(--accent);
       padding: 3px 10px;
@@ -718,7 +619,6 @@
       font-family: var(--font-sans);
       line-height: 1.2;
     }
-
     @media (max-width: 600px) {
       .hero-title { font-size: 1.5rem; }
       .stat-bar-inner { grid-template-columns: 1fr; gap: 16px; }
@@ -726,7 +626,6 @@
       .audit-table th, .audit-table td { padding: 6px 8px; }
       .pricing-grid { grid-template-columns: 1fr; }
     }
-
     /* Inline sjekk form */
     .sjekk-inline-wrap { max-width: 520px; margin-top: 28px; }
     .sjekk-inline-label { font-size: 0.78rem; font-weight: 600; color: var(--text-dim);   margin-bottom: 12px; }
@@ -741,15 +640,17 @@
 </head>
 <body>
 
-<nav style="background:var(--color-wash);backdrop-filter:blur(12px);border-bottom:1px solid var(--color-line);padding:1rem 2rem;position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;max-width:100%;">
+<nav>
+  <div class="nav-inner">
   <!--SITE-LOGO-->
-  <div style="display:flex;gap:2rem;">
-    <a href="/" style="color:var(--color-muted);text-decoration:none;font-size:0.9rem;">Hjem</a>
-    <a href="/guide" style="color:var(--color-muted);text-decoration:none;font-size:0.9rem;">Guide</a>
-    <a href="/case/nordic-lithium" style="color:var(--color-muted);text-decoration:none;font-size:0.9rem;">Metode-case</a>
-    <a href="/blogg" style="color:var(--color-muted);text-decoration:none;font-size:0.9rem;">Blogg</a>
-    <a href="mailto:hei@synligdigital.no" style="background:var(--color-brand);color:var(--color-wash);padding:0.4rem 1rem;border-radius:6px;font-weight:600;text-decoration:none;font-size:0.9rem;">Kontakt</a>
+  <div class="nav-links">
+    <a href="/">Hjem</a>
+    <a href="/guide">Guide</a>
+    <a href="/case/nordic-lithium">Metode-case</a>
+    <a href="/blogg">Blogg</a>
+    <a href="mailto:hei@synligdigital.no" class="nav-cta">Kontakt</a>
   </div>
+</div>
 </nav>
 
 <main>

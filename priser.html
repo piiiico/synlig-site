@@ -135,7 +135,6 @@
   </script>
 
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --blue-900: var(--color-brand);
       --blue-700: var(--color-brand);
@@ -153,75 +152,8 @@
       --text-secondary: var(--color-muted);
       --font: var(--font-sans);
     }
-    body {
-      font-family: var(--font-sans);
-      background: var(--color-paper);
-      color: var(--gray-700);
-      line-height: 1.55;
-      -webkit-font-smoothing: antialiased;
-    }
     a { color: var(--blue-700); }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-
-    /* Nav */
-    nav {
-      border-bottom: 1px solid var(--gray-200);
-      background: var(--color-paper);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .nav-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 18px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .nav-logo {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--gray-900);
-      text-decoration: none;
-    }
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 28px;
-      align-items: center;
-    }
-    .nav-links a {
-      color: var(--gray-700);
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-    }
-    .nav-links a:hover { color: var(--gray-900); }
-    /* 2026-08-14: 44px trykkflate uten å røre navhøyden. Målt i Chromium på
-       390px: knappen var 117×35px — under 44px-minimumet, og den sitter i en
-       sticky nav på siden der pengene skifter hender. Å øke padding ville
-       dyttet navhøyden fra 71 til 80px på en 844px-skjerm; et gjennomsiktig
-       ::after-overlegg inne i lenka gir hele trykkflaten uten å flytte én
-       piksel av layouten. Samme defekt fantes i faktura.html og guide.html —
-       samme rettelse er lagt inn der i samme commit. */
-    .nav-cta {
-      background: var(--gray-900);
-      color: var(--color-paper) !important;
-      padding: 8px 16px;
-      border-radius: 6px;
-      position: relative;
-    }
-    .nav-cta::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      height: 44px;
-    }
-
     /* Hero */
     .hero {
       padding: 64px 0 32px;
@@ -289,7 +221,6 @@
     .hero-proof a:hover {
       text-decoration: underline;
     }
-
     /* Resultater fra kunder */
     .results {
       padding: 32px 0 8px;
@@ -299,8 +230,6 @@
       color: var(--gray-600);
       text-align: center;
       margin-bottom: 16px;
-      
-      
     }
     .results-grid {
       display: grid;
@@ -371,10 +300,7 @@
       padding: 1px 5px;
       margin-left: 6px;
       vertical-align: middle;
-      
-      
     }
-
     /* Services grid */
     .services {
       padding: 32px 0 64px;
@@ -551,7 +477,6 @@
       font-weight: 500;
     }
     .sample-report-link a:hover { color: var(--blue-900); }
-
     /* Comparison table */
     .compare {
       padding: 32px 0 64px;
@@ -586,7 +511,6 @@
     .compare-table td.check { color: var(--green-600); font-weight: 700; }
     .compare-table td.miss { color: var(--color-muted); }
     .compare-table tr:last-child td { border-bottom: none; }
-
     /* FAQ */
     .faq {
       padding: 64px 0;
@@ -644,18 +568,6 @@
       color: var(--gray-600);
       padding-bottom: 16px;
     }
-
-    /* Footer */
-    footer {
-      padding: 32px 0;
-      border-top: 1px solid var(--gray-200);
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--gray-600);
-    }
-    footer a { color: var(--gray-700); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-
     /* Stripe-abandonment recovery banner — surfaced only when /priser?utm_canceled=1
        (Stripe cancel_url). Warmest possible leads: entered email, clicked checkout,
        bailed at card step. Gives them faktura-fallback + mailto without making them
@@ -705,7 +617,6 @@
       border: 1px solid var(--gray-200);
     }
     .recovery-cta-secondary:hover { background: var(--gray-50); }
-
     /* Cold-report continuation banner — shown when ?ref=cold-report (or
        utm_medium=html-report). Surfaces context preservation between the
        personalized /r/<hash> report and /priser, so report-clickers don't
@@ -757,11 +668,8 @@
       border: 1px solid var(--gray-200);
     }
     .cold-report-cta-secondary:hover { background: var(--gray-50); }
-
     /* Mobile */
     @media (max-width: 800px) {
-      .nav-links { gap: 16px; }
-      .nav-links li:not(:last-child) { display: none; }
       .hero h1 { font-size: 1.7rem; }
       .services-grid { grid-template-columns: 1fr; }
       .service-card.featured { margin-top: 16px; }

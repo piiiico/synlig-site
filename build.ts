@@ -8,7 +8,7 @@
 
 import { readdirSync, readFileSync, statSync, existsSync } from "fs";
 import { join, basename, resolve } from "path";
-import { LOGO_HTML, LOGO_CSS } from "./_partials/site-logo";
+import { LOGO_HTML, LOGO_CSS, CHROME_CSS } from "./_partials/site-logo";
 import { applyMarkers, MID_MARKER, BOTTOM_MARKER, LEAD_CAPTURE_PATH, CHECKOUT_HREF_PREFIX, MAILTO_PREFIX, LIVE_PRICE_ANCHORS, type Stage } from "./_partials/render-audit-cta";
 import { runFactSourceGate } from "./_partials/fact-source-gate";
 import { runMetodeMeasureGate } from "./_partials/metode-measure-gate";
@@ -336,13 +336,14 @@ const files = {
   const theme = readFileSync("/workspace/synlig-site/src/styles/global.css", "utf-8").match(/@theme\s*\{([\s\S]*?)\n\}/)?.[1] ?? "";
   const vars = [...theme.matchAll(/(--(?:color|font)-[a-z-]+):\s*([^;]+);/g)].map((m) => `${m[1]}:${m[2].trim()}`);
   if (vars.length < 10) { console.error(`[BUILD FAIL] site chrome: ${vars.length} tokens parsed from global.css @theme`); process.exit(1); }
-  const faces = [400, 700, 800].map((w) => `@font-face{font-family:"Overpass";src:url("/fonts/overpass/overpass-${w}.woff2") format("woff2");font-weight:${w === 700 ? "500 700" : w};font-display:swap}`).join("");
-  const chrome = `<style>${faces}:root{${vars.join(";")}}body{font-family:var(--font-sans)}${LOGO_CSS}</style>`;
+  const faces = [400, 700, 800].map((w) => `@font-face{font-family:"Overpass";src:url("/fonts/overpass/overpass-${w}.woff2") format("woff2");font-weight:${w === 700 ? "500 700" : w};font-display:swap;unicode-range:U+0-B6,U+B8-10FFFF}`).join("");
+  // U+B7 excluded: Overpass marks «·» as a combining mark (GDEF class 3) → zero advance, «Guide ·AEO».
+  const chrome = `<style>${faces}:root{${vars.join(";")}}${CHROME_CSS}${LOGO_CSS}</style>`;
   let n = 0;
   for (const bag of [files, verticalFiles] as Record<string, string>[]) {
     for (const [k, v] of Object.entries(bag)) {
       if (!v.includes("<!--SITE-LOGO-->")) continue;
-      bag[k] = v.replace(/<!--SITE-LOGO-->/g, LOGO_HTML).replace("</head>", chrome + "</head>");
+      bag[k] = v.replace(/<!--SITE-LOGO-->/g, LOGO_HTML).replace(/<style|<\/head>/, (m) => chrome + m);
       n++;
     }
   }

@@ -131,7 +131,6 @@
   </script>
 
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --bg: var(--color-wash);
       --bg-raised: var(--color-paper);
@@ -141,30 +140,11 @@
       --text-muted: var(--color-muted);
       --accent: var(--color-brand);
     }
-    body {
-      font-family: var(--font-sans);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-    }
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: var(--color-wash); backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 2rem;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo { font-size:1.1rem;font-weight:700;color:var(--accent);text-decoration:none;letter-spacing:-0.02em; }
-    .nav-links { display:flex;gap:2rem; }
-    .nav-links a { color:var(--text-dim);text-decoration:none;font-size:0.9rem;transition:color .15s; }
-    .nav-links a:hover { color:var(--text); }
     main { max-width: 760px; margin: 0 auto; padding: 4rem 2rem 6rem; }
     .page-tag {
       display: inline-block;
       font-size: 0.75rem;
       font-weight: 700;
-      
-      
       color: var(--accent);
       margin-bottom: 1.25rem;
     }
@@ -266,23 +246,17 @@
       transition: opacity .15s;
     }
     .btn:hover { opacity: 0.85; }
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-    }
-    footer a { color: var(--text-dim); text-decoration: none; }
   </style>
 </head>
 <body>
   <nav>
+    <div class="nav-inner">
     <!--SITE-LOGO-->
     <div class="nav-links">
       <a href="/">Hjem</a>
       <a href="/blogg">Blogg</a>
-      <a href="https://sjekk.synligdigital.no">Gratis sjekk</a>
+      <a href="https://sjekk.synligdigital.no" class="nav-cta">Gratis sjekk</a>
+    </div>
     </div>
   </nav>
 
