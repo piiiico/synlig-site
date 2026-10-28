@@ -12,7 +12,7 @@
   <meta property="og:title" content="AEO for advokatfirmaer — Bli synlig i ChatGPT og Perplexity">
   <meta property="og:description" content="93% av AI-søk gir null klikk. Advokatfirmaet ditt kan bli svaret — eller usynlig. Se konkrete data fra norske advokatfirmaer og hva du kan gjøre.">
   <meta property="og:url" content="https://synligdigital.no/tjenester/aeo-for-advokater">
-  <meta property="og:image" content="https://synligdigital.no/og.png">
+  <meta property="og:image" content="https://synligdigital.no/og-2026-08.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="Synlig">
@@ -22,9 +22,6 @@
   <meta name="twitter:title" content="AEO for advokatfirmaer — Bli synlig i ChatGPT">
   <meta name="twitter:description" content="93% av AI-søk gir null klikk. Er advokatfirmaet ditt svaret?">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <script type="application/ld+json">
   {
@@ -83,10 +80,10 @@
       },
       {
         "@type": "Question",
-        "name": "Hva koster en AI-synlighetsanalyse for advokatfirmaet?",
+        "name": "Hva koster AI-synlighet for advokatfirmaet?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Fire pakker. Synlig Lite fra 990 NOK (FAQPage-schema for én side, levering 1 virkedag) gir deg en lavterskel test av metodikken. AI-synlighetsanalyse er 4 900 NOK (engangsanalyse, 5 virkedager). AI-synlighetsfundament er 14 900 NOK (engangsimplementering, 2–4 uker). Løpende AEO-overvåking er 4 900 NOK/mnd. Grunnleggende sjekk er gratis på sjekk.synligdigital.no. Se /tjenester/aeo-for-advokater#priser for full sammenligning."
+          "text": "To pakker. Synlig Lite fra 990 NOK (FAQPage-schema for én side, levering 1 virkedag) gir deg en lavterskel test av metodikken. Grunnleggende sjekk er gratis på sjekk.synligdigital.no. Se /tjenester/aeo-for-advokater#priser for full sammenligning. Sitert-pakken til 9 900 kr eks. mva er tre steg: nullpunktsmåling med fem kjøpsnære spørsmål kjørt ni ganger hver, endringene skrevet ferdig for inntil ti sider (JSON-LD, sitatvennlige spørsmål og svar, llms.txt og crawler-regler), og ny måling 30 dager etter at dere har publisert. Utfallskriterium: minst én sitering av deres domene i etterkjøringene — innfris det ikke, kjører vi én runde til uten ny faktura. Faktureres med 14 dagers betalingsfrist."
         }
       },
       {
@@ -105,21 +102,21 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #0a0a0b;
-      --bg-raised: #111113;
-      --border: #222225;
-      --text: #e8e8ed;
-      --text-dim: #9f9faa;
-      --text-muted: #9f9faa;
-      --accent: #6ee7b7;
-      --accent-dim: #2d6a5a;
-      --red: #f87171;
-      --red-dim: #6a2d2d;
-      --yellow: #fbbf24;
-      --yellow-dim: #6a5a2d;
-      --blue: #60a5fa;
-      --mono: 'SF Mono', 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
-      --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+      --bg: var(--color-wash);
+      --bg-raised: var(--color-paper);
+      --border: var(--color-line);
+      --text: var(--color-ink);
+      --text-dim: var(--color-muted);
+      --text-muted: var(--color-muted);
+      --accent: var(--color-brand);
+      --accent-dim: var(--color-brand);
+      --red: var(--color-alert);
+      --red-dim: var(--color-alert);
+      --yellow: var(--color-ink);
+      --yellow-dim: var(--color-ink);
+      --blue: var(--color-brand);
+      --mono: var(--font-mono);
+      --sans: var(--font-sans);
     }
 
     html { font-size: 16px; -webkit-font-smoothing: antialiased; }
@@ -127,7 +124,7 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: var(--sans);
+      font-family: var(--font-sans);
       line-height: 1.7;
       min-height: 100vh;
       display: flex;
@@ -147,16 +144,16 @@
 
     .hero-tag {
       display: inline-block;
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.65rem;
       color: var(--accent);
-      background: rgba(110,231,183,0.1);
+      background: var(--color-line);
       border: 1px solid var(--accent-dim);
       padding: 3px 10px;
       border-radius: 3px;
       margin-bottom: 20px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      
+      
     }
 
     .hero-title {
@@ -190,7 +187,7 @@
     .btn-primary {
       display: inline-block;
       background: var(--accent);
-      color: #0a0a0b;
+      color: var(--color-wash);
       font-weight: 700;
       font-size: 0.9rem;
       padding: 12px 28px;
@@ -229,7 +226,7 @@
     }
 
     .stat-value {
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 1.8rem;
       font-weight: 700;
       color: var(--accent);
@@ -283,18 +280,18 @@
     .audit-table th {
       text-align: left;
       padding: 8px 12px;
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.68rem;
       font-weight: 600;
       color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      
+      
       border-bottom: 1px solid var(--border);
     }
 
     .audit-table td {
       padding: 10px 12px;
-      border-bottom: 1px solid rgba(34,34,37,0.7);
+      border-bottom: 1px solid var(--color-line);
       color: var(--text-dim);
       vertical-align: top;
     }
@@ -308,25 +305,25 @@
 
     .check-ok {
       color: var(--accent);
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.72rem;
     }
 
     .check-partial {
       color: var(--yellow);
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.72rem;
     }
 
     .check-fail {
       color: var(--red);
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.72rem;
     }
 
     .level-badge {
       display: inline-block;
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.65rem;
       padding: 2px 6px;
       border-radius: 3px;
@@ -334,13 +331,13 @@
     }
 
     .level-1 {
-      background: rgba(251,191,36,0.1);
+      background: var(--color-line);
       border: 1px solid var(--yellow-dim);
       color: var(--yellow);
     }
 
     .level-0 {
-      background: rgba(248,113,113,0.1);
+      background: var(--color-line);
       border: 1px solid var(--red-dim);
       color: var(--red);
     }
@@ -349,17 +346,17 @@
     .warning-block {
       margin: 24px 0;
       padding: 18px 20px;
-      background: rgba(248,113,113,0.06);
+      background: var(--color-line);
       border: 1px solid var(--red-dim);
       border-left: 3px solid var(--red);
       border-radius: 6px;
     }
 
     .warning-label {
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.68rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      
+      
       color: var(--red);
       margin-bottom: 8px;
     }
@@ -383,10 +380,10 @@
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background: rgba(110,231,183,0.12);
+      background: var(--color-line);
       border: 1px solid var(--accent-dim);
       color: var(--accent);
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.8rem;
       font-weight: 700;
       display: flex;
@@ -417,7 +414,7 @@
       background: var(--bg-raised);
       border: 1px solid var(--border);
       border-radius: 4px;
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.72rem;
       color: var(--accent);
       line-height: 1.5;
@@ -442,7 +439,7 @@
     }
 
     .quote-attr {
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.72rem;
       color: var(--text-muted);
     }
@@ -467,7 +464,7 @@
       width: 40px;
       height: 40px;
       border-radius: 6px;
-      background: rgba(110,231,183,0.1);
+      background: var(--color-line);
       border: 1px solid var(--accent-dim);
       display: flex;
       align-items: center;
@@ -478,11 +475,11 @@
 
     .case-meta {}
     .case-label {
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.68rem;
       color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      
+      
       margin-bottom: 4px;
     }
     .case-title {
@@ -502,8 +499,8 @@
       padding: 1px 5px;
       margin-left: 6px;
       vertical-align: middle;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
+      
+      
     }
     .case-desc {
       font-size: 0.8rem;
@@ -537,7 +534,7 @@
     .cta-btn {
       display: inline-block;
       background: var(--accent);
-      color: #0a0a0b;
+      color: var(--color-wash);
       font-weight: 700;
       font-size: 0.9rem;
       padding: 12px 32px;
@@ -573,7 +570,7 @@
       text-align: center;
       color: var(--accent);
       text-decoration: none;
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.85rem;
     }
 
@@ -590,7 +587,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.72rem;
       color: var(--text-muted);
     }
@@ -598,10 +595,11 @@
     footer a { color: var(--text-muted); text-decoration: none; }
     footer a:hover { color: var(--text-dim); }
 
-    /* Pricing block — 4-tier (Lite + Handlingsplan + Fundament + Lopende).
-       Added 2026-06-06 idle-mode surface-parity fix: advokater was on disk
-       as a vertical landing page but had no #priser section, leaving cold
-       advokat-search visitors at a 4 900-floor (no entry-point tier). */
+    /* Pricing block — 2-tier (Sitert-pakken + Synlig Lite), the live ladder
+       since 2026-08-12. Added 2026-06-06 as an idle-mode surface-parity fix:
+       advokater was on disk as a vertical landing page but had no #priser
+       section at all, so cold advokat-search visitors saw no entry point.
+       Synlig Lite at 990 kr is that entry point. */
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -623,10 +621,10 @@
     .price-card.featured::before {
       content: "Start her";
       display: inline-block;
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.65rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      
+      
       color: var(--bg);
       background: var(--accent);
       padding: 3px 10px;
@@ -641,7 +639,7 @@
       margin-bottom: 2px;
     }
     .price-amount {
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 1.5rem;
       color: var(--accent);
       font-weight: 700;
@@ -676,7 +674,7 @@
       text-align: center;
       padding: 10px 14px;
       background: var(--accent);
-      color: #0a0a0b;
+      color: var(--color-wash);
       border-radius: 6px;
       font-weight: 700;
       font-size: 0.85rem;
@@ -709,7 +707,7 @@
       color: var(--text);
       box-sizing: border-box;
       transition: border-color 0.15s;
-      font-family: inherit;
+      font-family: var(--font-sans);
       outline: none;
     }
     .lead-form-input:focus { border-color: var(--accent); }
@@ -717,7 +715,7 @@
       cursor: pointer;
       border: none;
       width: 100%;
-      font-family: inherit;
+      font-family: var(--font-sans);
       line-height: 1.2;
     }
 
@@ -731,26 +729,26 @@
 
     /* Inline sjekk form */
     .sjekk-inline-wrap { max-width: 520px; margin-top: 28px; }
-    .sjekk-inline-label { font-size: 0.78rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+    .sjekk-inline-label { font-size: 0.78rem; font-weight: 600; color: var(--text-dim);   margin-bottom: 12px; }
     .sjekk-inline-form { background: var(--bg); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; padding: 22px 24px; }
     .sjekk-field { margin-bottom: 12px; }
     .sjekk-field label { display: block; font-size: 0.78rem; font-weight: 500; color: var(--text-dim); margin-bottom: 4px; }
-    .sjekk-field input { width: 100%; padding: 9px 11px; background: var(--bg-raised); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 0.88rem; outline: none; font-family: inherit; }
+    .sjekk-field input { width: 100%; padding: 9px 11px; background: var(--bg-raised); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 0.88rem; outline: none; font-family: var(--font-sans); }
     .sjekk-field input:focus { border-color: var(--accent); }
-    .sjekk-submit { width: 100%; padding: 11px 18px; background: var(--accent); color: var(--bg); border: none; border-radius: 6px; font-weight: 700; font-size: 0.9rem; cursor: pointer; margin-top: 6px; font-family: inherit; }
+    .sjekk-submit { width: 100%; padding: 11px 18px; background: var(--accent); color: var(--bg); border: none; border-radius: 6px; font-weight: 700; font-size: 0.9rem; cursor: pointer; margin-top: 6px; font-family: var(--font-sans); }
     .sjekk-submit:hover { opacity: 0.9; }
   </style>
 </head>
 <body>
 
-<nav style="background:rgba(10,10,11,0.92);backdrop-filter:blur(12px);border-bottom:1px solid #222225;padding:1rem 2rem;position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;max-width:100%;">
-  <a href="/" style="font-size:1.15rem;font-weight:700;color:#6ee7b7;text-decoration:none;">Synlig</a>
+<nav style="background:var(--color-wash);backdrop-filter:blur(12px);border-bottom:1px solid var(--color-line);padding:1rem 2rem;position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;max-width:100%;">
+  <!--SITE-LOGO-->
   <div style="display:flex;gap:2rem;">
-    <a href="/" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Hjem</a>
-    <a href="/guide" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Guide</a>
-    <a href="/case/nordic-lithium" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Metode-case</a>
-    <a href="/blogg" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Blogg</a>
-    <a href="mailto:hei@synligdigital.no" style="background:#6ee7b7;color:#0a0a0b;padding:0.4rem 1rem;border-radius:6px;font-weight:600;text-decoration:none;font-size:0.9rem;">Kontakt</a>
+    <a href="/" style="color:var(--color-muted);text-decoration:none;font-size:0.9rem;">Hjem</a>
+    <a href="/guide" style="color:var(--color-muted);text-decoration:none;font-size:0.9rem;">Guide</a>
+    <a href="/case/nordic-lithium" style="color:var(--color-muted);text-decoration:none;font-size:0.9rem;">Metode-case</a>
+    <a href="/blogg" style="color:var(--color-muted);text-decoration:none;font-size:0.9rem;">Blogg</a>
+    <a href="mailto:hei@synligdigital.no" style="background:var(--color-brand);color:var(--color-wash);padding:0.4rem 1rem;border-radius:6px;font-weight:600;text-decoration:none;font-size:0.9rem;">Kontakt</a>
   </div>
 </nav>
 
@@ -877,8 +875,8 @@
         Audit kjørt med Synlig AEO Audit v1.0 (mars–mai 2026). Score er målt på schema, meta, innholdsstruktur, teknisk grunnlag og AI-signaler. Berre Firma E hadde fullverdig LegalService-blokk; ingen av dei andre fire hadde LegalService verken på front eller praksisområde-underseter. Firma D — eit Wix-bygd nettstad — var det einaste med llms.txt-fil.
       </p>
 
-      <div class="warning-block" style="margin-top:28px; background: rgba(251,191,36,0.05); border-color: var(--yellow-dim); border-left-color: var(--yellow);">
-        <div class="warning-label" style="color: var(--yellow);">📊 Hovudfunn</div>
+      <div class="warning-block" style="margin-top:28px; background: var(--color-line); border-color: var(--yellow-dim); border-left-color: var(--yellow);">
+        <div class="warning-label" style="color: var(--color-ink);">📊 Hovudfunn</div>
         <p>
           <strong>4 av 5</strong> manglar LegalService schema-markup på hovudsida. <strong>0 av 5</strong> har FAQPage schema. <strong>4 av 5</strong> manglar llms.txt. Og kanskje viktigast: <strong>ingen</strong> av dei 5 blokkerer AI-crawlarane aktivt i robots.txt — så problemet er ikkje tilgang. Problemet er at AI ikkje har noko strukturert innhald å sitere når klienten spør.
         </p>
@@ -984,10 +982,26 @@
   <!-- Pricing — 4 tiers with Synlig Lite as entry point -->
   <section id="priser" style="background: var(--bg-raised);">
     <div class="container-wide">
-      <h2>Fire pakker. Faste priser. Bestilling med kort.</h2>
+      <h2>To pakker. Faste priser. Kort eller faktura.</h2>
       <p class="muted">Samme priser som på <a href="/priser" style="color: var(--accent); text-decoration: none;">/priser</a>. Velg det som passer der firmaet er nå.</p>
 
       <div class="pricing-grid">
+        <div class="price-card price-card-primary">
+          <div class="price-name">Sitert-pakken</div>
+          <div class="price-amount">9 900 kr</div>
+          <div class="price-note">Måling, endringene skrevet ferdig, ny måling etter 30 dager</div>
+          <ul class="price-list">
+            <li>Nullpunktsmåling: fem kjøpsnære spørsmål fra ditt marked, hvert kjørt ni ganger</li>
+            <li>Navn på hvem AI siterer i stedet for dere i dag</li>
+            <li>Endringene skrevet ferdig for inntil ti sider — JSON-LD, sitatvennlige spørsmål og svar, llms.txt, crawler-regler</li>
+            <li>Klare til innliming, eller levert som pull request mot repoet deres</li>
+            <li>Ny måling 30 dager etter publisering — før og etter i ett dokument, med rådata</li>
+            <li>Utfallskriterium: minst én sitering av dere i etterkjøringene. Innfris det ikke, kjører vi én runde til uten ny faktura</li>
+          </ul>
+          <a class="price-cta" href="/faktura?slug=tjenester-aeo-for-advokater-sitert&amp;pakke=priser-sitert">Bestill Sitert-pakken &rarr;</a>
+          <a href="/metode" class="price-cta-secondary">Se metoden kj&oslash;rt offentlig f&oslash;rst</a>
+        </div>
+
         <div class="price-card featured">
           <div class="price-name">Synlig Lite</div>
           <div class="price-amount">990 kr</div>
@@ -1008,63 +1022,8 @@
           <a href="/faktura?slug=tjenester-aeo-for-advokater-lite" class="price-cta-secondary">Send forespørsel (faktura)</a>
         </div>
 
-        <div class="price-card">
-          <div class="price-name">AI-synlighetsanalyse</div>
-          <div class="price-amount">4 900 kr</div>
-          <div class="price-note">Engangsanalyse, levering 5 virkedager</div>
-          <ul class="price-list">
-            <li>Test i ChatGPT, Perplexity, Google AI</li>
-            <li>Score med konkrete tiltak</li>
-            <li>LegalService-schema-sjekk og praksisområde-sjekk</li>
-            <li>Skriftlig spørsmål-og-svar-runde på e-post etter levering</li>
-          </ul>
-          <form method="POST" action="/api/lead-capture" class="lead-form">
-            <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254" aria-label="E-postadresse">
-            <input type="hidden" name="tier" value="handlingsplan">
-            <input type="hidden" name="slug" value="tjenester-aeo-for-advokater-handlingsplan">
-            <button type="submit" class="price-cta">Bestill med kort →</button>
-          </form>
-          <a href="/faktura?slug=tjenester-aeo-for-advokater-handlingsplan" class="price-cta-secondary">Send forespørsel (faktura)</a>
-        </div>
 
-        <div class="price-card">
-          <div class="price-name">AI-synlighetsfundament</div>
-          <div class="price-amount">14 900 kr</div>
-          <div class="price-note">Engangsimplementering, 2 til 4 uker</div>
-          <ul class="price-list">
-            <li>Alt i analysen, pluss implementering</li>
-            <li>LegalService-schema utrullet på relevante sider</li>
-            <li>FAQ-side med vanlige spørsmål om honorar og prosess</li>
-            <li>Praksisområde-sider strukturert for AI-sitering</li>
-            <li>Skriftlig opplæringsmateriale og e-post-oppfølging</li>
-          </ul>
-          <form method="POST" action="/api/lead-capture" class="lead-form">
-            <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254" aria-label="E-postadresse">
-            <input type="hidden" name="tier" value="fundament">
-            <input type="hidden" name="slug" value="tjenester-aeo-for-advokater-fundament">
-            <button type="submit" class="price-cta">Bestill med kort →</button>
-          </form>
-          <a href="/faktura?slug=tjenester-aeo-for-advokater-fundament" class="price-cta-secondary">Send forespørsel (faktura)</a>
-        </div>
 
-        <div class="price-card">
-          <div class="price-name">Løpende overvåking</div>
-          <div class="price-amount">4 900 kr/mnd</div>
-          <div class="price-note">Forutsetter at fundamentet er på plass</div>
-          <ul class="price-list">
-            <li>Månedlig AI-synlighetsaudit</li>
-            <li>1 til 2 nye fagartikler eller praksisområde-utvidelser per måned</li>
-            <li>Konkurransesporing i ChatGPT</li>
-            <li>Kvartalsrapport med trend</li>
-          </ul>
-          <form method="POST" action="/api/lead-capture" class="lead-form">
-            <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254" aria-label="E-postadresse">
-            <input type="hidden" name="tier" value="lopende">
-            <input type="hidden" name="slug" value="tjenester-aeo-for-advokater-lopende">
-            <button type="submit" class="price-cta">Start abonnement →</button>
-          </form>
-          <a href="/faktura?slug=tjenester-aeo-for-advokater-lopende" class="price-cta-secondary">Send forespørsel (faktura)</a>
-        </div>
       </div>
 
       <p class="muted" style="font-size: 0.78rem; margin-top: 16px; text-align: center;">

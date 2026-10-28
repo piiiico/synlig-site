@@ -22,9 +22,6 @@
   <meta name="twitter:title" content="AEO-byrå i Stavanger — Synlig Digital">
   <meta name="twitter:description" content="AEO-byrå i Stavanger spesialisert på AI-synlighet i ChatGPT, Perplexity og Google AI.">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <script type="application/ld+json">
   {
@@ -55,7 +52,7 @@
       {"@type": "Country", "name": "Norway"}
     ],
     "serviceType": "Digital markedsføring",
-    "priceRange": "4900–14900 NOK",
+    "priceRange": "990–9900 NOK",
     "knowsAbout": [
       "Digital markedsføring",
       "Answer Engine Optimization",
@@ -82,16 +79,9 @@
         },
         {
           "@type": "Offer",
-          "name": "AI-synlighetsanalyse",
-          "description": "Full audit av bedriftens synlighet i AI-assistenter. Skriftlig rapport med score og konkrete tiltak.",
-          "price": "4900",
-          "priceCurrency": "NOK"
-        },
-        {
-          "@type": "Offer",
-          "name": "AEO-implementeringspakke",
-          "description": "Full implementering av digital markedsføring for AI-søk: schema.org, GBP, aggregatorregistrering, AI-tilpasset innhold.",
-          "price": "14900",
+          "name": "Sitert-pakken",
+          "description": "Nullpunktsmåling på fem kjøpsnære spørsmål, endringene skrevet ferdig for inntil ti sider, og ny måling 30 dager etter publisering. Skriftlig utfallskriterium.",
+          "price": "9900",
           "priceCurrency": "NOK"
         }
       ]
@@ -143,23 +133,23 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #0a0a0b;
-      --bg-raised: #111113;
-      --border: #222225;
-      --text: #e8e8ed;
-      --text-dim: #9f9faa;
-      --text-muted: #9f9faa;
-      --accent: #6ee7b7;
+      --bg: var(--color-wash);
+      --bg-raised: var(--color-paper);
+      --border: var(--color-line);
+      --text: var(--color-ink);
+      --text-dim: var(--color-muted);
+      --text-muted: var(--color-muted);
+      --accent: var(--color-brand);
     }
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: var(--font-sans);
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
     }
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(10,10,11,0.92); backdrop-filter: blur(12px);
+      background: var(--color-wash); backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 1rem 2rem;
       display: flex; align-items: center; justify-content: space-between;
@@ -173,8 +163,8 @@
       display: inline-block;
       font-size: 0.75rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      
+      
       color: var(--accent);
       margin-bottom: 1.25rem;
     }
@@ -255,8 +245,8 @@
     }
     .faq-a { color: var(--text-dim); font-size: 0.95rem; }
     .cta-box {
-      background: linear-gradient(135deg, rgba(110,231,183,0.08), rgba(110,231,183,0.02));
-      border: 1px solid rgba(110,231,183,0.2);
+      background: var(--color-line);
+      border: 1px solid var(--color-line);
       border-radius: 12px;
       padding: 2rem;
       text-align: center;
@@ -266,7 +256,7 @@
     .btn {
       display: inline-block;
       background: var(--accent);
-      color: #0a0a0b;
+      color: var(--color-wash);
       font-weight: 700;
       font-size: 0.9rem;
       padding: 0.75rem 1.75rem;
@@ -288,7 +278,7 @@
 </head>
 <body>
   <nav>
-    <a href="/" class="nav-logo">Synlig Digital</a>
+    <!--SITE-LOGO-->
     <div class="nav-links">
       <a href="/">Hjem</a>
       <a href="/blogg">Blogg</a>
@@ -334,15 +324,15 @@
     </div>
 
     <h2>Dokumenterte metode-case (nærstående part — opplyst)</h2>
-    <p style="font-size:0.92rem;color:var(--text-secondary,#9f9faa);margin-bottom:12px;">Begge case under er nærstående part-implementeringer — interne metode-case vi viser for å dokumentere før/etter, ikke arm's-length kundereferanser. Eierskapsopplysning ligger på respektive case-side. Første arm's-length kundecase er under arbeid.</p>
+    <p style="font-size:0.92rem;color:var(--text-secondary,var(--color-muted));margin-bottom:12px;">Begge case under er nærstående part-implementeringer — interne metode-case vi viser for å dokumentere før/etter, ikke arm's-length kundereferanser. Eierskapsopplysning ligger på respektive case-side. Første arm's-length kundecase er under arbeid.</p>
     <div class="card">
-      <h3>Nordic Lithium — fra 67/C til 85/A <span style="font-size:0.7rem;background:#3b2f1f;color:#f5c97a;padding:2px 8px;border-radius:4px;font-weight:600;margin-left:6px;">Nærstående part</span></h3>
+      <h3>Nordic Lithium — fra 67/C til 85/A <span style="font-size:0.7rem;background:var(--color-line);color:var(--color-ink);padding:2px 8px;border-radius:4px;font-weight:600;margin-left:6px;">Nærstående part</span></h3>
       <p>
         Felles eierskap med Synlig (Håkon Åmdal). Utgangspunkt: AEO-score 67/100 (karakter C) — robots.txt blokkerte GPTBot, ClaudeBot, Google-Extended og PerplexityBot, og siden manglet schema.org-markup. Etter intern sprint: AEO-score 85/100 (karakter A) på to uker (20. februar–5. mars 2026), uten plattformbytte. <a href="/case/nordic-lithium">Les hele case studyen + eierskapsopplysning →</a>
       </p>
     </div>
     <div class="card">
-      <h3>Pierstop — fra 52/D til 76/B <span style="font-size:0.7rem;background:#3b2f1f;color:#f5c97a;padding:2px 8px;border-radius:4px;font-weight:600;margin-left:6px;">Nærstående part</span></h3>
+      <h3>Pierstop — fra 52/D til 76/B <span style="font-size:0.7rem;background:var(--color-line);color:var(--color-ink);padding:2px 8px;border-radius:4px;font-weight:600;margin-left:6px;">Nærstående part</span></h3>
       <p>
         Co-styremedlem i AS Åmdal Invest, vederlagsfri levering. Teknisk perfekt nettside med llms.txt og Cloudflare CDN — men AI visste ikke hvem de var. Etter schema-sprint: AEO-score fra 52/D til 76/B, en økning på 24 poeng. <a href="/case/pierstop">Les hele case studyen + eierskapsopplysning →</a>
       </p>

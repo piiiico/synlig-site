@@ -1,72 +1,52 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
 
-/* ─────────────────────────────────────────────────────────────────────────
-   Synlig Digital — design system (fase 2, 2026-08-08)
-
-   Inherited from memory/knowledge/design-system-agentlair.md, which is the
-   only taste-verdict we have from Håkon ("designet var mye bedre",
-   2026-03-29): light-mode-first, DM Sans, oklch semantic tokens, generous
-   vertical rhythm, no decorative chrome.
-
-   Brand carry-over: the emerald accent (#059669) from the hand-written site
-   is kept as `brand` so the page still reads as Synlig, not as a template.
-
-   Fonts are SELF-HOSTED. The old page loaded Inter from fonts.googleapis.com
-   in the critical render path (two extra DNS+TLS handshakes before first
-   paint, and a third-party dependency on a page whose whole product claim is
-   that machines can read it).
-   ───────────────────────────────────────────────────────────────────────── */
-
-@font-face {
-  font-family: "DM Sans";
-  src: url("/fonts/dm-sans/DMSans-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "DM Sans";
-  src: url("/fonts/dm-sans/DMSans-Medium.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "DM Sans";
-  src: url("/fonts/dm-sans/DMSans-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+/* Synlig — «Vegvisning» (2026-10-28). Statens vegvesen direction signs as
+   the model: blue panel, white rule, black text on light ground; yellow ONLY
+   on date/measured tags, red ONLY for a loss. One family (Overpass, the sign
+   lettering), sentence case, no eyebrows, no gradients, no pills.
+   Every colour on the site is one of the tokens below — design-gate.ts counts
+   the shipped HTML (≤12 colours, 1 logo, ≤2 font stacks). No alpha variants:
+   each `/NN` emits a new literal. */
+@font-face { font-family: "Overpass"; src: url("/fonts/overpass/overpass-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Overpass"; src: url("/fonts/overpass/overpass-700.woff2") format("woff2"); font-weight: 500 700; font-display: swap; }
+@font-face { font-family: "Overpass"; src: url("/fonts/overpass/overpass-800.woff2") format("woff2"); font-weight: 800; font-display: swap; }
 
 @theme {
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-    Roboto, sans-serif;
-
-  --color-paper: oklch(1 0 0);
-  --color-wash: oklch(0.978 0.003 255);
-  --color-ink: oklch(0.21 0.015 255);
-  --color-muted: oklch(0.52 0.014 255);
-  --color-line: oklch(0.915 0.005 255);
-  --color-brand: oklch(0.6 0.13 163);
-  --color-brand-ink: oklch(0.47 0.11 163);
-  --color-brand-wash: oklch(0.965 0.025 163);
-  --color-deep: oklch(0.24 0.028 255);
-  --color-alert: oklch(0.58 0.19 27);
-  --color-warn: oklch(0.72 0.16 70);
-
-  --radius-card: 10px;
+  --color-*: initial;
+  --font-*: initial;
+  --font-sans: "Overpass", sans-serif;
+  --font-mono: ui-monospace, monospace;
+  --color-paper: #ffffff;
+  --color-wash: #e9ecee;
+  --color-ink: #111418;
+  --color-muted: #4a525a;
+  --color-line: #c9ced3;
+  --color-brand: #00508f;
+  --color-brand-ink: #00508f;
+  --color-brand-wash: #e9ecee;
+  --color-deep: #00508f;
+  --color-alert: #a3150f;
+  --color-warn: #f6b400;
+  --radius-card: 14px;
+  --radius-md: 5px;
 }
 
 html {
   scroll-behavior: smooth;
+  /* Nav-en er sticky og 64 px høy. Uten dette lander HVER ankerlenke 65 px
+     under nav-en — målt live 2026-08-09 på /#tjenester, /metode#bestill og
+     /metode#steg-1: clearance −65 px, overskriften helt skjult.
+     Det gjelder bestillings-CTA-en i footeren på alle 39 sider.
+     Erstatter `scroll-mt-24` på .prose h2/h3, som bare dekket
+     blogg-overskrifter og ikke seksjonsankrene. Ett sted, alle ankere. */
+  scroll-padding-top: 6rem;
 }
 
 body {
   font-family: var(--font-sans);
   color: var(--color-ink);
-  background: var(--color-paper);
+  background: var(--color-wash);
+  font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -80,10 +60,10 @@ body {
     @apply mx-auto w-full max-w-3xl px-6;
   }
   .section-label {
-    @apply mb-3 text-xs font-medium uppercase tracking-[0.14em] text-muted;
+    @apply mb-3 text-base font-bold text-muted;
   }
   .section-header h2 {
-    @apply text-3xl font-bold tracking-tight text-ink sm:text-[2.1rem];
+    @apply text-3xl font-extrabold text-ink sm:text-[2.1rem];
   }
   .section-header p {
     @apply mt-3 max-w-2xl text-lg text-muted;
@@ -93,11 +73,8 @@ body {
   }
 
   /* ── Navigation ─────────────────────────────────────────────────────── */
-  .nav-logo {
-    @apply text-lg font-bold tracking-tight text-ink no-underline;
-  }
   .nav-links a {
-    @apply text-sm text-muted no-underline transition-colors hover:text-ink;
+    @apply text-base font-bold text-ink no-underline hover:text-brand;
   }
   .nav-cta {
     @apply rounded-md border border-ink px-3 py-1.5 !text-ink hover:bg-ink hover:!text-paper;
@@ -105,10 +82,10 @@ body {
 
   /* ── Hero ───────────────────────────────────────────────────────────── */
   .hero-badge {
-    @apply inline-block rounded-full border border-line bg-wash px-3 py-1 text-xs font-medium uppercase tracking-[0.12em] text-muted;
+    @apply text-base font-bold text-muted;
   }
   .hero-sub {
-    @apply mt-6 max-w-2xl text-xl leading-relaxed text-muted;
+    @apply mt-5 max-w-[34ch] text-xl leading-relaxed text-muted;
   }
   .hero-cta {
     @apply mt-8 inline-block rounded-md bg-ink px-6 py-3.5 text-base font-semibold text-paper no-underline transition-opacity hover:opacity-85;
@@ -120,10 +97,7 @@ body {
     @apply font-medium text-brand-ink underline underline-offset-2;
   }
   .hero-proof {
-    @apply mt-8 flex max-w-2xl flex-wrap items-center gap-x-2.5 gap-y-1 rounded-card border border-line bg-wash px-4 py-3 text-sm text-muted;
-  }
-  .hero-proof-check {
-    @apply shrink-0 text-brand-ink;
+    @apply mt-8 flex max-w-2xl flex-wrap items-center gap-x-2.5 gap-y-1 rounded-card border border-line bg-paper px-4 py-3 text-sm text-muted;
   }
   .hero-proof a {
     @apply font-medium text-brand-ink underline underline-offset-2;
@@ -140,30 +114,110 @@ body {
     @apply text-brand-ink underline underline-offset-2;
   }
 
-  /* ── Demo query box ─────────────────────────────────────────────────── */
-  .demo-query {
-    @apply rounded-t-card border border-line bg-wash px-5 py-4 text-base text-ink;
+  /* ── Skiltet (signatur): blått panel, 14px radius, 3px hvit innfelt ramme,
+     målte rader høyrejustert som kilometer på et vegskilt. */
+  .sign {
+    @apply rounded-[14px] bg-brand p-1.5 text-paper;
   }
-  .demo-results {
-    @apply space-y-2.5 rounded-b-card border border-t-0 border-line px-5 py-4 text-sm text-muted;
+  .sign > div {
+    @apply rounded-[10px] border-[3px] border-paper px-6 pb-5 pt-6;
   }
-  .demo-results li {
-    @apply flex gap-2.5;
+  .sign-q {
+    @apply text-[21px] font-extrabold leading-tight sm:text-[25px];
   }
-  .demo-results .check {
-    @apply font-bold text-brand-ink;
+  .sign-row {
+    @apply mt-3.5 grid grid-cols-[84px_1fr_auto] items-baseline gap-3.5 border-t-2 border-paper pb-2.5 pt-3.5 sm:grid-cols-[110px_1fr_auto];
   }
-  .demo-results .miss {
-    @apply font-bold text-alert;
+  .sign-e {
+    @apply text-[22px] font-extrabold;
   }
-  .demo-results .you {
-    @apply font-medium text-ink;
+  .sign-n {
+    @apply text-right text-[30px] font-extrabold;
+  }
+  .sign-d {
+    @apply flex min-w-0 flex-wrap gap-x-3 text-[15px] leading-normal;
+  }
+  .sign-d .us {
+    @apply rounded-[3px] bg-paper px-1.5 font-bold text-brand;
+  }
+  .tag {
+    @apply mt-3.5 inline-block rounded bg-warn px-2.5 py-1 text-sm font-bold text-ink;
+  }
+  .board {
+    @apply mb-16 rounded-[14px] bg-paper px-4 py-5 sm:px-8 sm:py-7;
+  }
+  .board h2 {
+    @apply text-2xl font-extrabold;
+  }
+  .board table {
+    @apply mt-3.5 w-full border-collapse text-base;
+  }
+  .board :where(td, th) {
+    @apply border-t border-line px-1 py-2 text-left sm:px-2 sm:py-2.5;
+  }
+  .board th {
+    @apply text-sm font-bold text-muted;
+  }
+  .board .c {
+    @apply w-20 text-right font-extrabold;
+  }
+  .board .z {
+    @apply text-alert;
+  }
+
+  /* ── Måle-panel (hero) ──────────────────────────────────────────────────
+     Utdraget av leveransen som står i heroen. Erstattet 2026-08-09 den
+     hypotetiske «demo-query»-boksen (tannlege i Stavanger, oppdiktet svar):
+     ekte målte rader slår en illustrasjon når kjøperen er teknisk. */
+  .measure-panel {
+    @apply overflow-hidden rounded-card border border-line bg-paper;
+  }
+  .measure-head {
+    @apply border-b border-line bg-paper px-5 py-4;
+  }
+  .measure-title {
+    @apply text-sm font-semibold text-ink;
+  }
+  .measure-meta {
+    @apply mt-1 text-xs leading-relaxed text-muted;
+  }
+  .measure-rows {
+    @apply divide-y divide-line;
+  }
+  .measure-row {
+    @apply block px-5 py-3.5 border-l-2 border-brand;
+  }
+  .measure-row.is-miss {
+    @apply border-alert bg-paper;
+  }
+  .measure-q {
+    @apply block text-sm leading-snug text-ink;
+  }
+  .measure-verdict {
+    @apply mt-1.5 block text-xs font-semibold  text-brand-ink;
+  }
+  .measure-row.is-miss .measure-verdict {
+    @apply text-alert;
+  }
+  .measure-others {
+    @apply mt-0.5 block text-xs text-muted;
+  }
+  .measure-foot {
+    @apply border-t border-line bg-paper px-5 py-3.5 text-xs leading-relaxed text-muted;
+  }
+
+  /* ── Bevisfunn ──────────────────────────────────────────────────────── */
+  .finding {
+    @apply rounded-card border border-line p-5;
+  }
+  .finding-h {
+    @apply text-base font-semibold leading-snug text-ink;
+  }
+  .finding-p {
+    @apply mt-2 text-sm leading-relaxed text-muted;
   }
 
   /* ── Case cards ─────────────────────────────────────────────────────── */
-  .case-intro {
-    @apply mt-3 max-w-2xl text-lg leading-relaxed text-muted;
-  }
   .case-card {
     @apply rounded-card border border-line p-5;
   }
@@ -174,19 +228,13 @@ body {
     @apply text-alert;
   }
   .case-card .score.meh {
-    @apply text-warn;
+    @apply text-ink;
   }
   .case-card .score-label {
     @apply mt-1 text-sm font-semibold text-ink;
   }
   .case-card .score-detail {
     @apply mt-2 text-sm leading-relaxed text-muted;
-  }
-  .case-quote {
-    @apply mt-8 rounded-card border-l-2 border-brand bg-wash px-6 py-5 text-base leading-relaxed text-muted;
-  }
-  .case-quote strong {
-    @apply text-ink;
   }
   .btn-solid {
     @apply inline-block rounded-md bg-brand-ink px-5 py-2.5 text-sm font-semibold text-paper no-underline hover:opacity-85;
@@ -200,7 +248,7 @@ body {
     @apply mt-8 w-full border-collapse text-left text-sm;
   }
   .benchmark-table th {
-    @apply border-b border-line pb-3 pr-4 text-xs font-semibold uppercase tracking-[0.08em] text-muted;
+    @apply border-b border-line pb-3 pr-4 text-xs font-semibold  text-muted;
   }
   .benchmark-table td {
     @apply border-b border-line py-4 pr-4 align-middle text-muted;
@@ -212,19 +260,10 @@ body {
     @apply flex items-center gap-3;
   }
   .score-bar-bg {
-    @apply h-1.5 w-28 overflow-hidden rounded-full bg-line;
+    @apply h-1.5 w-28 overflow-hidden rounded bg-line;
   }
   .score-bar-fill {
-    @apply block h-full rounded-full;
-  }
-  .fill-red {
-    @apply bg-alert;
-  }
-  .fill-orange {
-    @apply bg-warn;
-  }
-  .fill-green {
-    @apply bg-brand;
+    @apply block h-full rounded;
   }
   .score-num {
     @apply tabular-nums text-ink;
@@ -237,44 +276,31 @@ body {
     @apply bg-alert;
   }
   .grade-c {
-    @apply bg-warn;
+    @apply bg-ink;
   }
   .grade-b {
     @apply bg-brand;
   }
-  .benchmark-note {
-    @apply mt-6 rounded-card border border-line bg-wash px-5 py-4 text-sm leading-relaxed text-muted;
-  }
-  .benchmark-note strong {
-    @apply text-ink;
-  }
-  .benchmark-cta {
-    @apply mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted;
-  }
-  .benchmark-cta a {
-    @apply font-semibold text-brand-ink underline underline-offset-2;
-  }
-
   /* ── Dark AEO section ───────────────────────────────────────────────── */
   .aeo-stat .num {
     @apply text-3xl font-bold tracking-tight text-paper;
   }
   .aeo-stat .label {
-    @apply mt-1 text-sm text-paper/60;
+    @apply mt-1 text-sm text-paper;
   }
   .aeo-table th {
-    @apply border-b border-paper/20 px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-[0.08em] text-paper/60;
+    @apply border-b border-paper px-4 py-2.5 text-left text-xs font-semibold  text-paper;
   }
   .aeo-table td {
-    @apply border-b border-paper/10 px-4 py-2.5 text-sm text-paper/85;
+    @apply border-b border-paper px-4 py-2.5 text-sm text-paper;
   }
   .source-note {
-    @apply mt-4 text-xs leading-relaxed text-paper/50;
+    @apply mt-4 text-xs leading-relaxed text-paper;
   }
 
   /* ── Steps ──────────────────────────────────────────────────────────── */
   .step-number {
-    @apply flex h-9 w-9 items-center justify-center rounded-full border border-line text-sm font-bold text-brand-ink;
+    @apply flex h-9 w-9 items-center justify-center rounded border border-line text-sm font-bold text-brand-ink;
   }
   .step h3 {
     @apply mt-4 text-lg font-semibold text-ink;
@@ -285,10 +311,10 @@ body {
 
   /* ── Blog cards ─────────────────────────────────────────────────────── */
   .blog-card {
-    @apply block rounded-card border border-line p-6 no-underline transition-colors hover:border-ink/30;
+    @apply block rounded-card border border-line p-6 no-underline transition-colors hover:border-ink;
   }
   .blog-tag {
-    @apply text-xs font-semibold uppercase tracking-[0.1em] text-brand-ink;
+    @apply text-xs font-semibold  text-brand-ink;
   }
   .blog-card h3 {
     @apply mt-3 text-xl font-semibold tracking-tight text-ink;
@@ -308,7 +334,7 @@ body {
     @apply flex flex-col rounded-card border border-line bg-paper p-6;
   }
   .service-card.featured {
-    @apply border-2 border-brand shadow-[0_1px_24px_-12px_oklch(0.6_0.13_163)];
+    @apply border-2 border-brand ;
   }
   .service-name {
     @apply text-lg font-bold tracking-tight text-ink;
@@ -335,7 +361,7 @@ body {
     @apply bg-ink text-paper hover:opacity-85;
   }
   .service-cta-outline {
-    @apply border border-ink text-ink hover:bg-wash;
+    @apply border border-ink text-ink hover:bg-paper;
   }
   .service-cta-faktura {
     @apply border border-line text-muted hover:border-ink hover:text-ink;
@@ -379,7 +405,7 @@ body {
 
   /* ── Contact ────────────────────────────────────────────────────────── */
   .contact-card {
-    @apply mt-8 rounded-card border border-line bg-wash p-8;
+    @apply mt-8 rounded-card border border-line bg-paper p-8;
   }
   .contact-items {
     @apply mt-4 space-y-2 text-base text-muted;
@@ -427,37 +453,36 @@ body {
 
 :root {
   /* names the hand-written pages and render-audit-cta.ts read */
-  --bg: var(--color-paper);
-  --bg-raised: var(--color-wash);
+  --bg: var(--color-wash);
+  --bg-raised: var(--color-paper);
   --border: var(--color-line);
   --text: var(--color-ink);
   --text-dim: var(--color-muted);
   --text-muted: var(--color-muted);
   --accent: var(--color-brand-ink);
-  --accent-dim: oklch(0.88 0.06 163);
-  --accent-blue: oklch(0.52 0.16 255);
-  --accent-purple: oklch(0.5 0.19 295);
-  --accent-orange: oklch(0.58 0.14 70);
+  --accent-dim: var(--color-wash);
+  --accent-blue: var(--color-brand);
+  --accent-purple: var(--color-brand);
+  --accent-orange: var(--color-ink);
   --accent-red: var(--color-alert);
   --blue: var(--accent-blue);
   --red: var(--color-alert);
-  --red-dim: oklch(0.9 0.05 27);
+  --red-dim: var(--color-wash);
   --yellow: var(--accent-orange);
-  --yellow-dim: oklch(0.91 0.06 85);
+  --yellow-dim: var(--color-wash);
   --grade-a: var(--color-brand-ink);
-  --grade-b: oklch(0.55 0.15 130);
+  --grade-b: var(--color-brand);
   --grade-c: var(--accent-orange);
-  --grade-d: oklch(0.6 0.17 45);
+  --grade-d: var(--color-ink);
   --grade-e: var(--color-alert);
   --grade-f: var(--color-alert);
   --lv0: var(--color-alert);
-  --lv1: oklch(0.6 0.17 45);
+  --lv1: var(--color-ink);
   --lv2: var(--accent-orange);
   --lv3: var(--color-brand-ink);
   --lv4: var(--accent-blue);
   --lv5: var(--accent-purple);
-  --mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Consolas,
-    monospace;
+  --mono: var(--font-mono);
   --sans: var(--font-sans);
 
   /* aliases emitted by the dark→light re-theme in the migration */
@@ -490,10 +515,10 @@ body {
     @apply mt-8 border-b border-line pb-8;
   }
   .article-tag {
-    @apply text-xs font-semibold uppercase tracking-[0.12em] text-brand-ink;
+    @apply text-xs font-semibold  text-brand-ink;
   }
   .article-title {
-    @apply mt-3 text-4xl font-bold leading-[1.1] tracking-tight text-ink sm:text-[2.85rem];
+    @apply mt-3 text-4xl font-extrabold leading-[1.1] text-ink sm:text-[2.85rem];
   }
   .article-lead {
     @apply mt-5 text-xl leading-relaxed text-muted;
@@ -502,36 +527,33 @@ body {
     @apply mt-6 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm text-muted;
   }
   .meta-chip {
-    @apply rounded-full border border-line px-2.5 py-0.5 text-xs;
+    @apply rounded border border-line px-2.5 py-0.5 text-xs;
   }
 
-  /* ── Prose body ─────────────────────────────────────────────────────────
-     @tailwindcss/typography does the rhythm; the overrides below only bind it
-     to the design tokens so it cannot drift from the rest of the site. */
+  /* ── Prose body — own rhythm, no typography plugin (its gray palette
+     shipped 9 extra colour literals). */
   .article-surface {
-    @apply prose prose-lg mt-10 max-w-none;
-    --tw-prose-body: var(--color-muted);
-    --tw-prose-headings: var(--color-ink);
-    --tw-prose-lead: var(--color-muted);
-    --tw-prose-links: var(--color-brand-ink);
-    --tw-prose-bold: var(--color-ink);
-    --tw-prose-counters: var(--color-muted);
-    --tw-prose-bullets: var(--color-line);
-    --tw-prose-hr: var(--color-line);
-    --tw-prose-quotes: var(--color-ink);
-    --tw-prose-quote-borders: var(--color-brand);
-    --tw-prose-captions: var(--color-muted);
-    --tw-prose-code: var(--color-ink);
-    --tw-prose-pre-code: var(--color-ink);
-    --tw-prose-pre-bg: var(--color-wash);
-    --tw-prose-th-borders: var(--color-line);
-    --tw-prose-td-borders: var(--color-line);
+    @apply mt-10 text-lg leading-[1.7] text-muted;
   }
+  .article-surface :where(p, ul, ol, table, pre, blockquote, figure) {
+    @apply my-5;
+  }
+  .article-surface :where(ul) { @apply list-disc pl-6; }
+  .article-surface :where(ol) { @apply list-decimal pl-6; }
+  .article-surface :where(li) { @apply my-2; }
+  .article-surface :where(a) { @apply text-brand-ink underline underline-offset-2; }
+  .article-surface :where(strong, h2, h3, h4, th, blockquote) { @apply text-ink; }
+  .article-surface :where(h4) { @apply mt-8 font-bold; }
+  .article-surface :where(blockquote) { @apply border-l-[3px] border-brand pl-5; }
+  .article-surface :where(hr) { @apply my-10 border-line; }
+  .article-surface :where(th, td) { @apply border-b border-line px-3 py-2 text-left align-top; }
+  .article-surface :where(pre) { @apply overflow-x-auto bg-paper p-4 text-sm; }
+  .article-surface :where(img) { @apply my-6 max-w-full; }
   .article-surface h2 {
-    @apply mt-14 scroll-mt-24 text-[1.75rem] font-bold tracking-tight;
+    @apply mt-14 text-[1.75rem] font-bold tracking-tight;
   }
   .article-surface h3 {
-    @apply mt-10 scroll-mt-24 text-xl font-semibold tracking-tight;
+    @apply mt-10 text-xl font-semibold tracking-tight;
   }
   .article-surface table {
     @apply block w-full overflow-x-auto text-base sm:table;
@@ -542,16 +564,12 @@ body {
   .article-surface code {
     font-family: var(--mono);
   }
-  .article-surface :where(code):not(pre code)::before,
-  .article-surface :where(code):not(pre code)::after {
-    content: "";
-  }
 
   /* ── Callouts ───────────────────────────────────────────────────────────
      31 of 39 pages use these. Colour carries meaning (neutral / caution /
      context / alert), so the variants keep their roles on paper. */
   .article-surface .callout {
-    @apply my-8 rounded-card border border-line border-l-[3px] border-l-brand bg-wash px-6 py-5;
+    @apply my-8 rounded-card border border-line border-l-[3px] border-l-brand bg-paper px-6 py-5;
   }
   .article-surface .callout > :first-child {
     @apply mt-0;
@@ -564,18 +582,18 @@ body {
   }
   .article-surface .callout-orange {
     border-left-color: var(--accent-orange);
-    background: color-mix(in oklab, var(--accent-orange) 7%, var(--color-paper));
+    background: var(--color-paper);
   }
   .article-surface .callout-blue {
     border-left-color: var(--accent-blue);
-    background: color-mix(in oklab, var(--accent-blue) 6%, var(--color-paper));
+    background: var(--color-paper);
   }
   .article-surface .callout-red {
     border-left-color: var(--color-alert);
-    background: color-mix(in oklab, var(--color-alert) 6%, var(--color-paper));
+    background: var(--color-paper);
   }
   .article-surface .key-answer {
-    @apply my-8 rounded-card border border-brand/40 bg-brand-wash px-6 py-5 text-ink;
+    @apply my-8 rounded-card border border-brand bg-brand-wash px-6 py-5 text-ink;
   }
   .article-surface .key-answer > :last-child {
     @apply mb-0;
@@ -583,10 +601,10 @@ body {
 
   /* ── Table of contents ──────────────────────────────────────────────── */
   .article-surface .toc {
-    @apply my-8 rounded-card border border-line bg-wash px-6 py-5;
+    @apply my-8 rounded-card border border-line bg-paper px-6 py-5;
   }
   .article-surface .toc-title {
-    @apply m-0 text-xs font-semibold uppercase tracking-[0.12em] text-muted;
+    @apply m-0 text-xs font-semibold  text-muted;
   }
   .article-surface .toc ol,
   .article-surface .toc ul {
@@ -608,7 +626,7 @@ body {
   .article-surface .cta-block,
   .article-surface .cta-box,
   .article-surface .cta-section {
-    @apply my-10 rounded-card border border-line bg-wash px-7 py-7 text-center;
+    @apply my-10 rounded-card border border-line bg-paper px-7 py-7 text-center;
   }
   .article-surface .cta-block h2,
   .article-surface .cta-block h3,
@@ -632,16 +650,16 @@ body {
     @apply mt-16 border-t border-line pt-8;
   }
   .article-surface .related-posts h3 {
-    @apply mt-0 text-xs font-semibold uppercase tracking-[0.12em] text-muted;
+    @apply mt-0 text-xs font-semibold  text-muted;
   }
   .article-surface .related-grid {
     @apply mt-5 grid gap-4 sm:grid-cols-3;
   }
   .article-surface .related-card {
-    @apply block rounded-card border border-line p-5 no-underline transition-colors hover:border-ink/30;
+    @apply block rounded-card border border-line p-5 no-underline transition-colors hover:border-ink;
   }
   .article-surface .related-card-tag {
-    @apply text-xs font-semibold uppercase tracking-[0.1em] text-brand-ink;
+    @apply text-xs font-semibold  text-brand-ink;
   }
   .article-surface .related-card-title {
     @apply mt-2 text-base font-semibold leading-snug text-ink;
@@ -711,10 +729,10 @@ body {
 
   /* ── /blogg index promo ─────────────────────────────────────────────── */
   .audit-promo {
-    @apply mt-10 rounded-card border border-line border-l-[3px] border-l-brand bg-wash px-7 py-6;
+    @apply mt-10 rounded-card border border-line border-l-[3px] border-l-brand bg-paper px-7 py-6;
   }
   .audit-promo__label {
-    @apply text-xs font-semibold uppercase tracking-[0.12em] text-muted;
+    @apply text-xs font-semibold  text-muted;
   }
   .audit-promo__headline {
     @apply mt-2 text-xl font-bold tracking-tight text-ink;

@@ -17,9 +17,6 @@
   <meta property="og:image" content="https://synligdigital.no/og-2026-08.png">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- JSON-LD Block 1: Service OfferCatalog (mirrors homepage hasOfferCatalog so pricing-parity gate sees same numbers) -->
   <script type="application/ld+json">
@@ -140,25 +137,25 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --blue-900: #1a365d;
-      --blue-700: #2b4c8a;
-      --blue-100: #ebf2ff;
-      --green-600: #38a169;
-      --green-500: #48bb78;
-      --green-100: #e6f7ed;
-      --gray-900: #1a202c;
-      --gray-700: #4a5568;
-      --gray-600: #5a6577;
-      --gray-200: #e2e8f0;
-      --gray-100: #edf2f7;
-      --gray-50: #f7fafc;
-      --white: #ffffff;
-      --text-secondary: #5a6577;
-      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --blue-900: var(--color-brand);
+      --blue-700: var(--color-brand);
+      --blue-100: var(--color-paper);
+      --green-600: var(--color-brand);
+      --green-500: var(--color-brand);
+      --green-100: var(--color-wash);
+      --gray-900: var(--color-ink);
+      --gray-700: var(--color-muted);
+      --gray-600: var(--color-muted);
+      --gray-200: var(--color-wash);
+      --gray-100: var(--color-wash);
+      --gray-50: var(--color-paper);
+      --white: var(--color-paper);
+      --text-secondary: var(--color-muted);
+      --font: var(--font-sans);
     }
     body {
-      font-family: var(--font);
-      background: var(--white);
+      font-family: var(--font-sans);
+      background: var(--color-paper);
       color: var(--gray-700);
       line-height: 1.55;
       -webkit-font-smoothing: antialiased;
@@ -169,7 +166,7 @@
     /* Nav */
     nav {
       border-bottom: 1px solid var(--gray-200);
-      background: var(--white);
+      background: var(--color-paper);
       position: sticky;
       top: 0;
       z-index: 10;
@@ -210,7 +207,7 @@
        samme rettelse er lagt inn der i samme commit. */
     .nav-cta {
       background: var(--gray-900);
-      color: var(--white) !important;
+      color: var(--color-paper) !important;
       padding: 8px 16px;
       border-radius: 6px;
       position: relative;
@@ -266,8 +263,8 @@
       justify-content: center;
       margin: 12px auto 0;
       padding: 10px 18px;
-      background: rgba(110, 231, 183, 0.08);
-      border: 1px solid rgba(5, 150, 105, 0.18);
+      background: var(--color-paper);
+      border: 1px solid var(--color-line);
       border-radius: 8px;
       font-size: 0.85rem;
       color: var(--gray-700);
@@ -302,8 +299,8 @@
       color: var(--gray-600);
       text-align: center;
       margin-bottom: 16px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      
+      
     }
     .results-grid {
       display: grid;
@@ -316,7 +313,7 @@
       border: 1px solid var(--gray-200);
       border-radius: 10px;
       padding: 20px 22px;
-      background: var(--white);
+      background: var(--color-paper);
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -374,8 +371,8 @@
       padding: 1px 5px;
       margin-left: 6px;
       vertical-align: middle;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
+      
+      
     }
 
     /* Services grid */
@@ -396,7 +393,7 @@
       padding: 32px;
       display: flex;
       flex-direction: column;
-      background: var(--white);
+      background: var(--color-paper);
     }
     .service-card.featured {
       border-color: var(--green-600);
@@ -410,7 +407,7 @@
       left: 50%;
       transform: translateX(-50%);
       background: var(--green-600);
-      color: var(--white);
+      color: var(--color-paper);
       font-size: 0.75rem;
       font-weight: 600;
       padding: 4px 14px;
@@ -466,7 +463,7 @@
     }
     .service-cta-fill {
       background: var(--green-600);
-      color: var(--white);
+      color: var(--color-paper);
     }
     .service-cta-fill:hover { background: var(--green-500); }
     .service-cta-outline {
@@ -521,11 +518,11 @@
       font-size: 0.92rem;
       border: 1px solid var(--gray-200);
       border-radius: 8px;
-      background: var(--white);
+      background: var(--color-paper);
       color: var(--gray-900);
       box-sizing: border-box;
       transition: border-color 0.15s;
-      font-family: inherit;
+      font-family: var(--font-sans);
     }
     .lead-form-input:focus {
       outline: none;
@@ -535,7 +532,7 @@
       cursor: pointer;
       border: none;
       width: 100%;
-      font-family: inherit;
+      font-family: var(--font-sans);
     }
     .stripe-note {
       font-size: 0.78rem;
@@ -569,7 +566,7 @@
     .compare-table {
       width: 100%;
       border-collapse: collapse;
-      background: var(--white);
+      background: var(--color-paper);
       border: 1px solid var(--gray-200);
       border-radius: 12px;
       overflow: hidden;
@@ -587,7 +584,7 @@
       font-weight: 600;
     }
     .compare-table td.check { color: var(--green-600); font-weight: 700; }
-    .compare-table td.miss { color: var(--gray-200); }
+    .compare-table td.miss { color: var(--color-muted); }
     .compare-table tr:last-child td { border-bottom: none; }
 
     /* FAQ */
@@ -665,9 +662,9 @@
        hunt for the secondary CTA on the pricing card they just left. */
     .recovery-banner {
       display: none;
-      background: #fffbeb;
-      border: 1px solid #f59e0b;
-      border-left: 4px solid #f59e0b;
+      background: var(--color-paper);
+      border: 1px solid var(--color-warn);
+      border-left: 4px solid var(--color-warn);
       border-radius: 8px;
       padding: 18px 22px;
       margin: 18px auto 0;
@@ -700,10 +697,10 @@
       text-decoration: none;
       line-height: 1.3;
     }
-    .recovery-cta-primary { background: var(--gray-900); color: var(--white) !important; }
-    .recovery-cta-primary:hover { background: #000; }
+    .recovery-cta-primary { background: var(--gray-900); color: var(--color-paper) !important; }
+    .recovery-cta-primary:hover { background: var(--color-ink); }
     .recovery-cta-secondary {
-      background: var(--white);
+      background: var(--color-paper);
       color: var(--gray-900) !important;
       border: 1px solid var(--gray-200);
     }
@@ -717,9 +714,9 @@
        instead of warning (amber). Same conversion-bottleneck logic. */
     .cold-report-banner {
       display: none;
-      background: #ecfdf5;
-      border: 1px solid #10b981;
-      border-left: 4px solid #10b981;
+      background: var(--color-wash);
+      border: 1px solid var(--color-brand);
+      border-left: 4px solid var(--color-brand);
       border-radius: 8px;
       padding: 18px 22px;
       margin: 18px auto 0;
@@ -752,10 +749,10 @@
       text-decoration: none;
       line-height: 1.3;
     }
-    .cold-report-cta-primary { background: #065f46; color: var(--white) !important; }
-    .cold-report-cta-primary:hover { background: #064e3b; }
+    .cold-report-cta-primary { background: var(--color-ink); color: var(--color-paper) !important; }
+    .cold-report-cta-primary:hover { background: var(--color-ink); }
     .cold-report-cta-secondary {
-      background: var(--white);
+      background: var(--color-paper);
       color: var(--gray-900) !important;
       border: 1px solid var(--gray-200);
     }
@@ -781,7 +778,7 @@
 <body>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-logo">Synlig</a>
+      <!--SITE-LOGO-->
       <ul class="nav-links">
         <li><a href="/guide">Guide</a></li>
         <li><a href="/blogg">Blogg</a></li>
@@ -1039,7 +1036,7 @@
         <div style="display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 10px 16px; align-items: baseline; max-width: 720px; font-size: 0.95rem; color: var(--gray-700); padding: 14px 22px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px;">
           <strong style="color: var(--gray-900); font-weight: 600;">Ikke klar for å bestille enda?</strong>
           <a href="mailto:hei@synligdigital.no?subject=Sp%C3%B8rsm%C3%A5l%20om%20AEO-pakker&amp;body=Hei%20Synlig%2C%0A%0AJeg%20vurderer%20[bytt%20ut%20med%20pakke%20eller%20la%20st%C3%A5]%20og%20lurer%20p%C3%A5%3A%0A%0A" style="color: var(--blue-700); text-decoration: none; font-weight: 500;">Send oss en kort melding &rarr;</a>
-          <span style="color: var(--gray-200);">·</span>
+          <span style="color: var(--color-muted);">·</span>
           <a href="https://sjekk.synligdigital.no/?ref=priser-soft" style="color: var(--blue-700); text-decoration: none; font-weight: 500;">Ta en gratis AI-synlighetssjekk &rarr;</a>
         </div>
       </div>

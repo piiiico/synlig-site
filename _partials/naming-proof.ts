@@ -100,6 +100,24 @@ export const ENGINE_ROWS = [...new Set(PANEL_ROWS.map((r) => r.q))].map((q) => (
     of: PANEL_ROWS.filter((r) => r.q === q && r.engine === e.key && !r.error).length,
   })),
 }));
+/**
+ * Skiltet i forsidens hero (Vegvisning 2026-10-28): første spørsmål, per motor
+ * de seks første unike vertene kjøring 1 siterte, og navngitt-tellingen. Alt
+ * telles her fra rådata — aldri håndskrevet i markupen.
+ */
+export const ENGINE_SIGN = (() => {
+  const q = ENGINE_ROWS[0].q;
+  const rows = PANEL_ROWS.filter((r) => r.q === q) as Array<(typeof PANEL_ROWS)[number] & { at?: string; cites?: string[] }>;
+  const engines = ENGINE_PANEL.engines.map((e, i) => {
+    const run1 = rows.find((r) => r.engine === e.key && r.run === 1 && !r.error);
+    const hosts = [...new Set((run1?.cites ?? []).map((u) => new URL(u).hostname.replace(/^www\./, "")))].slice(0, 6);
+    if (hosts.length < 3) throw new Error(`ENGINE_SIGN: ${e.key} kjøring 1 har ${hosts.length} kilder`);
+    return { ...ENGINE_ROWS[0].counts[i], name: e.name.replace("OpenAIs ", ""), hosts };
+  });
+  const ats = rows.map((r) => r.at).filter(Boolean).sort() as string[];
+  const hm = (iso: string) => iso.slice(11, 16).replace(":", ".");
+  return { q, engines, window: `${hm(ats[0])}–${hm(ats[ats.length - 1])} UTC` };
+})();
 export const ENGINE_CAVEAT =
   "Målt via leverandørenes API med eget websøk, ikke i forbrukerappene. Tre kjøringer samme kveld. Sidene motorene oftest siterer om oss er våre egne.";
 

@@ -16,32 +16,29 @@
   <meta property="og:locale" content="nb_NO">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --blue-900: #1a365d;
-      --blue-700: #2b4c8a;
-      --blue-100: #ebf2ff;
-      --green-600: #38a169;
-      --green-500: #48bb78;
-      --green-100: #e6f7ed;
-      --red-600: #c53030;
-      --gray-900: #1a202c;
-      --gray-700: #4a5568;
-      --gray-600: #5a6577;
-      --gray-200: #e2e8f0;
-      --gray-100: #edf2f7;
-      --gray-50: #f7fafc;
-      --white: #ffffff;
-      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --blue-900: var(--color-brand);
+      --blue-700: var(--color-brand);
+      --blue-100: var(--color-paper);
+      --green-600: var(--color-brand);
+      --green-500: var(--color-brand);
+      --green-100: var(--color-wash);
+      --red-600: var(--color-alert);
+      --gray-900: var(--color-ink);
+      --gray-700: var(--color-muted);
+      --gray-600: var(--color-muted);
+      --gray-200: var(--color-wash);
+      --gray-100: var(--color-wash);
+      --gray-50: var(--color-paper);
+      --white: var(--color-paper);
+      --font: var(--font-sans);
     }
     body {
-      font-family: var(--font);
-      background: var(--white);
+      font-family: var(--font-sans);
+      background: var(--color-paper);
       color: var(--gray-700);
       line-height: 1.55;
       -webkit-font-smoothing: antialiased;
@@ -51,7 +48,7 @@
 
     nav {
       border-bottom: 1px solid var(--gray-200);
-      background: var(--white);
+      background: var(--color-paper);
       position: sticky;
       top: 0;
       z-index: 10;
@@ -83,11 +80,24 @@
       font-weight: 500;
     }
     .nav-links a:hover { color: var(--gray-900); }
+    /* 2026-08-14: 44px trykkflate, samme rettelse som priser.html (målt der:
+       117×35px på 390px). Overlegget utvider treffområdet uten å endre
+       navhøyden. */
     .nav-cta {
       background: var(--gray-900);
-      color: var(--white) !important;
+      color: var(--color-paper) !important;
       padding: 8px 16px;
       border-radius: 6px;
+      position: relative;
+    }
+    .nav-cta::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 44px;
     }
 
     .hero {
@@ -113,12 +123,48 @@
       font-size: 0.92rem;
       color: var(--gray-700);
     }
+    /* Cloudflare Agent Readiness Score — verifiable third-party trust signal
+       at the form (peak skepticism: about to submit firma + org.nr). Mirrors
+       homepage hero-proof + /r/<hash> trust-anchor + /priser hero-proof so
+       cold prospects keep the credential through the whole conversion path. */
+    .hero-proof {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 12px 0 0;
+      padding: 10px 18px;
+      background: var(--color-paper);
+      border: 1px solid var(--color-line);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--gray-700);
+      line-height: 1.5;
+    }
+    .hero-proof-check {
+      color: var(--green-600);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .hero-proof strong {
+      color: var(--gray-900);
+      font-weight: 600;
+    }
+    .hero-proof a {
+      color: var(--green-600);
+      text-decoration: none;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .hero-proof a:hover {
+      text-decoration: underline;
+    }
 
     .form-section {
       padding: 32px 0 64px;
     }
     form {
-      background: var(--white);
+      background: var(--color-paper);
       border: 1px solid var(--gray-200);
       border-radius: 12px;
       padding: 32px;
@@ -145,9 +191,9 @@
       width: 100%;
       padding: 10px 12px;
       font-size: 0.95rem;
-      font-family: var(--font);
+      font-family: var(--font-sans);
       color: var(--gray-900);
-      background: var(--white);
+      background: var(--color-paper);
       border: 1px solid var(--gray-200);
       border-radius: 6px;
       outline: none;
@@ -165,6 +211,102 @@
     .field input:invalid:not(:placeholder-shown) {
       border-color: var(--red-600);
     }
+
+    /* Brreg autocomplete dropdown — anchored to .field-firmanavn wrapper.
+       Positioned absolute so it overlays the next field without shifting layout.
+       Max-height + scroll handles edge cases where Brreg returns 8 long matches. */
+    .field-firmanavn { position: relative; }
+    .brreg-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--color-paper);
+      border: 1px solid var(--gray-200);
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      box-shadow: 0 4px 12px var(--color-line);
+      max-height: 280px;
+      overflow-y: auto;
+      z-index: 20;
+      display: none;
+    }
+    .brreg-dropdown[data-open="true"] { display: block; }
+    .brreg-option {
+      padding: 10px 12px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 0.92rem;
+    }
+    .brreg-option:last-child { border-bottom: none; }
+    .brreg-option:hover,
+    .brreg-option[data-active="true"] { background: var(--blue-100); }
+    .brreg-option-name {
+      color: var(--gray-900);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .brreg-option-meta {
+      color: var(--gray-600);
+      font-size: 0.82rem;
+    }
+    .brreg-prefilled {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--green-600);
+      margin-left: 8px;
+    }
+    .brreg-prefilled[hidden] { display: none; }
+
+    /* Order summary — confirms what the user is buying when ?pakke= is set.
+       Sits at the top of the form so a buyer arriving from a report or
+       /priser CTA sees the price + scope upfront, not buried in a dropdown.
+       Reactive: updates when the pakke <select> changes. */
+    .order-summary {
+      margin: 0 0 24px;
+      padding: 16px 18px;
+      background: var(--green-100);
+      border: 1px solid var(--green-500);
+      border-radius: 8px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .order-summary[hidden] { display: none; }
+    .order-summary-check {
+      flex: 0 0 auto;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--green-600);
+      color: var(--color-paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+    .order-summary-body {
+      flex: 1 1 auto;
+      font-size: 0.95rem;
+      color: var(--gray-900);
+      line-height: 1.45;
+    }
+    .order-summary-label {
+      font-weight: 600;
+    }
+    .order-summary-price {
+      color: var(--gray-700);
+    }
+    .order-summary-meta {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.82rem;
+      color: var(--gray-600);
+    }
+
     .submit-row {
       margin-top: 24px;
     }
@@ -173,12 +315,12 @@
       padding: 14px;
       font-size: 1rem;
       font-weight: 600;
-      color: var(--white);
+      color: var(--color-paper);
       background: var(--green-600);
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      font-family: var(--font);
+      font-family: var(--font-sans);
       transition: background 0.15s;
     }
     button[type="submit"]:hover { background: var(--green-500); }
@@ -193,7 +335,7 @@
       display: none;
       margin-bottom: 20px;
       padding: 12px 16px;
-      background: #fff5f5;
+      background: var(--color-paper);
       border: 1px solid var(--red-600);
       border-radius: 6px;
       color: var(--red-600);
@@ -221,12 +363,12 @@
 <body>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-logo">Synlig</a>
+      <!--SITE-LOGO-->
       <ul class="nav-links">
-        <li><a href="/guide">Guide</a></li>
-        <li><a href="/blogg">Blogg</a></li>
-        <li><a href="/priser">Priser</a></li>
-        <li><a href="https://sjekk.synligdigital.no/" class="nav-cta">Gratis sjekk</a></li>
+        <li><a href="/guide" id="nav-link-guide">Guide</a></li>
+        <li><a href="/blogg" id="nav-link-blogg">Blogg</a></li>
+        <li><a href="/priser" id="nav-link-priser">Priser</a></li>
+        <li><a href="https://sjekk.synligdigital.no/" class="nav-cta" id="nav-cta">Gratis sjekk</a></li>
       </ul>
     </div>
   </nav>
@@ -234,10 +376,15 @@
   <main>
     <section class="hero">
       <div class="container">
-        <h1>Bestill med faktura</h1>
-        <p>Fyll inn skjemaet, så sender vi faktura innen 24 timer. Du betaler etter mottak. Arbeidet starter når fakturaen er signert.</p>
-        <div class="trust-box">
-          <strong>Slik fungerer det:</strong> Du sender bestillingen → vi sender faktura med 14 dagers betalingsfrist → arbeidet starter når faktura er signert. Alle priser eksklusiv mva.
+        <h1 id="hero-h1">Bestill med faktura</h1>
+        <p id="hero-lead">Fyll inn skjemaet, så sender vi faktura innen 24 timer. Du betaler etter mottak. Arbeidet starter når fakturaen er signert.</p>
+        <div class="trust-box" id="trust-box">
+          <strong id="trust-box-strong">Slik fungerer det:</strong> <span id="trust-box-text">Du sender bestillingen → vi sender faktura med 14 dagers betalingsfrist → arbeidet starter når faktura er signert. Alle priser eksklusiv mva.</span>
+        </div>
+        <div class="hero-proof">
+          <svg class="hero-proof-check" aria-hidden="true" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 10 8 14 16 6"></polyline></svg>
+          <span id="hero-proof-text">Synlig sin egen AI-synlighet: <strong>5/5 Agent-Native</strong> (toppnivå) på Cloudflares uavhengige agent-skanner.</span>
+          <a href="/bevis/agent-readiness" rel="noopener" id="hero-proof-link">Verifiser →</a>
         </div>
       </div>
     </section>
@@ -249,16 +396,25 @@
           <input type="hidden" name="source" value="faktura-form">
           <input type="hidden" name="timestamp" id="timestamp">
           <input type="hidden" name="referrer_slug" id="referrer-slug" value="">
+          <input type="hidden" name="lang" id="lang-hidden" value="">
+
+          <div id="order-summary" class="order-summary" hidden aria-live="polite">
+            <div class="order-summary-check" aria-hidden="true">✓</div>
+            <div class="order-summary-body">
+              <span class="order-summary-label" id="order-summary-label"></span>
+              <span class="order-summary-price" id="order-summary-price"></span>
+              <span class="order-summary-meta" id="order-summary-meta"></span>
+            </div>
+          </div>
 
           <div class="field">
-            <label for="pakke">Pakke <span class="hint">(velg den du vil bestille)</span></label>
+            <label for="pakke" id="pakke-label">Pakke <span class="hint" id="pakke-hint">(velg den du vil bestille)</span></label>
             <select id="pakke" name="pakke" required>
-              <option value="">— Velg pakke —</option>
-              <option value="priser-analyse">AI-synlighetsanalyse — 4 900 kr (engangsanalyse, 5 virkedager)</option>
-              <option value="priser-fundament">AI-synlighetsfundament — 14 900 kr (implementering, 2–4 uker)</option>
-              <option value="priser-lopende">Løpende overvåking — 4 900 kr/mnd (månedlig abonnement)</option>
+              <option value="" id="pakke-opt-empty">— Velg pakke —</option>
+              <option value="priser-sitert" id="pakke-opt-sitert">Sitert-pakken — 9 900 kr (måling, endringene, ny måling etter 30 dager)</option>
+              <option value="priser-lite" id="pakke-opt-lite">Synlig Lite — 990 kr (FAQPage for én side, 1 virkedag)</option>
               <option value="aeo-for-advokater">AEO for advokater — vertikalpakke</option>
-              <option value="aeo-for-saas-bedrifter">AEO for B2B SaaS — vertikalpakke</option>
+              <option value="aeo-for-saas-bedrifter" id="pakke-opt-saas">AEO for B2B SaaS — vertikalpakke</option>
               <option value="aeo-for-tannleger">AEO for tannleger — vertikalpakke</option>
               <option value="aeo-for-eiendomsmeglere">AEO for eiendomsmeglere — vertikalpakke</option>
               <option value="aeo-for-kiropraktor">AEO for kiropraktor — vertikalpakke</option>
@@ -266,44 +422,45 @@
             </select>
           </div>
 
-          <div class="field">
-            <label for="firmanavn">Firmanavn</label>
-            <input type="text" id="firmanavn" name="firmanavn" required placeholder="F.eks. Eksempel AS" autocomplete="organization" maxlength="200">
+          <div class="field field-firmanavn">
+            <label for="firmanavn" id="firmanavn-label">Firmanavn <span class="hint" id="firmanavn-hint">(begynn å skrive — vi henter org.nr fra Brønnøysund)</span><span id="firmanavn-prefilled" class="brreg-prefilled" hidden>✓ Fylt ut fra Brønnøysund</span></label>
+            <input type="text" id="firmanavn" name="firmanavn" required placeholder="F.eks. Avo Consulting AS" autocomplete="organization" maxlength="200" aria-autocomplete="list" aria-controls="brreg-dropdown" aria-expanded="false">
+            <div id="brreg-dropdown" class="brreg-dropdown" role="listbox" aria-label="Forslag fra Brønnøysundregistrene"></div>
           </div>
 
-          <div class="field">
-            <label for="orgnr">Organisasjonsnummer <span class="hint">(9 siffer)</span></label>
+          <div class="field" id="orgnr-field">
+            <label for="orgnr" id="orgnr-label">Organisasjonsnummer <span class="hint" id="orgnr-hint">(9 siffer)</span><span id="orgnr-prefilled" class="brreg-prefilled" hidden>✓ Hentet automatisk</span></label>
             <input type="text" id="orgnr" name="orgnr" required pattern="[0-9]{9}" inputmode="numeric" placeholder="987654321" maxlength="9" autocomplete="off">
           </div>
 
           <div class="field">
-            <label for="kontaktperson">Kontaktperson</label>
+            <label for="kontaktperson" id="kontaktperson-label">Kontaktperson</label>
             <input type="text" id="kontaktperson" name="kontaktperson" required placeholder="Fornavn Etternavn" autocomplete="name" maxlength="200">
           </div>
 
           <div class="field">
-            <label for="epost">E-post</label>
+            <label for="epost" id="epost-label">E-post</label>
             <input type="email" id="epost" name="epost" required placeholder="navn@firma.no" autocomplete="email" maxlength="200">
           </div>
 
           <div class="field">
-            <label for="telefon">Telefon <span class="hint">(valgfritt)</span></label>
+            <label for="telefon" id="telefon-label">Telefon <span class="hint" id="telefon-hint">(valgfritt)</span></label>
             <input type="tel" id="telefon" name="telefon" placeholder="+47 123 45 678" autocomplete="tel" maxlength="40">
           </div>
 
           <div class="field">
-            <label for="domene">Domene som skal analyseres <span class="hint">(uten https://)</span></label>
+            <label for="domene" id="domene-label">Domene som skal analyseres <span class="hint" id="domene-hint">(uten https://)</span></label>
             <input type="text" id="domene" name="domene" required placeholder="dinbedrift.no" autocomplete="url" maxlength="200">
           </div>
 
           <div class="field">
-            <label for="kommentar">Eventuelle ønsker eller spørsmål <span class="hint">(valgfritt)</span></label>
+            <label for="kommentar" id="kommentar-label">Eventuelle ønsker eller spørsmål <span class="hint" id="kommentar-hint">(valgfritt)</span></label>
             <textarea id="kommentar" name="kommentar" placeholder="F.eks. spesifikke konkurrenter, fakturaadresse, EHF-bestillinger, eller andre detaljer." maxlength="2000"></textarea>
           </div>
 
           <div class="submit-row">
             <button type="submit" id="submit-btn">Send bestilling</button>
-            <p class="note">Vi sender faktura innen 24 timer. Ingen betaling før du har mottatt og signert.</p>
+            <p class="note" id="submit-note">Vi sender faktura innen 24 timer. Ingen betaling før du har mottatt og signert.</p>
           </div>
         </form>
       </div>
@@ -312,13 +469,254 @@
 
   <footer>
     <div class="container">
-      <p>Synlig Digital · Stavanger · <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> · <a href="/">synligdigital.no</a></p>
+      <p id="footer-text">Synlig Digital · Stavanger · <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> · <a href="/">synligdigital.no</a></p>
     </div>
   </footer>
 
   <script>
     (function() {
       var params = new URLSearchParams(window.location.search);
+
+      // ──────────────────────────────────────────────────────────────────────
+      // Locale detection + UI swap.
+      //
+      // Why: 2026-06-17 Halliday/Griffin (USD 92-460 prospect) clicked the
+      // "Get invoice" CTA on his English audit report at 16:14Z and bounced
+      // without submitting. The faktura form is structurally Norwegian: UI
+      // strings, Brreg lookup, and a 9-digit Norwegian org.nr field that
+      // foreign companies cannot supply. Adding `?lang=en` to the report's
+      // faktura CTA propagates the locale; this block flips the rendered
+      // UI to English and relaxes orgnr to a free-form Tax ID / VAT field
+      // so international prospects can complete the form.
+      //
+      // Brreg autocomplete + auto-prefill (which fan out two API calls on
+      // page load) are skipped for lang=en — foreign companies are not in
+      // the Norwegian business registry, so the requests would either fail
+      // silently or hit zero-result paths that confuse the UX.
+      //
+      // The hidden `lang` field tells the worker which locale to use for
+      // the confirmation email (Norwegian otherwise; English when set).
+      //
+      // Note: slug suffix "-en" alone is not authoritative — explicit
+      // ?lang=en is the source of truth. report-html.ts always emits both
+      // for cold-outreach English reports, so a clean propagation chain.
+      // ──────────────────────────────────────────────────────────────────────
+      // Authoritative source: ?lang=en URL param.
+      // Back-compat fallback: cold-outreach English reports use slugs that
+      // end with "-en" (see report-html.ts langSuffix). Reports sent before
+      // 2026-06-17 do NOT carry ?lang=en in their CTA URL (Halliday E1 at
+      // 15:49Z is the canonical example — Griffin abandoned, the lang
+      // propagation fix landed after). Treat slug-suffix "-en" as English
+      // so those already-sent reports localize on click. No false-positive
+      // risk: the suffix is appended only to outreach-<hash>-en cold
+      // reports, never to user-typed slugs or aliases.
+      var earlySlug = (params.get("slug") || "").toLowerCase().trim();
+      var langFromUrl = (params.get("lang") || "").toLowerCase().trim();
+      var lang = (langFromUrl === "en" || /-en$/.test(earlySlug)) ? "en" : "no";
+
+      // Bilingual string table. Only EN entries are needed (NO is the default
+      // already rendered server-side). USD figures are approximations at the
+      // 14-day-terms ≈10.7 NOK/USD rate used in report copy.
+      var EN_STRINGS = {
+        "nav-link-guide":      "Guide",
+        "nav-link-blogg":      "Blog",
+        "nav-link-priser":     "Pricing",
+        "nav-cta":             "Free check",
+        "hero-h1":             "Order with invoice",
+        "hero-lead":           "Fill out the form and we'll send the invoice within 24 hours. You pay after receipt. Work starts when the invoice is signed.",
+        "trust-box-strong":    "How it works:",
+        "trust-box-text":      "You submit the order → we send the invoice with 14 day terms → work starts when the invoice is signed. All prices excl. VAT.",
+        "hero-proof-text-html": "Synlig's own AI visibility: <strong>5/5 Agent-Native</strong> (top tier) on Cloudflare's independent agent scanner.",
+        "hero-proof-link":     "Verify →",
+        "pakke-label":         "Package",
+        "pakke-hint":          "(pick what you want to order)",
+        "pakke-opt-empty":     "— Select package —",
+        "pakke-opt-sitert":    "The Cited package — USD 1,100 (measurement, the changes written out, re-measurement after 30 days)",
+        "pakke-opt-lite":      "Synlig Lite — USD 92 (FAQPage for one page, 1 business day)",
+        "pakke-opt-saas":      "AEO for B2B SaaS — vertical package",
+        "firmanavn-label":     "Company name",
+        "firmanavn-hint":      "",
+        "firmanavn-placeholder": "Your company, Inc.",
+        "orgnr-label":         "Tax ID / VAT / Company registration",
+        "orgnr-hint":          "(optional — EIN, VAT, CRN, or local equivalent)",
+        "orgnr-placeholder":   "e.g. EU VAT, US EIN, UK CRN",
+        "kontaktperson-label": "Contact person",
+        "kontaktperson-placeholder": "First Last",
+        "epost-label":         "Email",
+        "epost-placeholder":   "you@yourcompany.com",
+        "telefon-label":       "Phone",
+        "telefon-hint":        "(optional)",
+        "telefon-placeholder": "+1 555 123 4567",
+        "domene-label":        "Domain to be analyzed",
+        "domene-hint":         "(without https://)",
+        "domene-placeholder":  "yourcompany.com",
+        "kommentar-label":     "Any requests or questions",
+        "kommentar-hint":      "(optional)",
+        "kommentar-placeholder": "E.g. specific competitors, billing address, currency preference (USD/EUR), or any other details.",
+        "submit-btn":          "Submit order",
+        "submit-note":         "We send the invoice within 24 hours. No payment until you receive and approve it.",
+        "footer-text-html":    "Synlig Digital · Stavanger, Norway · <a href=\"mailto:hei@synligdigital.no\">hei@synligdigital.no</a> · <a href=\"/\">synligdigital.no</a>"
+      };
+
+      // EN package summary (mirrors PACKAGE_DISPLAY below in NO).
+      var EN_PACKAGE_DISPLAY = {
+        "priser-lite":             { label: "Synlig Lite — FAQPage AEO",   price: "USD 92 excl. VAT (one-time)", sla: "Delivered 1 business day after signed invoice: FAQPage JSON-LD for one page of your choice, sent by email ready to paste into <head> or via tag manager." },
+        "priser-sitert":           { label: "The Cited package",           price: "USD 1,100 (one-off; Norwegian list price NOK 9,900 excl. VAT — no Norwegian VAT is charged on services exported out of Norway)", sla: "Three steps: (1) baseline measurement — five buying-intent questions from your market, nine byte-identical runs, naming who gets cited instead. (2) The changes written out for up to ten pages — JSON-LD, citable questions and answers, llms.txt and AI-crawler rules, ready to paste or as a pull request. (3) Re-measurement 30 days after you publish, before/after in one document with the raw data. Outcome criterion: at least one citation of your domain in the follow-up runs — if not met, we run another round at no extra charge." },
+        "priser-analyse":          { label: "AI visibility analysis (discontinued)", price: "Discontinued product — we will reply with the citation measurement, USD 1,100", sla: "We contact you before any invoice is sent." },
+        "priser-fundament":        { label: "AI visibility foundation (discontinued)", price: "Discontinued product — we will reply with the citation measurement, USD 1,100", sla: "We contact you before any invoice is sent." },
+        "priser-lopende":          { label: "Ongoing monitoring (discontinued)", price: "Discontinued product — we will reply with the citation measurement, USD 1,100", sla: "We contact you before any invoice is sent." },
+        "aeo-for-advokater":       { label: "AEO for law firms",           price: "Quote agreed in writing before invoicing — scope sets the price", sla: "Delivered within 2–4 weeks after signed invoice." },
+        "aeo-for-saas-bedrifter":  { label: "AEO for B2B SaaS",            price: "Quote agreed in writing before invoicing — scope sets the price", sla: "Delivered within 2–4 weeks after signed invoice." },
+        "aeo-for-tannleger":       { label: "AEO for dental clinics",      price: "Quote agreed in writing before invoicing — scope sets the price", sla: "Delivered within 2–4 weeks after signed invoice." },
+        "aeo-for-eiendomsmeglere": { label: "AEO for real estate agents",  price: "Quote agreed in writing before invoicing — scope sets the price", sla: "Delivered within 2–4 weeks after signed invoice." },
+        "aeo-for-kiropraktor":     { label: "AEO for chiropractors",       price: "Quote agreed in writing before invoicing — scope sets the price", sla: "Delivered within 2–4 weeks after signed invoice." },
+        "aeo-for-regnskap":        { label: "AEO for accounting firms",    price: "Quote agreed in writing before invoicing — scope sets the price", sla: "Delivered within 2–4 weeks after signed invoice." },
+        "_orderingLabel": "You're ordering: ",
+        "_paymentNote": " You only pay after signing the invoice — 14 day terms."
+      };
+
+      // Stamp the hidden field unconditionally so the worker can route on it.
+      var langHidden = document.getElementById("lang-hidden");
+      if (langHidden) langHidden.value = lang;
+
+      if (lang === "en") {
+        // Flip <html lang> so screen readers + search bots see the locale.
+        document.documentElement.setAttribute("lang", "en");
+
+        function setText(id, txt) {
+          var el = document.getElementById(id);
+          if (el && typeof txt === "string") el.textContent = txt;
+        }
+        function setHtml(id, html) {
+          var el = document.getElementById(id);
+          if (el && typeof html === "string") el.innerHTML = html;
+        }
+        function setAttr(id, attr, val) {
+          var el = document.getElementById(id);
+          if (el && typeof val === "string") el.setAttribute(attr, val);
+        }
+
+        // Text content swaps
+        var textIds = [
+          "nav-link-guide","nav-link-blogg","nav-link-priser","nav-cta",
+          "hero-h1","hero-lead","trust-box-strong","trust-box-text",
+          "hero-proof-link",
+          "pakke-label","pakke-hint",
+          // 2026-08-13: "pakke-opt-sitert" was MISSING from this list while
+          // three ids for tiers retired 2026-08-08 were still in it. Net effect
+          // for an English buyer: the flagship option kept its Norwegian label
+          // ("Sitert-pakken — 9 900 kr (måling, endringene, ...)") on an
+          // otherwise fully English form, and EN_STRINGS["pakke-opt-sitert"]
+          // was dead code that had never once been applied. A localization list
+          // is a registry — it goes stale the same way a gate's file list does.
+          "pakke-opt-empty","pakke-opt-sitert","pakke-opt-lite","pakke-opt-saas",
+          "firmanavn-label","firmanavn-hint",
+          "orgnr-label","orgnr-hint",
+          "kontaktperson-label","epost-label",
+          "telefon-label","telefon-hint",
+          "domene-label","domene-hint",
+          "kommentar-label","kommentar-hint",
+          "submit-btn","submit-note"
+        ];
+        for (var ti = 0; ti < textIds.length; ti++) {
+          var key = textIds[ti];
+          if (EN_STRINGS[key]) setText(key, EN_STRINGS[key]);
+        }
+
+        // innerHTML swaps (contain <strong>/<a>)
+        setHtml("hero-proof-text", EN_STRINGS["hero-proof-text-html"]);
+        setHtml("footer-text", EN_STRINGS["footer-text-html"]);
+
+        // Localize the per-label text in pakke-label / hint that wraps the
+        // span — pakke-label is "Pakke <span>...</span>", which when we set
+        // textContent loses the hint span. Re-wire: keep the label as
+        // "Package", and re-attach the hint child.
+        var pakkeLabel = document.getElementById("pakke-label");
+        if (pakkeLabel) {
+          pakkeLabel.textContent = EN_STRINGS["pakke-label"] + " ";
+          var pakkeHint = document.createElement("span");
+          pakkeHint.className = "hint";
+          pakkeHint.id = "pakke-hint";
+          pakkeHint.textContent = EN_STRINGS["pakke-hint"];
+          pakkeLabel.appendChild(pakkeHint);
+        }
+        var firmanavnLabel = document.getElementById("firmanavn-label");
+        if (firmanavnLabel) {
+          firmanavnLabel.textContent = EN_STRINGS["firmanavn-label"] + " ";
+          // (No hint in EN — Brreg autocomplete is disabled.)
+          var fnPrefilled = document.createElement("span");
+          fnPrefilled.id = "firmanavn-prefilled";
+          fnPrefilled.className = "brreg-prefilled";
+          fnPrefilled.hidden = true;
+          firmanavnLabel.appendChild(fnPrefilled);
+        }
+        var orgnrLabel = document.getElementById("orgnr-label");
+        if (orgnrLabel) {
+          orgnrLabel.textContent = EN_STRINGS["orgnr-label"] + " ";
+          var orgnrHintEl = document.createElement("span");
+          orgnrHintEl.className = "hint";
+          orgnrHintEl.id = "orgnr-hint";
+          orgnrHintEl.textContent = EN_STRINGS["orgnr-hint"];
+          orgnrLabel.appendChild(orgnrHintEl);
+          var orgnrPrefilledEl = document.createElement("span");
+          orgnrPrefilledEl.id = "orgnr-prefilled";
+          orgnrPrefilledEl.className = "brreg-prefilled";
+          orgnrPrefilledEl.hidden = true;
+          orgnrLabel.appendChild(orgnrPrefilledEl);
+        }
+        var telefonLabel = document.getElementById("telefon-label");
+        if (telefonLabel) {
+          telefonLabel.textContent = EN_STRINGS["telefon-label"] + " ";
+          var tlHint = document.createElement("span");
+          tlHint.className = "hint";
+          tlHint.id = "telefon-hint";
+          tlHint.textContent = EN_STRINGS["telefon-hint"];
+          telefonLabel.appendChild(tlHint);
+        }
+        var domeneLabel = document.getElementById("domene-label");
+        if (domeneLabel) {
+          domeneLabel.textContent = EN_STRINGS["domene-label"] + " ";
+          var dmHint = document.createElement("span");
+          dmHint.className = "hint";
+          dmHint.id = "domene-hint";
+          dmHint.textContent = EN_STRINGS["domene-hint"];
+          domeneLabel.appendChild(dmHint);
+        }
+        var kommentarLabel = document.getElementById("kommentar-label");
+        if (kommentarLabel) {
+          kommentarLabel.textContent = EN_STRINGS["kommentar-label"] + " ";
+          var kmHint = document.createElement("span");
+          kmHint.className = "hint";
+          kmHint.id = "kommentar-hint";
+          kmHint.textContent = EN_STRINGS["kommentar-hint"];
+          kommentarLabel.appendChild(kmHint);
+        }
+
+        // Localize the title + meta tags for screen-reader / og:type purposes.
+        document.title = "Order with invoice — Synlig Digital";
+
+        // Placeholder swaps
+        setAttr("firmanavn", "placeholder", EN_STRINGS["firmanavn-placeholder"]);
+        setAttr("orgnr", "placeholder", EN_STRINGS["orgnr-placeholder"]);
+        setAttr("kontaktperson", "placeholder", EN_STRINGS["kontaktperson-placeholder"]);
+        setAttr("epost", "placeholder", EN_STRINGS["epost-placeholder"]);
+        setAttr("telefon", "placeholder", EN_STRINGS["telefon-placeholder"]);
+        setAttr("domene", "placeholder", EN_STRINGS["domene-placeholder"]);
+        setAttr("kommentar", "placeholder", EN_STRINGS["kommentar-placeholder"]);
+
+        // Critical: remove the 9-digit Norwegian org.nr constraint. Replace
+        // with a free-form text field that accepts EIN, VAT, CRN, etc. up to
+        // 40 chars. The field is no longer required (international SMBs often
+        // skip tax-ID on invoices and supply it on request).
+        var orgnrInputEl = document.getElementById("orgnr");
+        if (orgnrInputEl) {
+          orgnrInputEl.removeAttribute("required");
+          orgnrInputEl.removeAttribute("pattern");
+          orgnrInputEl.removeAttribute("inputmode");
+          orgnrInputEl.maxLength = 40;
+          orgnrInputEl.type = "text";
+        }
+      }
 
       // Pre-fill pakke from ?slug=, with alias matching for slugs that don't
       // map 1:1 to dropdown values. Stripe cancel_url writes the slug used at
@@ -344,12 +742,43 @@
         // to the vertikalpakke option, and the original raw slug is preserved
         // in referrer_slug for admin attribution. "handlingsplan" is the
         // internal name for the Analyse tier — alias both.
+        //
+        // "outreach" alias added 2026-05-30: cold-outreach reports use
+        // slugs like "outreach-<8charhash>" (no tier substring). When the
+        // prospect bails at Stripe and clicks the recovery banner's
+        // "Få faktura i stedet" link, they land here without an explicit
+        // ?pakke= override (only report-baked direct CTAs include it).
+        // /api/handlingsplan-checkout sells priser-analyse exclusively, so
+        // outreach-* → priser-analyse is the deterministic mapping. Before
+        // this alias, the dropdown stayed blank and the buyer had to
+        // re-pick what they'd already chosen at Stripe — friction in the
+        // recovery path. Test: faktura-slug-to-pakke.test.ts.
         if (!match) {
           var aliases = [
-            ["fundament", "priser-fundament"],
-            ["lopende", "priser-lopende"],
-            ["analyse", "priser-analyse"],
-            ["handlingsplan", "priser-analyse"],
+            // Flagship first: a compound slug like
+            // "tjenester-aeo-for-saas-bedrifter-sitert" must resolve to the
+            // tier, not to the vertical package that also appears in it.
+            ["sitert", "priser-sitert"],
+            ["citation", "priser-sitert"],
+            // 2026-08-12: these seven used to point at priser-analyse /
+            // -fundament / -lopende. Those tiers were retired 2026-08-08 and
+            // removed from the <select> above, which silently broke every
+            // legacy recovery link: the resolver still "matched", then found
+            // no such option and left the dropdown BLANK — reintroducing the
+            // exact friction the outreach alias was added to remove in the
+            // first place. They now land on the live flagship, whose price is
+            // visible in the option label the buyer sees before submitting.
+            // Their original slug is preserved in referrer_slug, so admin
+            // attribution still shows which dead tier they came from.
+            ["fundament", "priser-sitert"],
+            ["foundation", "priser-sitert"],
+            ["lopende", "priser-sitert"],
+            ["continuous", "priser-sitert"],
+            ["lite", "priser-lite"],
+            ["analyse", "priser-sitert"],
+            ["analysis", "priser-sitert"],
+            ["handlingsplan", "priser-sitert"],
+            ["outreach", "priser-sitert"],
             ["eiendomsmeglere", "aeo-for-eiendomsmeglere"],
             ["kiropraktor", "aeo-for-kiropraktor"],
             ["advokater", "aeo-for-advokater"],
@@ -368,35 +797,478 @@
         }
       }
 
+      // Explicit ?pakke= URL param. Wins over slug-alias matching above.
+      // Used by report-baked faktura CTAs which carry the attribution slug
+      // (outreach-<hash>, doesn't contain a tier substring) AND the tier the
+      // report was sized for (priser-analyse for Handlingsplan reports).
+      var pakkeParam = (params.get("pakke") || "").toLowerCase().trim();
+      if (pakkeParam) {
+        var selEl = document.getElementById("pakke");
+        for (var k = 0; k < selEl.options.length; k++) {
+          if (selEl.options[k].value === pakkeParam) { selEl.selectedIndex = k; break; }
+        }
+      }
+
+      // ──────────────────────────────────────────────────────────────────────
+      // Order summary banner — confirms what the buyer is ordering, with
+      // price, at the top of the form. Reactive to dropdown changes.
+      //
+      // Why: pre-fill alone (firmanavn/orgnr/email/kontaktperson/domene)
+      // leaves the buyer staring at a 7-field form with no visible
+      // confirmation of what they're paying. The pakke selection is buried
+      // in a dropdown — the buyer has to scan it to verify scope + price.
+      // The banner makes the answer to "what am I buying for how much?"
+      // immediate and unambiguous, so the form feels like a confirmation
+      // step rather than data entry from scratch.
+      //
+      // Source of truth for labels + prices: PACKAGES in
+      // /workspace/synlig-worker/faktura-handler.ts. Mirrored here to keep
+      // the client banner identical to the server-side admin/buyer emails.
+      // ──────────────────────────────────────────────────────────────────────
+      var PACKAGE_DISPLAY = {
+        "priser-lite":             { label: "Synlig Lite — FAQPage AEO",   price: "990 kr eks. mva (engangsbetaling)", sla: "Leveranse 1 virkedag etter signert faktura: FAQPage JSON-LD for én side du velger, levert på e-post klar til innliming i <head> eller via tag-manager." },
+        "priser-sitert":           { label: "Sitert-pakken",               price: "9 900 kr eks. mva (engangs)", sla: "Tre steg: (1) nullpunktsmåling — fem kjøpsnære spørsmål fra ditt marked, ni byte-identiske kjøringer, navn på hvem som siteres i stedet. (2) Endringene skrevet ferdig for inntil ti sider — JSON-LD, sitatvennlige spørsmål og svar, llms.txt og AI-crawler-regler, klare til innliming eller som pull request. (3) Ny måling 30 dager etter at dere har publisert, før/etter i ett dokument med rådata. Utfallskriterium: minst én sitering av deres domene i etterkjøringene — innfris det ikke, kjører vi én runde til uten ny faktura." },
+        // Utgått 2026-08-08. Nøklene blir stående fordi gamle lenker og
+        // recovery-slugger fortsatt peker hit; de står IKKE i <select>.
+        "priser-analyse":          { label: "Utgått pakke", price: "Utgått produkt — vi svarer med sitert-måling, 9 900 kr eks. mva", sla: "Vi kontakter deg før faktura sendes." },
+        "priser-fundament":        { label: "Utgått pakke", price: "Utgått produkt — vi svarer med sitert-måling, 9 900 kr eks. mva", sla: "Vi kontakter deg før faktura sendes." },
+        "priser-lopende":          { label: "Utgått pakke", price: "Utgått produkt — vi svarer med sitert-måling, 9 900 kr eks. mva", sla: "Vi kontakter deg før faktura sendes." },
+        "aeo-for-advokater":       { label: "AEO for advokater",           price: "Pris avtales skriftlig før faktura — omfang bestemmer prisen", sla: "Leveranse innen 2–4 uker etter signert faktura." },
+        "aeo-for-saas-bedrifter":  { label: "AEO for B2B SaaS",            price: "Pris avtales skriftlig før faktura — omfang bestemmer prisen", sla: "Leveranse innen 2–4 uker etter signert faktura." },
+        "aeo-for-tannleger":       { label: "AEO for tannleger",           price: "Pris avtales skriftlig før faktura — omfang bestemmer prisen", sla: "Leveranse innen 2–4 uker etter signert faktura." },
+        "aeo-for-eiendomsmeglere": { label: "AEO for eiendomsmeglere",     price: "Pris avtales skriftlig før faktura — omfang bestemmer prisen", sla: "Leveranse innen 2–4 uker etter signert faktura." },
+        "aeo-for-kiropraktor":     { label: "AEO for kiropraktor",         price: "Pris avtales skriftlig før faktura — omfang bestemmer prisen", sla: "Leveranse innen 2–4 uker etter signert faktura." },
+        "aeo-for-regnskap":        { label: "AEO for regnskap",            price: "Pris avtales skriftlig før faktura — omfang bestemmer prisen", sla: "Leveranse innen 2–4 uker etter signert faktura." }
+      };
+
+      var summaryEl = document.getElementById("order-summary");
+      var summaryLabelEl = document.getElementById("order-summary-label");
+      var summaryPriceEl = document.getElementById("order-summary-price");
+      var summaryMetaEl = document.getElementById("order-summary-meta");
+      var pakkeSelect = document.getElementById("pakke");
+
+      function renderOrderSummary() {
+        if (!summaryEl || !pakkeSelect) return;
+        var current = pakkeSelect.value;
+        // English-locale buyers see USD-denominated copy from EN_PACKAGE_DISPLAY;
+        // Norwegian buyers see the original NOK source-of-truth. Fallback to NO
+        // if a vertikal-package slug isn't in EN dict (currently EN covers all).
+        var dict = (lang === "en") ? EN_PACKAGE_DISPLAY : PACKAGE_DISPLAY;
+        var info = current ? dict[current] : null;
+        if (!info && current && lang === "en") info = PACKAGE_DISPLAY[current];
+        if (!info) {
+          summaryEl.hidden = true;
+          return;
+        }
+        if (lang === "en") {
+          summaryLabelEl.textContent = EN_PACKAGE_DISPLAY._orderingLabel + info.label + ". ";
+          summaryPriceEl.textContent = info.price + ".";
+          summaryMetaEl.textContent = info.sla + EN_PACKAGE_DISPLAY._paymentNote;
+        } else {
+          summaryLabelEl.textContent = "Du bestiller: " + info.label + ". ";
+          summaryPriceEl.textContent = info.price + ".";
+          summaryMetaEl.textContent = info.sla + " Du betaler først etter signert faktura — 14 dagers betalingsfrist.";
+        }
+        summaryEl.hidden = false;
+      }
+
+      renderOrderSummary();
+      if (pakkeSelect) {
+        pakkeSelect.addEventListener("change", renderOrderSummary);
+      }
+
       // Pre-fill e-post from ?email= (banner-recovery flow may pass it).
       // Validated as basic email shape before write to avoid garbage input.
       var emailParam = (params.get("email") || "").trim();
+      var prefilledEmail = "";
       if (emailParam && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailParam) && emailParam.length <= 254) {
         var epostInput = document.getElementById("epost");
         if (epostInput && !epostInput.value) epostInput.value = emailParam;
+        prefilledEmail = emailParam.toLowerCase();
       }
+
+      // Pre-fill domene from ?domene= (the /bevis/agent-readiness CTA passes
+      // the scanned URL — e.g. ?domene=https%3A%2F%2Fcarma.no). Sanitize to
+      // a bare hostname (strip protocol, path, trailing slash, leading www.)
+      // so it matches the field's "uten https://" hint and Brreg's
+      // hjemmeside-filter exact-match. Invalid input is silently dropped.
+      function sanitizeDomainParam(raw) {
+        if (!raw) return "";
+        var s = String(raw).trim().toLowerCase();
+        s = s.replace(/^https?:\/\//, "");
+        s = s.replace(/^www\./, "");
+        var slash = s.indexOf("/"); if (slash !== -1) s = s.slice(0, slash);
+        var qmark = s.indexOf("?"); if (qmark !== -1) s = s.slice(0, qmark);
+        var hash = s.indexOf("#"); if (hash !== -1) s = s.slice(0, hash);
+        s = s.split(":")[0]; // strip :port
+        if (s.length === 0 || s.length > 253) return "";
+        if (s.indexOf(".") === -1) return "";
+        if (!/^[a-z0-9.\-]+$/.test(s)) return "";
+        return s;
+      }
+      var prefilledDomain = sanitizeDomainParam(params.get("domene"));
 
       // Stamp client-side timestamp
       document.getElementById("timestamp").value = new Date().toISOString();
 
-      // Client-side validation + submit UX
+      // ──────────────────────────────────────────────────────────────────────
+      // Brreg autocomplete — friction-removal for firmanavn + orgnr.
+      //
+      // Why: 2026-05-25 Avo CEO clicked the report's "Få faktura" CTA at 15:14
+      // but never submitted the form. With pakke + epost auto-filled, the
+      // remaining manual fields were firmanavn, orgnr, kontaktperson, domene.
+      // The 9-digit orgnr is the most likely abandon trigger — CEOs don't
+      // memorize it, and looking it up on Brreg.no breaks the flow.
+      //
+      // Two-mode UX:
+      //   1. As the user types firmanavn, debounced 220ms fetch to
+      //      /api/brreg-search?q=<typed>. Dropdown shows name + orgnr + city.
+      //      Click or Enter → fills both fields, hides dropdown.
+      //   2. On page load with ?email=, derive the email domain and call
+      //      /api/brreg-search?domain=<host>. If exactly one match comes back,
+      //      auto-pre-fill firmanavn + orgnr (with a "Hentet automatisk" badge
+      //      so the user knows where it came from). User can still edit.
+      //
+      // Also derives kontaktperson + domene from the prospect email when known:
+      //   kontaktperson: split local-part on . / _, title-case each token
+      //   domene: the email's domain (e.g. avoconsulting.no)
+      // ──────────────────────────────────────────────────────────────────────
+
+      var firmanavnInput = document.getElementById("firmanavn");
+      var orgnrInput = document.getElementById("orgnr");
+      var kontaktpersonInput = document.getElementById("kontaktperson");
+      var domeneInput = document.getElementById("domene");
+      var dropdown = document.getElementById("brreg-dropdown");
+      var firmanavnBadge = document.getElementById("firmanavn-prefilled");
+      var orgnrBadge = document.getElementById("orgnr-prefilled");
+
+      function titleCaseSegment(s) {
+        // Per-segment title-case. Handles small connectors (de, von, etc.)
+        // conservatively — most Norwegian names are 1–3 words with no special
+        // casing, so a uniform title-case is the right default.
+        if (!s) return "";
+        return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+      }
+
+      function deriveKontaktpersonFromEmail(email) {
+        // local-part-only humanization. Drops anything after + (Gmail aliases),
+        // splits on . / _, filters out short numeric tokens.
+        var local = (email.split("@")[0] || "").split("+")[0];
+        if (!local) return "";
+        var parts = local.split(/[._\-]+/).filter(function(p) {
+          if (!p) return false;
+          if (/^\d+$/.test(p)) return false; // skip pure numbers like jane.doe.123
+          if (p.length < 2) return false;     // skip single chars
+          return true;
+        });
+        if (parts.length === 0) return "";
+        return parts.map(titleCaseSegment).join(" ");
+      }
+
+      function deriveDomeneFromEmail(email) {
+        var host = (email.split("@")[1] || "").toLowerCase().trim();
+        if (!host || host.indexOf(".") === -1) return "";
+        return host;
+      }
+
+      // Pre-fill kontaktperson + domene. URL ?domene= wins (explicit intent
+      // from /bevis/agent-readiness — buyer scanned a specific URL); email
+      // derivation is fallback when no URL param. Kontaktperson is
+      // email-derived only (no URL-param equivalent today).
+      if (prefilledEmail && kontaktpersonInput && !kontaktpersonInput.value) {
+        var derivedName = deriveKontaktpersonFromEmail(prefilledEmail);
+        if (derivedName) kontaktpersonInput.value = derivedName;
+      }
+      if (domeneInput && !domeneInput.value) {
+        var resolvedDomain = prefilledDomain ||
+          (prefilledEmail ? deriveDomeneFromEmail(prefilledEmail) : "");
+        if (resolvedDomain) domeneInput.value = resolvedDomain;
+      }
+
+      // Lazy fallback cache — when domain-lookup returns 0 (most NO SMBs do
+      // not register hjemmeside in Brreg: tested 2026-05-27, 4 of 6 sample
+      // domains returned 0 even with the www-variant fanout). Stash
+      // name-derived suggestions here; the firmanavn focus handler renders
+      // them as a dropdown on first focus without typing. No surprise UI on
+      // page load.
+      var brregDomainFallback = [];
+      var brregDomainFallbackShown = false;
+
+      function rootFromDomain(domain) {
+        // example: carma.no → "carma", avoconsulting.no → "avoconsulting",
+        // sub.example.co.uk → "sub". Picks the leftmost label that's >2 chars
+        // and not "www". Trade-off: longer roots produce fewer false-positive
+        // name matches; sub-labels for two-part TLDs (.co.uk) are rare in NO.
+        if (!domain) return "";
+        var parts = String(domain).toLowerCase().split(".");
+        for (var i = 0; i < parts.length - 1; i++) {
+          var p = parts[i];
+          if (p && p.length >= 2 && p !== "www") return p;
+        }
+        return "";
+      }
+
+      // Auto-prefill firmanavn + orgnr from Brreg hjemmeside-filter when the
+      // email domain matches exactly one registered enhet. Filter is
+      // substring-on-query (server fans bare ↔ www. variants 2026-05-27), so
+      // a single deduped match is a strong signal. User can still edit. If
+      // zero matches, populate the lazy name-fallback so the firmanavn focus
+      // event can surface suggestions without the user having to type.
+      function autoPrefillFromDomain(domain) {
+        if (!domain) return;
+        var u = "/api/brreg-search?domain=" + encodeURIComponent(domain);
+        fetch(u, { method: "GET", credentials: "omit" })
+          .then(function(r) { return r.ok ? r.json() : { results: [] }; })
+          .then(function(data) {
+            var results = (data && data.results) || [];
+            if (results.length === 1) {
+              var hit = results[0];
+              if (!hit || !hit.navn || !/^[0-9]{9}$/.test(hit.orgnr)) return;
+              if (firmanavnInput && !firmanavnInput.value) {
+                firmanavnInput.value = hit.navn;
+                if (firmanavnBadge) firmanavnBadge.hidden = false;
+              }
+              if (orgnrInput && !orgnrInput.value) {
+                orgnrInput.value = hit.orgnr;
+                if (orgnrBadge) orgnrBadge.hidden = false;
+              }
+              return;
+            }
+            // Multi-match domain (e.g. bouvet.no → BOUVET ASA + BOUVET NORGE
+            // AS, parent + subsidiary sharing the same hjemmeside). Don't
+            // auto-fill — user picks — but surface THESE results on focus.
+            // Stronger signal than fuzzy name-search "bouvet" which returns
+            // BONETE, AREZO BOUVET, etc. mixed with the real candidates.
+            // 2026-06-07 fix surfaced by dogfood walk of Rune Fagermoen
+            // (Bouvet) E4 self-service link before Monday 07:30Z send.
+            if (results.length > 1) {
+              brregDomainFallback = results;
+              return;
+            }
+            // Zero hjemmeside results — try name-search using the domain
+            // root. Ambiguous (5 CARMA AS variants) is acceptable because we
+            // don't auto-fill; the user picks from the dropdown.
+            var root = rootFromDomain(domain);
+            if (!root) return;
+            var nu = "/api/brreg-search?q=" + encodeURIComponent(root);
+            fetch(nu, { method: "GET", credentials: "omit" })
+              .then(function(r) { return r.ok ? r.json() : { results: [] }; })
+              .then(function(d2) {
+                var nameResults = (d2 && d2.results) || [];
+                if (nameResults.length > 0) {
+                  brregDomainFallback = nameResults;
+                }
+              })
+              .catch(function() {});
+          })
+          .catch(function() { /* silent — typed autocomplete still available */ });
+      }
+
+      // Fire Brreg auto-prefill (firmanavn + orgnr) from whichever domain
+      // we resolved. URL ?domene= takes precedence over email-derived.
+      // Skipped when lang=en — Brønnøysund only registers Norwegian
+      // entities, so international prospects would always get 0 results
+      // and the orgnr field is free-form for them (see locale-swap block).
+      var brregDomain = prefilledDomain ||
+        (prefilledEmail ? deriveDomeneFromEmail(prefilledEmail) : "");
+      if (brregDomain && lang !== "en") autoPrefillFromDomain(brregDomain);
+
+      // Live autocomplete dropdown. Debounced 220ms. Abort prior in-flight
+      // request so late responses don't overwrite newer queries.
+      var searchTimer = null;
+      var searchAbort = null;
+      var activeIndex = -1;
+      var currentResults = [];
+
+      function closeDropdown() {
+        dropdown.removeAttribute("data-open");
+        dropdown.innerHTML = "";
+        firmanavnInput.setAttribute("aria-expanded", "false");
+        activeIndex = -1;
+        currentResults = [];
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function renderDropdown(results) {
+        if (!results.length) { closeDropdown(); return; }
+        var html = results.map(function(r, i) {
+          var meta = [r.orgnr, r.sted].filter(Boolean).join(" · ");
+          return '<div class="brreg-option" role="option" data-index="' + i + '" id="brreg-opt-' + i + '">' +
+                 '<div class="brreg-option-name">' + escapeHtml(r.navn) + '</div>' +
+                 '<div class="brreg-option-meta">' + escapeHtml(meta) + '</div>' +
+                 '</div>';
+        }).join("");
+        dropdown.innerHTML = html;
+        dropdown.setAttribute("data-open", "true");
+        firmanavnInput.setAttribute("aria-expanded", "true");
+        activeIndex = -1;
+      }
+
+      function selectResult(index) {
+        if (index < 0 || index >= currentResults.length) return;
+        var r = currentResults[index];
+        if (!r) return;
+        firmanavnInput.value = r.navn;
+        if (orgnrInput) orgnrInput.value = r.orgnr;
+        // Brreg-sourced; mark both fields as auto-filled.
+        if (firmanavnBadge) firmanavnBadge.hidden = false;
+        if (orgnrBadge) orgnrBadge.hidden = false;
+        closeDropdown();
+        // Move focus forward — natural flow goes to kontaktperson next.
+        if (kontaktpersonInput && !kontaktpersonInput.value) {
+          kontaktpersonInput.focus();
+        }
+      }
+
+      function runSearch(q) {
+        if (searchAbort) { try { searchAbort.abort(); } catch (e) {} }
+        searchAbort = (typeof AbortController === "function") ? new AbortController() : null;
+        var url = "/api/brreg-search?q=" + encodeURIComponent(q);
+        fetch(url, {
+          method: "GET",
+          credentials: "omit",
+          signal: searchAbort ? searchAbort.signal : undefined,
+        })
+          .then(function(r) { return r.ok ? r.json() : { results: [] }; })
+          .then(function(data) {
+            var results = (data && data.results) || [];
+            currentResults = results;
+            renderDropdown(results);
+          })
+          .catch(function() { /* aborted or network error — silent */ });
+      }
+
+      // Brreg-backed firmanavn autocomplete is wired only for the Norwegian
+      // locale. For lang=en the Norwegian business registry has no useful
+      // result for international companies; binding the listeners would
+      // cause empty-dropdown flicker on every keystroke and confusing UX.
+      if (firmanavnInput && lang !== "en") {
+        // First-focus fallback — if domain-lookup returned 0 but name-search
+        // found candidates, surface them when the user clicks into firmanavn
+        // (no surprise dropdown on page load). Only renders once: if the
+        // user starts typing, normal autocomplete takes over.
+        firmanavnInput.addEventListener("focus", function() {
+          if (brregDomainFallbackShown) return;
+          if (firmanavnInput.value) return;        // user already has content
+          if (!brregDomainFallback.length) return; // nothing cached
+          brregDomainFallbackShown = true;
+          currentResults = brregDomainFallback;
+          renderDropdown(brregDomainFallback);
+        });
+
+        firmanavnInput.addEventListener("input", function() {
+          // User edited firmanavn — clear the "auto-filled" badge and any
+          // previously-paired orgnr (likely no longer correct).
+          if (firmanavnBadge && !firmanavnBadge.hidden) {
+            firmanavnBadge.hidden = true;
+            if (orgnrBadge && !orgnrBadge.hidden) {
+              orgnrBadge.hidden = true;
+              if (orgnrInput) orgnrInput.value = "";
+            }
+          }
+          var q = firmanavnInput.value.trim();
+          if (searchTimer) clearTimeout(searchTimer);
+          if (q.length < 2) { closeDropdown(); return; }
+          searchTimer = setTimeout(function() { runSearch(q); }, 220);
+        });
+
+        firmanavnInput.addEventListener("keydown", function(e) {
+          if (dropdown.getAttribute("data-open") !== "true") return;
+          var max = currentResults.length;
+          if (max === 0) return;
+          if (e.key === "ArrowDown") {
+            e.preventDefault();
+            activeIndex = (activeIndex + 1) % max;
+            updateActive();
+          } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            activeIndex = (activeIndex - 1 + max) % max;
+            updateActive();
+          } else if (e.key === "Enter") {
+            if (activeIndex >= 0) {
+              e.preventDefault();
+              selectResult(activeIndex);
+            }
+          } else if (e.key === "Escape") {
+            closeDropdown();
+          }
+        });
+
+        firmanavnInput.addEventListener("blur", function() {
+          // Delay close so mousedown on a dropdown option can fire first.
+          setTimeout(closeDropdown, 150);
+        });
+      }
+
+      function updateActive() {
+        var opts = dropdown.querySelectorAll(".brreg-option");
+        for (var i = 0; i < opts.length; i++) {
+          if (i === activeIndex) {
+            opts[i].setAttribute("data-active", "true");
+            firmanavnInput.setAttribute("aria-activedescendant", opts[i].id);
+          } else {
+            opts[i].removeAttribute("data-active");
+          }
+        }
+      }
+
+      // Click handler on dropdown. mousedown not click — click fires after
+      // blur, by which point we've closed the dropdown.
+      // Skipped for lang=en — dropdown is never populated and the listener
+      // is a no-op anyway, but skip the bind to make intent explicit.
+      if (lang !== "en") {
+        dropdown.addEventListener("mousedown", function(e) {
+          var target = e.target;
+          while (target && target !== dropdown && !target.classList.contains("brreg-option")) {
+            target = target.parentNode;
+          }
+          if (target && target.classList && target.classList.contains("brreg-option")) {
+            e.preventDefault();
+            var idx = parseInt(target.getAttribute("data-index"), 10);
+            if (!isNaN(idx)) selectResult(idx);
+          }
+        });
+      }
+
+      // Clear orgnr badge when user types in orgnr (no longer auto-sourced).
+      // Badge is Brreg-specific so no-op for lang=en (the badge element is
+      // hidden and never shown), but the input listener is harmless.
+      if (orgnrInput) {
+        orgnrInput.addEventListener("input", function() {
+          if (orgnrBadge && !orgnrBadge.hidden) orgnrBadge.hidden = true;
+        });
+      }
+
+      // Client-side validation + submit UX. For lang=en the 9-digit orgnr
+      // gate is dropped — international buyers cannot supply a Norwegian
+      // org.nr and the field is optional free-form Tax ID for them. The
+      // server-side faktura-handler still validates the locale-appropriate
+      // fields (firmanavn, kontaktperson, epost, domene).
       var form = document.getElementById("faktura-form");
       var btn = document.getElementById("submit-btn");
       var errorBanner = document.getElementById("error-banner");
-      var orgnrInput = document.getElementById("orgnr");
 
       form.addEventListener("submit", function(e) {
         errorBanner.style.display = "none";
-        // Orgnr validation
-        if (!/^[0-9]{9}$/.test(orgnrInput.value.trim())) {
-          e.preventDefault();
-          errorBanner.textContent = "Organisasjonsnummer må være 9 siffer.";
-          errorBanner.style.display = "block";
-          orgnrInput.focus();
-          return;
+        if (lang !== "en") {
+          // Norwegian path: orgnr is required and must be 9 digits.
+          if (!/^[0-9]{9}$/.test(orgnrInput.value.trim())) {
+            e.preventDefault();
+            errorBanner.textContent = "Organisasjonsnummer må være 9 siffer.";
+            errorBanner.style.display = "block";
+            orgnrInput.focus();
+            return;
+          }
         }
         btn.disabled = true;
-        btn.textContent = "Sender…";
+        btn.textContent = lang === "en" ? "Sending…" : "Sender…";
       });
     })();
   </script>

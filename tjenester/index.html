@@ -19,9 +19,6 @@
   <meta property="og:locale" content="nb_NO">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <script type="application/ld+json">
   {
@@ -39,23 +36,23 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #0a0a0b;
-      --bg-raised: #111113;
-      --border: #222225;
-      --text: #e8e8ed;
-      --text-dim: #9f9faa;
-      --text-muted: #9f9faa;
-      --accent: #6ee7b7;
+      --bg: var(--color-wash);
+      --bg-raised: var(--color-paper);
+      --border: var(--color-line);
+      --text: var(--color-ink);
+      --text-dim: var(--color-muted);
+      --text-muted: var(--color-muted);
+      --accent: var(--color-brand);
     }
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: var(--font-sans);
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
     }
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(10,10,11,0.92); backdrop-filter: blur(12px);
+      background: var(--color-wash); backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 1rem 2rem;
       display: flex; align-items: center; justify-content: space-between;
@@ -69,7 +66,7 @@
     main { max-width: 900px; margin: 5rem auto; padding: 0 2rem 6rem; }
 
     .page-header { margin-bottom: 3rem; }
-    .page-label { font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:0.75rem; }
+    .page-label { font-size:0.8rem;font-weight:700;color:var(--accent);margin-bottom:0.75rem; }
     h1 { font-size:2.2rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:0.75rem; }
     .page-sub { color:var(--text-dim);font-size:1.05rem;max-width:640px; }
 
@@ -94,11 +91,11 @@
     .service-tag {
       font-size: 0.75rem;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      
+      
       color: var(--accent);
-      background: rgba(110,231,183,0.1);
-      border: 1px solid rgba(110,231,183,0.15);
+      background: var(--color-line);
+      border: 1px solid var(--color-line);
       padding: 0.2rem 0.6rem;
       border-radius: 4px;
       align-self: flex-start;
@@ -132,15 +129,15 @@
     .section-title {
       font-size: 0.8rem;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      
+      
       color: var(--text-muted);
       margin: 3rem 0 1.25rem;
     }
 
     .audit-promo {
-      background: linear-gradient(135deg, rgba(110,231,183,0.07) 0%, rgba(96,165,250,0.05) 100%);
-      border: 1px solid rgba(110,231,183,0.25);
+      background: var(--color-line);
+      border: 1px solid var(--color-line);
       border-radius: 12px;
       padding: 2rem 2.25rem;
       margin-bottom: 3rem;
@@ -148,8 +145,8 @@
     .audit-promo__label {
       font-size: 0.75rem;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
+      
+      
       color: var(--accent);
       margin-bottom: 0.5rem;
     }
@@ -238,14 +235,14 @@
 <body>
 
 <nav>
-  <a href="/" class="nav-logo">Synlig</a>
+  <!--SITE-LOGO-->
   <div class="nav-links">
     <a href="/">Hjem</a>
     <a href="/guide">Guide</a>
     <a href="/case/nordic-lithium">Metode-case</a>
     <a href="/tjenester" aria-current="page">Tjenester</a>
     <a href="/blogg">Blogg</a>
-    <a href="mailto:hei@synligdigital.no" style="background:#6ee7b7;color:#0a0a0b;padding:0.4rem 1rem;border-radius:6px;font-weight:600;">Kontakt</a>
+    <a href="mailto:hei@synligdigital.no" style="background:var(--color-brand);color:var(--color-wash);padding:0.4rem 1rem;border-radius:6px;font-weight:600;">Kontakt</a>
   </div>
 </nav>
 
@@ -339,7 +336,7 @@
       <span class="service-cta">Se hva som mangler &rarr;</span>
     </a>
     <a href="/tjenester/digital-markedsforing-stavanger" class="service-card">
-      <span class="service-tag" style="color:#60a5fa;background:rgba(96,165,250,0.1);border-color:rgba(96,165,250,0.15);">Stavanger</span>
+      <span class="service-tag" style="color:var(--color-brand);background:var(--color-line);border-color:var(--color-line);">Stavanger</span>
       <h2 class="service-title">AEO-byrå i Stavanger</h2>
       <p class="service-excerpt">Synlig Digital er et AEO-byrå i Stavanger sentrum (4010) — utelukkende spesialisert på AI-synlighet i ChatGPT, Gemini og Claude.</p>
       <span class="service-cta">Les mer &rarr;</span>

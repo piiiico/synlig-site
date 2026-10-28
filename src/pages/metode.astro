@@ -31,11 +31,14 @@ import Base from "../layouts/Base.astro";
 import { TIERS } from "../../../bin/cross-border-invoice";
 import {
   loadMetodeMeasurements,
+  loadCausalLink,
   numWord,
   numWordCap,
 } from "../../_partials/metode-measurements";
 
 const M = loadMetodeMeasurements();
+/** 2026-09-06 skår-mot-sitering, 124 nettsteder. Kaster ved tynt/vendt datasett. */
+const C = loadCausalLink();
 const heldRows = M.rows.filter((r) => r.held);
 /** Spørsmålet der en kjøring feilet — nevnes eksplisitt, ellers ser Y-en gal ut. */
 const failedRow = M.rows.find((r) => r.runs < M.totalRuns);
@@ -87,7 +90,7 @@ const notClaims = [
   },
   {
     h: "Det er én motor, ikke «AI».",
-    p: "Standardmålingen kjøres mot Perplexity (Sonar) via OpenRouter, fordi den oppgir kildene sine og kan etterprøves. Vi skriver aldri «AI-en siterer dere» når vi mener «denne motoren, disse dagene». Andre motorer kan avtales, men da står det hvilke.",
+    p: "Standardmålingen kjøres mot Perplexity (Sonar) via OpenRouter, fordi den oppgir kildene sine og kan etterprøves. Vi skriver aldri «AI-en siterer dere» når vi mener «denne motoren, disse dagene». Andre motorer kan avtales, men da står det hvilke. Andre måler flere grensesnitt og færre ganger. Vi måler ett, ni ganger. Det er byttet, og det står her fordi dere skal kunne velge det bort.",
   },
   {
     h: "Det er ingen årsaksforklaring og ingen garanti.",
@@ -103,6 +106,10 @@ const faqs = [
   {
     q: "Hvilken AI-motor måler dere mot?",
     a: "Perplexity (Sonar) via OpenRouter i standardmålingen, fordi den oppgir kildene sine slik at påstanden kan etterprøves. Datoer, modellnavn og kjøringstall står i leveransen.",
+  },
+  {
+    q: "Hva er forskjellen på live henting og simulering i måling av AI-synlighet?",
+    a: "Forskjellen er hvor svaret kommer fra. En live henting søker på web i det øyeblikket spørsmålet stilles, og oppgir URL-ene den faktisk brukte — dem kan du åpne og etterprøve selv. En simulering spør en modell uten søk og får tilbake det modellen husker: ingen kilder, ingenting å kontrollere. Vi henter live. Sonar søker på web i det spørsmålet stilles, og oppgir URL-ene den brukte. Vi kjører mot API-et framfor å sitte i en nettleser, men hentingen er den samme — og det er hentingen som avgjør, ikke transporten. Kontrollen vår 8. september 2026: samme spørsmål til en modell uten websøk klarte ikke å svare i det hele tatt, fire av fire, mens Sonar traff en kurs vi hentet uavhengig i samme minutt på 0,02 prosent. Det vi ikke påstår: at tallet er ferskt i sekundet. Samme spørsmål ga samme svar i fire minutter mens kursen flyttet seg, så indeksen ligger noen minutter bak. For siteringsmåling spiller det ingen rolle. For en børskurs hadde det vært en løgn.",
   },
   {
     q: "Kan vi velge spørsmålene selv?",
@@ -315,12 +322,64 @@ const JSONLD = [
             ))
           }
         </div>
-        <p class="source-note mt-8 max-w-3xl">
+        <p class="mt-8 max-w-3xl text-xs leading-relaxed text-muted">
           Tallene over er fra vår egen måling 6.–8. august 2026: fem spørsmål,
           ni byte-identiske kjøringer mot Perplexity (Sonar), og AEO-skår kjørt
           på domenene som eide lenkene. Hele datasettet ligger åpent på <a
             href="/leaderboard#skaar-mot-sitering">leaderboardet</a
           >.
+        </p>
+      </div>
+    </section>
+
+    <section class="about py-20" id="score-vs-sitering">
+      <div class="container-narrow copy">
+        <div class="section-label">Måling mot oss selv</div>
+        <h2 class="mb-6 mt-3 text-3xl font-bold tracking-tight text-ink sm:text-[2.1rem]">
+          Skåren kjøper ikke sitering. Vi har målt det på {C.scoredSites} nettsteder.
+        </h2>
+        <p>
+          En kunde spurte oss i juni hva det konkret gir å løfte skåren fra 76
+          til 90. Vi hadde ikke et tall å svare med. Nå har vi det: {C.panels}
+          {" "}kategoripaneler, {C.scoredSites} nettsteder skåret med nøyaktig det
+          verktøyet som lager rapporten din.
+        </p>
+        <p>
+          Nettstedene motorene faktisk siterte skårer {C.citedMean} av 100 i
+          snitt. De målte merkevarene som ble hoppet over skårer {C.brandMean}.
+          Forskjellen er {C.delta} poeng, med et 95 %-intervall fra {C.ciLo} til
+          {" "}{C.ciHi} — det krysser null. Og de siterte er plukket ut nettopp
+          fordi de ble sitert, altså med tommelen på vår egen vektskål. Selv da
+          holder ikke sammenhengen.
+        </p>
+        <p>
+          Enkeltradene er tydeligere enn snittet. {C.topBrand.brand} skårer{" "}
+          {C.topBrand.score} av 100 (karakter {C.topBrand.grade}) og ble sitert
+          på {C.topBrand.citedQ} av {C.topBrand.totalQ} spørsmål. {C.mostCited.brand}
+          {" "}skårer {C.mostCited.score} ({C.mostCited.grade}) og ble sitert på{" "}
+          {C.mostCited.citedQ}. Og {C.unscorableCited} av nettstedene motorene
+          siterte nekter i det hele tatt å svare verktøyet vårt — de siteres uten
+          at det finnes en skår å vise til.
+        </p>
+        <p>
+          Det ubehageligste tallet er vårt eget. synligdigital.no skårer{" "}
+          {C.selfScore} av 100, høyest i hele datasettet, og blir sitert på{" "}
+          {C.selfCited} av {C.selfQuestions} spørsmål i vår egen kategori. Det er
+          ikke et argument for å droppe lesbarhet. Det er argumentet for å måle
+          siteringen for seg.
+        </p>
+        <p>
+          Derfor står det ikke lenger i rapportene at høyere skår gir flere
+          anbefalinger. Skåren er en lesbarhetstest — den finner det som gjør
+          dere umulig å sitere. Om dere faktisk blir sitert er en annen måling,
+          og det er den vi selger: før, og på nytt 30 dager etter.
+        </p>
+        <p class="mt-8 max-w-3xl text-xs leading-relaxed text-muted">
+          Rådata og utregning: <code>money/aeo/causal-link-test-2026-09-06.json</code>.
+          Målt 6. september 2026 med samme audit-verktøy som rapportene, mot
+          siteringspanelene fra august. {C.attempted - C.scoredSites} av {C.attempted}
+          {" "}nettsteder lot seg ikke score og er talt som uscorbare, ikke som
+          nuller.
         </p>
       </div>
     </section>

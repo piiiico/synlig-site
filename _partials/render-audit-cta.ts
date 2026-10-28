@@ -176,9 +176,9 @@ const MAILTO_TRACKING_SCRIPT = `<script>
 
 const SHARED_STYLE = `<style>
 .audit-cta {
-  background: var(--bg-raised, #111113);
-  border: 1px solid var(--border, #222225);
-  border-left: 3px solid var(--accent, #6ee7b7);
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
   border-radius: 8px;
   padding: 1.5rem 1.75rem;
   margin: 2rem 0;
@@ -186,12 +186,12 @@ const SHARED_STYLE = `<style>
 .audit-cta__headline {
   font-size: 1.15rem;
   font-weight: 700;
-  color: var(--accent, #6ee7b7);
+  color: var(--accent);
   margin-bottom: 0.4rem;
   letter-spacing: -0.01em;
 }
 .audit-cta__sub {
-  color: var(--text-dim, #9f9faa);
+  color: var(--text-dim);
   font-size: 0.95rem;
   margin-bottom: 1rem;
 }
@@ -204,18 +204,18 @@ const SHARED_STYLE = `<style>
   flex: 1 1 200px;
   min-width: 160px;
   padding: 0.55rem 0.9rem;
-  background: var(--bg, #0a0a0b);
-  border: 1px solid var(--border, #222225);
+  background: var(--bg);
+  border: 1px solid var(--border);
   border-radius: 6px;
-  color: var(--text, #e8e8ed);
+  color: var(--text);
   font-size: 0.95rem;
   outline: none;
 }
-.audit-cta__input:focus { border-color: var(--accent, #6ee7b7); }
+.audit-cta__input:focus { border-color: var(--accent); }
 .audit-cta__btn {
   padding: 0.55rem 1.1rem;
-  background: var(--accent, #6ee7b7);
-  color: var(--bg, #0a0a0b);
+  background: var(--accent);
+  color: var(--bg);
   border: none;
   border-radius: 6px;
   font-weight: 700;
@@ -244,14 +244,14 @@ const SHARED_STYLE = `<style>
   text-align: center;
   white-space: normal;
 }
-.audit-cta__btn--link { color: var(--bg, #0a0a0b); }
+.audit-cta__btn--link { color: var(--bg); }
 .audit-cta__btn--secondary {
   background: transparent;
-  color: var(--accent, #6ee7b7);
-  border: 1px solid var(--accent, #6ee7b7);
+  color: var(--accent);
+  border: 1px solid var(--accent);
 }
 .audit-cta__btn--secondary:hover {
-  background: rgba(110, 231, 183, 0.08);
+  background: var(--bg);
   opacity: 1;
 }
 .audit-cta__btn-detail {
@@ -268,7 +268,7 @@ const SHARED_STYLE = `<style>
 }
 .audit-cta__primary-row { margin: 0.5rem 0 0.6rem; }
 .audit-cta__trust {
-  color: var(--text-muted, #9f9faa);
+  color: var(--text-muted);
   font-size: 0.8rem;
   margin-top: 0.6rem;
 }
@@ -276,41 +276,41 @@ const SHARED_STYLE = `<style>
   display: block;
   margin-top: 1rem;
   padding: 0.7rem 0.9rem;
-  border: 1px dashed var(--border, #2a2a30);
+  border: 1px dashed var(--border);
   border-radius: 6px;
-  color: var(--text, #e8e8ed);
+  color: var(--text);
   text-decoration: none;
   font-size: 0.9rem;
   transition: border-color 0.15s, background 0.15s;
 }
 .audit-cta__pricing-link:hover {
-  border-color: var(--accent, #6ee7b7);
-  background: rgba(110, 231, 183, 0.04);
+  border-color: var(--accent);
+  background: var(--bg);
 }
 .audit-cta__pricing-label {
   display: block;
-  color: var(--text-dim, #9f9faa);
+  color: var(--text-dim);
   font-size: 0.82rem;
   margin-bottom: 0.15rem;
 }
 .audit-cta__pricing-anchor {
   display: block;
-  color: var(--accent, #6ee7b7);
+  color: var(--accent);
   font-weight: 600;
   text-decoration: none;
 }
 .audit-cta__pricing-anchor:hover { text-decoration: underline; }
 .audit-cta__pricing-mail {
   display: block;
-  color: var(--text-dim, #9f9faa);
+  color: var(--text-dim);
   font-size: 0.78rem;
   margin-top: 0.35rem;
   text-decoration: none;
 }
-.audit-cta__pricing-mail:hover { color: var(--text, #e8e8ed); text-decoration: underline; }
+.audit-cta__pricing-mail:hover { color: var(--text); text-decoration: underline; }
 .audit-cta__pricing-learn {
   display: block;
-  color: var(--accent, #6ee7b7);
+  color: var(--accent);
   font-size: 0.85rem;
   font-weight: 500;
   margin-top: 0.55rem;
@@ -319,33 +319,33 @@ const SHARED_STYLE = `<style>
   width: fit-content;
 }
 .audit-cta__pricing-learn:hover {
-  border-bottom-color: var(--accent, #6ee7b7);
+  border-bottom-color: var(--accent);
   text-decoration: none;
 }
 .audit-cta__trust--lite-learn { margin-top: 0.45rem; }
 .audit-cta__proof-line {
   font-size: 0.8rem;
-  color: var(--text-dim, #9f9faa);
+  color: var(--text-dim);
   margin: 0.5rem 0 0.6rem;
   line-height: 1.5;
 }
 .audit-cta__proof-link {
-  color: var(--accent, #6ee7b7);
+  color: var(--accent);
   text-decoration: underline;
 }
 .audit-cta__proof-link:hover { opacity: 0.85; }
 .audit-cta__mailto-fallback {
-  color: var(--text-dim, #9f9faa);
+  color: var(--text-dim);
   text-decoration: underline;
 }
-.audit-cta__mailto-fallback:hover { color: var(--text, #e8e8ed); }
+.audit-cta__mailto-fallback:hover { color: var(--text); }
 .audit-cta__secondary {
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px dashed var(--border, #2a2a30);
+  border-top: 1px dashed var(--border);
 }
 .audit-cta__secondary-label {
-  color: var(--text-dim, #9f9faa);
+  color: var(--text-dim);
   font-size: 0.85rem;
   margin-bottom: 0.6rem;
 }
@@ -365,16 +365,16 @@ const SHARED_STYLE = `<style>
 .lead-form-input {
   width: 100%;
   padding: 0.55rem 0.9rem;
-  background: var(--bg, #0a0a0b);
-  border: 1px solid var(--border, #222225);
+  background: var(--bg);
+  border: 1px solid var(--border);
   border-radius: 6px;
-  color: var(--text, #e8e8ed);
+  color: var(--text);
   font-size: 0.95rem;
   font-family: inherit;
   outline: none;
   box-sizing: border-box;
 }
-.lead-form-input:focus { border-color: var(--accent, #6ee7b7); }
+.lead-form-input:focus { border-color: var(--accent); }
 .lead-form .audit-cta__btn { width: 100%; font-family: inherit; }
 </style>`;
 

@@ -8,13 +8,16 @@
 
 import { readdirSync, readFileSync, statSync, existsSync } from "fs";
 import { join, basename, resolve } from "path";
+import { LOGO_HTML, LOGO_CSS } from "./_partials/site-logo";
 import { applyMarkers, MID_MARKER, BOTTOM_MARKER, LEAD_CAPTURE_PATH, CHECKOUT_HREF_PREFIX, MAILTO_PREFIX, LIVE_PRICE_ANCHORS, type Stage } from "./_partials/render-audit-cta";
 import { runFactSourceGate } from "./_partials/fact-source-gate";
 import { runMetodeMeasureGate } from "./_partials/metode-measure-gate";
 import { runEnPriceCorpusGate, faktura_EN_SURFACE, fakturaConfirmation_EN_SURFACE, EN_PRICES } from "./_partials/en-price-gate";
 import { runNamingProofGate } from "./_partials/naming-proof";
-import { checkEnCitedHowTo } from "./_partials/en-cited-howto";
+import { checkEnCitedHowTo, checkVisibleBody } from "./_partials/en-cited-howto";
+import { enSurfaceParity, sitemapParity } from "./_partials/sitemap-parity";
 import { stripHtmlComments, STRIP_KEEP_PREFIXES } from "./_partials/strip-html-comments";
+import { loadSentLog, reportHash } from "../lib/sent-log.ts";
 import { injectLegalIdentity, hasFooter, LEGAL_MARKER, LEGAL, DEAD_POSTAL_CODES } from "./_partials/legal-identity";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -257,6 +260,7 @@ const files = {
   EN_BLOG_AGENTJACKING_AI_TRUST_HTML: await Bun.file("/workspace/synlig-site/en-blog-agentjacking-and-ai-trust.html").text(),
   PIERSTOP_CASE_HTML: await Bun.file("/workspace/synlig-site/dist/case/pierstop/index.html").text(),
   PICO_PAGE_HTML: await Bun.file("/workspace/synlig-site/pico.html").text(),
+  PERSONVERN_HTML: await Bun.file("/workspace/synlig-site/personvern.html").text(),
   AGENT_CARD_JSON: await Bun.file("/workspace/synlig-site/agent-card.json").text(),
   BLOGG_INDEX_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/index.html").text(),
   BLOGG_HVA_ER_AEO_HTML: await applyBlogCta("hva-er-aeo"),
@@ -300,8 +304,13 @@ const files = {
   BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/google-search-profiles-61-prosent-ctr-fall/index.html").text(),
   BLOGG_AEO_LITE_FAQPAGE_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/aeo-lite-faqpage-990-kr/index.html").text(),
   BLOGG_B2B_FINTECH_AGENT_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/b2b-fintech-agent-discoverability/index.html").text(),
+  BLOGG_KI_VANNMERKING_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/ki-vannmerking-norge-artikkel-50/index.html").text(),
+  BLOGG_INSTALLATORREGISTERET_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/installatorregisteret/index.html").text(),
+  BLOGG_INSTALLATORINDEKSEN_2026_09_HTML: await applyBlogCta("installatorindeksen-2026-09"),
+  BLOGG_INSTALLATORINDEKSEN_2026_10_HTML: await applyBlogCta("installatorindeksen-2026-10"),
   LEADERBOARD_HTML: await Bun.file("/workspace/synlig-site/leaderboard.html").text(),
   LEADERBOARD_JSON: await Bun.file("/workspace/synlig-site/leaderboard.json").text(),
+  AEO_BYRA_RAADATA_JSON: await Bun.file("/workspace/synlig-site/data/aeo-byra-norge-raadata-2026-10.json").text(),
   CONTEXT_MD: await Bun.file("/workspace/synlig-site/context.md").text(),
   PRISER_MD: await Bun.file("/workspace/synlig-site/priser.md").text(),
   // Cloudflare Agent Readiness Score — Level 3+ ("Agent-Readable") well-known endpoints.
@@ -318,6 +327,28 @@ const files = {
   // with `openssl rand -hex 16`, updating this file + INDEXNOW_KEY below + scripts/indexnow-ping.ts.
   INDEXNOW_KEY_TXT: await Bun.file("/workspace/synlig-site/22424f96edcdb8ea14002edcd65a6b0c.txt").text(),
 };
+
+// SITE CHROME for static pages (Vegvisning 2026-10-28). A page opts in with the
+// <!--SITE-LOGO--> marker; it then gets THE logo (_partials/site-logo.ts) and the
+// tokens, read from src/styles/global.css @theme — one token file for Astro and
+// static pages alike, so design-gate.ts reads one palette and one logo.
+{
+  const theme = readFileSync("/workspace/synlig-site/src/styles/global.css", "utf-8").match(/@theme\s*\{([\s\S]*?)\n\}/)?.[1] ?? "";
+  const vars = [...theme.matchAll(/(--(?:color|font)-[a-z-]+):\s*([^;]+);/g)].map((m) => `${m[1]}:${m[2].trim()}`);
+  if (vars.length < 10) { console.error(`[BUILD FAIL] site chrome: ${vars.length} tokens parsed from global.css @theme`); process.exit(1); }
+  const faces = [400, 700, 800].map((w) => `@font-face{font-family:"Overpass";src:url("/fonts/overpass/overpass-${w}.woff2") format("woff2");font-weight:${w === 700 ? "500 700" : w};font-display:swap}`).join("");
+  const chrome = `<style>${faces}:root{${vars.join(";")}}body{font-family:var(--font-sans)}${LOGO_CSS}</style>`;
+  let n = 0;
+  for (const bag of [files, verticalFiles] as Record<string, string>[]) {
+    for (const [k, v] of Object.entries(bag)) {
+      if (!v.includes("<!--SITE-LOGO-->")) continue;
+      bag[k] = v.replace(/<!--SITE-LOGO-->/g, LOGO_HTML).replace("</head>", chrome + "</head>");
+      n++;
+    }
+  }
+  if (n < 7) { console.error(`[BUILD FAIL] site chrome: only ${n} static pages carry <!--SITE-LOGO--> (floor 7)`); process.exit(1); }
+  console.log(`  ✅ Site chrome: ${vars.length} tokens + 1 logo injected into ${n} static pages.`);
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // First-party visit beacon — site-wide injection.
@@ -424,6 +455,171 @@ const staticHit = injectBeacon(files as Record<string, string>, (k) => k.endsWit
 // Vertical landings live in their own map — same _HTML naming convention.
 const verticalHit = injectBeacon(verticalFiles, (k) => k.endsWith("_HTML"));
 console.log(`[build] visit-beacon injected into ${staticHit.hit + verticalHit.hit} HTML surface(s) (static=${staticHit.hit}/skip=${staticHit.skip}, vertical=${verticalHit.hit}/skip=${verticalHit.skip}).`);
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EN-FLATEN — ÉN tabell, fire konsumenter.
+//
+// Målt live 2026-08-14 20:10Z: /llms.txt listet 12 stier, ALLE norske, null
+// engelske — mens sitemap.xml kjente 3 av de 5 engelske bloggpostene workeren
+// faktisk serverer, og /en/ ikke lenket til sin egen blogg i det hele tatt.
+// Fire lister over samme sannhet, tre håndholdte, alle gaflet hver sin vei.
+//
+// Hvorfor det koster penger: den engelske flaten selger Sitert til USD 1 100
+// (TIERS i bin/cross-border-invoice.ts) til et marked som ikke er Norge, og
+// llms.txt er fila svarmotorene henter FØRST for å vite hva som er verdt å
+// lese. Vår egen nevnte ikke dollarflaten med ett ord. Samme defektklasse som
+// b8c3fc07c59eb022: en håndholdt liste som gafler fra sannheten.
+//
+// Kollapsen: EN_PAGES er kilden for ruter (+aliaser), llms.txt-seksjonen,
+// sitemap-oppføringene og lenkene fra /en/, så en ny engelsk side ikke KAN
+// mangle i én av dem. Tittel og beskrivelse leses ut av sidens egne bytes —
+// ingen andrehåndstekst å vedlikeholde. lastmod er filas mtime; den håndsatte
+// løy allerede (sitemap sa /en/ endret 2026-05-29, en.html prisrettet 08-14).
+// Legger du en engelsk side i rutetabellen uten en rad her: rød på porten.
+// ─────────────────────────────────────────────────────────────────────────────
+type EnPage = {
+  path: string;        // kanonisk sti — den som havner i llms.txt og sitemap
+  key: string;         // nøkkel i `files` (= const-navnet i den genererte workeren)
+  file: string;        // kildefil, brukt til lastmod (mtime)
+  aliases: string[];   // ruter som serverer samme body, men aldri annonseres
+  changefreq: string;
+  priority: string;
+};
+const EN_PAGES: EnPage[] = [
+  { path: "/en/", key: "EN_HTML", file: "en.html",
+    aliases: ["/en", "/en/index.html", "/en.html"], changefreq: "monthly", priority: "0.9" },
+  { path: "/en/case/nordic-lithium", key: "EN_CASE_NORDIC_LITHIUM_HTML", file: "en-case-nordic-lithium.html",
+    aliases: ["/en/case/nordic-lithium/", "/en/case/nordic-lithium.html"], changefreq: "never", priority: "0.8" },
+  { path: "/en/blog", key: "EN_BLOG_HTML", file: "en-blog.html",
+    aliases: ["/en/blog/", "/en/blog/index.html"], changefreq: "weekly", priority: "0.8" },
+  { path: "/en/blog/llm-smell-check-benchmark", key: "EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML", file: "en-blog-llm-smell-check-benchmark.html",
+    aliases: ["/en/blog/llm-smell-check-benchmark/", "/en/blog/llm-smell-check-benchmark.html"], changefreq: "monthly", priority: "0.9" },
+  { path: "/en/blog/aeo-for-digital-asset-companies", key: "EN_BLOG_AEO_DIGITAL_ASSETS_HTML", file: "en-blog-aeo-digital-assets.html",
+    aliases: ["/en/blog/aeo-for-digital-asset-companies/", "/en/blog/aeo-for-digital-asset-companies.html"], changefreq: "monthly", priority: "0.9" },
+  { path: "/en/blog/aeo-agency-norway", key: "EN_BLOG_AEO_AGENCY_NORWAY_HTML", file: "en-blog-aeo-agency-norway.html",
+    aliases: ["/en/blog/aeo-agency-norway/", "/en/blog/aeo-agency-norway.html"], changefreq: "monthly", priority: "0.9" },
+  { path: "/en/blog/visibility-paradox-b2b-saas", key: "EN_BLOG_VISIBILITY_PARADOX_HTML", file: "en-blog-visibility-paradox.html",
+    aliases: ["/en/blog/visibility-paradox-b2b-saas/", "/en/blog/visibility-paradox-b2b-saas.html"], changefreq: "monthly", priority: "0.9" },
+  { path: "/en/blog/agentjacking-and-ai-trust", key: "EN_BLOG_AGENTJACKING_AI_TRUST_HTML", file: "en-blog-agentjacking-and-ai-trust.html",
+    aliases: ["/en/blog/agentjacking-and-ai-trust/", "/en/blog/agentjacking-and-ai-trust.html"], changefreq: "monthly", priority: "0.9" },
+];
+
+// Gulv: en tom/avkortet tabell gjør ALLE fire konsumentene og porten blinde i
+// stedet for røde. 8 er dagens sannhet, målt mot rutetabellen 2026-08-14.
+if (EN_PAGES.length < 8) {
+  console.error(`\n[BUILD FAIL] EN_PAGES har ${EN_PAGES.length} rader, gulvet er 8.`);
+  console.error(`En krympet tabell fjerner sider fra llms.txt/sitemap/ruter uten å si fra.`);
+  process.exit(1);
+}
+
+const EN_ENTITIES: Array<[RegExp, string]> = [
+  [/&amp;/g, "&"], [/&lt;/g, "<"], [/&gt;/g, ">"], [/&quot;/g, '"'],
+  [/&#0?39;/g, "'"], [/&apos;/g, "'"], [/&nbsp;/g, " "],
+];
+function unescapeHtmlText(s: string): string {
+  let out = s;
+  for (const [re, to] of EN_ENTITIES) out = out.replace(re, to);
+  return out.replace(/\s+/g, " ").trim();
+}
+
+// Tittel og beskrivelse hentes fra sidens EGNE bytes (etter injectBeacon), ikke
+// fra en parallell tekstliste. Mangler én av dem er det byggefeil, ikke "ingen
+// avvik" — en side uten <title>/description er uansett usynlig for svarmotorene.
+function enMeta(p: EnPage): { title: string; desc: string } {
+  const html = (files as Record<string, unknown>)[p.key];
+  if (typeof html !== "string" || html.length < 1000) {
+    console.error(`\n[BUILD FAIL] EN_PAGES: files.${p.key} mangler eller er for kort (${p.path}).`);
+    process.exit(1);
+  }
+  const rawTitle = (html as string).match(/<title>([\s\S]*?)<\/title>/i)?.[1] ?? "";
+  const rawDesc = (html as string).match(/<meta\s+name="description"\s+content="([^"]*)"/i)?.[1] ?? "";
+  // Merkevaresuffikset fjernes bare når det som blir igjen fortsatt sier hva
+  // sida er. /en/blog heter «Notes — Synlig Digital»; strippet blir det «Notes»,
+  // som er ubrukelig i en katalog svarmotorene leser. Gulvet under fanget det.
+  const full = unescapeHtmlText(rawTitle);
+  const stripped = full.replace(/\s*[—·|]\s*Synlig Digital\s*$/, "").trim();
+  const title = stripped.length >= 12 ? stripped : full;
+  const desc = unescapeHtmlText(rawDesc);
+  if (title.length < 10 || desc.length < 40) {
+    console.error(`\n[BUILD FAIL] EN_PAGES: ${p.path} har tittel(${title.length} tegn)/description(${desc.length} tegn) under gulvet.`);
+    console.error(`Kilde: /workspace/synlig-site/${p.file}`);
+    process.exit(1);
+  }
+  return { title, desc };
+}
+
+function enLastmod(file: string): string {
+  return statSync(`/workspace/synlig-site/${file}`).mtime.toISOString().slice(0, 10);
+}
+
+// ── Konsument 1: llms.txt-seksjonen ─────────────────────────────────────────
+const EN_LLMS_SECTION = [
+  "## English pages (priced in USD)",
+  "",
+  "Our English-language surface. Same measurement and method as the Norwegian pages, billed in USD by cross-border invoice. Titles and descriptions below are the pages' own.",
+  "",
+  ...EN_PAGES.map(p => {
+    const { title, desc } = enMeta(p);
+    return `- **${title}:** https://synligdigital.no${p.path} — ${desc}`;
+  }),
+].join("\n");
+
+// ── Konsument 2: sitemap-oppføringene ───────────────────────────────────────
+const EN_SITEMAP_URLS = EN_PAGES.map(p =>
+  `  <url>\n    <loc>https://synligdigital.no${p.path}</loc>\n    <lastmod>${enLastmod(p.file)}</lastmod>\n` +
+  `    <changefreq>${p.changefreq}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>`
+).join("\n");
+
+// ── Konsument 3: rutene i den genererte workeren ────────────────────────────
+const EN_ROUTE_LINES = EN_PAGES.flatMap(p =>
+  [p.path, ...p.aliases].map(r => `  ${JSON.stringify(r)}: { body: ${p.key}, contentType: "text/html; charset=utf-8" },`)
+).join("\n");
+const EN_ROUTE_PATHS = new Set(EN_PAGES.flatMap(p => [p.path, ...p.aliases]));
+
+// ── Konsument 4: lenkene fra /en/ inn i den engelske bloggen ────────────────
+// 2026-08-14: /en/ hadde 0 lenker til /en/blog. Fem engelske poster lå live og
+// var foreldreløse fra sin egen språkrot — en leser (menneske eller agent) som
+// landet på /en/ hadde ingen vei videre inn i det engelske innholdet.
+// Regelen er mekanisk (hele /en/blog-undertreet), ikke et per-rad-flagg, så en
+// ny post dukker opp her av seg selv.
+// To ulike omfang, med vilje: PORTEN krever at /en/ lenker til hele
+// /en/blog-undertreet (indeksen inkludert — den lenken står i ingressteksten,
+// og forsvinner den, skal bygget bli rødt). LISTEN rendrer bare postene, så
+// indeksen ikke står to ganger på samme skjerm.
+const EN_HUB_PAGES = EN_PAGES.filter(p => p.path.startsWith("/en/blog"));
+const EN_HUB_LINKS = EN_HUB_PAGES.filter(p => p.path.startsWith("/en/blog/")).map(p => {
+  const { title, desc } = enMeta(p);
+  const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  const firstSentence = desc.split(/(?<=\.)\s/)[0] ?? desc;
+  // <small>, ikke en egen klasse: /en/ har ingen stil for en «blurb», og en
+  // udefinert klasse er død markup. Nettleseren dempar <small> uten CSS.
+  return `    <li><a href="${p.path}">${esc(title)}</a><br><small>${esc(firstSentence)}</small></li>`;
+}).join("\n");
+
+// ── Injeksjon med ankere. Mangler et anker er det byggefeil: da har noen
+//    hånd-redigert bort koblingen, og alternativet er stille gafling igjen. ──
+const EN_ANCHOR_TXT = "<!-- EN-PAGES: generert fra EN_PAGES i build.ts — ikke hånd-rediger -->";
+function spliceEnAnchor(text: string, anchor: string, replacement: string, where: string): string {
+  if (!text.includes(anchor)) {
+    console.error(`\n[BUILD FAIL] Fant ikke EN-ankeret i ${where}:`);
+    console.error(`  ${anchor}`);
+    console.error(`Ankeret er koblingen til EN_PAGES i build.ts. Uten det gafler flaten seg stille igjen.`);
+    process.exit(1);
+  }
+  return text.split(anchor).join(replacement);
+}
+files.LLMS_TXT = spliceEnAnchor(files.LLMS_TXT, EN_ANCHOR_TXT, EN_LLMS_SECTION, "llms.txt");
+files.SITEMAP_XML = spliceEnAnchor(files.SITEMAP_XML, `  ${EN_ANCHOR_TXT}`, EN_SITEMAP_URLS, "sitemap.xml");
+files.EN_HTML = spliceEnAnchor(files.EN_HTML, `<ul id="en-notes-list"></ul>`,
+  `<ul id="en-notes-list">\n${EN_HUB_LINKS}\n  </ul>`, "en.html");
+
+// Gulv nummer to: en generert seksjon som kollapser til nesten ingenting skal
+// være rød, ikke grønn (08-04-klassen: en tom fetch som ratifiserer påstanden).
+if (EN_LLMS_SECTION.length < 800 || EN_SITEMAP_URLS.length < 600 || EN_HUB_LINKS.length < 300) {
+  console.error(`\n[BUILD FAIL] EN-generering kollapset: llms=${EN_LLMS_SECTION.length}b, sitemap=${EN_SITEMAP_URLS.length}b, hub=${EN_HUB_LINKS.length}b.`);
+  process.exit(1);
+}
+console.log(`[build] EN_PAGES: ${EN_PAGES.length} sider → llms.txt-seksjon (${EN_LLMS_SECTION.length}b), ${EN_PAGES.length} sitemap-URLer, ${EN_ROUTE_PATHS.size} ruter, ${EN_HUB_PAGES.length} hub-lenker på /en/.`);
 
 // ─────────────────────────────────────────────────────────────────────────────
 // JSON-LD PARSE GATE — every <script type="application/ld+json"> on every
@@ -558,15 +754,23 @@ console.log(`[build] visit-beacon injected into ${staticHit.hit + verticalHit.hi
 // Kilde, invariant og begrunnelse: _partials/en-cited-howto.ts.
 // Kjører på files.EN_HTML, altså etter injectBeacon — de bytene kjøperen får.
 // ─────────────────────────────────────────────────────────────────────────────
+// To ARMER, kjørt separat med hvert sitt gulv: maskinlaget (JSON-LD) og laget
+// øynene leser. En fikstur som faller på den enes gulv skal aldri kunne maskere
+// den andre. 2026-08-15: JSON-LD-armen var per konstruksjon blind for den
+// synlige <ul>-en, som solgte «Monthly monitoring … quarterly review» i seks
+// dager etter at maskinlaget var migrert — rett over et kortcheckout.
 {
-  const v = checkEnCitedHowTo(files.EN_HTML, "/en/ (servert)");
+  const v = [
+    ...checkEnCitedHowTo(files.EN_HTML, "/en/ (servert)"),
+    ...checkVisibleBody(files.EN_HTML, "/en/ (servert, synlig kropp)"),
+  ];
   if (v.length > 0) {
-    console.error(`\n[BUILD FAIL] EN-flatens HowTo beskriver ikke produktet vi selger (${v.length} avvik):`);
+    console.error(`\n[BUILD FAIL] EN-flaten beskriver ikke produktet vi selger (${v.length} avvik):`);
     for (const x of v) console.error(`  - ${x}`);
     console.error(`\nPrimærkilde: /workspace/synlig-site/_partials/en-cited-howto.ts`);
     process.exit(1);
   }
-  console.log(`  ✅ EN-produktport: HowTo-noden på /en/ er identisk med _partials/en-cited-howto.ts.`);
+  console.log(`  ✅ EN-produktport: HowTo-noden OG den synlige «How we work»-lista på /en/ avstemt mot _partials/en-cited-howto.ts.`);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -604,23 +808,24 @@ console.log(`[build] visit-beacon injected into ${staticHit.hit + verticalHit.hi
   console.log(`  ✅ Navngivingsport: ${n.claimFiles} bevisflater av ${n.scanned} filer enige med NAMING_PROOF.`);
 }
 
-// Sitemap assertion: every ACTIVE vertical in VERTICAL_LANDINGS must appear in
-// sitemap.xml. Adding a new vertical without updating sitemap.xml fails the
-// build here, not silently at deploy time.
-// Deprecated verticals (`deprecated: true`) must NOT appear in sitemap —
-// they're being de-promoted, kept live only for residual traffic. The check
-// runs both directions so re-adding a deprecated slug to sitemap also fails.
-for (const v of VERTICAL_LANDINGS) {
-  const inSitemap = files.SITEMAP_XML.includes(`/tjenester/${v.slug}`);
-  if (!v.deprecated && !inSitemap) {
-    console.error(`\n[BUILD FAIL] VERTICAL_LANDINGS: slug "${v.slug}" missing from sitemap.xml.`);
-    console.error(`Add https://synligdigital.no/tjenester/${v.slug} to /workspace/synlig-site/sitemap.xml.`);
-    process.exit(1);
-  }
-  if (v.deprecated && inSitemap) {
-    console.error(`\n[BUILD FAIL] VERTICAL_LANDINGS: deprecated slug "${v.slug}" is still in sitemap.xml.`);
-    console.error(`Remove the <url> entry for https://synligdigital.no/tjenester/${v.slug} from sitemap.xml.`);
-    console.error(`(Deprecated verticals stay live for residual traffic but must not be promoted to search engines.)`);
+// Sitemap-paritet for verticals — begge veier: en aktiv slug MÅ stå der, en
+// deprecated slug må IKKE (de holdes live for resttrafikk, ikke for søk).
+// Delt implementasjon: _partials/sitemap-parity.ts (samme port som blogg og EN).
+{
+  const v = sitemapParity({
+    label: "VERTICAL_LANDINGS",
+    sitemap: files.SITEMAP_XML,
+    entries: VERTICAL_LANDINGS.map(x => ({
+      url: `https://synligdigital.no/tjenester/${x.slug}`,
+      listed: !x.deprecated,
+      name: x.slug,
+    })),
+    minEntries: 8,
+  });
+  if (v.length > 0) {
+    console.error(`\n[BUILD FAIL] VERTICAL_LANDINGS sitemap-paritet (${v.length} avvik):`);
+    for (const x of v) console.error(`  - ${x}`);
+    console.error(`\nRett <url>-oppføringene i /workspace/synlig-site/sitemap.xml, eller flytt raden i VERTICAL_LANDINGS.`);
     process.exit(1);
   }
 }
@@ -682,6 +887,10 @@ const blogFileMap: Record<string, string> = {
   "google-search-profiles-61-prosent-ctr-fall.html": files.BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML,
   "aeo-lite-faqpage-990-kr.html": files.BLOGG_AEO_LITE_FAQPAGE_HTML,
   "b2b-fintech-agent-discoverability.html": files.BLOGG_B2B_FINTECH_AGENT_HTML,
+  "ki-vannmerking-norge-artikkel-50.html": files.BLOGG_KI_VANNMERKING_HTML,
+  "installatorregisteret.html": files.BLOGG_INSTALLATORREGISTERET_HTML,
+  "installatorindeksen-2026-09.html": files.BLOGG_INSTALLATORINDEKSEN_2026_09_HTML,
+  "installatorindeksen-2026-10.html": files.BLOGG_INSTALLATORINDEKSEN_2026_10_HTML,
 };
 // Self-check the gate's own vocabulary before trusting it. If a price is
 // renamed in render-audit-cta.ts and LIVE_PRICE_ANCHORS is not updated, every
@@ -745,20 +954,23 @@ if (ctaViolations.length > 0) {
 // Source of truth: blogFileMap above (published posts loaded into the worker).
 // If a slug is in blogFileMap, it's live and must be in sitemap.xml.
 // ─────────────────────────────────────────────────────────────────────────────
-const sitemapViolations: string[] = [];
-for (const fname of Object.keys(blogFileMap)) {
-  const slug = fname.replace(/\.html$/, "");
-  const expectedLoc = `https://synligdigital.no/blogg/${slug}`;
-  if (!files.SITEMAP_XML.includes(expectedLoc)) {
-    sitemapViolations.push(`  blogg/${fname}: ${expectedLoc} missing from sitemap.xml`);
+{
+  const sitemapViolations = sitemapParity({
+    label: "blogg",
+    sitemap: files.SITEMAP_XML,
+    entries: Object.keys(blogFileMap).map(fname => ({
+      url: `https://synligdigital.no/blogg/${fname.replace(/\.html$/, "")}`,
+      name: `blogg/${fname}`,
+    })),
+    minEntries: 30,
+  });
+  if (sitemapViolations.length > 0) {
+    console.error(`\n[BUILD FAIL] sitemap-parity violations (published posts not in sitemap.xml):`);
+    for (const x of sitemapViolations) console.error(`  - ${x}`);
+    console.error(`\nAdd <url> entries for each to /workspace/synlig-site/sitemap.xml.`);
+    console.error(`Crawlers using sitemap discovery (Bing, ChatGPT-bot, PerplexityBot) skip orphan URLs.`);
+    process.exit(1);
   }
-}
-if (sitemapViolations.length > 0) {
-  console.error(`\n[BUILD FAIL] sitemap-parity violations (published posts not in sitemap.xml):`);
-  console.error(sitemapViolations.join("\n"));
-  console.error(`\nAdd <url> entries for each to /workspace/synlig-site/sitemap.xml.`);
-  console.error(`Crawlers using sitemap discovery (Bing, ChatGPT-bot, PerplexityBot) skip orphan URLs.`);
-  process.exit(1);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1058,6 +1270,39 @@ const TIER_SURFACE_REGISTRY: Record<string, TierSurface> = {
       // can't be hardcoded because the set changes with every outreach send.
     ],
   },
+  // 2026-09-09 — SAME discoverability vacuum, one product line over, and this
+  // gate's own error text already names it. Installatørregisteret (29 000 kr
+  // fastpris + 5 900 kr/mnd, næringskode 43.210) is a LIVE standing offer:
+  // five letters went out 2026-09-07 and kill-date d52456bfb2573b24 (2026-09-20)
+  // reads whether that channel answers. Measured on the live surfaces 2026-09-08
+  // and re-measured 2026-09-09: synligdigital.no/ carried 0 hits of "installat",
+  // "konkurs", "43.210" or "registeret"; llms.txt named exactly one blog URL and
+  // it was not this one; context.md named zero blog paths. The letters carry NO
+  // URL by design (80-word gate), so the recipient's real path is to type the
+  // domain — where she found an AEO agency and nothing about konkursdata. A
+  // silent 09-20 would then be measuring an unreachable page, not absent demand:
+  // the honesty instrument for the verdict is the thing being fixed here.
+  //
+  // The needle is the PATH, not a price. Prices move inside a live branch — this
+  // one already went 4 900 → 5 900 when the dead-tier gate stopped the build —
+  // while /blogg/installatorregisteret is quoted verbatim in five sent reply
+  // payloads and in the branch row, so it is the invariant.
+  installatorregisteret: {
+    needle: "/blogg/installatorregisteret",
+    surfaces: [
+      // Domain root, as the ARTIFACT that ships (dist/), not src/ — same reason
+      // as the lite tier above: only dist/ proves the link survived the build.
+      "/workspace/synlig-site/dist/index.html",
+      // The two catalogues an assistant fetches for "what does Synlig have?".
+      // Deliberately NOT the agent-skills catalogue: that one is the AEO
+      // implementation service, and this is risikodata, not AEO.
+      "/workspace/synlig-site/llms.txt",
+      "/workspace/synlig-site/context.md",
+      // /pico: what someone who just got a letter signed "Pico, Synlig Digital"
+      // searches for. Its FAQPage JSON-LD is the string an assistant quotes.
+      "/workspace/synlig-site/pico.html",
+    ],
+  },
 };
 
 // Dynamic registry extension: any /r/<hash>.html report referenced by an
@@ -1069,19 +1314,19 @@ const TIER_SURFACE_REGISTRY: Record<string, TierSurface> = {
 // `/priser` will also be required to appear on every actively-referenced
 // prospect report — closing the static-report blind-spot.
 function dynamicReportSurfaces(): string[] {
-  const SENT_EMAILS = "/workspace/money/aeo/sent-emails.jsonl";
+  // Canonical send log via reportHash(), not money/aeo via a report_url-only
+  // regex. Measured 2026-09-04: that pairing saw 10 of the 40 report links we
+  // have actually mailed — the other 30 were logged as reportUrl / audit_url /
+  // report / hash, in the file this never opened. A tier-launch gate inspecting
+  // a quarter of the sent prospects is false-clean by construction: the exact
+  // failure its own comment above describes, one field-name drift later.
   const slugs = new Set<string>();
-  let text = "";
-  try { text = readFileSync(SENT_EMAILS, "utf-8"); } catch { return []; }
-  for (const line of text.split("\n")) {
-    if (!line.trim()) continue;
-    try {
-      const obj = JSON.parse(line) as Record<string, unknown>;
-      const url = typeof obj.report_url === "string" ? obj.report_url : "";
-      const m = /\/r\/([a-z0-9]+)\b/i.exec(url);
-      if (m) slugs.add(m[1].toLowerCase());
-    } catch {}
-  }
+  try {
+    for (const r of loadSentLog()) {
+      const h = reportHash(r);
+      if (h && /^[a-z0-9]+$/.test(h)) slugs.add(h);
+    }
+  } catch { return []; }
   return [...slugs].map(s => `/workspace/synlig-site/reports/${s}.html`);
 }
 const dynamicReports = dynamicReportSurfaces();
@@ -1103,14 +1348,11 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
         );
         continue;
       }
-      // Match either single or double quotes around the value, since some
-      // surfaces (button.name carrier on case pages) use button[name="tier"
-      // value="lite"] while others use input[type=hidden] — both forms POST
-      // tier=lite. The needle is the canonical form; relax for button form.
-      const matched =
-        text.includes(spec.needle) ||
-        text.includes(spec.needle.replace(`name="tier" value=`, `name="tier" value=`));
-      if (!matched) {
+      // 2026-09-09: the second arm was `spec.needle.replace(X, X)` — a no-op that
+      // read like a quote-form relaxation and relaxed nothing. Deleted rather
+      // than fixed: every surface in the registry passes on the canonical form,
+      // so the promised tolerance was never load-bearing, only reassuring.
+      if (!text.includes(spec.needle)) {
         tierViolations.push(
           `tier="${tier}" missing from surface: ${path}\n      needle: ${spec.needle}`
         );
@@ -1168,6 +1410,22 @@ const DEAD_TIER_PATTERNS: Array<[RegExp, string]> = [
   // rule above — every paraphrase so far printed the NOK number beside it —
   // so this rule lists only forms we have actually published, no invented ranges.
   [/\b(USD|EUR)[  ]?(460|420|1,?400)\b|€[  ]?420\b/, "Foundation/Analysis foreign-currency paraphrase — discontinued 2026-08-08"],
+  // 2026-08-21 — FOURTH escape of the same class: the machine layer (JSON-LD
+  // SchemaOrg Offer) emits bare digits with no separator at all: "price":"14900"
+  // and "price":"4900". Every human-readable form above (thin space, comma,
+  // period) missed this, because the gate learned how WE write numbers, not how
+  // the serialiser writes them. Root: a gate that only knows human-readable forms
+  // is blind to the surface an answer engine actually reads. Cost: afc859e
+  // re-introduced "price":"14900" on 2026-08-14; it persisted 7 days, during
+  // which we had to correct an accepted HiBot honorar derived from that number.
+  // These patterns have no separator requirements so they match the machine form
+  // AND any bare-digit prose occurrence (e.g. "14900 kr" without thin space).
+  // ⚠ /\b4900\b/: false-positive sweep required before each deploy — run
+  // DEAD_TIER_PATTERNS over all gated dirs and read every hit individually.
+  // Known-safe: 4900 does not appear as a year (1900–2099 range), CSS px
+  // (trailing letter breaks the \b), or hash fragment (%hex) in this corpus.
+  [/\b14900\b/, "Fundament 14900 (bare digit / JSON-LD form) — discontinued 2026-08-08"],
+  [/\b4900\b/, "Analyse/Handlingsplan 4900 (bare digit / JSON-LD form) — discontinued 2026-08-08"],
   // The tier NAMES, not just their prices: "full Analysis in 5" sold the dead
   // tier in the EN report template for five days without printing any number.
   [/full Analysis\b|\(Foundation\b/, "discontinued tier named in prose (Analysis/Foundation)"],
@@ -1207,6 +1465,18 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
     // false-CLEAN by construction — same class as a guard that passes on absent
     // input. When adding a pricing surface, add it here in the same commit.
     "/workspace/synlig-site/reports",
+    // 2026-09-09: FIFTH escape of this class, and the scope-claim above is why.
+    // Every gated path was a SUBDIRECTORY, so the 15 live HTML pages served
+    // straight off the site root — /pico, /priser, /guide, /leaderboard, the
+    // English mirrors — sat outside every pricing gate for the gate's whole
+    // life. Measured today: pico.html had quoted "4 900 NOK" since the tier was
+    // retired 2026-08-08, in its FAQPage JSON-LD (the string answer engines
+    // quote back verbatim) AND in the visible answer beneath it. That is the
+    // page someone lands on when she searches the name in an AI-signed cold
+    // letter's signature. The gate scanned five directories and printed
+    // all-clear for 32 days. readdirSync is non-recursive, so this adds exactly
+    // the root-level pages and nothing else.
+    "/workspace/synlig-site",
   ];
   // Minimum expected files per dir. `catch {}` below turns a renamed or deleted
   // directory into a silent zero-file scan and the gate would still print
@@ -1214,6 +1484,8 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
   // fact-source gate hit the same day. Floors are the count at the time of the
   // fase-3 port minus nothing: these dirs only grow.
   const PRICING_DIR_FLOOR: Record<string, number> = {
+    // Root: 15 root-level HTML files measured 2026-09-09.
+    "/workspace/synlig-site": 15,
     "/workspace/synlig-site/src/content/blogg": 36,
     "/workspace/synlig-site/src/content/case": 3,
     "/workspace/synlig-site/tjenester": 11,
@@ -1295,6 +1567,10 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
     // is the surface where a dead price costs the most: a prospect who was
     // emailed this exact page clicking a checkout for a product we retired.
     "/workspace/synlig-site/reports",
+    // Root is BAN, not RATCHET: measured 0 offenders on 2026-09-09 after the
+    // pico.html correction, and a ratchet over a clean directory only looks
+    // strict — it hands a future session silent slots to fill.
+    "/workspace/synlig-site",
   ]);
   // Baseline measured 2026-08-12 with the same patterns, after the Astro sweep.
   // Lower it when a legacy dir is cleaned; never raise it.
@@ -1684,15 +1960,13 @@ const OG_SOK_FRAG_PNG_B64 = Buffer.from(sokFragOgPngBytes).toString("base64");
 const ogPngBytes = await Bun.file("/workspace/synlig-site/og.png").arrayBuffer();
 const OG_PNG_B64 = Buffer.from(ogPngBytes).toString("base64");
 
-// Self-hosted DM Sans (fase 2 redesign, 2026-08-08). The old page pulled Inter
-// from fonts.googleapis.com in the critical render path — two extra handshakes
-// before first paint, on a page whose entire product claim is that machines can
-// read it fast. Weights: 400 body, 500 UI, 700 headings. Served with immutable
-// 1-year cache (filenames are content-stable; a weight swap gets a new name).
-const FONT_FILES = ["DMSans-Regular", "DMSans-Medium", "DMSans-Bold"] as const;
+// Self-hosted Overpass (Vegvisning, 2026-10-28; replaced DM Sans) — the
+// typeface of road-sign lettering. Weights 400 body, 700 UI, 800 headings.
+// Immutable 1-year cache: a weight swap gets a new filename.
+const FONT_FILES = ["overpass-400", "overpass-700", "overpass-800"] as const;
 const FONTS_B64: Record<string, string> = {};
 for (const name of FONT_FILES) {
-  const p = `/workspace/synlig-site/public/fonts/dm-sans/${name}.ttf`;
+  const p = `/workspace/synlig-site/public/fonts/overpass/${name}.woff2`;
   const bytes = await Bun.file(p).arrayBuffer();
   if (bytes.byteLength < 10_000) {
     console.error(`\n[BUILD FAIL] font ${p} is ${bytes.byteLength} bytes — truncated or missing.`);
@@ -1963,6 +2237,8 @@ const PIERSTOP_CASE_HTML = \`${escape(files.PIERSTOP_CASE_HTML)}\`;
 
 const PICO_PAGE_HTML = \`${escape(files.PICO_PAGE_HTML)}\`;
 
+const PERSONVERN_HTML = \`${escape(files.PERSONVERN_HTML)}\`;
+
 const AGENT_CARD_JSON = \`${escape(files.AGENT_CARD_JSON)}\`;
 
 const BLOGG_INDEX_HTML = \`${escape(files.BLOGG_INDEX_HTML)}\`;
@@ -2049,9 +2325,17 @@ const BLOGG_AEO_LITE_FAQPAGE_HTML = \`${escape(files.BLOGG_AEO_LITE_FAQPAGE_HTML
 
 const BLOGG_B2B_FINTECH_AGENT_HTML = \`${escape(files.BLOGG_B2B_FINTECH_AGENT_HTML)}\`;
 
+const BLOGG_KI_VANNMERKING_HTML = \`${escape(files.BLOGG_KI_VANNMERKING_HTML)}\`;
+
+const BLOGG_INSTALLATORREGISTERET_HTML = \`${escape(files.BLOGG_INSTALLATORREGISTERET_HTML)}\`;
+
+const BLOGG_INSTALLATORINDEKSEN_2026_09_HTML = \`${escape(files.BLOGG_INSTALLATORINDEKSEN_2026_09_HTML)}\`;
+const BLOGG_INSTALLATORINDEKSEN_2026_10_HTML = \`${escape(files.BLOGG_INSTALLATORINDEKSEN_2026_10_HTML)}\`;
+
 const LEADERBOARD_HTML = \`${escape(files.LEADERBOARD_HTML)}\`;
 
 const LEADERBOARD_JSON = \`${escape(files.LEADERBOARD_JSON)}\`;
+const AEO_BYRA_RAADATA_JSON = \`${escape(files.AEO_BYRA_RAADATA_JSON)}\`;
 
 const CONTEXT_MD = \`${escape(files.CONTEXT_MD)}\`;
 
@@ -2109,10 +2393,7 @@ const routes = {
   "/metode": { body: METODE_HTML, contentType: "text/html; charset=utf-8" },
   "/metode/": { body: METODE_HTML, contentType: "text/html; charset=utf-8" },
   "/metode.html": { body: METODE_HTML, contentType: "text/html; charset=utf-8" },
-  "/en": { body: EN_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/": { body: EN_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/index.html": { body: EN_HTML, contentType: "text/html; charset=utf-8" },
-  "/en.html": { body: EN_HTML, contentType: "text/html; charset=utf-8" },
+${EN_ROUTE_LINES}
   "/priser": { body: PRISER_HTML, contentType: "text/html; charset=utf-8" },
   "/priser/": { body: PRISER_HTML, contentType: "text/html; charset=utf-8" },
   "/priser.html": { body: PRISER_HTML, contentType: "text/html; charset=utf-8" },
@@ -2133,32 +2414,14 @@ const routes = {
   "/analyse/komplett-aeo.html": { body: KOMPLETT_AEO_HTML, contentType: "text/html; charset=utf-8" },
   "/case/nordic-lithium": { body: NORDIC_LITHIUM_CASE_HTML, contentType: "text/html; charset=utf-8" },
   "/case/nordic-lithium.html": { body: NORDIC_LITHIUM_CASE_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/case/nordic-lithium": { body: EN_CASE_NORDIC_LITHIUM_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/case/nordic-lithium/": { body: EN_CASE_NORDIC_LITHIUM_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/case/nordic-lithium.html": { body: EN_CASE_NORDIC_LITHIUM_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog": { body: EN_BLOG_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/": { body: EN_BLOG_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/index.html": { body: EN_BLOG_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/llm-smell-check-benchmark": { body: EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/llm-smell-check-benchmark/": { body: EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/llm-smell-check-benchmark.html": { body: EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/aeo-for-digital-asset-companies": { body: EN_BLOG_AEO_DIGITAL_ASSETS_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/aeo-for-digital-asset-companies/": { body: EN_BLOG_AEO_DIGITAL_ASSETS_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/aeo-for-digital-asset-companies.html": { body: EN_BLOG_AEO_DIGITAL_ASSETS_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/aeo-agency-norway": { body: EN_BLOG_AEO_AGENCY_NORWAY_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/aeo-agency-norway/": { body: EN_BLOG_AEO_AGENCY_NORWAY_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/aeo-agency-norway.html": { body: EN_BLOG_AEO_AGENCY_NORWAY_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/visibility-paradox-b2b-saas": { body: EN_BLOG_VISIBILITY_PARADOX_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/visibility-paradox-b2b-saas/": { body: EN_BLOG_VISIBILITY_PARADOX_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/visibility-paradox-b2b-saas.html": { body: EN_BLOG_VISIBILITY_PARADOX_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/agentjacking-and-ai-trust": { body: EN_BLOG_AGENTJACKING_AI_TRUST_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/agentjacking-and-ai-trust/": { body: EN_BLOG_AGENTJACKING_AI_TRUST_HTML, contentType: "text/html; charset=utf-8" },
-  "/en/blog/agentjacking-and-ai-trust.html": { body: EN_BLOG_AGENTJACKING_AI_TRUST_HTML, contentType: "text/html; charset=utf-8" },
   "/case/pierstop": { body: PIERSTOP_CASE_HTML, contentType: "text/html; charset=utf-8" },
   "/case/pierstop.html": { body: PIERSTOP_CASE_HTML, contentType: "text/html; charset=utf-8" },
   "/pico": { body: PICO_PAGE_HTML, contentType: "text/html; charset=utf-8" },
   "/pico/": { body: PICO_PAGE_HTML, contentType: "text/html; charset=utf-8" },
   "/pico.html": { body: PICO_PAGE_HTML, contentType: "text/html; charset=utf-8" },
+  "/personvern": { body: PERSONVERN_HTML, contentType: "text/html; charset=utf-8" },
+  "/personvern/": { body: PERSONVERN_HTML, contentType: "text/html; charset=utf-8" },
+  "/personvern.html": { body: PERSONVERN_HTML, contentType: "text/html; charset=utf-8" },
   "/.well-known/agent-card.json": { body: AGENT_CARD_JSON, contentType: "application/json; charset=utf-8" },
   "/.well-known/agent.json": { body: AGENT_CARD_JSON, contentType: "application/json; charset=utf-8" },
   "/blogg": { body: BLOGG_INDEX_HTML, contentType: "text/html; charset=utf-8" },
@@ -2251,10 +2514,19 @@ ${verticalRoutes}
   "/blogg/aeo-lite-faqpage-990-kr.html": { body: BLOGG_AEO_LITE_FAQPAGE_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/b2b-fintech-agent-discoverability": { body: BLOGG_B2B_FINTECH_AGENT_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/b2b-fintech-agent-discoverability.html": { body: BLOGG_B2B_FINTECH_AGENT_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/ki-vannmerking-norge-artikkel-50": { body: BLOGG_KI_VANNMERKING_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/ki-vannmerking-norge-artikkel-50.html": { body: BLOGG_KI_VANNMERKING_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/installatorregisteret": { body: BLOGG_INSTALLATORREGISTERET_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/installatorregisteret.html": { body: BLOGG_INSTALLATORREGISTERET_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/installatorindeksen-2026-09": { body: BLOGG_INSTALLATORINDEKSEN_2026_09_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/installatorindeksen-2026-09.html": { body: BLOGG_INSTALLATORINDEKSEN_2026_09_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/installatorindeksen-2026-10": { body: BLOGG_INSTALLATORINDEKSEN_2026_10_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/installatorindeksen-2026-10.html": { body: BLOGG_INSTALLATORINDEKSEN_2026_10_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard/": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard.html": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard.json": { body: LEADERBOARD_JSON, contentType: "application/json; charset=utf-8" },
+  "/data/aeo-byra-norge-raadata-2026-10.json": { body: AEO_BYRA_RAADATA_JSON, contentType: "application/json; charset=utf-8" },
   "/context.md": { body: CONTEXT_MD, contentType: "text/markdown; charset=utf-8" },
   "/priser.md": { body: PRISER_MD, contentType: "text/markdown; charset=utf-8" },
   // Agent-readiness well-known endpoints (Cloudflare Agent Readiness Score Level 3+).
@@ -2494,19 +2766,17 @@ export default {
     // rasters by URL for far longer, so a same-path swap leaves the dead headline
     // in every future share preview. Bump the date suffix whenever the image
     // content changes. /og.png stays served for links already in the wild.
-    // Self-hosted DM Sans. The front page declares @font-face against these
-    // exact paths; a 404 here degrades silently to a fallback font, which is
-    // the kind of regression nobody files a bug for — so deploy.ts gates them
-    // as live routes.
-    if (pathname.startsWith("/fonts/dm-sans/")) {
-      const key = pathname.slice("/fonts/dm-sans/".length).replace(/\\.ttf$/, "");
+    // Self-hosted Overpass. global.css declares @font-face against these exact
+    // paths; a 404 degrades silently to a fallback, so deploy.ts gates them live.
+    if (pathname.startsWith("/fonts/overpass/")) {
+      const key = pathname.slice("/fonts/overpass/".length).replace(/\\.woff2$/, "");
       const b64 = FONTS_B64[key];
       if (b64) {
         const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
         return new Response(bytes, {
           status: 200,
           headers: {
-            "Content-Type": "font/ttf",
+            "Content-Type": "font/woff2",
             "Cache-Control": "public, max-age=31536000, immutable",
             "Access-Control-Allow-Origin": "*",
             ...SECURITY_HEADERS,
@@ -2879,6 +3149,77 @@ export default {
       });
     }
 
+    // /about — trust-anchor for is-agentic/agent scanners. Serves METODE_HTML
+    // directly (200 OK) rather than redirecting, because agent scanners typically
+    // do not follow 301s when checking trust-anchor pages. Canonical stays on
+    // /metode so SEO duplicate is handled. The content answers "who are Synlig
+    // Digital, how do they work?" — exactly what /about is expected to answer.
+    if (pathname === "/about" || pathname === "/about/") {
+      return new Response(METODE_HTML, {
+        status: 200,
+        headers: { "Content-Type": "text/html; charset=utf-8", ...SECURITY_HEADERS, ...CACHE_HEADERS },
+      });
+    }
+
+    // /privacy — English trust-anchor. Serves PERSONVERN_HTML directly (200 OK)
+    // rather than redirecting, same reason as /about above. Canonical in
+    // personvern.html points to /personvern — the Norwegian canonical URL.
+    if (pathname === "/privacy" || pathname === "/privacy/") {
+      return new Response(PERSONVERN_HTML, {
+        status: 200,
+        headers: { "Content-Type": "text/html; charset=utf-8", ...SECURITY_HEADERS, ...CACHE_HEADERS },
+      });
+    }
+
+    // /mcp — same-origin proxy to the remote MCP server.
+    // WHY: is-agentic scans the domain for MCP at the domain level (/mcp), not
+    // at the manifest's remote URL. The remote at aeo-mcp-server.amdal-dev.workers.dev
+    // requires Accept: application/json, text/event-stream (MCP spec §4.2.1) and
+    // returns 406 when a client sends only Accept: application/json — breaking any
+    // scanner or client that doesn't include text/event-stream in its Accept header.
+    // A same-origin proxy fixes both: (1) scanners find MCP at the domain, (2) the
+    // proxy adds the required Accept header transparently. Measured: remote returns
+    // 200 with correct Accept, 406 with json-only Accept (2026-08-24).
+    if (pathname === "/mcp" || pathname === "/mcp/") {
+      const remote = "https://aeo-mcp-server.amdal-dev.workers.dev/mcp";
+      const proxyHeaders = new Headers(request.headers);
+      // Ensure both content types are in Accept — required by MCP streamable-HTTP spec.
+      const accept = proxyHeaders.get("Accept") || "";
+      if (!accept.includes("text/event-stream")) {
+        proxyHeaders.set("Accept", accept ? accept + ", text/event-stream" : "application/json, text/event-stream");
+      }
+      proxyHeaders.set("X-Forwarded-For", request.headers.get("CF-Connecting-IP") || "");
+      try {
+        const upstream = await fetch(remote, {
+          method: request.method,
+          headers: proxyHeaders,
+          body: request.method !== "GET" && request.method !== "HEAD" ? request.body : undefined,
+        });
+        const responseHeaders = new Headers(upstream.headers);
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
+        return new Response(upstream.body, {
+          status: upstream.status,
+          headers: responseHeaders,
+        });
+      } catch (err) {
+        return new Response(JSON.stringify({ error: "MCP upstream unavailable", detail: String(err) }), {
+          status: 502,
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+    }
+    // MCP OPTIONS preflight for the same-origin proxy.
+    if (request.method === "OPTIONS" && pathname === "/mcp") {
+      return new Response(null, {
+        status: 204,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Accept, Mcp-Session-Id",
+        },
+      });
+    }
+
     // AEO Report hosting: GET /r/{hash}
     if (pathname.startsWith("/r/")) {
       const hash = pathname.slice(3); // Remove /r/
@@ -2988,16 +3329,72 @@ export default {
       });
     }
 
-    return new Response("Not Found", {
+    // Agent-friendly 404: a short markdown body pointing to discovery documents.
+    // Plain "Not Found" body is 9 bytes with no navigation — an agent hitting a
+    // dead URL has no way to find the sitemap or llms.txt. A markdown body with
+    // links gives crawlers a recovery path in one hop. Content-Type text/plain
+    // is kept so existing link-checkers that expect text don't break.
+    const not_found_body = \`# 404 Not Found
+
+This page does not exist on synligdigital.no.
+
+## Discovery documents
+
+- Site map: https://synligdigital.no/sitemap.xml
+- Agent context: https://synligdigital.no/llms.txt
+- Markdown context: https://synligdigital.no/context.md
+- Home page: https://synligdigital.no/
+- Privacy: https://synligdigital.no/personvern
+\`;
+    return new Response(not_found_body, {
       status: 404,
       headers: {
-        "Content-Type": "text/plain; charset=utf-8",
+        // text/markdown so agent scanners (is-agentic etc.) detect the body as markdown.
+        // text/plain would also work but markdown content-type signals richer structure.
+        "Content-Type": "text/markdown; charset=utf-8",
         ...SECURITY_HEADERS,
       },
     });
   },
 };
 `;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EN-PARITETSPORT — leser den GENERERTE workeren, ikke kildefilene.
+//
+// Ett spørsmål: serverer vi en engelsk side som ikke står i llms.txt eller
+// sitemap? Defekten var usynlig fordi hver liste var grønn mot seg selv — bare
+// rutetabellen visste sannheten. Derfor måles alt mot `worker` (bytene som
+// deployes), ikke mot filene på disk: en port som leser kilden sertifiserer
+// noe ingen serverer. Samme grunn som EN-prisporten kjører etter injectBeacon.
+//
+// Negativ test: BUILD_GATE_NEGATIVE_TEST (som søsterportene).
+// ─────────────────────────────────────────────────────────────────────────────
+if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
+  // Implementasjonen ligger i _partials/sitemap-parity.ts — den ENESTE grunnen
+  // er testbarhet: de tre søsterportene på EN-flaten har testfil, denne hadde
+  // ingen, og det var nettopp den som bevislig var falsk-grønn (includes() på en
+  // URL som er prefiks av alle de andre). Nå kjører den samme kode som
+  // vertical- og bloggporten, og armene er pinnet i sitemap-parity.test.ts.
+  const v = enSurfaceParity({
+    worker,
+    llms: files.LLMS_TXT,
+    sitemap: files.SITEMAP_XML,
+    enBody: files.EN_HTML,
+    pages: EN_PAGES,
+  });
+
+  if (v.length > 0) {
+    console.error(`\n[BUILD FAIL] EN-paritetsport (${v.length} avvik):`);
+    for (const x of v) console.error(`  - ${x}`);
+    console.error(`\nKilde: EN_PAGES i /workspace/synlig-site/build.ts. Én rad der driver ruter,`);
+    console.error(`llms.txt, sitemap.xml og lenkene på /en/. Den engelske flaten er den som`);
+    console.error(`selger Sitert til USD 1 100 — står den ikke i llms.txt, finnes den ikke for`);
+    console.error(`svarmotorene vi tar betalt for å bli sitert i.`);
+    process.exit(1);
+  }
+  console.log(`  ✅ EN-paritetsport: ${EN_PAGES.length} engelske sider i ruter + llms.txt + sitemap, ${EN_HUB_PAGES.length} lenket fra /en/ (${EN_ROUTE_PATHS.size} ruter avstemt mot workeren).`);
+}
 
 await Bun.write("/workspace/synlig-worker/worker.ts", worker);
 console.log("Worker generated successfully");

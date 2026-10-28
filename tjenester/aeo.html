@@ -23,9 +23,6 @@
   <meta name="twitter:description" content="AEO-byrå for norske bedrifter. Gratis sjekk, faste priser fra 990 NOK.">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <script type="application/ld+json">
   {
@@ -64,7 +61,7 @@
         {"@type": "City", "name": "Trondheim"},
         {"@type": "City", "name": "Sandnes"}
       ],
-      "priceRange": "990–14900 NOK",
+      "priceRange": "990–9900 NOK",
       "knowsAbout": [
         "Answer Engine Optimization",
         "AEO",
@@ -111,32 +108,10 @@
         },
         {
           "@type": "Offer",
-          "name": "AI-synlighetsanalyse",
-          "description": "Full audit av bedriftens AI-synlighet. Skriftlig rapport med score, tekniske funn og prioriterte tiltak. Levering innen 5 virkedager.",
-          "price": "4900",
+          "name": "Sitert-pakken",
+          "description": "Nullpunktsmåling på fem kjøpsnære spørsmål i ni byte-identiske kjøringer, endringene skrevet ferdig for inntil ti sider (JSON-LD, sitatvennlige spørsmål og svar, llms.txt og AI-crawler-regler), og ny måling 30 dager etter publisering. Skriftlig utfallskriterium: minst én sitering av deres domene i etterkjøringene, ellers én ny runde uten ny faktura.",
+          "price": "9900",
           "priceCurrency": "NOK",
-          "url": "https://synligdigital.no/priser"
-        },
-        {
-          "@type": "Offer",
-          "name": "AEO-implementeringspakke (Fundament)",
-          "description": "Full implementering av AEO: schema.org-markup, Google Business Profile, aggregatorregistrering og AI-tilpasset innhold.",
-          "price": "14900",
-          "priceCurrency": "NOK",
-          "url": "https://synligdigital.no/priser"
-        },
-        {
-          "@type": "Offer",
-          "name": "Løpende AI-synlighetsovervåking",
-          "description": "Månedlig rapport på AI-sitering, justering av schema og innhold, og konkurranseovervåking.",
-          "price": "4900",
-          "priceCurrency": "NOK",
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "billingDuration": "P1M",
-            "price": "4900",
-            "priceCurrency": "NOK"
-          },
           "url": "https://synligdigital.no/priser"
         }
       ]
@@ -232,23 +207,23 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #0a0a0b;
-      --bg-raised: #111113;
-      --border: #222225;
-      --text: #e8e8ed;
-      --text-dim: #9f9faa;
-      --text-muted: #9f9faa;
-      --accent: #6ee7b7;
+      --bg: var(--color-wash);
+      --bg-raised: var(--color-paper);
+      --border: var(--color-line);
+      --text: var(--color-ink);
+      --text-dim: var(--color-muted);
+      --text-muted: var(--color-muted);
+      --accent: var(--color-brand);
     }
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: var(--font-sans);
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
     }
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(10,10,11,0.92); backdrop-filter: blur(12px);
+      background: var(--color-wash); backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 1rem 2rem;
       display: flex; align-items: center; justify-content: space-between;
@@ -270,8 +245,8 @@
       display: inline-block;
       font-size: 0.75rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      
+      
       color: var(--accent);
       margin-bottom: 1.25rem;
     }
@@ -338,8 +313,8 @@
     .price-card .link { font-size: 0.8rem; color: var(--accent); margin-top: 0.6rem; text-decoration: none; font-weight: 600; }
     .price-card .link:hover { text-decoration: underline; }
     .audit-promo {
-      background: linear-gradient(135deg, rgba(110,231,183,0.08) 0%, rgba(96,165,250,0.05) 100%);
-      border: 1px solid rgba(110,231,183,0.25);
+      background: var(--color-line);
+      border: 1px solid var(--color-line);
       border-radius: 12px;
       padding: 2rem 2.25rem;
       margin: 2.5rem 0 3rem;
@@ -347,8 +322,8 @@
     .audit-promo__label {
       font-size: 0.75rem;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
+      
+      
       color: var(--accent);
       margin-bottom: 0.5rem;
     }
@@ -396,8 +371,8 @@
     .faq-q { font-weight: 600; margin-bottom: 0.75rem; color: var(--text); }
     .faq-a { color: var(--text-dim); font-size: 0.95rem; }
     .cta-box {
-      background: linear-gradient(135deg, rgba(110,231,183,0.08), rgba(110,231,183,0.02));
-      border: 1px solid rgba(110,231,183,0.2);
+      background: var(--color-line);
+      border: 1px solid var(--color-line);
       border-radius: 12px;
       padding: 2rem;
       text-align: center;
@@ -407,7 +382,7 @@
     .btn {
       display: inline-block;
       background: var(--accent);
-      color: #0a0a0b;
+      color: var(--color-wash);
       font-weight: 700;
       font-size: 0.92rem;
       padding: 0.75rem 1.75rem;
@@ -434,7 +409,7 @@
       transition: border-color 0.15s;
     }
     .related a:hover { border-color: var(--accent); }
-    .related .related-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 700; margin-bottom: 0.3rem; }
+    .related .related-label { font-size: 0.7rem;   color: var(--accent); font-weight: 700; margin-bottom: 0.3rem; }
     footer {
       border-top: 1px solid var(--border);
       padding: 2rem;
@@ -449,14 +424,14 @@
 <body>
 
 <nav>
-  <a href="/" class="nav-logo">Synlig Digital</a>
+  <!--SITE-LOGO-->
   <div class="nav-links">
     <a href="/">Hjem</a>
     <a href="/guide">Guide</a>
     <a href="/tjenester" aria-current="page">Tjenester</a>
     <a href="/priser">Priser</a>
     <a href="/blogg">Blogg</a>
-    <a href="https://sjekk.synligdigital.no" style="background:#6ee7b7;color:#0a0a0b;padding:0.4rem 1rem;border-radius:6px;font-weight:600;">Gratis sjekk</a>
+    <a href="https://sjekk.synligdigital.no" style="background:var(--color-brand);color:var(--color-wash);padding:0.4rem 1rem;border-radius:6px;font-weight:600;">Gratis sjekk</a>
   </div>
 </nav>
 

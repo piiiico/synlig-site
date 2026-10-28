@@ -15,7 +15,7 @@
 import Base from "../layouts/Base.astro";
 import { HOMEPAGE_JSONLD } from "../data/homepage-jsonld";
 import { getCollection } from "astro:content";
-import { ENGINE_HEADLINE, ENGINE_ROWS, ENGINE_PANEL, ENGINE_CAVEAT } from "../../_partials/naming-proof";
+import { ENGINE_HEADLINE, ENGINE_ROWS, ENGINE_PANEL, ENGINE_CAVEAT, ENGINE_SIGN } from "../../_partials/naming-proof";
 
 /**
  * Forsidens blogg-kort DERIVERES fra samlingens frontmatter — de sto håndskrevet
@@ -126,19 +126,15 @@ const faqs = [
   jsonLd={HOMEPAGE_JSONLD}
 >
   <main id="main-content">
-    <!-- Hero. To kolonner fra lg: venstre = tilbudet, høyre = et UTDRAG AV
-         LEVERANSEN. Fram til 2026-08-09 var heroen ren tekst: den beskrev en
-         måling ingen fikk se før de betalte. Panelet til høyre er ekte data
-         fra vår egen måling (kilde i frontmatter), inkludert spørsmålet vi
-         taper — det er det eneste som skiller oss fra et byrå som påstår. -->
-    <section class="hero border-b border-line py-20 sm:py-28">
-      <div class="container grid items-start gap-12 lg:grid-cols-[minmax(0,1fr)_26rem]">
+    <!-- Hero (Vegvisning 2026-10-28). Venstre = tilbudet, høyre = skiltet: ekte
+         målte rader fra motorpanelet (_partials/naming-proof.ts), inkludert
+         spørsmålene vi taper. -->
+    <section class="hero py-12 sm:py-16">
+      <div class="container grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
        <div>
-        <div class="hero-badge">Sitert-pakken for merkevarer</div>
-        <h1
-          class="mt-6 max-w-3xl text-4xl font-bold leading-[1.1] tracking-tight text-ink sm:text-6xl"
-        >
-          Blir merkevaren din <span class="text-brand-ink">sitert</span> når AI svarer?
+        <p class="hero-badge">Sitert-pakken for merkevarer</p>
+        <h1 class="mt-4 text-4xl font-extrabold leading-[1.05] text-ink sm:text-[52px]">
+          Blir merkevaren din sitert når AI svarer?
         </h1>
         <p class="hero-sub">
           En AEO-score sier hva siden din har på plass. Den sier ikke om
@@ -159,51 +155,53 @@ const faqs = [
             class="hero-tool-link">gratis AEO-sjekk av forsiden →</a
           >
         </p>
-        <!-- Bevisstripe: motorpanelet, avledet fra rådata (_partials/naming-proof.ts).
-             Perplexity 28/28 (14.8.2026) lever videre som historisk rad på
-             /tjenester#navngitt, aldri som overskrift. -->
-        <div class="hero-proof">
-          <svg
-            class="hero-proof-check"
-            aria-hidden="true"
-            viewBox="0 0 20 20"
-            width="18"
-            height="18"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            ><polyline points="4 10 8 14 16 6"></polyline></svg
-          >
+        <p class="hero-proof">
           <span>{ENGINE_HEADLINE}</span>
           <a href="/tjenester#navngitt">Spørsmålene og forbeholdet →</a>
-        </div>
+        </p>
        </div>
 
-        <aside class="measure-panel" aria-label="Motorpanelet målt på oss selv">
-          <div class="measure-head">
-            <div class="measure-title">Målt på oss selv</div>
-            <p class="measure-meta">
-              {ENGINE_PANEL.measuredAt} · {ENGINE_PANEL.engines.map((e) => e.name).join(", ")} · navngitt i x av {ENGINE_PANEL.runs} kjøringer
-            </p>
-          </div>
-          <ul class="measure-rows">
+        <aside class="sign" aria-label="Motorpanelet målt på oss selv">
+          <div>
+            <p class="sign-q">«{ENGINE_SIGN.q}»</p>
             {
-              ENGINE_ROWS.map((r) => (
-                <li class={r.counts.some((c) => c.n === 0) ? "measure-row is-miss" : "measure-row"}>
-                  <span class="measure-q">«{r.q}»</span>
-                  <span class="measure-verdict">
-                    {r.counts.map((c) => `${c.name.replace("OpenAIs ", "")} ${c.n}/${c.of}`).join(" · ")}
+              ENGINE_SIGN.engines.map((e) => (
+                <div class="sign-row">
+                  <span class="sign-e">{e.name}</span>
+                  <span class="sign-d">
+                    {e.hosts.map((h) => <span class={h === "synligdigital.no" ? "us" : undefined}>{h}</span>)}
                   </span>
-                </li>
+                  <span class="sign-n">{e.n}/{e.of}</span>
+                </div>
               ))
             }
-          </ul>
-          <p class="measure-foot">
-            Vi publiserer spørsmålene vi taper. {ENGINE_CAVEAT}
-          </p>
+            <p class="tag">Målt {ENGINE_PANEL.measuredAt} kl. {ENGINE_SIGN.window} · via API med websøk · de seks første kildene i kjøring 1</p>
+          </div>
         </aside>
+      </div>
+    </section>
+
+    <section class="container" aria-label="Alle spørsmålene i motorpanelet">
+      <div class="board">
+        <h2>Alle {ENGINE_PANEL.questions} spørsmål, målt på oss selv</h2>
+        <div class="overflow-x-auto">
+          <table>
+            <thead>
+              <tr><th>Spørsmål</th>{ENGINE_PANEL.engines.map((e) => <th class="c">{e.name.replace("OpenAIs ", "")}</th>)}</tr>
+            </thead>
+            <tbody>
+              {
+                ENGINE_ROWS.map((r) => (
+                  <tr>
+                    <td>{r.q}</td>
+                    {r.counts.map((c) => <td class={c.n === 0 ? "c z" : "c"}>{c.n}/{c.of}</td>)}
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-4 text-base text-muted">Navngitt i x av {ENGINE_PANEL.runs} kjøringer. Vi publiserer spørsmålene vi taper. {ENGINE_CAVEAT}</p>
       </div>
     </section>
 
@@ -272,16 +270,16 @@ const faqs = [
             <h2 class="text-3xl font-bold tracking-tight sm:text-[2.1rem]">
               Hva er Answer Engine Optimization?
             </h2>
-            <p class="mt-5 text-lg leading-relaxed text-paper/75">
+            <p class="mt-5 text-lg leading-relaxed text-paper">
               AEO handler om å optimalisere bedriftens digitale tilstedeværelse
               slik at AI-assistenter kan finne, forstå og anbefale dere.
             </p>
-            <p class="mt-4 text-lg leading-relaxed text-paper/75">
+            <p class="mt-4 text-lg leading-relaxed text-paper">
               Det betyr riktig schema-markup, optimalisert Google Business
               Profile, innhold som svarer på reelle spørsmål, og anmeldelser som
               AI kan sitere.
             </p>
-            <p class="mt-4 text-lg leading-relaxed text-paper/75">
+            <p class="mt-4 text-lg leading-relaxed text-paper">
               Tradisjonell SEO handler om å rangere på side 1. AEO handler om å
               være det ene svaret AI gir.
             </p>
