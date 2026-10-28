@@ -22,9 +22,6 @@
   <meta name="twitter:title" content="AEO for tannleger — Bli svaret i ChatGPT">
   <meta name="twitter:description" content="Fem norske tannklinikker auditert. Snitt 50/100. Ingen hadde MedicalBusiness-schema.">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <script type="application/ld+json">
   {
@@ -102,62 +99,41 @@
   </script>
 
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
-      --bg: #0a0a0b;
-      --bg-raised: #111113;
-      --border: #222225;
-      --text: #e8e8ed;
-      --text-dim: #9f9faa;
-      --text-muted: #9f9faa;
-      --accent: #6ee7b7;
-      --accent-dim: #2d6a5a;
-      --red: #f87171;
-      --red-dim: #6a2d2d;
-      --yellow: #fbbf24;
-      --yellow-dim: #6a5a2d;
-      --blue: #60a5fa;
+      --bg: var(--color-wash);
+      --bg-raised: var(--color-paper);
+      --border: var(--color-line);
+      --text: var(--color-ink);
+      --text-dim: var(--color-muted);
+      --text-muted: var(--color-muted);
+      --accent: var(--color-brand);
+      --accent-dim: var(--color-brand);
+      --red: var(--color-alert);
+      --red-dim: var(--color-alert);
+      --yellow: var(--color-ink);
+      --yellow-dim: var(--color-ink);
+      --blue: var(--color-brand);
       --mono: 'SF Mono', 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
       --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
     }
-
-    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      line-height: 1.7;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
     .container { max-width: 640px; margin: 0 auto; padding: 0 24px; width: 100%; }
     .container-wide { max-width: 880px; margin: 0 auto; padding: 0 24px; width: 100%; }
-
     main { flex: 1; padding: 0 0 80px; }
-
     .hero {
       padding: 80px 0 64px;
       border-bottom: 1px solid var(--border);
     }
-
     .hero-tag {
       display: inline-block;
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.65rem;
       color: var(--accent);
-      background: rgba(110,231,183,0.1);
+      background: var(--color-line);
       border: 1px solid var(--accent-dim);
       padding: 3px 10px;
       border-radius: 3px;
       margin-bottom: 20px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
     }
-
     .hero-title {
       font-size: 2rem;
       font-weight: 700;
@@ -165,12 +141,10 @@
       line-height: 1.2;
       margin-bottom: 20px;
     }
-
     .hero-title em {
       font-style: normal;
       color: var(--accent);
     }
-
     .hero-subtitle {
       font-size: 1rem;
       color: var(--text-dim);
@@ -178,18 +152,16 @@
       margin-bottom: 32px;
       max-width: 520px;
     }
-
     .hero-cta-group {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
       align-items: center;
     }
-
     .btn-primary {
       display: inline-block;
       background: var(--accent);
-      color: #0a0a0b;
+      color: var(--color-wash);
       font-weight: 700;
       font-size: 0.9rem;
       padding: 12px 28px;
@@ -197,9 +169,7 @@
       text-decoration: none;
       letter-spacing: -0.01em;
     }
-
     .btn-primary:hover { opacity: 0.9; }
-
     .btn-secondary {
       display: inline-block;
       color: var(--text-dim);
@@ -207,64 +177,52 @@
       padding: 12px 0;
       text-decoration: none;
     }
-
     .btn-secondary:hover { color: var(--text); }
-
     .stat-bar {
       background: var(--bg-raised);
       border-bottom: 1px solid var(--border);
       padding: 28px 0;
     }
-
     .stat-bar-inner {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
-
     .stat-item { text-align: center; }
-
     .stat-value {
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 1.8rem;
       font-weight: 700;
       color: var(--accent);
       line-height: 1;
       margin-bottom: 6px;
     }
-
     .stat-label {
       font-size: 0.75rem;
       color: var(--text-muted);
       line-height: 1.4;
     }
-
     section { padding: 56px 0; border-bottom: 1px solid var(--border); }
     section:last-child { border-bottom: none; }
-
     h2 {
       font-size: 1.25rem;
       font-weight: 600;
       letter-spacing: -0.02em;
       margin-bottom: 20px;
     }
-
     h3 {
       font-size: 0.95rem;
       font-weight: 600;
       margin-bottom: 10px;
       color: var(--text);
     }
-
     p {
       font-size: 0.92rem;
       color: var(--text);
       margin-bottom: 16px;
       line-height: 1.7;
     }
-
     p.muted { color: var(--text-dim); }
-
     /* Query examples */
     .query-card {
       background: var(--bg-raised);
@@ -274,7 +232,7 @@
       margin: 14px 0;
     }
     .query-prompt {
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.82rem;
       color: var(--accent);
       margin-bottom: 8px;
@@ -284,7 +242,6 @@
       color: var(--text-dim);
       font-style: italic;
     }
-
     /* Audit data table */
     .audit-table {
       width: 100%;
@@ -292,71 +249,60 @@
       margin: 24px 0;
       font-size: 0.82rem;
     }
-
     .audit-table th {
       text-align: left;
       padding: 8px 12px;
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.68rem;
       font-weight: 600;
       color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
       border-bottom: 1px solid var(--border);
     }
-
     .audit-table td {
       padding: 10px 12px;
-      border-bottom: 1px solid rgba(34,34,37,0.7);
+      border-bottom: 1px solid var(--color-line);
       color: var(--text-dim);
       vertical-align: top;
     }
-
     .audit-table tr:last-child td { border-bottom: none; }
     .audit-table .firm-name { color: var(--text); font-weight: 500; }
-
-    .check-ok { color: var(--accent); font-family: var(--mono); font-size: 0.72rem; }
-    .check-fail { color: var(--red); font-family: var(--mono); font-size: 0.72rem; }
-    .check-partial { color: var(--yellow); font-family: var(--mono); font-size: 0.72rem; }
-
+    .check-ok { color: var(--accent); font-family: var(--font-mono); font-size: 0.72rem; }
+    .check-fail { color: var(--red); font-family: var(--font-mono); font-size: 0.72rem; }
+    .check-partial { color: var(--yellow); font-family: var(--font-mono); font-size: 0.72rem; }
     .score-badge {
       display: inline-block;
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.72rem;
       padding: 2px 8px;
       border-radius: 3px;
       white-space: nowrap;
     }
     .score-c {
-      background: rgba(251,191,36,0.1);
+      background: var(--color-line);
       border: 1px solid var(--yellow-dim);
       color: var(--yellow);
     }
     .score-d {
-      background: rgba(248,113,113,0.1);
+      background: var(--color-line);
       border: 1px solid var(--red-dim);
       color: var(--red);
     }
-
     /* Warning block */
     .warning-block {
       margin: 24px 0;
       padding: 18px 20px;
-      background: rgba(251,191,36,0.05);
+      background: var(--color-line);
       border: 1px solid var(--yellow-dim);
       border-left: 3px solid var(--yellow);
       border-radius: 6px;
     }
     .warning-label {
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.68rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
       color: var(--yellow);
       margin-bottom: 8px;
     }
     .warning-block p { margin: 0; font-size: 0.88rem; }
-
     /* Tactics steps */
     .steps { margin: 24px 0; }
     .step {
@@ -371,10 +317,10 @@
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background: rgba(110,231,183,0.12);
+      background: var(--color-line);
       border: 1px solid var(--accent-dim);
       color: var(--accent);
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.8rem;
       font-weight: 700;
       display: flex;
@@ -400,13 +346,12 @@
       background: var(--bg-raised);
       border: 1px solid var(--border);
       border-radius: 4px;
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.72rem;
       color: var(--accent);
       line-height: 1.5;
       overflow-x: auto;
     }
-
     /* Pricing block */
     .pricing-grid {
       display: grid;
@@ -429,10 +374,8 @@
     .price-card.featured::before {
       content: "Start her";
       display: inline-block;
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.65rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
       color: var(--bg);
       background: var(--accent);
       padding: 3px 10px;
@@ -447,7 +390,7 @@
       margin-bottom: 2px;
     }
     .price-amount {
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 1.5rem;
       color: var(--accent);
       font-weight: 700;
@@ -482,7 +425,7 @@
       text-align: center;
       padding: 10px 14px;
       background: var(--accent);
-      color: #0a0a0b;
+      color: var(--color-wash);
       border-radius: 6px;
       font-weight: 700;
       font-size: 0.85rem;
@@ -516,7 +459,7 @@
       color: var(--text);
       box-sizing: border-box;
       transition: border-color 0.15s;
-      font-family: inherit;
+      font-family: var(--font-sans);
       outline: none;
     }
     .lead-form-input:focus { border-color: var(--accent); }
@@ -524,11 +467,9 @@
       cursor: pointer;
       border: none;
       width: 100%;
-      font-family: inherit;
+      font-family: var(--font-sans);
       line-height: 1.2;
     }
-
-
     /* Audit form (bottom CTA secondary) */
     .audit-form-box {
       margin-top: 28px;
@@ -572,22 +513,14 @@
       white-space: nowrap;
     }
     .audit-form-btn:hover { opacity: 0.9; }
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 0;
-    }
     footer .container {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.72rem;
       color: var(--text-muted);
     }
-    footer a { color: var(--text-muted); text-decoration: none; }
-    footer a:hover { color: var(--text-dim); }
-
     @media (max-width: 700px) {
       .hero-title { font-size: 1.5rem; }
       .stat-bar-inner { grid-template-columns: 1fr; gap: 16px; }
@@ -595,18 +528,16 @@
       .audit-table th, .audit-table td { padding: 6px 8px; }
       .pricing-grid { grid-template-columns: 1fr; }
     }
-
     /* Inline sjekk form */
     .sjekk-inline-wrap { max-width: 520px; margin-top: 28px; }
-    .sjekk-inline-label { font-size: 0.78rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+    .sjekk-inline-label { font-size: 0.78rem; font-weight: 600; color: var(--text-dim);   margin-bottom: 12px; }
     .sjekk-inline-form { background: var(--bg); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; padding: 22px 24px; }
     .sjekk-field { margin-bottom: 12px; }
     .sjekk-field label { display: block; font-size: 0.78rem; font-weight: 500; color: var(--text-dim); margin-bottom: 4px; }
-    .sjekk-field input { width: 100%; padding: 9px 11px; background: var(--bg-raised); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 0.88rem; outline: none; font-family: inherit; }
+    .sjekk-field input { width: 100%; padding: 9px 11px; background: var(--bg-raised); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 0.88rem; outline: none; font-family: var(--font-sans); }
     .sjekk-field input:focus { border-color: var(--accent); }
-    .sjekk-submit { width: 100%; padding: 11px 18px; background: var(--accent); color: var(--bg); border: none; border-radius: 6px; font-weight: 700; font-size: 0.9rem; cursor: pointer; margin-top: 6px; font-family: inherit; }
+    .sjekk-submit { width: 100%; padding: 11px 18px; background: var(--accent); color: var(--bg); border: none; border-radius: 6px; font-weight: 700; font-size: 0.9rem; cursor: pointer; margin-top: 6px; font-family: var(--font-sans); }
     .sjekk-submit:hover { opacity: 0.9; }
-
     /* Case link */
     .case-link {
       display: flex;
@@ -625,7 +556,7 @@
       width: 40px;
       height: 40px;
       border-radius: 6px;
-      background: rgba(110,231,183,0.1);
+      background: var(--color-line);
       border: 1px solid var(--accent-dim);
       display: flex;
       align-items: center;
@@ -634,11 +565,9 @@
       flex-shrink: 0;
     }
     .case-label {
-      font-family: var(--mono);
+      font-family: var(--font-mono);
       font-size: 0.68rem;
       color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
       margin-bottom: 4px;
     }
     .case-title {
@@ -658,8 +587,6 @@
       padding: 1px 5px;
       margin-left: 6px;
       vertical-align: middle;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
     }
     .case-desc {
       font-size: 0.8rem;
@@ -669,14 +596,16 @@
 </head>
 <body>
 
-<nav style="background:rgba(10,10,11,0.92);backdrop-filter:blur(12px);border-bottom:1px solid #222225;padding:1rem 2rem;position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;max-width:100%;">
-  <a href="/" style="font-size:1.15rem;font-weight:700;color:#6ee7b7;text-decoration:none;">Synlig</a>
-  <div style="display:flex;gap:2rem;">
-    <a href="/" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Hjem</a>
-    <a href="/priser" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Priser</a>
-    <a href="/blogg" style="color:#9f9faa;text-decoration:none;font-size:0.9rem;">Blogg</a>
-    <a href="mailto:hei@synligdigital.no" style="background:#6ee7b7;color:#0a0a0b;padding:0.4rem 1rem;border-radius:6px;font-weight:600;text-decoration:none;font-size:0.9rem;">Kontakt</a>
+<nav>
+  <div class="nav-inner">
+  <!--SITE-LOGO-->
+  <div class="nav-links">
+    <a href="/">Hjem</a>
+    <a href="/priser">Priser</a>
+    <a href="/blogg">Blogg</a>
+    <a href="mailto:hei@synligdigital.no" class="nav-cta">Kontakt</a>
   </div>
+</div>
 </nav>
 
 <main>
@@ -815,7 +744,7 @@
         Audit kjørt med Synlig AEO Audit v1.1 i mars 2026. Score er målt på schema, meta, innholdsstruktur, teknisk grunnlag og AI-signaler. De to klinikkene med C-score hadde WebPage- eller Person-schema, men ingen Dentist eller MedicalBusiness — som er det AI faktisk vekter for medisinske bedrifter.
       </p>
 
-      <div class="warning-block" style="background: rgba(248,113,113,0.05); border-color: var(--red-dim); border-left-color: var(--red); margin-top:24px;">
+      <div class="warning-block" style="background: var(--color-line); border-color: var(--red-dim); border-left-color: var(--red); margin-top:24px;">
         <div class="warning-label" style="color: var(--red);">Hovedfunn</div>
         <p>
           0 av 5 hadde Dentist eller MedicalBusiness schema. 0 av 5 hadde FAQ-side. 0 av 5 viste behandlingspriser. Tre av fem hadde null strukturerte data overhodet. Det er typisk 4 til 8 timers arbeid å rette — og det er nok til å flytte en D til C eller B på de fleste klinikker.

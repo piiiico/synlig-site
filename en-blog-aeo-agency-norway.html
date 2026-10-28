@@ -30,9 +30,6 @@
 <meta name="twitter:description" content="Synlig Digital is Norway's only AEO specialist. Based in Stavanger, we help Norwegian SMBs get cited in ChatGPT, Perplexity, and Google AI.">
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script type="application/ld+json">
 {
@@ -150,50 +147,40 @@
 </script>
 
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --blue-900: #1a365d;
-    --blue-700: #2b4c8a;
-    --blue-100: #ebf2ff;
-    --blue-50: #f5f8ff;
-    --green-700: #2f855a;
-    --green-600: #38a169;
-    --green-500: #48bb78;
-    --red-600: #c53030;
-    --red-50: #fff5f5;
-    --yellow-700: #b7791f;
-    --yellow-50: #fffbeb;
-    --gray-900: #1a202c;
-    --gray-700: #4a5568;
-    --gray-600: #5a6577;
-    --gray-300: #cbd5e0;
-    --gray-200: #e2e8f0;
-    --gray-100: #edf2f7;
-    --gray-50: #f7fafc;
-    --white: #ffffff;
+    --blue-900: var(--color-brand);
+    --blue-700: var(--color-brand);
+    --blue-100: var(--color-paper);
+    --blue-50: var(--color-paper);
+    --green-700: var(--color-brand);
+    --green-600: var(--color-brand);
+    --green-500: var(--color-brand);
+    --red-600: var(--color-alert);
+    --red-50: var(--color-paper);
+    --yellow-700: var(--color-ink);
+    --yellow-50: var(--color-paper);
+    --gray-900: var(--color-ink);
+    --gray-700: var(--color-muted);
+    --gray-600: var(--color-muted);
+    --gray-300: var(--color-line);
+    --gray-200: var(--color-wash);
+    --gray-100: var(--color-wash);
+    --gray-50: var(--color-paper);
+    --white: var(--color-paper);
     --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   }
-  html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  body { background: var(--white); color: var(--gray-700); font-family: var(--font); line-height: 1.7; }
   .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
-
-  nav { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--gray-200); z-index: 100; }
-  .nav-inner { max-width: 760px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; height: 56px; }
-  .nav-logo { font-size: 1.05rem; font-weight: 700; color: var(--blue-900); text-decoration: none; letter-spacing: -0.02em; }
   .nav-lang { color: var(--gray-600); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
   .nav-lang:hover { color: var(--blue-900); }
-
   .breadcrumbs { font-size: 0.82rem; color: var(--gray-600); padding: 20px 0 0; }
   .breadcrumbs a { color: var(--gray-600); text-decoration: none; }
   .breadcrumbs a:hover { color: var(--blue-700); }
   .breadcrumbs .sep { margin: 0 6px; opacity: 0.5; }
-
   header.article-header { padding: 28px 0 16px; }
   .article-tag-row { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; font-size: 0.78rem; color: var(--gray-600); }
-  .article-tag { background: var(--blue-100); color: var(--blue-700); padding: 3px 10px; border-radius: 12px; font-weight: 600; letter-spacing: 0.01em; }
+  .article-tag { background: var(--blue-100); color: var(--blue-700); padding: 3px 10px; border-radius: 12px; font-weight: 600;  }
   h1.article-title { font-size: 2rem; line-height: 1.25; color: var(--gray-900); margin-bottom: 16px; letter-spacing: -0.02em; font-weight: 700; }
   .article-sub { font-size: 1.05rem; color: var(--gray-700); }
-
   section { padding: 24px 0; }
   section + section { border-top: 1px solid var(--gray-100); }
   h2 { font-size: 1.35rem; color: var(--gray-900); margin: 6px 0 14px; font-weight: 600; letter-spacing: -0.01em; }
@@ -202,33 +189,27 @@
   ul, ol { padding-left: 22px; margin-bottom: 14px; }
   ul li, ol li { margin-bottom: 8px; }
   a { color: var(--blue-700); }
-
   .key-stat { background: var(--blue-50); border: 1px solid var(--blue-100); border-radius: 8px; padding: 16px 20px; margin: 18px 0; }
   .key-stat strong { color: var(--blue-900); font-size: 1.35rem; display: block; margin-bottom: 4px; }
   .key-stat span { color: var(--gray-600); font-size: 0.9rem; }
-
   .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 18px 0; }
   .service-card { border: 1px solid var(--gray-200); border-radius: 8px; padding: 18px 20px; }
   .service-card .service-name { font-weight: 700; color: var(--gray-900); margin-bottom: 4px; font-size: 0.95rem; }
   .service-card .service-price { color: var(--blue-700); font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; }
   .service-card p { font-size: 0.88rem; color: var(--gray-700); margin-bottom: 0; }
-
   .faq-list { margin: 0; padding: 0; list-style: none; }
   .faq-item { border: 1px solid var(--gray-200); border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
   .faq-q { padding: 14px 18px; font-weight: 600; color: var(--gray-900); font-size: 0.95rem; background: var(--gray-50); }
   .faq-a { padding: 14px 18px; font-size: 0.92rem; color: var(--gray-700); border-top: 1px solid var(--gray-100); }
-
   .result-row { display: flex; gap: 16px; align-items: center; background: var(--gray-50); border-radius: 8px; padding: 14px 18px; margin-bottom: 10px; }
   .result-grade { font-size: 1.5rem; font-weight: 700; width: 44px; text-align: center; }
-  .result-grade.a { color: #166534; }
-  .result-grade.b { color: #3f6212; }
-  .result-grade.f { color: #991b1b; }
+  .result-grade.a { color: var(--color-brand); }
+  .result-grade.b { color: var(--color-brand); }
+  .result-grade.f { color: var(--color-alert); }
   .result-detail strong { color: var(--gray-900); font-size: 0.92rem; display: block; }
   .result-detail span { color: var(--gray-600); font-size: 0.85rem; }
   .result-arrow { color: var(--gray-400); font-size: 1.2rem; margin: 0 4px; }
-
   blockquote { border-left: 3px solid var(--blue-700); background: var(--blue-50); padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 18px 0; font-size: 0.95rem; color: var(--gray-700); }
-
   .cta-block { margin: 36px 0 0; padding: 24px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px; text-align: center; }
   .cta-block h2 { font-size: 1.15rem; margin-bottom: 10px; }
   .cta-block > p { font-size: 0.95rem; margin-bottom: 16px; }
@@ -236,12 +217,7 @@
   .btn-primary:hover { background: var(--green-500); }
   .cta-sub { font-size: 0.85rem; color: var(--gray-600); margin-top: 14px; }
   .cta-sub a { color: var(--blue-700); }
-
-  footer { padding: 36px 0; border-top: 1px solid var(--gray-200); color: var(--gray-600); font-size: 0.88rem; margin-top: 40px; }
   footer p { margin-bottom: 6px; }
-  footer a { color: var(--blue-700); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-
   @media (max-width: 600px) {
     h1.article-title { font-size: 1.65rem; }
     .services-grid { grid-template-columns: 1fr; }
@@ -252,7 +228,7 @@
 
 <nav>
   <div class="nav-inner">
-    <a href="/en/" class="nav-logo">Synlig Digital</a>
+    <!--SITE-LOGO-->
     <a href="/blogg/aeo-byra-norge" class="nav-lang">På norsk →</a>
   </div>
 </nav>
@@ -348,7 +324,7 @@
   </div>
 
   <div class="result-row">
-    <div class="result-grade" style="color:#854d0e;">D</div>
+    <div class="result-grade" style="color:var(--color-ink);">D</div>
     <div class="result-detail">
       <strong>Pierstop AS — before</strong>
       <span>Score 52/100. Missing schema on key service pages, incomplete GBP, blocked AI crawlers.</span>
@@ -406,7 +382,7 @@
   <div class="container">
     <p><strong>Synlig Digital</strong> — Answer Engine Optimization, Stavanger, Norway</p>
     <p><a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> · <a href="/en/">synligdigital.no/en</a> · <a href="/blogg/aeo-byra-norge">Les på norsk</a></p>
-    <p style="margin-top:12px; font-size:0.82rem; color:#8a9ab0;">© 2026 Synlig Digital. All AI visibility scores are generated by automated audit tooling and are provided for informational purposes.</p>
+    <p style="margin-top:12px; font-size:0.82rem; color:var(--color-brand);">© 2026 Synlig Digital. All AI visibility scores are generated by automated audit tooling and are provided for informational purposes.</p>
   </div>
 </footer>
 

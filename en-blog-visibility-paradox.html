@@ -30,9 +30,6 @@
 <meta name="twitter:description" content="DevTune tracked 13 agent auth companies. The leader is visible 27% of the time. This is what it means for every B2B SaaS company selling to developers.">
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script type="application/ld+json">
 {
@@ -70,46 +67,36 @@
 </script>
 
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --blue-900: #1a365d;
-    --blue-700: #2b4c8a;
-    --blue-100: #ebf2ff;
-    --blue-50: #f5f8ff;
-    --green-700: #2f855a;
-    --green-600: #38a169;
-    --green-500: #48bb78;
-    --gray-900: #1a202c;
-    --gray-700: #4a5568;
-    --gray-600: #5a6577;
-    --gray-300: #cbd5e0;
-    --gray-200: #e2e8f0;
-    --gray-100: #edf2f7;
-    --gray-50: #f7fafc;
-    --white: #ffffff;
+    --blue-900: var(--color-brand);
+    --blue-700: var(--color-brand);
+    --blue-100: var(--color-paper);
+    --blue-50: var(--color-paper);
+    --green-700: var(--color-brand);
+    --green-600: var(--color-brand);
+    --green-500: var(--color-brand);
+    --gray-900: var(--color-ink);
+    --gray-700: var(--color-muted);
+    --gray-600: var(--color-muted);
+    --gray-300: var(--color-line);
+    --gray-200: var(--color-wash);
+    --gray-100: var(--color-wash);
+    --gray-50: var(--color-paper);
+    --white: var(--color-paper);
     --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   }
-  html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  body { background: var(--white); color: var(--gray-700); font-family: var(--font); line-height: 1.7; }
   .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
-
-  nav { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--gray-200); z-index: 100; }
-  .nav-inner { max-width: 760px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; height: 56px; }
-  .nav-logo { font-size: 1.05rem; font-weight: 700; color: var(--blue-900); text-decoration: none; letter-spacing: -0.02em; }
   .nav-lang { color: var(--gray-600); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
   .nav-lang:hover { color: var(--blue-900); }
-
   .breadcrumbs { font-size: 0.82rem; color: var(--gray-600); padding: 20px 0 0; }
   .breadcrumbs a { color: var(--gray-600); text-decoration: none; }
   .breadcrumbs a:hover { color: var(--blue-700); }
   .breadcrumbs .sep { margin: 0 6px; opacity: 0.5; }
-
   header.article-header { padding: 28px 0 16px; }
   .article-tag-row { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; font-size: 0.78rem; color: var(--gray-600); }
-  .article-tag { background: var(--blue-100); color: var(--blue-700); padding: 3px 10px; border-radius: 12px; font-weight: 600; letter-spacing: 0.01em; }
+  .article-tag { background: var(--blue-100); color: var(--blue-700); padding: 3px 10px; border-radius: 12px; font-weight: 600;  }
   h1.article-title { font-size: 2rem; line-height: 1.25; color: var(--gray-900); margin-bottom: 16px; letter-spacing: -0.02em; font-weight: 700; }
   .article-sub { font-size: 1.05rem; color: var(--gray-700); }
-
   section { padding: 24px 0; }
   section + section { border-top: 1px solid var(--gray-100); }
   h2 { font-size: 1.35rem; color: var(--gray-900); margin: 6px 0 14px; font-weight: 600; letter-spacing: -0.01em; }
@@ -119,35 +106,26 @@
   ul li, ol li { margin-bottom: 8px; }
   a { color: var(--blue-700); }
   strong { color: var(--gray-900); }
-
   .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.92rem; }
-  .data-table th { background: var(--blue-900); color: var(--white); padding: 10px 14px; text-align: left; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.02em; }
+  .data-table th { background: var(--blue-900); color: var(--white); padding: 10px 14px; text-align: left; font-size: 0.82rem; font-weight: 600;  }
   .data-table td { padding: 10px 14px; border-bottom: 1px solid var(--gray-200); }
   .data-table tr:last-child td { border-bottom: none; }
   .data-table tr:nth-child(even) td { background: var(--gray-50); }
   .vis-bar { display: inline-block; height: 10px; border-radius: 4px; background: var(--blue-700); vertical-align: middle; margin-right: 8px; }
-  .vis-bar.low { background: #fc8181; }
+  .vis-bar.low { background: var(--color-alert); }
   .vis-bar.zero { background: var(--gray-300); }
-
   .key-stat { background: var(--blue-50); border: 1px solid var(--blue-100); border-radius: 8px; padding: 16px 20px; margin: 18px 0; }
   .key-stat strong { color: var(--blue-900); font-size: 1.5rem; display: block; margin-bottom: 4px; }
   .key-stat span { color: var(--gray-600); font-size: 0.9rem; }
-
   .insight-box { background: var(--gray-50); border-left: 3px solid var(--blue-700); border-radius: 0 6px 6px 0; padding: 14px 18px; margin: 18px 0; font-size: 0.95rem; }
-
-  .cta-block { margin: 28px 0 0; padding: 24px; background: var(--blue-50); border: 1px solid #d6e3fb; border-radius: 10px; text-align: center; }
+  .cta-block { margin: 28px 0 0; padding: 24px; background: var(--blue-50); border: 1px solid var(--color-wash); border-radius: 10px; text-align: center; }
   .cta-block h2 { font-size: 1.2rem; margin-bottom: 8px; color: var(--gray-900); font-weight: 600; border: none; padding: 0; }
   .cta-block p { font-size: 0.95rem; margin-bottom: 14px; }
   .btn-primary { display: inline-block; background: var(--green-600); color: var(--white); padding: 11px 22px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.95rem; transition: background 0.2s; }
   .btn-primary:hover { background: var(--green-500); }
   .cta-sub { font-size: 0.85rem; color: var(--gray-600); margin-top: 12px; }
   .cta-sub a { color: var(--blue-700); }
-
-  footer { padding: 36px 0; border-top: 1px solid var(--gray-200); color: var(--gray-600); font-size: 0.88rem; margin-top: 40px; }
   footer p { margin-bottom: 6px; }
-  footer a { color: var(--blue-700); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-
   @media (max-width: 600px) {
     h1.article-title { font-size: 1.55rem; }
     .data-table { font-size: 0.82rem; }
@@ -159,7 +137,7 @@
 
 <nav>
   <div class="nav-inner">
-    <a href="/en/" class="nav-logo">Synlig Digital</a>
+    <!--SITE-LOGO-->
     <a href="/blogg" class="nav-lang">På norsk →</a>
   </div>
 </nav>
@@ -338,7 +316,7 @@
   <div class="container">
     <p><strong>Synlig Digital</strong> — Answer Engine Optimization, Stavanger, Norway</p>
     <p><a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> · <a href="/en/">synligdigital.no/en</a> · <a href="/blogg">Norsk blogg</a></p>
-    <p style="margin-top:12px; font-size:0.82rem; color:#8a9ab0;">© 2026 Synlig Digital. AI visibility data from DevTune.ai, June 2026.</p>
+    <p style="margin-top:12px; font-size:0.82rem; color:var(--color-brand);">© 2026 Synlig Digital. AI visibility data from DevTune.ai, June 2026.</p>
   </div>
 </footer>
 

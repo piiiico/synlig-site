@@ -55,41 +55,20 @@
   </script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0a0a0a;
-      color: #e0e0e0;
-      line-height: 1.7;
-    }
-    a { color: #6ee7b7; text-decoration: none; }
+    a { color: var(--color-brand); text-decoration: none; }
     a:hover { text-decoration: underline; }
-
-    .site-header {
-      background: #111;
-      border-bottom: 1px solid #222;
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-    .site-header .logo { font-size: 1.5rem; font-weight: 700; color: #fff; }
-    .site-header nav a { color: #aaa; margin: 0 0.75rem; font-size: 0.9rem; }
-    .site-header nav a:hover { color: #fff; }
-
     .hero {
-      background: linear-gradient(135deg, #0f1923 0%, #111827 100%);
-      border-bottom: 1px solid #1a2332;
+      background: var(--color-paper);
+      border-bottom: 1px solid var(--color-line);
       padding: 4rem 2rem 3rem;
       text-align: center;
     }
     .hero .badge {
       display: inline-block;
-      background: #1a3a5c;
-      color: #6ee7b7;
+      background: var(--color-brand);
+      color: var(--color-paper);
       font-size: 0.75rem;
       font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
       padding: 0.3rem 0.8rem;
       border-radius: 20px;
       margin-bottom: 1.5rem;
@@ -97,22 +76,21 @@
     .hero h1 {
       font-size: 2.5rem;
       font-weight: 800;
-      color: #fff;
+      color: var(--color-ink);
       line-height: 1.2;
       max-width: 800px;
       margin: 0 auto 1rem;
     }
     .hero .subtitle {
       font-size: 1.15rem;
-      color: #9ca3af;
+      color: var(--color-muted);
       max-width: 650px;
       margin: 0 auto 2rem;
     }
     .hero .meta {
       font-size: 0.85rem;
-      color: #6b7280;
+      color: var(--color-muted);
     }
-
     .key-stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -122,8 +100,8 @@
       margin: 0 auto;
     }
     .stat-box {
-      background: #111;
-      border: 1px solid #222;
+      background: var(--color-paper);
+      border: 1px solid var(--color-line);
       border-radius: 12px;
       padding: 1.5rem 1rem;
       text-align: center;
@@ -131,54 +109,48 @@
     .stat-box .value {
       font-size: 2.5rem;
       font-weight: 800;
-      color: #fff;
+      color: var(--color-ink);
       line-height: 1;
       margin-bottom: 0.5rem;
     }
     .stat-box .label {
       font-size: 0.8rem;
-      color: #9ca3af;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      color: var(--color-muted);
     }
-    .stat-box.highlight .value { color: #ef4444; }
-    .stat-box.ok .value { color: #22c55e; }
-
+    .stat-box.highlight .value { color: var(--color-alert); }
+    .stat-box.ok .value { color: var(--color-brand); }
     .content {
       max-width: 800px;
       margin: 0 auto;
       padding: 0 2rem 4rem;
     }
-
     h2 {
       font-size: 1.6rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--color-ink);
       margin: 3rem 0 1rem;
       padding-top: 2rem;
-      border-top: 1px solid #222;
+      border-top: 1px solid var(--color-line);
     }
     h2:first-of-type { border-top: none; }
     h3 {
       font-size: 1.15rem;
       font-weight: 600;
-      color: #e0e0e0;
+      color: var(--color-ink);
       margin: 2rem 0 0.75rem;
     }
-    p { margin-bottom: 1rem; color: #ccc; }
-
+    p { margin-bottom: 1rem; color: var(--color-ink); }
     .callout {
-      background: #111827;
-      border-left: 4px solid #6ee7b7;
+      background: var(--color-paper);
+      border-left: 4px solid var(--color-brand);
       padding: 1.25rem 1.5rem;
       margin: 2rem 0;
       border-radius: 0 8px 8px 0;
     }
-    .callout.warning { border-color: #ef4444; }
-    .callout.success { border-color: #22c55e; }
-    .callout.info { border-color: #3b82f6; }
+    .callout.warning { border-color: var(--color-alert); }
+    .callout.success { border-color: var(--color-brand); }
+    .callout.info { border-color: var(--color-brand); }
     .callout p { margin: 0; }
-
     /* Visibility bars */
     .vis-bar-wrap {
       display: flex;
@@ -188,16 +160,15 @@
     .vis-bar {
       flex: 1;
       height: 8px;
-      background: #222;
+      background: var(--color-line);
       border-radius: 4px;
       overflow: hidden;
     }
     .vis-bar-fill { height: 100%; border-radius: 4px; }
-    .fill-red { background: #ef4444; }
-    .fill-orange { background: #f59e0b; }
-    .fill-yellow { background: #eab308; }
-    .fill-green { background: #22c55e; }
-
+    .fill-red { background: var(--color-alert); }
+    .fill-orange { background: var(--color-warn); }
+    .fill-yellow { background: var(--color-warn); }
+    .fill-green { background: var(--color-brand); }
     /* Score tags */
     .vis-pct {
       font-weight: 700;
@@ -205,11 +176,10 @@
       min-width: 48px;
       text-align: right;
     }
-    .pct-red { color: #ef4444; }
-    .pct-orange { color: #f59e0b; }
-    .pct-yellow { color: #eab308; }
-    .pct-green { color: #22c55e; }
-
+    .pct-red { color: var(--color-alert); }
+    .pct-orange { color: var(--color-ink); }
+    .pct-yellow { color: var(--color-ink); }
+    .pct-green { color: var(--color-brand); }
     /* Data tables */
     .data-table {
       width: 100%;
@@ -220,24 +190,22 @@
     .data-table th {
       text-align: left;
       padding: 0.6rem 0.75rem;
-      background: #111;
-      color: #9ca3af;
+      background: var(--color-paper);
+      color: var(--color-muted);
       font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      border-bottom: 1px solid #222;
+      border-bottom: 1px solid var(--color-line);
     }
     .data-table td {
       padding: 0.6rem 0.75rem;
-      border-bottom: 1px solid #1a1a1a;
-      color: #ccc;
+      border-bottom: 1px solid var(--color-paper);
+      color: var(--color-ink);
     }
-    .data-table tr:hover td { background: #111; }
-    .data-table .score-cell { font-weight: 700; color: #fff; }
+    .data-table tr:hover td { background: var(--color-paper); }
+    .data-table .score-cell { font-weight: 700; color: var(--color-ink); }
     .badge-verified {
       display: inline-block;
-      background: #052e16;
-      color: #4ade80;
+      background: var(--color-paper);
+      color: var(--color-brand);
       font-size: 0.65rem;
       font-weight: 700;
       padding: 1px 5px;
@@ -247,8 +215,8 @@
     }
     .badge-est {
       display: inline-block;
-      background: #1a1a2e;
-      color: #9ca3af;
+      background: var(--color-line);
+      color: var(--color-muted);
       font-size: 0.65rem;
       font-weight: 600;
       padding: 1px 5px;
@@ -256,7 +224,6 @@
       margin-left: 4px;
       vertical-align: middle;
     }
-
     /* Sector summary */
     .sector-grid {
       display: grid;
@@ -265,58 +232,53 @@
       margin: 1.5rem 0;
     }
     .sector-card {
-      background: #111;
-      border: 1px solid #222;
+      background: var(--color-paper);
+      border: 1px solid var(--color-line);
       border-radius: 10px;
       padding: 1rem;
     }
     .sector-card h4 {
       font-size: 0.85rem;
-      color: #9ca3af;
+      color: var(--color-muted);
       margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
-    .sector-card .sector-score { font-size: 1.8rem; font-weight: 800; color: #fff; }
-    .sector-card .sector-grade { font-size: 0.75rem; color: #6b7280; margin-top: 0.2rem; }
-
+    .sector-card .sector-score { font-size: 1.8rem; font-weight: 800; color: var(--color-ink); }
+    .sector-card .sector-grade { font-size: 0.75rem; color: var(--color-muted); margin-top: 0.2rem; }
     /* Finding cards */
     .finding {
-      background: #111;
-      border: 1px solid #222;
+      background: var(--color-paper);
+      border: 1px solid var(--color-line);
       border-radius: 10px;
       padding: 1.25rem 1.5rem;
       margin: 1rem 0;
     }
     .finding h3 { margin: 0 0 0.5rem; font-size: 1rem; }
-    .finding p { margin: 0; font-size: 0.9rem; color: #9ca3af; }
-
+    .finding p { margin: 0; font-size: 0.9rem; color: var(--color-muted); }
     /* Spotlight */
     .spotlight {
-      background: #0f1f1a;
-      border: 1px solid #1a3028;
+      background: var(--color-paper);
+      border: 1px solid var(--color-line);
       border-radius: 12px;
       padding: 1.5rem;
       margin: 1.5rem 0;
     }
-    .spotlight h4 { color: #4ade80; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.5rem; }
-    .spotlight p { margin: 0.5rem 0 0; font-size: 0.9rem; color: #ccc; }
-
+    .spotlight h4 { color: var(--color-brand); font-size: 0.9rem;   margin-bottom: 0.5rem; }
+    .spotlight p { margin: 0.5rem 0 0; font-size: 0.9rem; color: var(--color-ink); }
     /* Recommendations */
     .rec-list { margin: 1rem 0; }
     .rec-item {
       display: flex;
       gap: 1rem;
       padding: 0.75rem 0;
-      border-bottom: 1px solid #1a1a1a;
+      border-bottom: 1px solid var(--color-paper);
     }
     .rec-item:last-child { border-bottom: none; }
     .rec-num {
       flex-shrink: 0;
       width: 28px;
       height: 28px;
-      background: #1a3a5c;
-      color: #6ee7b7;
+      background: var(--color-brand);
+      color: var(--color-paper);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -324,43 +286,40 @@
       font-weight: 700;
       font-size: 0.85rem;
     }
-    .rec-content h4 { font-size: 0.95rem; color: #e0e0e0; margin-bottom: 0.25rem; }
-    .rec-content p { font-size: 0.85rem; color: #9ca3af; margin: 0; }
-
+    .rec-content h4 { font-size: 0.95rem; color: var(--color-ink); margin-bottom: 0.25rem; }
+    .rec-content p { font-size: 0.85rem; color: var(--color-muted); margin: 0; }
     /* CTA */
     .cta-box {
-      background: linear-gradient(135deg, #0f1923, #111827);
-      border: 1px solid #1a2332;
+      background: var(--color-paper);
+      border: 1px solid var(--color-line);
       border-radius: 12px;
       padding: 2.5rem;
       text-align: center;
       margin: 3rem 0;
     }
     .cta-box h2 { border: none; padding: 0; margin: 0 0 0.75rem; font-size: 1.5rem; }
-    .cta-box p { color: #9ca3af; margin-bottom: 1.5rem; }
+    .cta-box p { color: var(--color-muted); margin-bottom: 1.5rem; }
     .btn {
       display: inline-block;
-      background: #6ee7b7;
-      color: #000;
+      background: var(--color-brand);
+      color: var(--color-wash);
       font-weight: 700;
       padding: 0.85rem 2rem;
       border-radius: 8px;
       text-decoration: none;
       font-size: 1rem;
     }
-    .btn:hover { background: #6cf; text-decoration: none; }
-
+    .btn:hover { background: var(--color-brand); text-decoration: none; }
     .methodology {
-      background: #111;
-      border: 1px solid #222;
+      background: var(--color-paper);
+      border: 1px solid var(--color-line);
       border-radius: 10px;
       padding: 1.5rem;
       margin: 2rem 0;
       font-size: 0.85rem;
-      color: #9ca3af;
+      color: var(--color-muted);
     }
-    .methodology h3 { font-size: 0.95rem; color: #e0e0e0; margin: 0 0 0.75rem; }
-
+    .methodology h3 { font-size: 0.95rem; color: var(--color-ink); margin: 0 0 0.75rem; }
     /* Ranked list */
     .rank-list { margin: 1rem 0; }
     .rank-item {
@@ -368,7 +327,7 @@
       align-items: center;
       gap: 0.75rem;
       padding: 0.5rem 0;
-      border-bottom: 1px solid #1a1a1a;
+      border-bottom: 1px solid var(--color-paper);
     }
     .rank-item:last-child { border-bottom: none; }
     .rank-num {
@@ -382,14 +341,13 @@
       font-size: 0.75rem;
       font-weight: 700;
     }
-    .rank-gold { background: #78350f; color: #fde68a; }
-    .rank-silver { background: #1f2937; color: #d1d5db; }
-    .rank-bronze { background: #431407; color: #fdba74; }
-    .rank-mid { background: #1a1a1a; color: #9ca3af; }
-    .rank-low { background: #1f0000; color: #fca5a5; }
-    .rank-name { flex: 1; font-size: 0.9rem; color: #e0e0e0; }
-    .rank-industry { font-size: 0.75rem; color: #6b7280; display: block; }
-
+    .rank-gold { background: var(--color-warn); color: var(--color-ink); }
+    .rank-silver { background: var(--color-line); color: var(--color-ink); }
+    .rank-bronze { background: var(--color-line); color: var(--color-ink); }
+    .rank-mid { background: var(--color-paper); color: var(--color-muted); }
+    .rank-low { background: var(--color-paper); color: var(--color-alert); }
+    .rank-name { flex: 1; font-size: 0.9rem; color: var(--color-ink); }
+    .rank-industry { font-size: 0.75rem; color: var(--color-muted); display: block; }
     @media (max-width: 600px) {
       .hero h1 { font-size: 1.8rem; }
       .key-stats { grid-template-columns: 1fr 1fr; }
@@ -399,16 +357,18 @@
 </head>
 <body>
 
-<header class="site-header">
-  <a href="/" class="logo">Synlig</a>
-  <nav>
+<nav>
+  <div class="nav-inner">
+    <!--SITE-LOGO-->
+    <div class="nav-links">
     <a href="/">Hjem</a>
     <a href="/guide">Guide</a>
     <a href="/case/nordic-lithium">Metode-case</a>
     <a href="/blogg">Blogg</a>
-    <a href="mailto:hei@synligdigital.no">Kontakt</a>
+    <a href="mailto:hei@synligdigital.no" class="nav-cta">Kontakt</a>
+    </div>
+  </div>
   </nav>
-</header>
 
 <div class="hero">
   <div class="badge">Norges første bransjevise AI-synlighetsrapport</div>
@@ -467,7 +427,7 @@
     <p><strong>AI-synlighetsscore</strong> = andelen spørringer (0–100 %) der bedriften ble funnet og vurdert relevant av AI-systemet.</p>
     <p><strong>Spørsmålstyper per bedrift:</strong> Generiske anbefalingsspørsmål ("beste X i Y"), nærhetsspørsmål ("X i nærheten av meg"), prisspørsmål, kvalitetsspørsmål, og merkevarevalidering.</p>
     <p><strong>Analyserte bransjer:</strong> Tannlege, rørlegger/VVS, advokat, regnskapsfører, frisørsalong.</p>
-    <p><strong>Analyseperiode:</strong> Mars 2026. Bedriftene ble ikke varslet. <span style="color:#4ade80">✓ Verifiserte målinger</span> indikerer direkte audit-data (10 spørringer per bedrift). Øvrige tall er estimert basert på AI-synlighetsdata fra eksperimentserier januar–mars 2026 (200+ spørringer, 5 norske byer).</p>
+    <p><strong>Analyseperiode:</strong> Mars 2026. Bedriftene ble ikke varslet. <span style="color:var(--color-brand)">✓ Verifiserte målinger</span> indikerer direkte audit-data (10 spørringer per bedrift). Øvrige tall er estimert basert på AI-synlighetsdata fra eksperimentserier januar–mars 2026 (200+ spørringer, 5 norske byer).</p>
   </div>
 
   <h2>Bransjevis oversikt: AI-synlighet 2026</h2>
@@ -476,32 +436,32 @@
     <div class="sector-card">
       <h4>Regnskapsfører</h4>
       <div class="sector-score">42<span style="font-size:1rem">%</span></div>
-      <div class="sector-grade" style="color:#eab308">▲ Høyest av alle bransjer</div>
+      <div class="sector-grade" style="color:var(--color-ink)">▲ Høyest av alle bransjer</div>
     </div>
     <div class="sector-card">
       <h4>Rørlegger / VVS</h4>
       <div class="sector-score">37<span style="font-size:1rem">%</span></div>
-      <div class="sector-grade" style="color:#9ca3af">Over gjennomsnitt</div>
+      <div class="sector-grade" style="color:var(--color-muted)">Over gjennomsnitt</div>
     </div>
     <div class="sector-card">
       <h4>Tannlege</h4>
       <div class="sector-score">34<span style="font-size:1rem">%</span></div>
-      <div class="sector-grade" style="color:#9ca3af">Rundt gjennomsnitt</div>
+      <div class="sector-grade" style="color:var(--color-muted)">Rundt gjennomsnitt</div>
     </div>
     <div class="sector-card">
       <h4>Advokat</h4>
       <div class="sector-score">33<span style="font-size:1rem">%</span></div>
-      <div class="sector-grade" style="color:#9ca3af">Rundt gjennomsnitt</div>
+      <div class="sector-grade" style="color:var(--color-muted)">Rundt gjennomsnitt</div>
     </div>
     <div class="sector-card">
       <h4>Frisørsalong</h4>
       <div class="sector-score">24<span style="font-size:1rem">%</span></div>
-      <div class="sector-grade" style="color:#ef4444">▼ Lavest av alle bransjer</div>
+      <div class="sector-grade" style="color:var(--color-alert)">▼ Lavest av alle bransjer</div>
     </div>
     <div class="sector-card">
       <h4>Norsk gjennomsnitt</h4>
       <div class="sector-score">32<span style="font-size:1rem">%</span></div>
-      <div class="sector-grade" style="color:#6b7280">Alle 5 bransjer (n=31)</div>
+      <div class="sector-grade" style="color:var(--color-muted)">Alle 5 bransjer (n=31)</div>
     </div>
   </div>
 
@@ -521,43 +481,43 @@
     </thead>
     <tbody>
       <tr>
-        <td>Hinna Tannlegesenter<br><small style="color:#6b7280">Stavanger</small></td>
+        <td>Hinna Tannlegesenter<br><small style="color:var(--color-muted)">Stavanger</small></td>
         <td class="score-cell">65%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-green" style="width:65%"></div></div></td>
         <td>Sterk profil på legelisten.no, konsistent i alle spørringer</td>
       </tr>
       <tr>
-        <td>Colosseum Tannlege Stavanger<br><small style="color:#6b7280">Stavanger</small></td>
+        <td>Colosseum Tannlege Stavanger<br><small style="color:var(--color-muted)">Stavanger</small></td>
         <td class="score-cell">60%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-green" style="width:60%"></div></div></td>
         <td>7 allmenntannleger + spesialist, aktiv aggregatorprofil</td>
       </tr>
       <tr>
-        <td>Stavanger Tann- og Kjeveklinikk<br><small style="color:#6b7280">Stavanger, 25+ år</small></td>
+        <td>Stavanger Tann- og Kjeveklinikk<br><small style="color:var(--color-muted)">Stavanger, 25+ år</small></td>
         <td class="score-cell">55%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-green" style="width:55%"></div></div></td>
         <td>Stedsspesifikt innhold på eget nettsted, aktiv klinikkvalg.no-profil</td>
       </tr>
       <tr>
-        <td>Storhaug Tannlegesenter<br><small style="color:#6b7280">Stavanger</small></td>
+        <td>Storhaug Tannlegesenter<br><small style="color:var(--color-muted)">Stavanger</small></td>
         <td class="score-cell">50%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:50%"></div></div></td>
         <td>Konsistent i begge søkemotorer, legelisten-profil</td>
       </tr>
       <tr>
-        <td>Tannklinikken Larsen &amp; Boe<br><small style="color:#6b7280">Stavanger</small></td>
+        <td>Tannklinikken Larsen &amp; Boe<br><small style="color:var(--color-muted)">Stavanger</small></td>
         <td class="score-cell">45%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:45%"></div></div></td>
         <td>Aktiv nettside og aggregatorprofil</td>
       </tr>
       <tr>
-        <td>Forus Tannhelse<br><small style="color:#6b7280">Stavanger</small></td>
+        <td>Forus Tannhelse<br><small style="color:var(--color-muted)">Stavanger</small></td>
         <td class="score-cell">20%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:20%"></div></div></td>
         <td>Begrenset aggregatorprofil, mangler FAQ om spesialiteter</td>
       </tr>
       <tr>
-        <td>Tenner og Trivsel<br><small style="color:#6b7280">Stavanger</small></td>
+        <td>Tenner og Trivsel<br><small style="color:var(--color-muted)">Stavanger</small></td>
         <td class="score-cell">10%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:10%"></div></div></td>
         <td>Ingen schema, ingen FAQ, tekniske feil på nettsted</td>
@@ -586,38 +546,38 @@
     </thead>
     <tbody>
       <tr>
-        <td>Rørlegger SOS Stavanger<br><small style="color:#6b7280">Stavanger, 24/7 akutt</small></td>
+        <td>Rørlegger SOS Stavanger<br><small style="color:var(--color-muted)">Stavanger, 24/7 akutt</small></td>
         <td class="score-cell">55%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-green" style="width:55%"></div></div></td>
         <td>24/7 akuttservice tydelig kommunisert, telefonnummer fremtredende</td>
       </tr>
       <tr>
-        <td>Sig. Halvorsen AS<br><small style="color:#6b7280">Stavanger</small></td>
+        <td>Sig. Halvorsen AS<br><small style="color:var(--color-muted)">Stavanger</small></td>
         <td class="score-cell">50%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:50%"></div></div></td>
         <td>350 år samlet erfaring kommunisert, autoritetssignaler i aggregatordata</td>
       </tr>
       <tr>
-        <td>Stavanger Rørteknikk<br><small style="color:#6b7280">Stavanger</small></td>
+        <td>Stavanger Rørteknikk<br><small style="color:var(--color-muted)">Stavanger</small></td>
         <td class="score-cell">40%<span class="badge-verified">✓ verifisert</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:40%"></div></div></td>
         <td>Vises i 4/10 spørringer — sterk på generiske og nærhetsspørringer</td>
       </tr>
       <tr>
-        <td>Rørlegger Sunde<br><small style="color:#6b7280">Stavanger, VB-godkjent</small></td>
+        <td>Rørlegger Sunde<br><small style="color:var(--color-muted)">Stavanger, VB-godkjent</small></td>
         <td class="score-cell">35%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:35%"></div></div></td>
         <td>VB-godkjent og boblekarbad-spesialist, begrenset innholdsdybde</td>
       </tr>
       <tr>
-        <td>B. Hodnefjeld AS<br><small style="color:#6b7280">Stavanger, est. 1972</small></td>
+        <td>B. Hodnefjeld AS<br><small style="color:var(--color-muted)">Stavanger, est. 1972</small></td>
         <td class="score-cell">20%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:20%"></div></div></td>
         <td>Kun funnet i tradisjonelt søk — ikke i AI-syntetiserte svar</td>
       </tr>
       <tr>
-        <td>OSV Sivertsen VVS<br><small style="color:#6b7280">Stavanger, est. ca. 1950</small></td>
-        <td class="score-cell" style="color:#ef4444">0%<span class="badge-verified">✓ verifisert</span></td>
+        <td>OSV Sivertsen VVS<br><small style="color:var(--color-muted)">Stavanger, est. ca. 1950</small></td>
+        <td class="score-cell" style="color:var(--color-alert)">0%<span class="badge-verified">✓ verifisert</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:2%"></div></div></td>
         <td>Fullt usynlig i alle 10 spørringer — selv merkevare-spørringer</td>
       </tr>
@@ -649,37 +609,37 @@
     </thead>
     <tbody>
       <tr>
-        <td>Haver Advokatfirma<br><small style="color:#6b7280">Stavanger (byens største)</small></td>
+        <td>Haver Advokatfirma<br><small style="color:var(--color-muted)">Stavanger (byens største)</small></td>
         <td class="score-cell">70%<span class="badge-verified">✓ verifisert</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-green" style="width:70%"></div></div></td>
         <td>7/10 spørringer inkl. generiske — lokal innholdsinvestering betaler seg</td>
       </tr>
       <tr>
-        <td>Advokatfirmaet Legal<br><small style="color:#6b7280">Stavanger, prosedyrespesialist</small></td>
+        <td>Advokatfirmaet Legal<br><small style="color:var(--color-muted)">Stavanger, prosedyrespesialist</small></td>
         <td class="score-cell">40%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:40%"></div></div></td>
         <td>Ledende prosedyrefirma, synlig i begge analysemotorer</td>
       </tr>
       <tr>
-        <td>Advokathuset Stavanger<br><small style="color:#6b7280">Stavanger</small></td>
+        <td>Advokathuset Stavanger<br><small style="color:var(--color-muted)">Stavanger</small></td>
         <td class="score-cell">35%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:35%"></div></div></td>
         <td>Aktiv profil på advokatguiden.no</td>
       </tr>
       <tr>
-        <td>Stavangeradvokatene<br><small style="color:#6b7280">Stavanger</small></td>
+        <td>Stavangeradvokatene<br><small style="color:var(--color-muted)">Stavanger</small></td>
         <td class="score-cell">33%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:33%"></div></div></td>
         <td>Konsistent i aggregatorresultater, svak på egne sider</td>
       </tr>
       <tr>
-        <td>BA Advokatfirma<br><small style="color:#6b7280">Stavanger / Sandnes / Bryne</small></td>
+        <td>BA Advokatfirma<br><small style="color:var(--color-muted)">Stavanger / Sandnes / Bryne</small></td>
         <td class="score-cell">25%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:25%"></div></div></td>
         <td>Kun funnet i WebSearch-syntetisering, ikke i direkte AI-spørringer</td>
       </tr>
       <tr>
-        <td>Kluge Advokatfirma (CMS Kluge)<br><small style="color:#6b7280">Stavanger, est. 1923</small></td>
+        <td>Kluge Advokatfirma (CMS Kluge)<br><small style="color:var(--color-muted)">Stavanger, est. 1923</small></td>
         <td class="score-cell">20%<span class="badge-verified">✓ verifisert</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:20%"></div></div></td>
         <td>Vises kun i merkevarerelaterte spørringer — usynlig på generiske søk</td>
@@ -712,31 +672,31 @@
     </thead>
     <tbody>
       <tr>
-        <td>Kjell Haver Regnskap<br><small style="color:#6b7280">Stavanger</small></td>
+        <td>Kjell Haver Regnskap<br><small style="color:var(--color-muted)">Stavanger</small></td>
         <td class="score-cell">70%<span class="badge-verified">✓ verifisert</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-green" style="width:70%"></div></div></td>
         <td>7/10 spørringer — aggregatorprofiler + innholdsdybde kombinert</td>
       </tr>
       <tr>
-        <td>ECIT Stavanger<br><small style="color:#6b7280">Stavanger, nasjonal kjede</small></td>
+        <td>ECIT Stavanger<br><small style="color:var(--color-muted)">Stavanger, nasjonal kjede</small></td>
         <td class="score-cell">50%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:50%"></div></div></td>
         <td>Nasjonal kjede med lokale profiler og strukturert nettstedinnhold</td>
       </tr>
       <tr>
-        <td>Administra AS<br><small style="color:#6b7280">Stavanger</small></td>
+        <td>Administra AS<br><small style="color:var(--color-muted)">Stavanger</small></td>
         <td class="score-cell">45%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:45%"></div></div></td>
         <td>Konsistent i regnskapsfører-aggregatorer</td>
       </tr>
       <tr>
-        <td>Accomodo Regnskap<br><small style="color:#6b7280">Stavanger</small></td>
+        <td>Accomodo Regnskap<br><small style="color:var(--color-muted)">Stavanger</small></td>
         <td class="score-cell">35%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:35%"></div></div></td>
         <td>Synlig på 1881.no, begrenset eget nettstedinnhold</td>
       </tr>
       <tr>
-        <td>Rott Regnskap og Rådgivning<br><small style="color:#6b7280">Stavanger sentrum</small></td>
+        <td>Rott Regnskap og Rådgivning<br><small style="color:var(--color-muted)">Stavanger sentrum</small></td>
         <td class="score-cell">30%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:30%"></div></div></td>
         <td>Synlig i WebSearch-syntetisering, begrenset i direkte AI-spørringer</td>
@@ -765,43 +725,43 @@
     </thead>
     <tbody>
       <tr>
-        <td>Adam og Eva Stavanger<br><small style="color:#6b7280">Stavanger, 50+ år, nasjonal kjede</small></td>
+        <td>Adam og Eva Stavanger<br><small style="color:var(--color-muted)">Stavanger, 50+ år, nasjonal kjede</small></td>
         <td class="score-cell">40%<span class="badge-verified">✓ verifisert</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-yellow" style="width:40%"></div></div></td>
         <td>Kjende-navn-effekt + norgebeauty.com-profil — men usynlig på generiske søk</td>
       </tr>
       <tr>
-        <td>Studio Alf Stavanger<br><small style="color:#6b7280">Stavanger, 30+ år</small></td>
+        <td>Studio Alf Stavanger<br><small style="color:var(--color-muted)">Stavanger, 30+ år</small></td>
         <td class="score-cell">30%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:30%"></div></div></td>
         <td>Merkevarestyrke kompenserer delvis for svak AEO-infrastruktur</td>
       </tr>
       <tr>
-        <td>Grønnestad / Fryd og Forandring<br><small style="color:#6b7280">Stavanger, fargespesialist, est. 1999</small></td>
+        <td>Grønnestad / Fryd og Forandring<br><small style="color:var(--color-muted)">Stavanger, fargespesialist, est. 1999</small></td>
         <td class="score-cell">25%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-orange" style="width:25%"></div></div></td>
         <td>Spesialisering gir noe søkesynlighet, men mangler aggregatordybde</td>
       </tr>
       <tr>
-        <td>Hairforce Frisørsalong<br><small style="color:#6b7280">Stavanger</small></td>
+        <td>Hairforce Frisørsalong<br><small style="color:var(--color-muted)">Stavanger</small></td>
         <td class="score-cell">20%<span class="badge-verified">✓ verifisert</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:20%"></div></div></td>
         <td>Kun synlig i merkevarerelaterte og nærhetsspørringer (2/10)</td>
       </tr>
       <tr>
-        <td>Sezar Frisør &amp; Barbershop<br><small style="color:#6b7280">Stavanger, est. 2019</small></td>
+        <td>Sezar Frisør &amp; Barbershop<br><small style="color:var(--color-muted)">Stavanger, est. 2019</small></td>
         <td class="score-cell">20%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:20%"></div></div></td>
         <td>Synlig i begge søkemotorer, mangler spesialisert aggregatorprofil</td>
       </tr>
       <tr>
-        <td>Ivan Frisør &amp; Barbershop<br><small style="color:#6b7280">Stavanger og Sandnes</small></td>
+        <td>Ivan Frisør &amp; Barbershop<br><small style="color:var(--color-muted)">Stavanger og Sandnes</small></td>
         <td class="score-cell">20%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:20%"></div></div></td>
         <td>Konsistent i søk, men svak AI-aggregering</td>
       </tr>
       <tr>
-        <td>Sueno Frisørsalong<br><small style="color:#6b7280">Stavanger, Årets beste frisør 2 år på rad</small></td>
+        <td>Sueno Frisørsalong<br><small style="color:var(--color-muted)">Stavanger, Årets beste frisør 2 år på rad</small></td>
         <td class="score-cell">15%<span class="badge-est">est</span></td>
         <td><div class="vis-bar"><div class="vis-bar-fill fill-red" style="width:15%"></div></div></td>
         <td>Prisbelønt lokalt — men ingen maskinlesbar kommunikasjon av dette</td>
@@ -992,10 +952,10 @@
     <h2>Sjekk din AI-synlighet gratis</h2>
     <p>Se nøyaktig hvilke søk du vises i — og hvilke du går glipp av. Gratis analyse av din bedrift.</p>
     <a href="https://sjekk.synligdigital.no" class="btn">Sjekk din score gratis →</a>
-    <p style="margin-top: 1rem; font-size: 0.9rem; color: #c8c8d0;">
-      Eller hopp rett til fiks: <strong>Synlig Lite — 990 NOK</strong> leverer FAQPage JSON-LD for én side på 1 virkedag. <a href="/blogg/aeo-lite-faqpage-990-kr" style="color:#6ee7b7;">Les og bestill →</a>
+    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-ink);">
+      Eller hopp rett til fiks: <strong>Synlig Lite — 990 NOK</strong> leverer FAQPage JSON-LD for én side på 1 virkedag. <a href="/blogg/aeo-lite-faqpage-990-kr" style="color:var(--color-brand);">Les og bestill →</a>
     </p>
-    <p style="margin-top: 0.6rem; font-size: 0.85rem; color: #6b7280;">
+    <p style="margin-top: 0.6rem; font-size: 0.85rem; color: var(--color-muted);">
       Eller ta kontakt direkte: <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a>
     </p>
   </div>
@@ -1008,7 +968,7 @@
 
 </div>
 
-<footer style="background:#0a0a0b;border-top:1px solid #222225;padding:2rem;text-align:center;font-size:0.85rem;color:#9f9faa;margin-top:3rem;">
+<footer style="background:var(--color-wash);border-top:1px solid var(--color-line);padding:2rem;text-align:center;font-size:0.85rem;color:var(--color-muted);margin-top:3rem;">
   <p>© 2026 Synlig Digital — <a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> — Stavanger, Norge</p>
   <p style="margin-top:0.5rem;"><a href="/">Hjem</a> · <a href="/blogg">Blogg</a> · <a href="/guide">Guide</a> · <a href="/rapport/state-of-aeo-2026">Rapport</a></p>
 </footer>

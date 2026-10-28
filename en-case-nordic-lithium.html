@@ -27,9 +27,6 @@
 <meta name="twitter:title" content="Nordic Lithium: 67 to 90 over 13 weeks (AEO case study)">
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script type="application/ld+json">
 {
@@ -100,53 +97,43 @@
 </script>
 
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --blue-900: #1a365d;
-    --blue-700: #2b4c8a;
-    --blue-100: #ebf2ff;
-    --blue-50: #f5f8ff;
-    --green-700: #2f855a;
-    --green-600: #38a169;
-    --green-500: #48bb78;
-    --green-50: #f0fff4;
-    --red-600: #c53030;
-    --red-50: #fff5f5;
-    --yellow-600: #b7791f;
-    --yellow-50: #fffaf0;
-    --gray-900: #1a202c;
-    --gray-700: #4a5568;
-    --gray-600: #5a6577;
-    --gray-200: #e2e8f0;
-    --gray-100: #edf2f7;
-    --gray-50: #f7fafc;
-    --white: #ffffff;
+    --blue-900: var(--color-brand);
+    --blue-700: var(--color-brand);
+    --blue-100: var(--color-paper);
+    --blue-50: var(--color-paper);
+    --green-700: var(--color-brand);
+    --green-600: var(--color-brand);
+    --green-500: var(--color-brand);
+    --green-50: var(--color-paper);
+    --red-600: var(--color-alert);
+    --red-50: var(--color-paper);
+    --yellow-600: var(--color-ink);
+    --yellow-50: var(--color-paper);
+    --gray-900: var(--color-ink);
+    --gray-700: var(--color-muted);
+    --gray-600: var(--color-muted);
+    --gray-200: var(--color-wash);
+    --gray-100: var(--color-wash);
+    --gray-50: var(--color-paper);
+    --white: var(--color-paper);
     --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   }
-  html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  body { background: var(--white); color: var(--gray-700); font-family: var(--font); line-height: 1.7; }
   .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
-
-  nav { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--gray-200); z-index: 100; }
-  .nav-inner { max-width: 760px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; height: 56px; }
-  .nav-logo { font-size: 1.05rem; font-weight: 700; color: var(--blue-900); text-decoration: none; letter-spacing: -0.02em; }
   .nav-lang { color: var(--gray-600); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
   .nav-lang:hover { color: var(--blue-900); }
-
   .breadcrumbs { font-size: 0.82rem; color: var(--gray-600); padding: 20px 0 0; }
   .breadcrumbs a { color: var(--gray-600); text-decoration: none; }
   .breadcrumbs a:hover { color: var(--blue-700); }
   .breadcrumbs .sep { margin: 0 6px; opacity: 0.5; }
-
   header.article-header { padding: 28px 0 16px; }
   .article-tag-row { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; font-size: 0.78rem; color: var(--gray-600); }
-  .article-tag { background: var(--blue-100); color: var(--blue-700); padding: 3px 10px; border-radius: 12px; font-weight: 600; letter-spacing: 0.01em; }
+  .article-tag { background: var(--blue-100); color: var(--blue-700); padding: 3px 10px; border-radius: 12px; font-weight: 600;  }
   .article-tag-disclose { background: var(--yellow-50); color: var(--yellow-600); border: 1px solid var(--yellow-600); }
   h1.article-title { font-size: 2rem; line-height: 1.2; color: var(--gray-900); margin-bottom: 14px; letter-spacing: -0.02em; font-weight: 700; }
   .article-sub { font-size: 1.05rem; color: var(--gray-700); }
   .disclosure-note { margin-top: 18px; padding: 12px 16px; background: var(--yellow-50); border-left: 3px solid var(--yellow-600); border-radius: 4px; font-size: 0.92rem; color: var(--gray-700); line-height: 1.55; }
   .disclosure-note strong { color: var(--yellow-600); font-weight: 700; }
-
   .score-card { display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; align-items: center; margin: 32px 0; padding: 24px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px; }
   .score-box { text-align: center; }
   .score-num { font-size: 2.6rem; font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
@@ -157,7 +144,6 @@
   .score-arrow { font-size: 1.6rem; color: var(--green-600); }
   .score-delta { grid-column: 1 / -1; text-align: center; padding-top: 16px; margin-top: 4px; border-top: 1px solid var(--gray-200); font-size: 0.86rem; color: var(--gray-700); }
   .score-delta strong { color: var(--green-700); }
-
   section { padding: 28px 0; }
   section + section { border-top: 1px solid var(--gray-100); }
   h2 { font-size: 1.35rem; color: var(--gray-900); margin-bottom: 14px; font-weight: 600; letter-spacing: -0.01em; }
@@ -165,21 +151,18 @@
   p { margin-bottom: 14px; }
   ul, ol { padding-left: 22px; margin-bottom: 14px; }
   ul li, ol li { margin-bottom: 8px; }
-
   .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 18px 0 24px; }
   .stat-cell { padding: 14px 14px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 8px; text-align: center; }
   .stat-cell .v { font-size: 1.4rem; font-weight: 700; color: var(--green-700); letter-spacing: -0.01em; }
   .stat-cell .l { font-size: 0.78rem; color: var(--gray-600); margin-top: 4px; line-height: 1.4; }
-
   .finding { margin: 14px 0; padding: 14px 18px; border-radius: 8px; border-left: 3px solid; }
   .finding-critical { background: var(--red-50); border-color: var(--red-600); }
   .finding-medium { background: var(--yellow-50); border-color: var(--yellow-600); }
-  .finding-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .finding-label { font-size: 0.72rem; font-weight: 700;   margin-bottom: 6px; }
   .finding-critical .finding-label { color: var(--red-600); }
   .finding-medium .finding-label { color: var(--yellow-600); }
   .finding h3 { margin: 0 0 6px; }
   .finding p { font-size: 0.92rem; margin-bottom: 0; }
-
   .phase-list { margin: 16px 0 8px; }
   .phase-item { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
   .phase-item:last-child { border-bottom: none; }
@@ -188,10 +171,8 @@
   .phase-title { font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
   .phase-detail { font-size: 0.94rem; color: var(--gray-700); margin-bottom: 6px; }
   .phase-result { font-size: 0.85rem; color: var(--green-700); font-weight: 600; }
-
   .quote-block { background: var(--blue-50); border-left: 3px solid var(--blue-700); padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 20px 0; font-size: 0.95rem; }
   .quote-block cite { display: block; margin-top: 10px; font-size: 0.85rem; color: var(--gray-600); font-style: normal; }
-
   .cta-block { margin: 36px 0 0; padding: 24px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px; text-align: center; }
   .cta-block h2 { font-size: 1.15rem; margin-bottom: 10px; }
   .cta-block p { font-size: 0.95rem; margin-bottom: 16px; }
@@ -202,21 +183,15 @@
      citation measurement, which is the primary CTA above it. */
   .btn-secondary { display: inline-block; background: var(--white); color: var(--green-600); padding: 10px 21px; border: 1px solid var(--green-600); border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.95rem; transition: background 0.2s; }
   .btn-secondary:hover { background: var(--gray-50); }
-  .cta-form button.btn-secondary { border: 1px solid var(--green-600); cursor: pointer; font-family: inherit; }
+  .cta-form button.btn-secondary { border: 1px solid var(--green-600); cursor: pointer; font-family: var(--font-sans); }
   .cta-form { display: flex; gap: 8px; max-width: 440px; margin: 0 auto 4px; flex-wrap: wrap; }
-  .cta-form-input { flex: 1 1 220px; padding: 10px 14px; background: var(--white); border: 1px solid var(--gray-200); border-radius: 6px; color: var(--gray-900); font-size: 0.95rem; font-family: inherit; }
+  .cta-form-input { flex: 1 1 220px; padding: 10px 14px; background: var(--white); border: 1px solid var(--gray-200); border-radius: 6px; color: var(--gray-900); font-size: 0.95rem; font-family: var(--font-sans); }
   .cta-form-input:focus { outline: none; border-color: var(--green-600); }
-  .cta-form button.btn-primary { border: none; cursor: pointer; font-family: inherit; }
+  .cta-form button.btn-primary { border: none; cursor: pointer; font-family: var(--font-sans); }
   .cta-sub { font-size: 0.85rem; color: var(--gray-600); margin-top: 14px; }
   .cta-sub a { color: var(--blue-700); }
-
-  footer { padding: 36px 0; border-top: 1px solid var(--gray-200); color: var(--gray-600); font-size: 0.88rem; margin-top: 40px; }
   footer p { margin-bottom: 6px; }
-  footer a { color: var(--blue-700); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-
   a { color: var(--blue-700); }
-
   @media (max-width: 600px) {
     h1.article-title { font-size: 1.7rem; }
     .score-card { padding: 18px; gap: 12px; }
@@ -229,7 +204,7 @@
 
 <nav>
   <div class="nav-inner">
-    <a href="/en/" class="nav-logo">Synlig Digital</a>
+    <!--SITE-LOGO-->
     <a href="/case/nordic-lithium" class="nav-lang">På norsk →</a>
   </div>
 </nav>

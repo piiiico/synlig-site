@@ -21,9 +21,6 @@
 <meta property="og:locale" content="en_US">
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script type="application/ld+json">
 {
@@ -42,72 +39,55 @@
 </script>
 
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --blue-900: #1a365d;
-    --blue-700: #2b4c8a;
-    --blue-100: #ebf2ff;
-    --blue-50: #f5f8ff;
-    --green-600: #38a169;
-    --green-500: #48bb78;
-    --gray-900: #1a202c;
-    --gray-700: #4a5568;
-    --gray-600: #5a6577;
-    --gray-200: #e2e8f0;
-    --gray-100: #edf2f7;
-    --gray-50: #f7fafc;
-    --white: #ffffff;
+    --blue-900: var(--color-brand);
+    --blue-700: var(--color-brand);
+    --blue-100: var(--color-paper);
+    --blue-50: var(--color-paper);
+    --green-600: var(--color-brand);
+    --green-500: var(--color-brand);
+    --gray-900: var(--color-ink);
+    --gray-700: var(--color-muted);
+    --gray-600: var(--color-muted);
+    --gray-200: var(--color-wash);
+    --gray-100: var(--color-wash);
+    --gray-50: var(--color-paper);
+    --white: var(--color-paper);
     --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   }
-  html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  body { background: var(--white); color: var(--gray-700); font-family: var(--font); line-height: 1.7; }
   .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
-
-  nav { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--gray-200); z-index: 100; }
-  .nav-inner { max-width: 760px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; height: 56px; }
-  .nav-logo { font-size: 1.05rem; font-weight: 700; color: var(--blue-900); text-decoration: none; letter-spacing: -0.02em; }
   .nav-lang { color: var(--gray-600); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
   .nav-lang:hover { color: var(--blue-900); }
-
   .breadcrumbs { font-size: 0.82rem; color: var(--gray-600); padding: 20px 0 0; }
   .breadcrumbs a { color: var(--gray-600); text-decoration: none; }
   .breadcrumbs a:hover { color: var(--blue-700); }
   .breadcrumbs .sep { margin: 0 6px; opacity: 0.5; }
-
   header.page-header { padding: 28px 0 24px; }
   h1.page-title { font-size: 2rem; line-height: 1.2; color: var(--gray-900); margin-bottom: 12px; letter-spacing: -0.02em; font-weight: 700; }
   .page-sub { font-size: 1.05rem; color: var(--gray-700); }
-
   .post-list { display: grid; gap: 14px; padding: 0 0 24px; }
-
   .post-card { display: block; padding: 22px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px; text-decoration: none; transition: border-color 0.15s, transform 0.12s; }
   .post-card:hover { border-color: var(--blue-700); transform: translateY(-1px); }
   .post-meta { font-size: 0.8rem; color: var(--gray-600); margin-bottom: 6px; }
-  .post-tag { display: inline-block; background: var(--blue-100); color: var(--blue-700); padding: 2px 9px; border-radius: 10px; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.02em; margin-right: 8px; }
+  .post-tag { display: inline-block; background: var(--blue-100); color: var(--blue-700); padding: 2px 9px; border-radius: 10px; font-size: 0.74rem; font-weight: 600;  margin-right: 8px; }
   .post-title { font-size: 1.1rem; line-height: 1.35; color: var(--gray-900); font-weight: 600; margin-bottom: 6px; letter-spacing: -0.01em; }
   .post-excerpt { font-size: 0.94rem; color: var(--gray-700); line-height: 1.55; }
-
   .empty-note { padding: 24px; background: var(--gray-50); border: 1px dashed var(--gray-200); border-radius: 10px; color: var(--gray-600); font-size: 0.93rem; text-align: center; }
-
-  .cta-block { margin: 28px 0 0; padding: 24px; background: var(--blue-50); border: 1px solid #d6e3fb; border-radius: 10px; text-align: center; }
+  .cta-block { margin: 28px 0 0; padding: 24px; background: var(--blue-50); border: 1px solid var(--color-wash); border-radius: 10px; text-align: center; }
   .cta-block h2 { font-size: 1.15rem; margin-bottom: 8px; color: var(--gray-900); font-weight: 600; }
   .cta-block p { font-size: 0.95rem; margin-bottom: 14px; }
   .btn-primary { display: inline-block; background: var(--green-600); color: var(--white); padding: 11px 22px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.95rem; transition: background 0.2s; }
   .btn-primary:hover { background: var(--green-500); }
   .cta-sub { font-size: 0.85rem; color: var(--gray-600); margin-top: 12px; }
   .cta-sub a { color: var(--blue-700); }
-
-  footer { padding: 36px 0; border-top: 1px solid var(--gray-200); color: var(--gray-600); font-size: 0.88rem; margin-top: 40px; }
   footer p { margin-bottom: 6px; }
-  footer a { color: var(--blue-700); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <a href="/en/" class="nav-logo">Synlig Digital</a>
+    <!--SITE-LOGO-->
     <a href="/blogg" class="nav-lang">På norsk →</a>
   </div>
 </nav>

@@ -26,9 +26,6 @@
 <meta name="twitter:description" content="A small AEO consultancy in Stavanger, Norway.">
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- JSON-LD Structured Data — Block 1: LocalBusiness (Organization, full)
      Mirrors the Norwegian / block 1 with English copy, an OfferCatalog
@@ -348,35 +345,27 @@
 </script>
 
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --blue-900: #1a365d;
-    --blue-700: #2b4c8a;
-    --blue-100: #ebf2ff;
-    --blue-50: #f5f8ff;
-    --green-600: #38a169;
-    --green-500: #48bb78;
-    --gray-900: #1a202c;
-    --gray-700: #4a5568;
-    --gray-600: #5a6577;
-    --gray-200: #e2e8f0;
-    --gray-100: #edf2f7;
-    --gray-50: #f7fafc;
-    --white: #ffffff;
+    --blue-900: var(--color-brand);
+    --blue-700: var(--color-brand);
+    --blue-100: var(--color-paper);
+    --blue-50: var(--color-paper);
+    --green-600: var(--color-brand);
+    --green-500: var(--color-brand);
+    --gray-900: var(--color-ink);
+    --gray-700: var(--color-muted);
+    --gray-600: var(--color-muted);
+    --gray-200: var(--color-wash);
+    --gray-100: var(--color-wash);
+    --gray-50: var(--color-paper);
+    --white: var(--color-paper);
     --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   }
-  html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  body { background: var(--white); color: var(--gray-700); font-family: var(--font); line-height: 1.7; }
   .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
-
-  nav { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--gray-200); z-index: 100; }
-  .nav-inner { max-width: 760px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; height: 56px; }
-  .nav-logo { font-size: 1.05rem; font-weight: 700; color: var(--blue-900); text-decoration: none; letter-spacing: -0.02em; }
   .nav-lang { color: var(--gray-600); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
   .nav-lang:hover { color: var(--blue-900); }
-
   .hero { padding: 64px 0 32px; }
-  .hero-badge { display: inline-block; background: var(--blue-100); color: var(--blue-700); font-size: 0.78rem; font-weight: 600; padding: 5px 14px; border-radius: 20px; margin-bottom: 20px; letter-spacing: 0.02em; }
+  .hero-badge { display: inline-block; background: var(--blue-100); color: var(--blue-700); font-size: 0.78rem; font-weight: 600; padding: 5px 14px; border-radius: 20px; margin-bottom: 20px;  }
   h1 { font-size: 2.1rem; line-height: 1.2; color: var(--gray-900); margin-bottom: 16px; letter-spacing: -0.02em; font-weight: 700; }
   .hero-sub { font-size: 1.1rem; color: var(--gray-700); margin-bottom: 28px; }
   .hero-cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
@@ -384,14 +373,12 @@
   .btn-primary:hover { background: var(--green-500); }
   .btn-secondary { display: inline-block; color: var(--blue-700); padding: 11px 6px; font-weight: 500; text-decoration: none; font-size: 0.95rem; }
   .btn-secondary:hover { color: var(--blue-900); text-decoration: underline; }
-
   section { padding: 32px 0; }
   section + section { border-top: 1px solid var(--gray-100); }
   h2 { font-size: 1.35rem; color: var(--gray-900); margin-bottom: 14px; font-weight: 600; letter-spacing: -0.01em; }
   p { margin-bottom: 14px; }
   ul { padding-left: 22px; margin-bottom: 14px; }
   ul li { margin-bottom: 8px; }
-
   .services { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 18px; }
   .service-card { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 8px; padding: 16px 18px; }
   .service-card h3 { font-size: 1rem; color: var(--gray-900); margin-bottom: 6px; font-weight: 600; }
@@ -409,29 +396,21 @@
      page) per checkout-en-i18n.test.ts contract. */
   .service-card-form { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; }
   .service-card-form label { font-size: 0.85rem; font-weight: 600; color: var(--gray-900); }
-  .service-card-input { padding: 9px 12px; background: var(--white); border: 1px solid var(--gray-200); border-radius: 6px; color: var(--gray-900); font-size: 0.92rem; font-family: inherit; }
+  .service-card-input { padding: 9px 12px; background: var(--white); border: 1px solid var(--gray-200); border-radius: 6px; color: var(--gray-900); font-size: 0.92rem; font-family: var(--font-sans); }
   .service-card-input:focus { outline: none; border-color: var(--green-600); }
-  .service-card-cta { display: inline-block; background: var(--green-600); color: var(--white); padding: 10px 18px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.93rem; border: none; cursor: pointer; font-family: inherit; text-align: center; transition: background 0.2s; }
+  .service-card-cta { display: inline-block; background: var(--green-600); color: var(--white); padding: 10px 18px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.93rem; border: none; cursor: pointer; font-family: var(--font-sans); text-align: center; transition: background 0.2s; }
   .service-card-cta:hover { background: var(--green-500); }
   .service-card-cta-outline { background: transparent; color: var(--green-600); border: 1px solid var(--green-600); }
-  .service-card-cta-outline:hover { background: rgba(34, 197, 94, 0.08); color: var(--green-600); }
+  .service-card-cta-outline:hover { background: var(--color-line); color: var(--green-600); }
   .service-card-stripe-note { font-size: 0.78rem; color: var(--gray-600); margin: 2px 0 0; }
-
   .case-quote { background: var(--blue-50); border-left: 3px solid var(--blue-700); padding: 14px 18px; border-radius: 0 6px 6px 0; margin: 16px 0; font-size: 0.95rem; }
   .case-quote cite { display: block; margin-top: 8px; font-size: 0.85rem; color: var(--gray-600); font-style: normal; }
   .case-quote a { color: var(--blue-700); }
-
   .tool-callout { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 8px; padding: 16px 18px; margin-top: 18px; font-size: 0.94rem; }
   .tool-callout strong { color: var(--gray-900); }
   .tool-callout a { color: var(--blue-700); }
-
-  footer { padding: 36px 0; border-top: 1px solid var(--gray-200); color: var(--gray-600); font-size: 0.88rem; }
   footer p { margin-bottom: 6px; }
-  footer a { color: var(--blue-700); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-
   a { color: var(--blue-700); }
-
   .audit-box { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 8px; padding: 18px 20px; margin: 22px 0 18px; }
   .audit-box-label { font-size: 0.94rem; color: var(--gray-900); font-weight: 600; margin-bottom: 10px; }
   .audit-form { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -441,21 +420,20 @@
   .audit-form button:hover { background: var(--blue-900); }
   .audit-form button:disabled { background: var(--gray-600); cursor: default; }
   .audit-box-note { font-size: 0.82rem; color: var(--gray-600); margin-top: 10px; margin-bottom: 0; }
-
   .audit-result { background: var(--white); border: 1px solid var(--gray-200); border-radius: 8px; padding: 20px; margin: 18px 0; }
-  .audit-result.error { border-color: #fca5a5; background: #fef2f2; color: #991b1b; font-size: 0.92rem; }
+  .audit-result.error { border-color: var(--color-alert); background: var(--color-paper); color: var(--color-alert); font-size: 0.92rem; }
   .audit-result.error p { margin: 0 0 12px; }
-  .audit-result.error a { color: #991b1b; font-weight: 600; text-decoration: underline; }
+  .audit-result.error a { color: var(--color-alert); font-weight: 600; text-decoration: underline; }
   .audit-result-error-cta { display: inline-block; background: var(--green-600); color: var(--white) !important; padding: 8px 16px; border-radius: 6px; font-weight: 600; text-decoration: none !important; font-size: 0.92rem; margin-top: 2px; }
   .audit-result-error-cta:hover { background: var(--green-500); }
   .audit-result-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
   .audit-result-score { font-size: 2.4rem; font-weight: 700; line-height: 1; color: var(--gray-900); }
   .audit-result-grade { font-size: 1rem; font-weight: 600; padding: 3px 10px; border-radius: 4px; }
-  .audit-result-grade.a { background: #dcfce7; color: #166534; }
-  .audit-result-grade.b { background: #ecfccb; color: #3f6212; }
-  .audit-result-grade.c { background: #fef9c3; color: #854d0e; }
-  .audit-result-grade.d { background: #fed7aa; color: #9a3412; }
-  .audit-result-grade.f { background: #fecaca; color: #991b1b; }
+  .audit-result-grade.a { background: var(--color-wash); color: var(--color-brand); }
+  .audit-result-grade.b { background: var(--color-wash); color: var(--color-brand); }
+  .audit-result-grade.c { background: var(--color-wash); color: var(--color-ink); }
+  .audit-result-grade.d { background: var(--color-warn); color: var(--color-alert); }
+  .audit-result-grade.f { background: var(--color-wash); color: var(--color-alert); }
   .audit-result-host { color: var(--gray-600); font-size: 0.92rem; }
   .audit-result-breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 14px; }
   .audit-result-cat { background: var(--gray-50); border-radius: 6px; padding: 10px 12px; font-size: 0.85rem; }
@@ -463,11 +441,11 @@
   .audit-result-cat-score { color: var(--gray-900); font-weight: 600; font-size: 1.05rem; }
   .audit-result-cat-max { color: var(--gray-600); font-weight: 500; font-size: 0.82rem; margin-left: 2px; }
   .audit-result-score-max { color: var(--gray-600); font-weight: 500; font-size: 1.1rem; margin-left: 2px; }
-  .audit-result-issues-label { font-size: 0.82rem; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; margin: 4px 0 8px; }
+  .audit-result-issues-label { font-size: 0.82rem; color: var(--gray-600);   font-weight: 600; margin: 4px 0 8px; }
   .audit-result-issues { margin: 0 0 14px; padding-left: 18px; }
   .audit-result-issues li { font-size: 0.92rem; color: var(--gray-900); margin-bottom: 6px; line-height: 1.45; }
-  .audit-result-issue-cat { display: inline-block; font-size: 0.74rem; font-weight: 600; color: var(--gray-600); background: var(--gray-100, #f3f4f6); padding: 1px 6px; border-radius: 3px; margin-right: 6px; text-transform: uppercase; letter-spacing: 0.03em; vertical-align: 1px; }
-  .audit-result-cta { display: inline-block; background: var(--green-600); color: var(--white); padding: 10px 18px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.95rem; margin-top: 4px; border: none; cursor: pointer; font-family: inherit; }
+  .audit-result-issue-cat { display: inline-block; font-size: 0.74rem; font-weight: 600; color: var(--gray-600); background: var(--gray-100, var(--color-wash)); padding: 1px 6px; border-radius: 3px; margin-right: 6px;   vertical-align: 1px; }
+  .audit-result-cta { display: inline-block; background: var(--green-600); color: var(--white); padding: 10px 18px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.95rem; margin-top: 4px; border: none; cursor: pointer; font-family: var(--font-sans); }
   .audit-result-cta:hover { background: var(--green-500); }
   /* Secondary tier button — step-up from the Lite default (the tier it
      originally named was discontinued 2026-08-08; it now points at the
@@ -477,12 +455,11 @@
      write-up discoverable without pulling attention from the impulse-buy
      Lite default. */
   .audit-result-cta-secondary { background: transparent; color: var(--green-600); border: 1px solid var(--green-600); }
-  .audit-result-cta-secondary:hover { background: rgba(34, 197, 94, 0.08); color: var(--green-600); }
+  .audit-result-cta-secondary:hover { background: var(--color-line); color: var(--green-600); }
   .audit-result-form { display: flex; gap: 8px; flex-wrap: wrap; align-items: stretch; max-width: 480px; margin: 4px 0 0; padding: 0; }
-  .audit-result-email { flex: 1 1 200px; padding: 10px 14px; background: var(--white); border: 1px solid var(--gray-200); border-radius: 6px; color: var(--gray-900); font-size: 0.95rem; font-family: inherit; }
+  .audit-result-email { flex: 1 1 200px; padding: 10px 14px; background: var(--white); border: 1px solid var(--gray-200); border-radius: 6px; color: var(--gray-900); font-size: 0.95rem; font-family: var(--font-sans); }
   .audit-result-email:focus { outline: none; border-color: var(--green-600); }
-  .audit-result-redo { margin-left: 12px; color: var(--gray-600); font-size: 0.88rem; cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; font-family: inherit; }
-
+  .audit-result-redo { margin-left: 12px; color: var(--gray-600); font-size: 0.88rem; cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; font-family: var(--font-sans); }
   /* Stripe abandonment recovery banner. Hidden by default; revealed by JS
      below when ?utm_canceled=1 is present (cancel_url from checkout-handler).
      Mirrors the Norwegian /priser recovery-banner pattern so the English
@@ -501,7 +478,6 @@
   .recovery-cta-primary:hover { background: var(--green-500); }
   .recovery-cta-secondary { background: transparent; color: var(--blue-700); border: 1px solid var(--blue-100); }
   .recovery-cta-secondary:hover { background: var(--blue-100); }
-
   @media (max-width: 600px) {
     h1 { font-size: 1.7rem; }
     .hero { padding: 40px 0 24px; }
@@ -514,7 +490,7 @@
 
 <nav>
   <div class="nav-inner">
-    <a href="/en/" class="nav-logo">Synlig Digital</a>
+    <!--SITE-LOGO-->
     <a href="/" class="nav-lang">På norsk →</a>
   </div>
 </nav>
