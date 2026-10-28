@@ -566,10 +566,19 @@
 
 <section>
   <h2>How we work</h2>
+  <!-- Denne <ul>-en er GENERERT fra CITED_STEPS i _partials/en-cited-howto.ts
+       (renderCitedStepsList). Erstattet 2026-08-15 «Audit → Foundation →
+       Monthly monitoring», som beskrev implementerings- og retainer-tjenesten
+       som ble lagt ned 2026-08-08: den lovet kvartalsvis gjennomgang rett over
+       sidens eget kortcheckout, mens vår egen blogg-FAQ sa «there is no
+       retainer». (Ingen pris skrives her — se prisporten.) Maskinlaget var
+       migrert 08-14, dette laget ikke. Skriv ikke om
+       punktene her — endre stegene i modulen; porten feiler bygget på avvik. -->
+  <p>Both packages are one-off. No meetings, no dashboards, no subscription — you get a document you can forward internally, and the raw data behind it.</p>
   <ul>
-    <li><strong>Audit.</strong> We score the site (0–100), test what AI assistants currently say about you when asked, and write up the gaps.</li>
-    <li><strong>Foundation.</strong> Schema, content structure, machine-readable metadata, canonical entity, business profile, llms.txt, agent-card.</li>
-    <li><strong>Monthly monitoring.</strong> Visibility tracking, content updates, and quarterly review of what shifted in the AI assistants you care about.</li>
+    <li><strong>Baseline measurement.</strong> Five buying-intent questions from your market, each run at least nine times over several days with byte-identical prompts. You approve the questions first. You get how often your domain was cited with a link, and the names of who was cited instead.</li>
+    <li><strong>The changes, written out.</strong> JSON-LD, citable questions and answers, llms.txt and AI-crawler rules for up to ten pages — ready to paste, or delivered as a pull request, within five business days. You publish them, and they stay in your own pages afterwards.</li>
+    <li><strong>Re-measurement 30 days after you publish.</strong> The same five questions, nine new runs, before and after in one document with the raw data. Written outcome criterion: at least one citation of your domain. If it is not met, we run another round at no extra charge.</li>
   </ul>
 
   <!-- Live EN offer set is exactly two cards (the other three sold tiers
@@ -611,6 +620,16 @@
     <cite>Feedback from Nordic Lithium, May 2026 (related party — see disclosure above). Full case: <a href="/en/case/nordic-lithium">synligdigital.no/en/case/nordic-lithium</a></cite>
   </div>
   <p>The methodology is the same in any language. Our two published cases (Nordic Lithium and Pierstop) are both related-party implementations — chosen as methodology baselines because internal access let us run clean before/after audits without external coordination. The schema and structural work transfers cleanly to arm's-length customers; the first such case is in progress.</p>
+</section>
+
+<section>
+  <h2>What we have written in English</h2>
+  <p>Audit data and findings, not pitches. Full index at <a href="/en/blog">synligdigital.no/en/blog</a>.</p>
+  <!-- Lenkene under GENERERES fra EN_PAGES i synlig-site/build.ts (hele
+       /en/blog-undertreet). Tom <ul> her er ankeret; fyller du den for hånd
+       gafler /en/ seg fra rutetabellen igjen — som den gjorde til 2026-08-14,
+       da den hadde null lenker til sin egen blogg. -->
+  <ul id="en-notes-list"></ul>
 </section>
 
 <section>

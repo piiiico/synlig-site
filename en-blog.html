@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes — Synlig Digital</title>
+<meta name="description" content="Notes from Synlig Digital on Answer Engine Optimization, AI search visibility, and what we actually find when we audit sites. Written for people who want the data, not the pitch.">
+<link rel="canonical" href="https://synligdigital.no/en/blog/">
+<link rel="alternate" hreflang="en" href="https://synligdigital.no/en/blog/">
+<link rel="alternate" hreflang="no" href="https://synligdigital.no/blogg">
+<link rel="alternate" hreflang="x-default" href="https://synligdigital.no/blogg">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Notes — Synlig Digital">
+<meta property="og:description" content="Notes on Answer Engine Optimization, AI search visibility, and audit findings. From Synlig Digital, Stavanger.">
+<meta property="og:url" content="https://synligdigital.no/en/blog/">
+<meta property="og:image" content="https://synligdigital.no/og-2026-08.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Synlig Digital">
+<meta property="og:locale" content="en_US">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Synlig Digital Notes",
+  "url": "https://synligdigital.no/en/blog/",
+  "description": "Notes on Answer Engine Optimization, AI search visibility, and audit findings.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Synlig Digital",
+    "url": "https://synligdigital.no/en/"
+  },
+  "inLanguage": "en"
+}
+</script>
+
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --blue-900: #1a365d;
+    --blue-700: #2b4c8a;
+    --blue-100: #ebf2ff;
+    --blue-50: #f5f8ff;
+    --green-600: #38a169;
+    --green-500: #48bb78;
+    --gray-900: #1a202c;
+    --gray-700: #4a5568;
+    --gray-600: #5a6577;
+    --gray-200: #e2e8f0;
+    --gray-100: #edf2f7;
+    --gray-50: #f7fafc;
+    --white: #ffffff;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body { background: var(--white); color: var(--gray-700); font-family: var(--font); line-height: 1.7; }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  nav { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--gray-200); z-index: 100; }
+  .nav-inner { max-width: 760px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; height: 56px; }
+  .nav-logo { font-size: 1.05rem; font-weight: 700; color: var(--blue-900); text-decoration: none; letter-spacing: -0.02em; }
+  .nav-lang { color: var(--gray-600); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+  .nav-lang:hover { color: var(--blue-900); }
+
+  .breadcrumbs { font-size: 0.82rem; color: var(--gray-600); padding: 20px 0 0; }
+  .breadcrumbs a { color: var(--gray-600); text-decoration: none; }
+  .breadcrumbs a:hover { color: var(--blue-700); }
+  .breadcrumbs .sep { margin: 0 6px; opacity: 0.5; }
+
+  header.page-header { padding: 28px 0 24px; }
+  h1.page-title { font-size: 2rem; line-height: 1.2; color: var(--gray-900); margin-bottom: 12px; letter-spacing: -0.02em; font-weight: 700; }
+  .page-sub { font-size: 1.05rem; color: var(--gray-700); }
+
+  .post-list { display: grid; gap: 14px; padding: 0 0 24px; }
+
+  .post-card { display: block; padding: 22px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px; text-decoration: none; transition: border-color 0.15s, transform 0.12s; }
+  .post-card:hover { border-color: var(--blue-700); transform: translateY(-1px); }
+  .post-meta { font-size: 0.8rem; color: var(--gray-600); margin-bottom: 6px; }
+  .post-tag { display: inline-block; background: var(--blue-100); color: var(--blue-700); padding: 2px 9px; border-radius: 10px; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.02em; margin-right: 8px; }
+  .post-title { font-size: 1.1rem; line-height: 1.35; color: var(--gray-900); font-weight: 600; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .post-excerpt { font-size: 0.94rem; color: var(--gray-700); line-height: 1.55; }
+
+  .empty-note { padding: 24px; background: var(--gray-50); border: 1px dashed var(--gray-200); border-radius: 10px; color: var(--gray-600); font-size: 0.93rem; text-align: center; }
+
+  .cta-block { margin: 28px 0 0; padding: 24px; background: var(--blue-50); border: 1px solid #d6e3fb; border-radius: 10px; text-align: center; }
+  .cta-block h2 { font-size: 1.15rem; margin-bottom: 8px; color: var(--gray-900); font-weight: 600; }
+  .cta-block p { font-size: 0.95rem; margin-bottom: 14px; }
+  .btn-primary { display: inline-block; background: var(--green-600); color: var(--white); padding: 11px 22px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.95rem; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--green-500); }
+  .cta-sub { font-size: 0.85rem; color: var(--gray-600); margin-top: 12px; }
+  .cta-sub a { color: var(--blue-700); }
+
+  footer { padding: 36px 0; border-top: 1px solid var(--gray-200); color: var(--gray-600); font-size: 0.88rem; margin-top: 40px; }
+  footer p { margin-bottom: 6px; }
+  footer a { color: var(--blue-700); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/en/" class="nav-logo">Synlig Digital</a>
+    <a href="/blogg" class="nav-lang">På norsk →</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<div class="breadcrumbs">
+  <a href="/en/">Synlig Digital</a>
+  <span class="sep">/</span>
+  Notes
+</div>
+
+<header class="page-header">
+  <h1 class="page-title">Notes</h1>
+  <p class="page-sub">Notes from the day job. AEO audits, distribution experiments we ran, and a handful of things we changed our minds about along the way. For people who want the data, not the pitch.</p>
+</header>
+
+<div class="post-list">
+
+  <!-- New posts: add <a class="post-card"> entries above this comment, newest first. Use post-tag "Preview" while editorial review is pending; drop the tag when ready. -->
+
+  <a class="post-card" href="/en/blog/agentjacking-and-ai-trust">
+    <div class="post-meta">June 19, 2026 &middot; Notes</div>
+    <div class="post-title">Agentjacking and the second AI trust problem</div>
+    <div class="post-excerpt">Tenet Security disclosed agentjacking on June 12. 2,388 organizations exposed. 85% success rate against Claude Code, Cursor, and Codex. The story is mostly being read as a security story. It deserves a second reading: the architectural property that made it work also decides whether AI search recommends your company.</div>
+  </a>
+
+  <a class="post-card" href="/en/blog/visibility-paradox-b2b-saas">
+    <div class="post-meta">June 19, 2026 &middot; Data</div>
+    <div class="post-title">The Visibility Paradox: Why AI Infrastructure Companies Can't Be Found by AI</div>
+    <div class="post-excerpt">DevTune.ai tracked 13 companies in the agent authentication space. The category leader (Auth0) appears in AI responses 27% of the time. Four companies are at 0%. Here is what this data means for every B2B SaaS company that sells to developers.</div>
+  </a>
+
+  <a class="post-card" href="/en/blog/aeo-agency-norway">
+    <div class="post-meta">June 12, 2026 &middot; Guide</div>
+    <div class="post-title">AEO agency Norway: what it is, why it matters locally, and what to expect</div>
+    <div class="post-excerpt">Answer engine optimization for Norwegian businesses is genuinely different from generic AEO. Norwegian aggregators, Norwegian-language structured data, and local AI search patterns all require a Norway-specific approach. Synlig Digital is the only Norwegian AEO specialist.</div>
+  </a>
+
+  <a class="post-card" href="/en/blog/aeo-for-digital-asset-companies">
+    <div class="post-meta"><span class="post-tag">Preview</span>June 7, 2026 &middot; Audit</div>
+    <div class="post-title">I audited eight stablecoin and RWA platforms for AEO. The pattern surprised me.</div>
+    <div class="post-excerpt">Eight digital-asset platforms audited for llms.txt, structured data, agent cards, and AI robot rules. AEO posture and being cited in competitor comparison pages turn out to be independent vectors: Centrifuge leads on surfaces without being on HIFI's list; Ondo runs better infrastructure than either platform HIFI does name. Live audit data, June 2026.</div>
+  </a>
+
+  <a class="post-card" href="/en/blog/llm-smell-check-benchmark">
+    <div class="post-meta"><span class="post-tag">Preview</span>May 30, 2026 &middot; Experiment</div>
+    <div class="post-title">I ran an AI-pattern detector across 18 marketing pages. The surprise wasn't enterprise marketing.</div>
+    <div class="post-excerpt">A small browser tool that scores text for AI-pattern density. Tested live against 18 marketing pages &mdash; Norwegian SMBs and English-language AI-first enterprise pages. The data went the other way from what I expected, and the explanation is boring.</div>
+  </a>
+
+  <p style="font-size:0.82rem;color:var(--gray-600);margin-top:10px;padding:0 4px;">Posts marked &ldquo;Preview&rdquo; are reachable but not yet indexed by search engines. The Norwegian archive is at <a href="/blogg" style="color:var(--blue-700);">/blogg</a>.</p>
+
+</div>
+
+<div class="cta-block">
+  <h2>Want a structured AEO audit?</h2>
+  <p>Score your own site in about 30 seconds — no email, runs live. That tells you whether your pages are machine-readable. It does not tell you whether AI actually cites you: that needs its own measurement, and the changes are what you pay for.</p>
+  <a href="/en/#auditBox" class="btn-primary">Score your site free &rarr;</a>
+  <div class="cta-sub">
+    <a href="/faktura?slug=en-blog-sitert&amp;pakke=priser-sitert&amp;lang=en">Order the Sitert package &mdash; USD 1,100</a> &middot;
+    <a href="/en/">About Synlig Digital</a> &middot;
+    <a href="/en/case/nordic-lithium">Case study: Nordic Lithium</a>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p><a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> &middot; <a href="/en/">English overview</a> &middot; <a href="/">Norsk</a> &middot; <a href="/blogg">Norsk blogg</a></p>
+    <p>Synlig Digital, Stavanger, Norway.</p>
+  </div>
+</footer>
+
+</body>
+</html>

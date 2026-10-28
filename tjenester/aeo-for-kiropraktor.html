@@ -12,13 +12,13 @@
   <meta property="og:title" content="AEO for kiropraktor — Bli klinikken ChatGPT anbefaler">
   <meta property="og:description" content="Fire norske kiropraktorklinikker analysert. Snitt 42/100. 0 hadde MedicalBusiness-schema. Pasienter spør AI om «beste kiropraktor i [by]» — du må være svaret.">
   <meta property="og:url" content="https://synligdigital.no/tjenester/aeo-for-kiropraktor">
-  <meta property="og:image" content="https://synligdigital.no/og.svg">
+  <meta property="og:image" content="https://synligdigital.no/og-2026-08.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="Synlig">
   <meta property="og:locale" content="nb_NO">
 
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AEO for kiropraktor — Bli svaret i ChatGPT">
   <meta name="twitter:description" content="Fire norske kiropraktorklinikker analysert. Snitt 42/100. Ingen hadde MedicalBusiness-schema.">
 
@@ -86,7 +86,7 @@
         "name": "Hva koster det?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Tre pakker. AI-synlighetsanalyse fra 4 900 NOK er en engangsrapport med score, schema-sjekk og prioriterte tiltak for klinikken, levering innen 5 virkedager. AI-synlighetsfundament fra 14 900 NOK er full implementering: MedicalBusiness-schema, behandlings-FAQ, prisinformasjon og spesialisering. Løpende overvåking fra 4 900 NOK per måned er månedlig audit, innholdsproduksjon (behandlingsguider, FAQ-oppdatering) og konkurransesporing i AI-svar."
+          "text": "To pakker. Synlig Lite fra 990 NOK er FAQPage-schema for én klinikkside du velger (f.eks. en spesifikk behandling eller akutt rygg), levering på e-post innen 1 virkedag. Sitert-pakken til 9 900 kr eks. mva er tre steg: nullpunktsmåling med fem kjøpsnære spørsmål kjørt ni ganger hver, endringene skrevet ferdig for inntil ti sider (JSON-LD, sitatvennlige spørsmål og svar, llms.txt og crawler-regler), og ny måling 30 dager etter at dere har publisert. Utfallskriterium: minst én sitering av deres domene i etterkjøringene — innfris det ikke, kjører vi én runde til uten ny faktura. Faktureres med 14 dagers betalingsfrist."
         }
       },
       {
@@ -411,7 +411,7 @@
     /* Pricing block */
     .pricing-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
       margin: 28px 0 8px;
     }
@@ -648,6 +648,20 @@
       color: var(--text);
       margin-bottom: 4px;
     }
+    .results-disclosure {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--gray-500);
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 3px;
+      padding: 1px 5px;
+      margin-left: 6px;
+      vertical-align: middle;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
     .case-desc {
       font-size: 0.8rem;
       color: var(--text-dim);
@@ -815,9 +829,9 @@
           <div>
             <div class="step-title">MedicalBusiness schema-markup</div>
             <p class="step-desc">
-              Den største enkeltvinningen for kiropraktorklinikker. Legg JSON-LD med <code>@type: "MedicalBusiness"</code>. Spesifiser <code>areaServed</code> med byer og regioner klinikken dekker, <code>medicalSpecialty</code> med spesialiseringer (rygg, nakke, hodepine, idrettsskader, barn), og <code>openingHoursSpecification</code> med faktiske åpningstider og om klinikken tar imot akuttpasienter. Ingen av klinikkene i analysen vår hadde dette.
+              Den største enkeltvinningen for kiropraktorklinikker. Legg JSON-LD med <code>@type: "MedicalBusiness"</code>. Spesifiser <code>areaServed</code> med byer og regioner klinikken dekker, <code>medicalSpecialty</code> med gyldig <code>schema.org/MedicalSpecialty</code>-enum-verdi (<code>Musculoskeletal</code> for kiropraktorer), beskriv konkrete behandlingsområder i <code>availableService</code> som fritekst, og <code>openingHoursSpecification</code> med faktiske åpningstider og om klinikken tar imot akuttpasienter. Ingen av klinikkene i analysen vår hadde dette.
             </p>
-            <div class="step-code">"@type": "MedicalBusiness",<br>"name": "Klinikkens navn",<br>"areaServed": ["Stavanger", "Sandnes", "Rogaland"],<br>"medicalSpecialty": ["Rygg og nakke", "Idrettsskader", "Hodepine"],<br>"address": { "@type": "PostalAddress", &hellip; }</div>
+            <div class="step-code">"@type": "MedicalBusiness",<br>"name": "Klinikkens navn",<br>"areaServed": ["Stavanger", "Sandnes", "Rogaland"],<br>"medicalSpecialty": "Musculoskeletal",<br>"availableService": [<br>&nbsp;&nbsp;{ "@type": "MedicalTherapy", "name": "Behandling av rygg og nakke" },<br>&nbsp;&nbsp;{ "@type": "MedicalTherapy", "name": "Idrettsskader" },<br>&nbsp;&nbsp;{ "@type": "MedicalTherapy", "name": "Hodepine" }<br>],<br>"address": { "@type": "PostalAddress", &hellip; }</div>
           </div>
         </div>
 
@@ -897,7 +911,7 @@
         <div class="case-icon">⚡</div>
         <div>
           <div class="case-label">Case study · +18 poeng på 2 uker</div>
-          <div class="case-title">Nordic Lithium: 67/C → 85/A</div>
+          <div class="case-title">Nordic Lithium: 67/C → 85/A <span class="results-disclosure">Nærstående</span></div>
           <div class="case-desc">Norsk nettbutikk for LiFePO4-batterier. Robots.txt blokkerte alle AI-crawlere. To enkle intervensjoner ga 18 poengs økning på to uker.</div>
         </div>
       </a>
@@ -906,7 +920,7 @@
         <div class="case-icon">⚓</div>
         <div>
           <div class="case-label">Case study · +24 poeng</div>
-          <div class="case-title">Pierstop: 52/D → 76/B</div>
+          <div class="case-title">Pierstop: 52/D → 76/B <span class="results-disclosure">Nærstående</span></div>
           <div class="case-desc">Norges ledende cruisehavn-guide med 176 sider. Perfekt teknisk grunnmur, men manglende schema. Vi rettet JSON-LD og NAP-konsistens; AI-svarene begynte å sitere dem.</div>
         </div>
       </a>
@@ -952,67 +966,48 @@
 
   <section id="priser" style="background: var(--bg-raised);">
     <div class="container-wide">
-      <h2>Tre pakker. Faste priser. Bestilling med kort.</h2>
+      <h2>To pakker. Faste priser. Kort eller faktura.</h2>
       <p class="muted">Samme priser som på <a href="/priser" style="color: var(--accent); text-decoration: none;">/priser</a>. Velg det som passer der klinikken er nå.</p>
 
       <div class="pricing-grid">
+        <div class="price-card price-card-primary">
+          <div class="price-name">Sitert-pakken</div>
+          <div class="price-amount">9 900 kr</div>
+          <div class="price-note">Måling, endringene skrevet ferdig, ny måling etter 30 dager</div>
+          <ul class="price-list">
+            <li>Nullpunktsmåling: fem kjøpsnære spørsmål fra ditt marked, hvert kjørt ni ganger</li>
+            <li>Navn på hvem AI siterer i stedet for dere i dag</li>
+            <li>Endringene skrevet ferdig for inntil ti sider — JSON-LD, sitatvennlige spørsmål og svar, llms.txt, crawler-regler</li>
+            <li>Klare til innliming, eller levert som pull request mot repoet deres</li>
+            <li>Ny måling 30 dager etter publisering — før og etter i ett dokument, med rådata</li>
+            <li>Utfallskriterium: minst én sitering av dere i etterkjøringene. Innfris det ikke, kjører vi én runde til uten ny faktura</li>
+          </ul>
+          <a class="price-cta" href="/faktura?slug=tjenester-aeo-for-kiropraktor-sitert&amp;pakke=priser-sitert">Bestill Sitert-pakken &rarr;</a>
+          <a href="/metode" class="price-cta-secondary">Se metoden kj&oslash;rt offentlig f&oslash;rst</a>
+        </div>
+
         <div class="price-card featured">
-          <div class="price-name">AI-synlighetsanalyse</div>
-          <div class="price-amount">4 900 kr</div>
-          <div class="price-note">Engangsanalyse, levering 5 virkedager</div>
+          <div class="price-name">Synlig Lite</div>
+          <div class="price-amount">990 kr</div>
+          <div class="price-note">FAQPage for én side, levering 1 virkedag</div>
           <ul class="price-list">
-            <li>Test i ChatGPT, Perplexity, Google AI</li>
-            <li>Score med konkrete tiltak</li>
-            <li>MedicalBusiness-schema-sjekk</li>
-            <li>1 times gjennomgang</li>
+            <li>FAQPage-schema for én side du velger</li>
+            <li>3–5 spørsmål–svar-par grunnet i innholdet ditt</li>
+            <li>JSON-LD-blob klar til innliming i &lt;head&gt;</li>
+            <li>F.eks. en behandlingsside eller akutt rygg</li>
+            <li>Engangsbetaling — ingen oppfølging</li>
           </ul>
           <form method="POST" action="/api/lead-capture" class="lead-form">
             <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254" aria-label="E-postadresse">
-            <input type="hidden" name="tier" value="handlingsplan">
-            <input type="hidden" name="slug" value="tjenester-aeo-for-kiropraktor-handlingsplan">
+            <input type="hidden" name="tier" value="lite">
+            <input type="hidden" name="slug" value="tjenester-aeo-for-kiropraktor-lite">
             <button type="submit" class="price-cta">Bestill med kort →</button>
           </form>
-          <a href="/faktura?slug=tjenester-aeo-for-kiropraktor-handlingsplan" class="price-cta-secondary">Send forespørsel (faktura)</a>
+          <a href="/faktura?slug=tjenester-aeo-for-kiropraktor-lite" class="price-cta-secondary">Send forespørsel (faktura)</a>
         </div>
 
-        <div class="price-card">
-          <div class="price-name">AI-synlighetsfundament</div>
-          <div class="price-amount">14 900 kr</div>
-          <div class="price-note">Engangsimplementering, 2 til 4 uker</div>
-          <ul class="price-list">
-            <li>Alt i analysen, pluss implementering</li>
-            <li>MedicalBusiness-schema utrullet</li>
-            <li>FAQ-side med priser og behandlinger</li>
-            <li>Behandlingssider med prisinformasjon</li>
-            <li>1 times opplæring</li>
-          </ul>
-          <form method="POST" action="/api/lead-capture" class="lead-form">
-            <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254" aria-label="E-postadresse">
-            <input type="hidden" name="tier" value="fundament">
-            <input type="hidden" name="slug" value="tjenester-aeo-for-kiropraktor-fundament">
-            <button type="submit" class="price-cta">Bestill med kort →</button>
-          </form>
-          <a href="/faktura?slug=tjenester-aeo-for-kiropraktor-fundament" class="price-cta-secondary">Send forespørsel (faktura)</a>
-        </div>
 
-        <div class="price-card">
-          <div class="price-name">Løpende overvåking</div>
-          <div class="price-amount">4 900 kr/mnd</div>
-          <div class="price-note">Forutsetter at fundamentet er på plass</div>
-          <ul class="price-list">
-            <li>Månedlig AI-synlighetsaudit</li>
-            <li>1 til 2 nye behandlingsguider per måned</li>
-            <li>Konkurransesporing i ChatGPT</li>
-            <li>Kvartalsrapport med trend</li>
-          </ul>
-          <form method="POST" action="/api/lead-capture" class="lead-form">
-            <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email" maxlength="254" aria-label="E-postadresse">
-            <input type="hidden" name="tier" value="lopende">
-            <input type="hidden" name="slug" value="tjenester-aeo-for-kiropraktor-lopende">
-            <button type="submit" class="price-cta">Start abonnement →</button>
-          </form>
-          <a href="/faktura?slug=tjenester-aeo-for-kiropraktor-lopende" class="price-cta-secondary">Send forespørsel (faktura)</a>
-        </div>
+
       </div>
 
       <p class="muted" style="font-size: 0.78rem; margin-top: 16px; text-align: center;">

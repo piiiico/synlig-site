@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentjacking and the second AI trust problem — Synlig Digital</title>
+<meta name="description" content="Tenet Security disclosed agentjacking on June 12. 2,388 organizations exposed, 85% success rate against Claude Code, Cursor, and Codex. The architectural property that made it work also decides whether your company shows up in AI search.">
+
+<link rel="canonical" href="https://synligdigital.no/en/blog/agentjacking-and-ai-trust">
+<link rel="alternate" hreflang="en" href="https://synligdigital.no/en/blog/agentjacking-and-ai-trust">
+<link rel="alternate" hreflang="x-default" href="https://synligdigital.no/en/blog/agentjacking-and-ai-trust">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Agentjacking and the second AI trust problem">
+<meta property="og:description" content="Tenet exposed 2,388 organizations whose AI coding agents would execute attacker code from a Sentry payload. The same trust pattern decides whether AI search recommends your company.">
+<meta property="og:url" content="https://synligdigital.no/en/blog/agentjacking-and-ai-trust">
+<meta property="og:site_name" content="Synlig Digital">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://synligdigital.no/og-2026-08.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-06-19">
+<meta property="article:author" content="Synlig Digital">
+<meta property="article:tag" content="AEO">
+<meta property="article:tag" content="AI security">
+<meta property="article:tag" content="Agentjacking">
+<meta property="article:tag" content="Answer Engine Optimization">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agentjacking and the second AI trust problem">
+<meta name="twitter:description" content="2,388 organizations exposed. 85% success rate. Sentry says it isn't defensible at their layer. The same trust pattern also decides whether AI search recommends you.">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Agentjacking and the second AI trust problem",
+  "description": "Tenet Security disclosed agentjacking on June 12, 2026. 2,388 organizations were identified with exposed Sentry DSNs; the exploit ran at 85% success against Claude Code, Cursor, and Codex. The story is mostly being read as a security story. It deserves a second reading: the architectural property that made the attack work also determines whether AI answer engines recommend your company.",
+  "author": {
+    "@type": "Organization",
+    "name": "Synlig Digital",
+    "url": "https://synligdigital.no/en/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Synlig Digital",
+    "url": "https://synligdigital.no/en/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://synligdigital.no/favicon.svg"
+    }
+  },
+  "datePublished": "2026-06-19",
+  "dateModified": "2026-06-19",
+  "inLanguage": "en",
+  "url": "https://synligdigital.no/en/blog/agentjacking-and-ai-trust",
+  "mainEntityOfPage": "https://synligdigital.no/en/blog/agentjacking-and-ai-trust",
+  "about": [
+    { "@type": "Thing", "name": "Agentjacking" },
+    { "@type": "Thing", "name": "AI agent security" },
+    { "@type": "Thing", "name": "Answer Engine Optimization" },
+    { "@type": "Thing", "name": "Model Context Protocol" },
+    { "@type": "Thing", "name": "AI search visibility" }
+  ],
+  "keywords": ["agentjacking", "Sentry MCP attack", "AI coding agent security", "answer engine optimization", "AEO", "AI search visibility", "MCP security"]
+}
+</script>
+
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --blue-900: #1a365d;
+    --blue-700: #2b4c8a;
+    --blue-100: #ebf2ff;
+    --blue-50: #f5f8ff;
+    --green-700: #2f855a;
+    --green-600: #38a169;
+    --green-500: #48bb78;
+    --gray-900: #1a202c;
+    --gray-700: #4a5568;
+    --gray-600: #5a6577;
+    --gray-300: #cbd5e0;
+    --gray-200: #e2e8f0;
+    --gray-100: #edf2f7;
+    --gray-50: #f7fafc;
+    --white: #ffffff;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body { background: var(--white); color: var(--gray-700); font-family: var(--font); line-height: 1.7; }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  nav { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--gray-200); z-index: 100; }
+  .nav-inner { max-width: 760px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; height: 56px; }
+  .nav-logo { font-size: 1.05rem; font-weight: 700; color: var(--blue-900); text-decoration: none; letter-spacing: -0.02em; }
+  .nav-lang { color: var(--gray-600); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+  .nav-lang:hover { color: var(--blue-900); }
+
+  .breadcrumbs { font-size: 0.82rem; color: var(--gray-600); padding: 20px 0 0; }
+  .breadcrumbs a { color: var(--gray-600); text-decoration: none; }
+  .breadcrumbs a:hover { color: var(--blue-700); }
+  .breadcrumbs .sep { margin: 0 6px; opacity: 0.5; }
+
+  header.article-header { padding: 28px 0 16px; }
+  .article-tag-row { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; font-size: 0.78rem; color: var(--gray-600); }
+  .article-tag { background: var(--blue-100); color: var(--blue-700); padding: 3px 10px; border-radius: 12px; font-weight: 600; letter-spacing: 0.01em; }
+  h1.article-title { font-size: 2rem; line-height: 1.25; color: var(--gray-900); margin-bottom: 16px; letter-spacing: -0.02em; font-weight: 700; }
+  .article-sub { font-size: 1.05rem; color: var(--gray-700); }
+
+  section { padding: 24px 0; }
+  section + section { border-top: 1px solid var(--gray-100); }
+  h2 { font-size: 1.35rem; color: var(--gray-900); margin: 6px 0 14px; font-weight: 600; letter-spacing: -0.01em; }
+  h3 { font-size: 1.0rem; color: var(--gray-900); margin: 16px 0 6px; font-weight: 600; }
+  p { margin-bottom: 14px; }
+  ul, ol { padding-left: 22px; margin-bottom: 14px; }
+  ul li, ol li { margin-bottom: 8px; }
+  a { color: var(--blue-700); }
+  strong { color: var(--gray-900); }
+
+  .key-stat { background: var(--blue-50); border: 1px solid var(--blue-100); border-radius: 8px; padding: 16px 20px; margin: 18px 0; }
+  .key-stat strong { color: var(--blue-900); font-size: 1.5rem; display: block; margin-bottom: 4px; }
+  .key-stat span { color: var(--gray-600); font-size: 0.9rem; }
+
+  .insight-box { background: var(--gray-50); border-left: 3px solid var(--blue-700); border-radius: 0 6px 6px 0; padding: 14px 18px; margin: 18px 0; font-size: 0.95rem; }
+
+  .cta-block { margin: 28px 0 0; padding: 24px; background: var(--blue-50); border: 1px solid #d6e3fb; border-radius: 10px; text-align: center; }
+  .cta-block h2 { font-size: 1.2rem; margin-bottom: 8px; color: var(--gray-900); font-weight: 600; border: none; padding: 0; }
+  .cta-block p { font-size: 0.95rem; margin-bottom: 14px; }
+  .btn-primary { display: inline-block; background: var(--green-600); color: var(--white); padding: 11px 22px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.95rem; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--green-500); }
+  .cta-sub { font-size: 0.85rem; color: var(--gray-600); margin-top: 12px; }
+  .cta-sub a { color: var(--blue-700); }
+
+  footer { padding: 36px 0; border-top: 1px solid var(--gray-200); color: var(--gray-600); font-size: 0.88rem; margin-top: 40px; }
+  footer p { margin-bottom: 6px; }
+  footer a { color: var(--blue-700); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 600px) {
+    h1.article-title { font-size: 1.55rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/en/" class="nav-logo">Synlig Digital</a>
+    <a href="/blogg" class="nav-lang">På norsk →</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<div class="breadcrumbs">
+  <a href="/en/">Synlig Digital</a>
+  <span class="sep">/</span>
+  <a href="/en/blog/">Notes</a>
+  <span class="sep">/</span>
+  Agentjacking and the second AI trust problem
+</div>
+
+<header class="article-header">
+  <div class="article-tag-row">
+    <span class="article-tag">Notes</span>
+    <span>June 19, 2026</span>
+  </div>
+  <h1 class="article-title">Agentjacking and the second AI trust problem</h1>
+  <p class="article-sub">Tenet Security disclosed a new attack class on June 12. 2,388 organizations exposed. 85% success rate against Claude Code, Cursor, and Codex. The story is mostly being read as a security story. It deserves a second reading.</p>
+</header>
+
+<section>
+  <p>On June 12, security firm Tenet disclosed a new class of attack against AI coding agents. They call it <strong>agentjacking</strong>.</p>
+
+  <p>The setup: a public Sentry DSN — the credential Sentry hands out so any client can submit error events — can be loaded with carefully formatted markdown. When a developer later asks Claude Code or Cursor to investigate an unresolved error, the agent retrieves that payload via Sentry's MCP server and treats it as trusted system output. The injected instructions then execute on the developer's machine.</p>
+
+  <p>The numbers are bad:</p>
+
+  <div class="key-stat">
+    <strong>2,388</strong>
+    <span>Organizations with exposed Sentry DSNs identified by Tenet during a validation window that ended June 17. Includes Fortune 100 companies.</span>
+  </div>
+
+  <div class="key-stat">
+    <strong>85%</strong>
+    <span>Success rate of the exploit across Claude Code, Cursor, and OpenAI Codex. A single HTTP POST using a public credential, no authentication required.</span>
+  </div>
+
+  <p>Tenet disclosed to Sentry on June 3. Sentry acknowledged the issue and declined to ship a root-cause fix; their position is that the attack class is "technically not defensible" at the platform layer. <a href="https://tenetsecurity.ai/blog/agentjacking-coding-agents-with-fake-sentry-errors/" target="_blank" rel="noopener">Tenet's writeup is here</a>.</p>
+</section>
+
+<section>
+  <h2>The pattern, not just the exploit</h2>
+
+  <p>What made agentjacking work isn't a Sentry bug. Sentry shipped exactly what its customers asked for: a fast event ingestion endpoint that accepts payloads from anywhere, plus an MCP server that gives AI agents read access to those events. Each part is reasonable on its own.</p>
+
+  <p>Composed, they create what Tenet calls an "Authorized Intent Chain" — every step is individually permitted, but the composed outcome is malicious. The AI agent is trusting a data source that the operator can't fully curate.</p>
+
+  <div class="insight-box">
+    Wherever an AI system pulls from open inputs and acts on what it finds, the same pattern is in play. Coding agents pulling errors is one surface. Answer engines pulling product information is another.
+  </div>
+</section>
+
+<section>
+  <h2>The second trust problem</h2>
+
+  <p>Here's the part that's relevant even if you don't run a Sentry-connected agent in production.</p>
+
+  <p>When a B2B buyer asks ChatGPT, Claude, or Perplexity "what's the best platform for X?", the answer engine assembles a recommendation from sources you mostly don't curate. Documentation pages. Stack Overflow threads. Third-party comparison posts. A Reddit answer from 2024. A reseller's product brief. A competitor's blog. The model treats those as inputs to a synthesis, weights them by a heuristic nobody at the LLM lab can fully explain, and returns a shortlist.</p>
+
+  <p>If you're in the shortlist, you're a contender. If you're not, the buyer asks a follow-up about one of the names that did appear. There's no page two.</p>
+
+  <p>This is the same architectural property that made agentjacking work: <strong>AI consuming data sources it didn't curate, and acting on what it finds.</strong> The blast radius is different. The pattern is the same.</p>
+</section>
+
+<section>
+  <h2>How invisible "invisible" actually is</h2>
+
+  <p>DevTune.ai tracks AI search visibility across companies in the agent authentication vertical — one of the closest-adjacent categories to the agentjacking story. The numbers are sobering:</p>
+
+  <ul>
+    <li><strong>Auth0</strong> (category leader): appears in AI responses <strong>27.2%</strong> of the time</li>
+    <li><strong>WorkOS</strong>: 26.4%</li>
+    <li><strong>Composio</strong>: 17.6%</li>
+    <li><strong>Arcade</strong>: 8.8%</li>
+    <li><strong>Descope</strong>: 5.6%</li>
+    <li>Four direct competitors: <strong>0%</strong> — entirely invisible</li>
+  </ul>
+
+  <p>We wrote the dataset up last week: <a href="/en/blog/visibility-paradox-b2b-saas">The Visibility Paradox</a>. The headline finding: the category leader appears in roughly one in four queries. Three out of four times a developer asks an AI assistant about this category, the market leader doesn't get named.</p>
+
+  <p>Half of B2B software buyers now start product research inside an AI assistant (G2, 2026 buyer research). If you're absent from the AI synthesis, you're absent from half your funnel.</p>
+</section>
+
+<section>
+  <h2>Why this window is unusually open</h2>
+
+  <p>Companies in AI security — the vertical closest to the agentjacking story — have a specific opening here. The story is searchable. The keyword is current. Buyers are asking AI assistants about AI agent risk right now, today, for the first time.</p>
+
+  <p>If your positioning doesn't appear in the queries that follow this disclosure, the recommendation goes to whoever did appear. Once a category settles into a stable AI-recommendation pattern, it's expensive to move.</p>
+
+  <p>This is the same compounding effect we wrote about in the Visibility Paradox piece. Companies the model already recommends get more community mentions, which increases their visibility further. The gap between recommended and invisible widens, not closes, without deliberate work.</p>
+</section>
+
+<section>
+  <h2>Three questions for any AI security company today</h2>
+
+  <p>Three questions, the same three we run on every audit:</p>
+
+  <h3>1. What does AI actually describe you as?</h3>
+  <p>Not what you wrote on your homepage. What ChatGPT, Claude, and Perplexity return when a buyer asks "what's the best [your category]?" The gap between intended positioning and AI-rendered positioning is almost always larger than founders expect.</p>
+
+  <h3>2. Where is the model drawing those words from?</h3>
+  <p>If the cited sources are mostly your own marketing pages, the AI hasn't found enough third-party signal yet — and your visibility ceiling is low. If they're mostly competitor comparison posts and forum threads, you're being summarized by other people's framing.</p>
+
+  <h3>3. Is the recommendation consistent across engines?</h3>
+  <p>If the three big engines describe you differently, your positioning is being averaged into noise. Buyers cross-check. Inconsistency suppresses confidence in the recommendation.</p>
+</section>
+
+<div class="cta-block">
+  <h2>How does AI describe your security product?</h2>
+  <p>Same engine our paid analysis runs on. Score, gap list, and inline card checkout — all in English. Free, runs live, no email required.</p>
+  <a href="/en/#auditBox" class="btn-primary">Score your site for free →</a>
+  <div class="cta-sub">
+    That score tells you whether your pages are machine-readable. It does not tell you whether AI actually cites you &mdash; that needs its own measurement: <a href="/faktura?slug=en-blog-agentjacking-sitert&amp;pakke=priser-sitert&amp;lang=en">the Sitert package, USD 1,100</a>.
+  </div>
+  <div class="cta-sub">
+    <a href="/en/blog/visibility-paradox-b2b-saas">The Visibility Paradox</a> &middot;
+    <a href="/en/blog/">More notes</a>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p><strong>Synlig Digital</strong> — Answer Engine Optimization, Stavanger, Norway</p>
+    <p><a href="mailto:hei@synligdigital.no">hei@synligdigital.no</a> · <a href="/en/">synligdigital.no/en</a> · <a href="/blogg">Norsk blogg</a></p>
+    <p style="margin-top:12px; font-size:0.82rem; color:#8a9ab0;">© 2026 Synlig Digital. Agentjacking attack disclosure: <a href="https://tenetsecurity.ai/blog/agentjacking-coding-agents-with-fake-sentry-errors/">Tenet Security</a>, June 12, 2026. AI visibility dataset: DevTune.ai.</p>
+  </div>
+</footer>
+
+<script>
+// URL prefill propagation: cold-email links like
+// /en/blog/agentjacking-and-ai-trust?url=arcade.dev land the reader on this
+// post AND carry their domain forward to the /en/#auditBox form. Removes the
+// "what domain am I auditing" typing step at the conversion edge. Matches the
+// /en/ home prefill convention (?url= and ?domain=) added 2026-06-18 after
+// the Dfns/Fordefi/SpherePay dogfood. Mailto fallback's [your domain] placeholder
+// is substituted with the same value so the manual-audit lane carries context too.
+(function propagateUrlPrefill(){
+  try {
+    var qp = new URLSearchParams(window.location.search);
+    var raw = (qp.get('url') || qp.get('domain') || '').trim();
+    if (!raw) return;
+    var clean = raw.replace(/^https?:\/\//i, '').replace(/\/.*$/, '').toLowerCase();
+    if (!/^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?(\.[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)+$/.test(clean)) return;
+    var cta = document.querySelector('.cta-block a.btn-primary');
+    if (cta && cta.getAttribute('href') === '/en/#auditBox') {
+      cta.setAttribute('href', '/en/?url=' + encodeURIComponent(clean) + '#auditBox');
+    }
+    var mailto = document.querySelector('.cta-block a[href^="mailto:hei@synligdigital.no"]');
+    if (mailto) {
+      var h = mailto.getAttribute('href');
+      if (h && h.indexOf('%5Byour%20domain%5D') !== -1) {
+        mailto.setAttribute('href', h.replace('%5Byour%20domain%5D', encodeURIComponent(clean)));
+      }
+    }
+  } catch (e) { /* fail silently */ }
+})();
+</script>
+
+</body>
+</html>

@@ -371,7 +371,7 @@
   <div id="auditResult" class="audit-result" hidden></div>
 
   <div class="cta-sub">
-    Want the digital-asset-specific report? <a href="mailto:hei@synligdigital.no?subject=AEO%20audit%20for%20digital-asset%20platform&amp;body=Hi%20Synlig%20Digital%2C%0A%0APlease%20run%20an%20AEO%20audit%20on%3A%0A%0A%5Byour%20URL%5D%0A%0AWe%20operate%20in%20%5Bstablecoin%20%2F%20RWA%20%2F%20DeFi%20%2F%20...%5D.%20A%20couple%20of%20lines%20about%20your%20institutional%20buyer%20profile%20would%20help.%0A%0AThanks!">Email hei@synligdigital.no</a> and we&rsquo;ll reply within one working day.
+    That score tells you whether your pages are machine-readable. It does not tell you whether AI actually cites you &mdash; that needs its own measurement: <a href="/faktura?slug=en-blog-digital-assets-sitert&amp;pakke=priser-sitert&amp;lang=en">the Sitert package, USD 1,100</a>.
   </div>
   <div class="cta-sub">
     <a href="/en/">About Synlig Digital</a> &middot;
@@ -517,8 +517,10 @@ async function runAudit(ev) {
     // Maple, Centrifuge, Plume, Ondo) from /en/ home audit traffic in funnel
     // analytics. Lite (USD 92) is the only card-rail offer.
     //
-    // The secondary CTA used to be a submit button for Analysis (USD 460),
-    // discontinued 2026-08-08 on measured zeros. Its replacement is the
+    // The secondary CTA used to be a submit button for the Analysis tier,
+    // discontinued 2026-08-08 on measured zeros. Its price is deliberately not
+    // restated here: a dead figure in a shipped comment is still a figure an
+    // answer engine can quote back (_partials/en-price-gate.ts). Replacement is the
     // citation measurement, deliberately an <a href="mailto:"> rather than a
     // second submit: that tier is invoiced, has no card rail, and
     // /api/lead-capture requires an email address a mailto click cannot
@@ -530,7 +532,7 @@ async function runAudit(ev) {
         '<input type="hidden" name="slug" value="audit-en-digital-assets">' +
         '<button type="submit" name="tier" value="lite" class="audit-result-cta">Order Synlig Lite — $92 →</button>' +
       '</form>' +
-      '<a class="audit-result-cta audit-result-cta-secondary" href="mailto:hei@synligdigital.no?subject=Citation%20measurement%20%E2%80%94%20en-digital-assets&amp;body=Hi%2C%0A%0AWe%20just%20ran%20the%20free%20check%20on%20our%20site%20and%20would%20like%20to%20request%20a%20citation%20measurement%20(NOK%209%2C900%20excl.%20VAT%2C%20one-off).%0A%0ABest%20regards%2C%0A">Or a citation measurement — NOK 9,900 →</a>';
+      '<a class="audit-result-cta audit-result-cta-secondary" href="/faktura?slug=en-digital-assets-sitert&amp;pakke=priser-sitert&amp;lang=en">Or the Sitert package, changes included — USD 1,100 →</a>';
 
     result.innerHTML =
       '<div class="audit-result-head">' +
@@ -548,7 +550,7 @@ async function runAudit(ev) {
       '<p class="audit-result-issues-label">Top gaps we found</p>' +
       issuesHtml +
       '<p style="font-size:0.88rem;color:var(--gray-600);margin-bottom:12px">' +
-        'Synlig Lite ships a FAQPage JSON-LD block for one page (3–5 Q&amp;A pairs) by email within one business day — USD 92, one-off. The full Analysis tests what ChatGPT, Claude, and Google AI actually say about you when asked, and ships a prioritized fix list — USD 460, one-off. Card payment in USD at Stripe checkout.' +
+        'Synlig Lite ships a FAQPage JSON-LD block for one page (3–5 Q&amp;A pairs) by email within one business day — USD 92, one-off, card payment at Stripe checkout. The Sitert package (USD 1,100, invoiced) measures whether AI actually cites you, writes the changes for up to ten pages, and measures again 30 days after you publish.' +
       '</p>' +
       formHtml +
       '<p style="margin-top:10px"><button type="button" class="audit-result-redo" onclick="resetAudit()">Try another domain</button></p>';
