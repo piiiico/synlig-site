@@ -226,7 +226,7 @@ for (const v of VERTICAL_LANDINGS) {
     console.error(`Fix: cd /workspace/synlig-site && bun install && bunx astro build`);
     process.exit(1);
   }
-  console.log(`  astro: dist/ rebuilt in ${Date.now() - t0}ms (front page + 36 blog posts + /blogg + 3 case pages)`);
+  console.log(`  astro: dist/ rebuilt in ${Date.now() - t0}ms (front page + blog posts + /blogg + 3 case pages)`);
 }
 
 const files = {
@@ -265,45 +265,15 @@ const files = {
   BLOGG_INDEX_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/index.html").text(),
   BLOGG_HVA_ER_AEO_HTML: await applyBlogCta("hva-er-aeo"),
   BLOGG_AEO_I_NORGE_2026_HTML: await applyBlogCta("aeo-i-norge-2026"),
-  BLOGG_NORSK_AEO_BENCHMARK_2026_HTML: await applyBlogCta("norsk-aeo-benchmark-2026"),
-  BLOGG_MCP_SECURITY_MARCH_2026_HTML: await applyBlogCta("mcp-security-march-2026"),
   BLOGG_AEO_BYRA_NORGE_HTML: await applyBlogCta("aeo-byra-norge"),
-  BLOGG_LOKAL_AI_SYNLIGHET_HTML: await applyBlogCta("lokal-ai-synlighet"),
   BLOGG_SLIK_BLIR_DU_SYNLIG_I_CHATGPT_HTML: await applyBlogCta("slik-blir-du-synlig-i-chatgpt"),
-  BLOGG_CAVEMAN_AI_PRICING_APRIL_2026_HTML: await applyBlogCta("caveman-ai-pricing-april-2026"),
-  BLOGG_ER_NETTSIDA_DI_KLAR_HTML: await applyBlogCta("er-nettsida-di-klar-for-ai-agentar"),
-  BLOGG_STAVANGER_AGENT_BEREDSKAP_HTML: await applyBlogCta("stavanger-agent-beredskap-april-2026"),
-  BLOGG_HVA_ER_AEO_GUIDE_HTML: await applyBlogCta("hva-er-aeo-guide"),
-  BLOGG_AEO_VS_SEO_HTML: await applyBlogCta("aeo-vs-seo"),
   RAPPORT_STATE_AEO_2026_HTML: await Bun.file("/workspace/synlig-site/rapport/state-of-aeo-2026.html").text(),
   // Note: /tjenester/aeo-for-* verticals are loaded via VERTICAL_LANDINGS registry above (verticalFiles).
   TJENESTER_INDEX_HTML: await Bun.file("/workspace/synlig-site/tjenester/index.html").text(),
   TJENESTER_AEO_HTML: await Bun.file("/workspace/synlig-site/tjenester/aeo.html").text(),
   TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML: await Bun.file("/workspace/synlig-site/tjenester/digital-markedsforing-stavanger.html").text(),
-  BLOGG_DIGITAL_MARKEDSFORING_STAVANGER_HTML: await applyBlogCta("digital-markedsforing-stavanger"),
-  BLOGG_CHATGPT_ANNONSER_OG_AEO_HTML: await applyBlogCta("chatgpt-annonser-og-aeo-april-2026"),
-  BLOGG_AUTOMATISERT_AEO_VS_RADGIVING_HTML: await applyBlogCta("automatisert-aeo-vs-radgiving"),
-  BLOGG_STAVANGER_KLINIKK_AEO_ANALYSE_HTML: await applyBlogCta("stavanger-klinikk-aeo-analyse"),
-  BLOGG_NORGES_AEO_LEADERBOARD_2026_04_HTML: await applyBlogCta("norges-aeo-leaderboard-2026-04"),
-  BLOGG_EU_AI_ACT_NORSKE_BEDRIFTER_HTML: await applyBlogCta("eu-ai-act-norske-bedrifter"),
-  BLOGG_AEO_BUDSJETT_45X_HTML: await applyBlogCta("aeo-budsjett-45x-okonomi"),
-  BLOGG_AEO_SJEKKLISTE_2026_HTML: await applyBlogCta("aeo-sjekkliste-2026"),
   BLOGG_GA4_AI_ASSISTANT_2026_HTML: await applyBlogCta("ga4-ai-assistant-2026"),
-  BLOGG_CHATGPT_KONVERTERER_9X_HTML: await applyBlogCta("chatgpt-konverterer-9x"),
-  BLOGG_GOOGLE_SOK_REDESIGN_MAI_2026_HTML: await applyBlogCta("google-sok-redesign-mai-2026"),
-  BLOGG_90_PROSENT_USYNLIGE_HTML: await applyBlogCta("90-prosent-usynlige-i-ai-sok"),
-  BLOGG_GOOGLE_SPAM_POLICY_AEO_HTML: await applyBlogCta("google-spam-policy-aeo-mai-2026"),
-  BLOGG_93_PROSENT_AI_MODE_NULL_KLIKK_HTML: await applyBlogCta("93-prosent-ai-mode-null-klikk"),
-  BLOGG_AI_PRODUKSJON_RELIABILITY_GAP_HTML: await applyBlogCta("ai-produksjon-reliability-gap"),
-  BLOGG_ROBINHOOD_AI_AGENTER_HTML: await applyBlogCta("robinhood-ai-agenter-norske-merkevarer"),
-  BLOGG_VIBESEC_AI_GENERERT_KODE_HTML: await applyBlogCta("vibesec-ai-generert-kode-sikkerhet"),
-  BLOGG_SOK_FRAGMENTERES_2026_HTML: await applyBlogCta("sok-fragmenteres-2026"),
-  BLOGG_EY_FALSKE_AI_KILDER_HTML: await applyBlogCta("ey-falske-ai-kilder"),
-  BLOGG_LLM_SMELLS_AEO_HTML: await applyBlogCta("llm-smells-aeo-synlighet"),
-  BLOGG_CHECKOUT_AGENTIC_COMMERCE_TILLIT_GAP_HTML: await applyBlogCta("checkout-agentic-commerce-tillit-gap-2026"),
-  BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/google-search-profiles-61-prosent-ctr-fall/index.html").text(),
   BLOGG_AEO_LITE_FAQPAGE_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/aeo-lite-faqpage-990-kr/index.html").text(),
-  BLOGG_B2B_FINTECH_AGENT_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/b2b-fintech-agent-discoverability/index.html").text(),
   BLOGG_KI_VANNMERKING_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/ki-vannmerking-norge-artikkel-50/index.html").text(),
   BLOGG_INSTALLATORREGISTERET_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/installatorregisteret/index.html").text(),
   BLOGG_INSTALLATORINDEKSEN_2026_09_HTML: await applyBlogCta("installatorindeksen-2026-09"),
@@ -347,7 +317,7 @@ const files = {
       n++;
     }
   }
-  if (n < 7) { console.error(`[BUILD FAIL] site chrome: only ${n} static pages carry <!--SITE-LOGO--> (floor 7)`); process.exit(1); }
+  if (n < 27) { console.error(`[BUILD FAIL] site chrome: only ${n} static pages carry <!--SITE-LOGO--> (floor 27)`); process.exit(1); }
   console.log(`  ✅ Site chrome: ${vars.length} tokens + 1 logo injected into ${n} static pages.`);
 }
 
@@ -854,40 +824,10 @@ const ctaViolations: string[] = [];
 const blogFileMap: Record<string, string> = {
   "hva-er-aeo.html": files.BLOGG_HVA_ER_AEO_HTML,
   "aeo-i-norge-2026.html": files.BLOGG_AEO_I_NORGE_2026_HTML,
-  "norsk-aeo-benchmark-2026.html": files.BLOGG_NORSK_AEO_BENCHMARK_2026_HTML,
-  "mcp-security-march-2026.html": files.BLOGG_MCP_SECURITY_MARCH_2026_HTML,
   "aeo-byra-norge.html": files.BLOGG_AEO_BYRA_NORGE_HTML,
-  "lokal-ai-synlighet.html": files.BLOGG_LOKAL_AI_SYNLIGHET_HTML,
   "slik-blir-du-synlig-i-chatgpt.html": files.BLOGG_SLIK_BLIR_DU_SYNLIG_I_CHATGPT_HTML,
-  "caveman-ai-pricing-april-2026.html": files.BLOGG_CAVEMAN_AI_PRICING_APRIL_2026_HTML,
-  "er-nettsida-di-klar-for-ai-agentar.html": files.BLOGG_ER_NETTSIDA_DI_KLAR_HTML,
-  "stavanger-agent-beredskap-april-2026.html": files.BLOGG_STAVANGER_AGENT_BEREDSKAP_HTML,
-  "hva-er-aeo-guide.html": files.BLOGG_HVA_ER_AEO_GUIDE_HTML,
-  "aeo-vs-seo.html": files.BLOGG_AEO_VS_SEO_HTML,
-  "digital-markedsforing-stavanger.html": files.BLOGG_DIGITAL_MARKEDSFORING_STAVANGER_HTML,
-  "chatgpt-annonser-og-aeo-april-2026.html": files.BLOGG_CHATGPT_ANNONSER_OG_AEO_HTML,
-  "automatisert-aeo-vs-radgiving.html": files.BLOGG_AUTOMATISERT_AEO_VS_RADGIVING_HTML,
-  "stavanger-klinikk-aeo-analyse.html": files.BLOGG_STAVANGER_KLINIKK_AEO_ANALYSE_HTML,
-  "norges-aeo-leaderboard-2026-04.html": files.BLOGG_NORGES_AEO_LEADERBOARD_2026_04_HTML,
-  "eu-ai-act-norske-bedrifter.html": files.BLOGG_EU_AI_ACT_NORSKE_BEDRIFTER_HTML,
-  "aeo-budsjett-45x-okonomi.html": files.BLOGG_AEO_BUDSJETT_45X_HTML,
-  "aeo-sjekkliste-2026.html": files.BLOGG_AEO_SJEKKLISTE_2026_HTML,
   "ga4-ai-assistant-2026.html": files.BLOGG_GA4_AI_ASSISTANT_2026_HTML,
-  "chatgpt-konverterer-9x.html": files.BLOGG_CHATGPT_KONVERTERER_9X_HTML,
-  "google-sok-redesign-mai-2026.html": files.BLOGG_GOOGLE_SOK_REDESIGN_MAI_2026_HTML,
-  "90-prosent-usynlige-i-ai-sok.html": files.BLOGG_90_PROSENT_USYNLIGE_HTML,
-  "google-spam-policy-aeo-mai-2026.html": files.BLOGG_GOOGLE_SPAM_POLICY_AEO_HTML,
-  "93-prosent-ai-mode-null-klikk.html": files.BLOGG_93_PROSENT_AI_MODE_NULL_KLIKK_HTML,
-  "ai-produksjon-reliability-gap.html": files.BLOGG_AI_PRODUKSJON_RELIABILITY_GAP_HTML,
-  "robinhood-ai-agenter-norske-merkevarer.html": files.BLOGG_ROBINHOOD_AI_AGENTER_HTML,
-  "vibesec-ai-generert-kode-sikkerhet.html": files.BLOGG_VIBESEC_AI_GENERERT_KODE_HTML,
-  "sok-fragmenteres-2026.html": files.BLOGG_SOK_FRAGMENTERES_2026_HTML,
-  "ey-falske-ai-kilder.html": files.BLOGG_EY_FALSKE_AI_KILDER_HTML,
-  "llm-smells-aeo-synlighet.html": files.BLOGG_LLM_SMELLS_AEO_HTML,
-  "checkout-agentic-commerce-tillit-gap-2026.html": files.BLOGG_CHECKOUT_AGENTIC_COMMERCE_TILLIT_GAP_HTML,
-  "google-search-profiles-61-prosent-ctr-fall.html": files.BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML,
   "aeo-lite-faqpage-990-kr.html": files.BLOGG_AEO_LITE_FAQPAGE_HTML,
-  "b2b-fintech-agent-discoverability.html": files.BLOGG_B2B_FINTECH_AGENT_HTML,
   "ki-vannmerking-norge-artikkel-50.html": files.BLOGG_KI_VANNMERKING_HTML,
   "installatorregisteret.html": files.BLOGG_INSTALLATORREGISTERET_HTML,
   "installatorindeksen-2026-09.html": files.BLOGG_INSTALLATORINDEKSEN_2026_09_HTML,
@@ -963,7 +903,7 @@ if (ctaViolations.length > 0) {
       url: `https://synligdigital.no/blogg/${fname.replace(/\.html$/, "")}`,
       name: `blogg/${fname}`,
     })),
-    minEntries: 30,
+    minEntries: 10, // 10 posts after the 2026-10-28 prune (was 30 at 40 posts)
   });
   if (sitemapViolations.length > 0) {
     console.error(`\n[BUILD FAIL] sitemap-parity violations (published posts not in sitemap.xml):`);
@@ -1487,7 +1427,7 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
   const PRICING_DIR_FLOOR: Record<string, number> = {
     // Root: 15 root-level HTML files measured 2026-09-09.
     "/workspace/synlig-site": 15,
-    "/workspace/synlig-site/src/content/blogg": 36,
+    "/workspace/synlig-site/src/content/blogg": 10, // prune 2026-10-28: 40 → 10
     "/workspace/synlig-site/src/content/case": 3,
     "/workspace/synlig-site/tjenester": 11,
     "/workspace/synlig-site/rapport": 7,
@@ -2029,8 +1969,8 @@ for (const name of FONT_FILES) {
 
   // Empty-input floor: covers ALL registries, not just `files`.
   // Minimum = 59 files + 8 verticals + 193 reports = 260. Floor set to 250.
-  if (allSurfaces.length < 250) {
-    console.error(`\n[BUILD FAIL] comment-strip: only ${allSurfaces.length} surfaces (expected ≥250 — did a registry stop loading?).`);
+  if (allSurfaces.length < 220) { // 266 → 236 after the 2026-10-28 blog prune
+    console.error(`\n[BUILD FAIL] comment-strip: only ${allSurfaces.length} surfaces (expected ≥220 — did a registry stop loading?).`);
     process.exit(1);
   }
 
@@ -2242,31 +2182,48 @@ const PERSONVERN_HTML = \`${escape(files.PERSONVERN_HTML)}\`;
 
 const AGENT_CARD_JSON = \`${escape(files.AGENT_CARD_JSON)}\`;
 
+const PRUNED_BLOG_301: Record<string, string> = {
+  "90-prosent-usynlige-i-ai-sok": "/blogg/hva-er-aeo",
+  "93-prosent-ai-mode-null-klikk": "/blogg/hva-er-aeo",
+  "aeo-budsjett-45x-okonomi": "/priser",
+  "aeo-sjekkliste-2026": "/blogg/slik-blir-du-synlig-i-chatgpt",
+  "aeo-vs-seo": "/blogg/hva-er-aeo",
+  "ai-produksjon-reliability-gap": "/blogg",
+  "automatisert-aeo-vs-radgiving": "/metode",
+  "b2b-fintech-agent-discoverability": "/blogg",
+  "caveman-ai-pricing-april-2026": "/blogg",
+  "chatgpt-annonser-og-aeo-april-2026": "/blogg",
+  "chatgpt-konverterer-9x": "/blogg/hva-er-aeo",
+  "checkout-agentic-commerce-tillit-gap-2026": "/blogg",
+  "digital-markedsforing-stavanger": "/blogg/aeo-byra-norge",
+  "er-nettsida-di-klar-for-ai-agentar": "/blogg/slik-blir-du-synlig-i-chatgpt",
+  "eu-ai-act-norske-bedrifter": "/blogg",
+  "ey-falske-ai-kilder": "/blogg",
+  "google-search-profiles-61-prosent-ctr-fall": "/blogg/hva-er-aeo",
+  "google-sok-redesign-mai-2026": "/blogg/hva-er-aeo",
+  "google-spam-policy-aeo-mai-2026": "/blogg/slik-blir-du-synlig-i-chatgpt",
+  "hva-er-aeo-guide": "/blogg/hva-er-aeo",
+  "llm-smells-aeo-synlighet": "/blogg",
+  "lokal-ai-synlighet": "/blogg/slik-blir-du-synlig-i-chatgpt",
+  "mcp-security-march-2026": "/blogg",
+  "norges-aeo-leaderboard-2026-04": "/leaderboard",
+  "norsk-aeo-benchmark-2026": "/metode",
+  "robinhood-ai-agenter-norske-merkevarer": "/blogg",
+  "sok-fragmenteres-2026": "/blogg/hva-er-aeo",
+  "stavanger-agent-beredskap-april-2026": "/blogg",
+  "stavanger-klinikk-aeo-analyse": "/blogg",
+  "vibesec-ai-generert-kode-sikkerhet": "/blogg",
+};
+
 const BLOGG_INDEX_HTML = \`${escape(files.BLOGG_INDEX_HTML)}\`;
 
 const BLOGG_HVA_ER_AEO_HTML = \`${escape(files.BLOGG_HVA_ER_AEO_HTML)}\`;
 
 const BLOGG_AEO_I_NORGE_2026_HTML = \`${escape(files.BLOGG_AEO_I_NORGE_2026_HTML)}\`;
 
-const BLOGG_NORSK_AEO_BENCHMARK_2026_HTML = \`${escape(files.BLOGG_NORSK_AEO_BENCHMARK_2026_HTML)}\`;
-
-const BLOGG_MCP_SECURITY_MARCH_2026_HTML = \`${escape(files.BLOGG_MCP_SECURITY_MARCH_2026_HTML)}\`;
-
 const BLOGG_AEO_BYRA_NORGE_HTML = \`${escape(files.BLOGG_AEO_BYRA_NORGE_HTML)}\`;
 
-const BLOGG_LOKAL_AI_SYNLIGHET_HTML = \`${escape(files.BLOGG_LOKAL_AI_SYNLIGHET_HTML)}\`;
-
 const BLOGG_SLIK_BLIR_DU_SYNLIG_I_CHATGPT_HTML = \`${escape(files.BLOGG_SLIK_BLIR_DU_SYNLIG_I_CHATGPT_HTML)}\`;
-
-const BLOGG_CAVEMAN_AI_PRICING_APRIL_2026_HTML = \`${escape(files.BLOGG_CAVEMAN_AI_PRICING_APRIL_2026_HTML)}\`;
-
-const BLOGG_ER_NETTSIDA_DI_KLAR_HTML = \`${escape(files.BLOGG_ER_NETTSIDA_DI_KLAR_HTML)}\`;
-
-const BLOGG_STAVANGER_AGENT_BEREDSKAP_HTML = \`${escape(files.BLOGG_STAVANGER_AGENT_BEREDSKAP_HTML)}\`;
-
-const BLOGG_HVA_ER_AEO_GUIDE_HTML = \`${escape(files.BLOGG_HVA_ER_AEO_GUIDE_HTML)}\`;
-
-const BLOGG_AEO_VS_SEO_HTML = \`${escape(files.BLOGG_AEO_VS_SEO_HTML)}\`;
 
 const RAPPORT_STATE_AEO_2026_HTML = \`${escape(files.RAPPORT_STATE_AEO_2026_HTML)}\`;
 
@@ -2278,53 +2235,9 @@ const TJENESTER_AEO_HTML = \`${escape(files.TJENESTER_AEO_HTML)}\`;
 
 const TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML = \`${escape(files.TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML)}\`;
 
-const BLOGG_DIGITAL_MARKEDSFORING_STAVANGER_HTML = \`${escape(files.BLOGG_DIGITAL_MARKEDSFORING_STAVANGER_HTML)}\`;
-
-const BLOGG_CHATGPT_ANNONSER_OG_AEO_HTML = \`${escape(files.BLOGG_CHATGPT_ANNONSER_OG_AEO_HTML)}\`;
-
-const BLOGG_AUTOMATISERT_AEO_VS_RADGIVING_HTML = \`${escape(files.BLOGG_AUTOMATISERT_AEO_VS_RADGIVING_HTML)}\`;
-
-const BLOGG_STAVANGER_KLINIKK_AEO_ANALYSE_HTML = \`${escape(files.BLOGG_STAVANGER_KLINIKK_AEO_ANALYSE_HTML)}\`;
-
-const BLOGG_NORGES_AEO_LEADERBOARD_2026_04_HTML = \`${escape(files.BLOGG_NORGES_AEO_LEADERBOARD_2026_04_HTML)}\`;
-
-const BLOGG_EU_AI_ACT_NORSKE_BEDRIFTER_HTML = \`${escape(files.BLOGG_EU_AI_ACT_NORSKE_BEDRIFTER_HTML)}\`;
-
-const BLOGG_AEO_BUDSJETT_45X_HTML = \`${escape(files.BLOGG_AEO_BUDSJETT_45X_HTML)}\`;
-
-const BLOGG_AEO_SJEKKLISTE_2026_HTML = \`${escape(files.BLOGG_AEO_SJEKKLISTE_2026_HTML)}\`;
-
 const BLOGG_GA4_AI_ASSISTANT_2026_HTML = \`${escape(files.BLOGG_GA4_AI_ASSISTANT_2026_HTML)}\`;
 
-const BLOGG_CHATGPT_KONVERTERER_9X_HTML = \`${escape(files.BLOGG_CHATGPT_KONVERTERER_9X_HTML)}\`;
-
-const BLOGG_GOOGLE_SOK_REDESIGN_MAI_2026_HTML = \`${escape(files.BLOGG_GOOGLE_SOK_REDESIGN_MAI_2026_HTML)}\`;
-
-const BLOGG_90_PROSENT_USYNLIGE_HTML = \`${escape(files.BLOGG_90_PROSENT_USYNLIGE_HTML)}\`;
-
-const BLOGG_GOOGLE_SPAM_POLICY_AEO_HTML = \`${escape(files.BLOGG_GOOGLE_SPAM_POLICY_AEO_HTML)}\`;
-
-const BLOGG_93_PROSENT_AI_MODE_NULL_KLIKK_HTML = \`${escape(files.BLOGG_93_PROSENT_AI_MODE_NULL_KLIKK_HTML)}\`;
-
-const BLOGG_AI_PRODUKSJON_RELIABILITY_GAP_HTML = \`${escape(files.BLOGG_AI_PRODUKSJON_RELIABILITY_GAP_HTML)}\`;
-
-const BLOGG_ROBINHOOD_AI_AGENTER_HTML = \`${escape(files.BLOGG_ROBINHOOD_AI_AGENTER_HTML)}\`;
-
-const BLOGG_VIBESEC_AI_GENERERT_KODE_HTML = \`${escape(files.BLOGG_VIBESEC_AI_GENERERT_KODE_HTML)}\`;
-
-const BLOGG_SOK_FRAGMENTERES_2026_HTML = \`${escape(files.BLOGG_SOK_FRAGMENTERES_2026_HTML)}\`;
-
-const BLOGG_EY_FALSKE_AI_KILDER_HTML = \`${escape(files.BLOGG_EY_FALSKE_AI_KILDER_HTML)}\`;
-
-const BLOGG_LLM_SMELLS_AEO_HTML = \`${escape(files.BLOGG_LLM_SMELLS_AEO_HTML)}\`;
-
-const BLOGG_CHECKOUT_AGENTIC_COMMERCE_TILLIT_GAP_HTML = \`${escape(files.BLOGG_CHECKOUT_AGENTIC_COMMERCE_TILLIT_GAP_HTML)}\`;
-
-const BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML = \`${escape(files.BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML)}\`;
-
 const BLOGG_AEO_LITE_FAQPAGE_HTML = \`${escape(files.BLOGG_AEO_LITE_FAQPAGE_HTML)}\`;
-
-const BLOGG_B2B_FINTECH_AGENT_HTML = \`${escape(files.BLOGG_B2B_FINTECH_AGENT_HTML)}\`;
 
 const BLOGG_KI_VANNMERKING_HTML = \`${escape(files.BLOGG_KI_VANNMERKING_HTML)}\`;
 
@@ -2432,26 +2345,10 @@ ${EN_ROUTE_LINES}
   "/blogg/hva-er-aeo.html": { body: BLOGG_HVA_ER_AEO_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/aeo-i-norge-2026": { body: BLOGG_AEO_I_NORGE_2026_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/aeo-i-norge-2026.html": { body: BLOGG_AEO_I_NORGE_2026_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/norsk-aeo-benchmark-2026": { body: BLOGG_NORSK_AEO_BENCHMARK_2026_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/norsk-aeo-benchmark-2026.html": { body: BLOGG_NORSK_AEO_BENCHMARK_2026_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/mcp-security-march-2026": { body: BLOGG_MCP_SECURITY_MARCH_2026_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/mcp-security-march-2026.html": { body: BLOGG_MCP_SECURITY_MARCH_2026_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/aeo-byra-norge": { body: BLOGG_AEO_BYRA_NORGE_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/aeo-byra-norge.html": { body: BLOGG_AEO_BYRA_NORGE_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/lokal-ai-synlighet": { body: BLOGG_LOKAL_AI_SYNLIGHET_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/lokal-ai-synlighet.html": { body: BLOGG_LOKAL_AI_SYNLIGHET_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/slik-blir-du-synlig-i-chatgpt": { body: BLOGG_SLIK_BLIR_DU_SYNLIG_I_CHATGPT_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/slik-blir-du-synlig-i-chatgpt.html": { body: BLOGG_SLIK_BLIR_DU_SYNLIG_I_CHATGPT_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/caveman-ai-pricing-april-2026": { body: BLOGG_CAVEMAN_AI_PRICING_APRIL_2026_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/caveman-ai-pricing-april-2026.html": { body: BLOGG_CAVEMAN_AI_PRICING_APRIL_2026_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/er-nettsida-di-klar-for-ai-agentar": { body: BLOGG_ER_NETTSIDA_DI_KLAR_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/er-nettsida-di-klar-for-ai-agentar.html": { body: BLOGG_ER_NETTSIDA_DI_KLAR_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/stavanger-agent-beredskap-april-2026": { body: BLOGG_STAVANGER_AGENT_BEREDSKAP_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/stavanger-agent-beredskap-april-2026.html": { body: BLOGG_STAVANGER_AGENT_BEREDSKAP_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/hva-er-aeo-guide": { body: BLOGG_HVA_ER_AEO_GUIDE_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/hva-er-aeo-guide.html": { body: BLOGG_HVA_ER_AEO_GUIDE_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/aeo-vs-seo": { body: BLOGG_AEO_VS_SEO_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/aeo-vs-seo.html": { body: BLOGG_AEO_VS_SEO_HTML, contentType: "text/html; charset=utf-8" },
   "/rapport/state-of-aeo-2026": { body: RAPPORT_STATE_AEO_2026_HTML, contentType: "text/html; charset=utf-8" },
   "/rapport/state-of-aeo-2026.html": { body: RAPPORT_STATE_AEO_2026_HTML, contentType: "text/html; charset=utf-8" },
   "/tjenester": { body: TJENESTER_INDEX_HTML, contentType: "text/html; charset=utf-8" },
@@ -2467,54 +2364,10 @@ ${verticalRoutes}
   "/tjenester/digital-markedsforing-stavanger": { body: TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML, contentType: "text/html; charset=utf-8" },
   "/tjenester/digital-markedsforing-stavanger/": { body: TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML, contentType: "text/html; charset=utf-8" },
   "/tjenester/digital-markedsforing-stavanger.html": { body: TJENESTER_DIGITAL_MARKEDSFORING_STAVANGER_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/digital-markedsforing-stavanger": { body: BLOGG_DIGITAL_MARKEDSFORING_STAVANGER_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/digital-markedsforing-stavanger.html": { body: BLOGG_DIGITAL_MARKEDSFORING_STAVANGER_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/chatgpt-annonser-og-aeo-april-2026": { body: BLOGG_CHATGPT_ANNONSER_OG_AEO_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/chatgpt-annonser-og-aeo-april-2026.html": { body: BLOGG_CHATGPT_ANNONSER_OG_AEO_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/automatisert-aeo-vs-radgiving": { body: BLOGG_AUTOMATISERT_AEO_VS_RADGIVING_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/automatisert-aeo-vs-radgiving.html": { body: BLOGG_AUTOMATISERT_AEO_VS_RADGIVING_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/stavanger-klinikk-aeo-analyse": { body: BLOGG_STAVANGER_KLINIKK_AEO_ANALYSE_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/stavanger-klinikk-aeo-analyse.html": { body: BLOGG_STAVANGER_KLINIKK_AEO_ANALYSE_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/norges-aeo-leaderboard-2026-04": { body: BLOGG_NORGES_AEO_LEADERBOARD_2026_04_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/norges-aeo-leaderboard-2026-04.html": { body: BLOGG_NORGES_AEO_LEADERBOARD_2026_04_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/eu-ai-act-norske-bedrifter": { body: BLOGG_EU_AI_ACT_NORSKE_BEDRIFTER_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/eu-ai-act-norske-bedrifter.html": { body: BLOGG_EU_AI_ACT_NORSKE_BEDRIFTER_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/aeo-budsjett-45x-okonomi": { body: BLOGG_AEO_BUDSJETT_45X_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/aeo-budsjett-45x-okonomi.html": { body: BLOGG_AEO_BUDSJETT_45X_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/aeo-sjekkliste-2026": { body: BLOGG_AEO_SJEKKLISTE_2026_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/aeo-sjekkliste-2026.html": { body: BLOGG_AEO_SJEKKLISTE_2026_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/ga4-ai-assistant-2026": { body: BLOGG_GA4_AI_ASSISTANT_2026_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/ga4-ai-assistant-2026.html": { body: BLOGG_GA4_AI_ASSISTANT_2026_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/chatgpt-konverterer-9x": { body: BLOGG_CHATGPT_KONVERTERER_9X_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/chatgpt-konverterer-9x.html": { body: BLOGG_CHATGPT_KONVERTERER_9X_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/google-sok-redesign-mai-2026": { body: BLOGG_GOOGLE_SOK_REDESIGN_MAI_2026_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/google-sok-redesign-mai-2026.html": { body: BLOGG_GOOGLE_SOK_REDESIGN_MAI_2026_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/90-prosent-usynlige-i-ai-sok": { body: BLOGG_90_PROSENT_USYNLIGE_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/90-prosent-usynlige-i-ai-sok.html": { body: BLOGG_90_PROSENT_USYNLIGE_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/google-spam-policy-aeo-mai-2026": { body: BLOGG_GOOGLE_SPAM_POLICY_AEO_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/google-spam-policy-aeo-mai-2026.html": { body: BLOGG_GOOGLE_SPAM_POLICY_AEO_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/93-prosent-ai-mode-null-klikk": { body: BLOGG_93_PROSENT_AI_MODE_NULL_KLIKK_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/93-prosent-ai-mode-null-klikk.html": { body: BLOGG_93_PROSENT_AI_MODE_NULL_KLIKK_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/ai-produksjon-reliability-gap": { body: BLOGG_AI_PRODUKSJON_RELIABILITY_GAP_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/ai-produksjon-reliability-gap.html": { body: BLOGG_AI_PRODUKSJON_RELIABILITY_GAP_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/robinhood-ai-agenter-norske-merkevarer": { body: BLOGG_ROBINHOOD_AI_AGENTER_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/robinhood-ai-agenter-norske-merkevarer.html": { body: BLOGG_ROBINHOOD_AI_AGENTER_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/vibesec-ai-generert-kode-sikkerhet": { body: BLOGG_VIBESEC_AI_GENERERT_KODE_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/vibesec-ai-generert-kode-sikkerhet.html": { body: BLOGG_VIBESEC_AI_GENERERT_KODE_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/sok-fragmenteres-2026": { body: BLOGG_SOK_FRAGMENTERES_2026_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/sok-fragmenteres-2026.html": { body: BLOGG_SOK_FRAGMENTERES_2026_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/ey-falske-ai-kilder": { body: BLOGG_EY_FALSKE_AI_KILDER_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/ey-falske-ai-kilder.html": { body: BLOGG_EY_FALSKE_AI_KILDER_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/llm-smells-aeo-synlighet": { body: BLOGG_LLM_SMELLS_AEO_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/llm-smells-aeo-synlighet.html": { body: BLOGG_LLM_SMELLS_AEO_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/checkout-agentic-commerce-tillit-gap-2026": { body: BLOGG_CHECKOUT_AGENTIC_COMMERCE_TILLIT_GAP_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/checkout-agentic-commerce-tillit-gap-2026.html": { body: BLOGG_CHECKOUT_AGENTIC_COMMERCE_TILLIT_GAP_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/google-search-profiles-61-prosent-ctr-fall": { body: BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/google-search-profiles-61-prosent-ctr-fall.html": { body: BLOGG_GOOGLE_SEARCH_PROFILES_61_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/aeo-lite-faqpage-990-kr": { body: BLOGG_AEO_LITE_FAQPAGE_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/aeo-lite-faqpage-990-kr.html": { body: BLOGG_AEO_LITE_FAQPAGE_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/b2b-fintech-agent-discoverability": { body: BLOGG_B2B_FINTECH_AGENT_HTML, contentType: "text/html; charset=utf-8" },
-  "/blogg/b2b-fintech-agent-discoverability.html": { body: BLOGG_B2B_FINTECH_AGENT_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/ki-vannmerking-norge-artikkel-50": { body: BLOGG_KI_VANNMERKING_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/ki-vannmerking-norge-artikkel-50.html": { body: BLOGG_KI_VANNMERKING_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/installatorregisteret": { body: BLOGG_INSTALLATORREGISTERET_HTML, contentType: "text/html; charset=utf-8" },
@@ -3150,6 +3003,22 @@ export default {
       });
     }
 
+    // Content prune 2026-10-28 (task 852a7395, Håkon 10-26 «alt innhold ikke er like relevant»):
+    // 30 of 40 /blogg posts removed (news pegs, off-topic English pieces, stale April
+    // snapshots, duplicates); each 301s to the page that now carries its subject.
+    // Decision table: /workspace/memory/knowledge/synlig-content-prune-2026-10.md.
+    if (pathname.startsWith("/blogg/")) {
+      let slug = pathname.slice(7);
+      if (slug.endsWith("/")) slug = slug.slice(0, -1);
+      if (slug.endsWith(".html")) slug = slug.slice(0, -5);
+      const to = PRUNED_BLOG_301[slug];
+      if (to) {
+        return new Response(null, {
+          status: 301,
+          headers: { "Location": "https://synligdigital.no" + to + url.search, "Cache-Control": "public, max-age=86400" },
+        });
+      }
+    }
     // /about — trust-anchor for is-agentic/agent scanners. Serves METODE_HTML
     // directly (200 OK) rather than redirecting, because agent scanners typically
     // do not follow 301s when checking trust-anchor pages. Canonical stays on

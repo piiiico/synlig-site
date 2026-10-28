@@ -30,7 +30,7 @@ const PROXIMITY_CHARS = 200;
 // stopped reading anything. Added 2026-08-09 during the fase-3 port, which
 // moved the source of truth from blogg/ to src/content/blogg/ and made a
 // silent mis-point a one-typo failure. 36 posts exist; the set only grows.
-const MIN_BLOG_FILES = 36;
+const MIN_BLOG_FILES = 10; // prune 2026-10-28: 40 → 10 posts
 
 const REPORT_REGISTRY = "/workspace/money/aeo/report-registry.jsonl";
 const FACT_REGISTRY = "/workspace/money/aeo/fact-registry.jsonl";

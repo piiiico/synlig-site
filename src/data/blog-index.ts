@@ -4,7 +4,7 @@
 export const BLOG_INDEX_HEADER = {
   "label": "Blogg",
   "heading": "AEO-innsikt og analyser",
-  "sub": "Guider, case studies og analyser fra Norges AEO-eksperter.",
+  "sub": "Målinger med rådata, og guidene vi står inne for i dag.",
   "title": "Blogg — Synlig AEO-innsikt og analyser",
   "description": "Synligs blogg om AEO, AI-synlighet og digitalt nærvær for norske bedrifter. Guider, case studies og bransjeanalyser.",
   "canonical": "https://synligdigital.no/blogg",
@@ -30,68 +30,8 @@ export const BLOG_INDEX_JSONLD: unknown[] = [
 
 /** route -> section. Order within a section is the order it shipped in. */
 export const BLOG_INDEX_SECTIONS: ReadonlyArray<{ title: string; routes: readonly string[] }> = [
-  {
-    "title": "Latest",
-    "routes": [
-      "/blogg/b2b-fintech-agent-discoverability",
-      "/blogg/checkout-agentic-commerce-tillit-gap-2026",
-      "/blogg/google-search-profiles-61-prosent-ctr-fall",
-      "/blogg/aeo-lite-faqpage-990-kr",
-      "/blogg/llm-smells-aeo-synlighet",
-      "/blogg/ey-falske-ai-kilder",
-      "/blogg/sok-fragmenteres-2026",
-      "/blogg/vibesec-ai-generert-kode-sikkerhet",
-      "/blogg/robinhood-ai-agenter-norske-merkevarer",
-      "/blogg/ai-produksjon-reliability-gap",
-      "/blogg/93-prosent-ai-mode-null-klikk",
-      "/blogg/google-spam-policy-aeo-mai-2026",
-      "/blogg/90-prosent-usynlige-i-ai-sok",
-      "/blogg/google-sok-redesign-mai-2026",
-      "/blogg/chatgpt-konverterer-9x",
-      "/blogg/ga4-ai-assistant-2026",
-      "/blogg/aeo-budsjett-45x-okonomi",
-      "/blogg/eu-ai-act-norske-bedrifter",
-      "/blogg/stavanger-klinikk-aeo-analyse",
-      "/blogg/automatisert-aeo-vs-radgiving",
-      "/blogg/chatgpt-annonser-og-aeo-april-2026",
-      "/blogg/stavanger-agent-beredskap-april-2026",
-      "/blogg/er-nettsida-di-klar-for-ai-agentar",
-      "/blogg/caveman-ai-pricing-april-2026",
-      "/blogg/mcp-security-march-2026",
-      "/blogg/aeo-sjekkliste-2026",
-      "/blogg/digital-markedsforing-stavanger",
-      "/blogg/norges-aeo-leaderboard-2026-04",
-      "/blogg/norsk-aeo-benchmark-2026"
-    ]
-  },
-  {
-    "title": "Siste analyse",
-    "routes": [
-      "/blogg/aeo-i-norge-2026"
-    ]
-  },
-  {
-    "title": "Siste guide",
-    "routes": [
-      "/blogg/slik-blir-du-synlig-i-chatgpt",
-      "/blogg/lokal-ai-synlighet"
-    ]
-  },
-  {
-    "title": "Guider",
-    "routes": [
-      "/blogg/hva-er-aeo-guide",
-      "/blogg/aeo-vs-seo",
-      "/blogg/aeo-byra-norge",
-      "/blogg/hva-er-aeo"
-    ]
-  },
-  {
-    "title": "Case studies og analyser",
-    "routes": [
-      "/case/pierstop",
-      "/case/nordic-lithium",
-      "/analyse/komplett-aeo"
-    ]
-  }
+  { "title": "Målinger", "routes": ["/blogg/aeo-byra-norge", "/blogg/aeo-i-norge-2026"] },
+  { "title": "Guider", "routes": ["/blogg/hva-er-aeo", "/blogg/slik-blir-du-synlig-i-chatgpt", "/blogg/ga4-ai-assistant-2026", "/blogg/aeo-lite-faqpage-990-kr", "/blogg/ki-vannmerking-norge-artikkel-50"] },
+  { "title": "Installatørregisteret", "routes": ["/blogg/installatorindeksen-2026-10", "/blogg/installatorindeksen-2026-09", "/blogg/installatorregisteret"] },
+  { "title": "Case", "routes": ["/case/pierstop", "/case/nordic-lithium", "/analyse/komplett-aeo"] }
 ];
