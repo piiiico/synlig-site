@@ -35,6 +35,7 @@ import {
   numWord,
   numWordCap,
 } from "../../_partials/metode-measurements";
+import { ENGINE_HEADLINE } from "../../_partials/naming-proof";
 
 const M = loadMetodeMeasurements();
 /** 2026-09-06 skår-mot-sitering, 124 nettsteder. Kaster ved tynt/vendt datasett. */
@@ -89,8 +90,8 @@ const notClaims = [
     p: "elkjop.no ble lenket i 9 av 9 kjøringer på «Hvor kjøper jeg PC billig i Norge?» og i 0 av 9 på «Beste nettbutikk for elektronikk i Norge?» — samme domene, samme uke, samme motor. Én score per forside kan ikke beskrive begge. Derfor rapporterer vi per spørsmål.",
   },
   {
-    h: "Det er én motor, ikke «AI».",
-    p: "Standardmålingen kjøres mot Perplexity (Sonar) via OpenRouter, fordi den oppgir kildene sine og kan etterprøves. Vi skriver aldri «AI-en siterer dere» når vi mener «denne motoren, disse dagene». Andre motorer kan avtales, men da står det hvilke. Andre måler flere grensesnitt og færre ganger. Vi måler ett, ni ganger. Det er byttet, og det står her fordi dere skal kunne velge det bort.",
+    h: "Det er tre navngitte motorer, ikke «AI».",
+    p: `Standardmålingen kjøres mot OpenAIs GPT, Claude og Gemini, hver med leverandørens eget websøk via API-et, tre kjøringer per motor per spørsmål. Det er ikke forbrukerappene: chatgpt.com, gemini.google.com og Googles AI-oversikter har egne instruksjoner, personalisering og modellvalg. Vi skriver aldri «AI-en siterer dere» når vi mener «disse motorene, disse dagene». Vår egen måling 27. oktober 2026: ${ENGINE_HEADLINE} Fram til oktober 2026 målte vi mot Perplexity (Sonar) alene. Elektronikk-målingen og kontrollene lenger ned er fra den perioden og står med motoren oppgitt. Vi byttet fordi folk bruker disse tre langt mer enn Perplexity.`,
   },
   {
     h: "Det er ingen årsaksforklaring og ingen garanti.",
@@ -105,11 +106,11 @@ const faqs = [
   },
   {
     q: "Hvilken AI-motor måler dere mot?",
-    a: "Perplexity (Sonar) via OpenRouter i standardmålingen, fordi den oppgir kildene sine slik at påstanden kan etterprøves. Datoer, modellnavn og kjøringstall står i leveransen.",
+    a: "OpenAIs GPT, Claude og Gemini, hver med leverandørens eget websøk via API-et, tre kjøringer per motor per spørsmål. I oktober 2026 var modellene gpt-5.6-luna, claude-sonnet-5.5 og gemini-3.8-flash. Datoer, modellnavn og kjøringstall står i leveransen. Målinger fra før oktober 2026 er gjort mot Perplexity (Sonar) og er merket slik.",
   },
   {
     q: "Hva er forskjellen på live henting og simulering i måling av AI-synlighet?",
-    a: "Forskjellen er hvor svaret kommer fra. En live henting søker på web i det øyeblikket spørsmålet stilles, og oppgir URL-ene den faktisk brukte — dem kan du åpne og etterprøve selv. En simulering spør en modell uten søk og får tilbake det modellen husker: ingen kilder, ingenting å kontrollere. Vi henter live. Sonar søker på web i det spørsmålet stilles, og oppgir URL-ene den brukte. Vi kjører mot API-et framfor å sitte i en nettleser, men hentingen er den samme — og det er hentingen som avgjør, ikke transporten. Kontrollen vår 8. september 2026: samme spørsmål til en modell uten websøk klarte ikke å svare i det hele tatt, fire av fire, mens Sonar traff en kurs vi hentet uavhengig i samme minutt på 0,02 prosent. Det vi ikke påstår: at tallet er ferskt i sekundet. Samme spørsmål ga samme svar i fire minutter mens kursen flyttet seg, så indeksen ligger noen minutter bak. For siteringsmåling spiller det ingen rolle. For en børskurs hadde det vært en løgn.",
+    a: "Forskjellen er hvor svaret kommer fra. En live henting søker på web i det øyeblikket spørsmålet stilles, og oppgir URL-ene den faktisk brukte — dem kan du åpne og etterprøve selv. En simulering spør en modell uten søk og får tilbake det modellen husker: ingen kilder, ingenting å kontrollere. Vi henter live: alle tre motorene kjøres med websøk slått på og oppgir URL-ene de brukte. Vi kjører mot API-et framfor å sitte i en nettleser, men hentingen er den samme — og det er hentingen som avgjør, ikke transporten. Kontrollen vår 8. september 2026, den gang mot Perplexity (Sonar): samme spørsmål til en modell uten websøk klarte ikke å svare i det hele tatt, fire av fire, mens Sonar traff en kurs vi hentet uavhengig i samme minutt på 0,02 prosent. Det vi ikke påstår: at tallet er ferskt i sekundet. Samme spørsmål ga samme svar i fire minutter mens kursen flyttet seg, så indeksen ligger noen minutter bak. For siteringsmåling spiller det ingen rolle. For en børskurs hadde det vært en løgn.",
   },
   {
     q: "Kan vi velge spørsmålene selv?",

@@ -127,7 +127,7 @@ const organization = {
         "@type": "Offer",
         name: "AI-synlighetssjekk",
         description:
-          "Gratis analyse av bedriftens synlighet i AI-assistenter. Se hvordan ChatGPT og Perplexity finner — eller ikke finner — bedriften din.",
+          "Gratis analyse av bedriftens synlighet i AI-assistenter: om nettsiden er lesbar for AI, og om Perplexity nevner bedriften din når kunder spør.",
         price: "0",
         priceCurrency: "NOK",
         url: "https://sjekk.synligdigital.no",
@@ -207,7 +207,7 @@ const organization = {
       "@type": "SearchAction",
       name: "Sjekk AI-synlighet gratis",
       description:
-        "Gratis AI-synlighetsanalyse — se korleis ChatGPT og Perplexity finn bedriften din",
+        "Gratis AI-synlighetsanalyse — sjekk om nettsida di er lesbar for AI, og om Perplexity nemner bedriften din",
       target: {
         "@type": "EntryPoint",
         urlTemplate: "https://sjekk.synligdigital.no/?url={url}",
