@@ -8,8 +8,10 @@
 
 import { readdirSync, readFileSync, statSync, existsSync } from "fs";
 import { join, basename, resolve } from "path";
-import { LOGO_HTML, LOGO_CSS, CHROME_CSS } from "./_partials/site-logo";
-import { applyMarkers, MID_MARKER, BOTTOM_MARKER, LEAD_CAPTURE_PATH, CHECKOUT_HREF_PREFIX, MAILTO_PREFIX, LIVE_PRICE_ANCHORS, type Stage } from "./_partials/render-audit-cta";
+import { LOGO_HTML } from "./_partials/site-logo";
+import { SITE_CHROME_STYLE, TOKEN_COUNT } from "./_partials/site-chrome";
+import { PRICES_NOK, kr } from "../synlig-worker/prices";
+import { applyMarkers, MID_MARKER, BOTTOM_MARKER, LEAD_CAPTURE_PATH, CHECKOUT_HREF_PREFIX, MAILTO_PREFIX, GRATIS_PATH, LIVE_PRICE_ANCHORS, type Stage } from "./_partials/render-audit-cta";
 import { runFactSourceGate } from "./_partials/fact-source-gate";
 import { runMetodeMeasureGate } from "./_partials/metode-measure-gate";
 import { runEnPriceCorpusGate, faktura_EN_SURFACE, fakturaConfirmation_EN_SURFACE, EN_PRICES } from "./_partials/en-price-gate";
@@ -278,9 +280,11 @@ const files = {
   BLOGG_INSTALLATORREGISTERET_HTML: await Bun.file("/workspace/synlig-site/dist/blogg/installatorregisteret/index.html").text(),
   BLOGG_INSTALLATORINDEKSEN_2026_09_HTML: await applyBlogCta("installatorindeksen-2026-09"),
   BLOGG_INSTALLATORINDEKSEN_2026_10_HTML: await applyBlogCta("installatorindeksen-2026-10"),
+  BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML: await applyBlogCta("ai-barometer-solceller-batteri-2026-10"),
   LEADERBOARD_HTML: await Bun.file("/workspace/synlig-site/leaderboard.html").text(),
   LEADERBOARD_JSON: await Bun.file("/workspace/synlig-site/leaderboard.json").text(),
   AEO_BYRA_RAADATA_JSON: await Bun.file("/workspace/synlig-site/data/aeo-byra-norge-raadata-2026-10.json").text(),
+  AI_BAROMETER_SOLCELLER_JSON: await Bun.file("/workspace/synlig-site/data/ai-barometer-solceller-batteri-2026-10.json").text(),
   CONTEXT_MD: await Bun.file("/workspace/synlig-site/context.md").text(),
   PRISER_MD: await Bun.file("/workspace/synlig-site/priser.md").text(),
   // Cloudflare Agent Readiness Score — Level 3+ ("Agent-Readable") well-known endpoints.
@@ -297,18 +301,32 @@ const files = {
   // with `openssl rand -hex 16`, updating this file + INDEXNOW_KEY below + scripts/indexnow-ping.ts.
   INDEXNOW_KEY_TXT: await Bun.file("/workspace/synlig-site/22424f96edcdb8ea14002edcd65a6b0c.txt").text(),
 };
+// ONE price source (task c094dde82a6f79ef): static pages write {{PRIS:sitert}}
+// («2 900») or {{PRIS:sitert:bare}} («2900», JSON-LD) and get the number from
+// synlig-worker/prices.ts here. An unknown tier fails the build.
+for (const k of Object.keys(files) as Array<keyof typeof files>) {
+  files[k] = files[k].replace(/\{\{PRIS:([a-z]+)(:bare)?\}\}/g, (m, tier: string, bare?: string) => {
+    const n = (PRICES_NOK as Record<string, number>)[tier];
+    if (!n) { console.error(`[BUILD FAIL] unknown price token ${m} in ${k}`); process.exit(1); }
+    return bare ? String(n) : kr(n).replace("\u00a0", " ");
+  });
+}
+// Vertical landings (/tjenester/aeo-for-*) live in verticalFiles, not files[] —
+// same tokens, same source, so a 9 900-era literal cannot survive there either.
+for (const k of Object.keys(verticalFiles)) {
+  verticalFiles[k] = verticalFiles[k].replace(/\{\{PRIS:([a-z]+)(:bare)?\}\}/g, (m, tier: string, bare?: string) => {
+    const n = (PRICES_NOK as Record<string, number>)[tier];
+    if (!n) { console.error(`[BUILD FAIL] unknown price token ${m} in ${k}`); process.exit(1); }
+    return bare ? String(n) : kr(n).replace("\u00a0", " ");
+  });
+}
 
 // SITE CHROME for static pages (Vegvisning 2026-10-28). A page opts in with the
-// <!--SITE-LOGO--> marker; it then gets THE logo (_partials/site-logo.ts) and the
-// tokens, read from src/styles/global.css @theme — one token file for Astro and
-// static pages alike, so design-gate.ts reads one palette and one logo.
+// <!--SITE-LOGO--> marker; it then gets THE logo and SITE_CHROME_STYLE
+// (_partials/site-chrome.ts: tokens from src/styles/global.css @theme, the
+// same string every generated audit report carries).
 {
-  const theme = readFileSync("/workspace/synlig-site/src/styles/global.css", "utf-8").match(/@theme\s*\{([\s\S]*?)\n\}/)?.[1] ?? "";
-  const vars = [...theme.matchAll(/(--(?:color|font)-[a-z-]+):\s*([^;]+);/g)].map((m) => `${m[1]}:${m[2].trim()}`);
-  if (vars.length < 10) { console.error(`[BUILD FAIL] site chrome: ${vars.length} tokens parsed from global.css @theme`); process.exit(1); }
-  const faces = [400, 700, 800].map((w) => `@font-face{font-family:"Overpass";src:url("/fonts/overpass/overpass-${w}.woff2") format("woff2");font-weight:${w === 700 ? "500 700" : w};font-display:swap;unicode-range:U+0-B6,U+B8-10FFFF}`).join("");
-  // U+B7 excluded: Overpass marks «·» as a combining mark (GDEF class 3) → zero advance, «Guide ·AEO».
-  const chrome = `<style>${faces}:root{${vars.join(";")}}${CHROME_CSS}${LOGO_CSS}</style>`;
+  const chrome = SITE_CHROME_STYLE;
   let n = 0;
   for (const bag of [files, verticalFiles] as Record<string, string>[]) {
     for (const [k, v] of Object.entries(bag)) {
@@ -318,7 +336,7 @@ const files = {
     }
   }
   if (n < 27) { console.error(`[BUILD FAIL] site chrome: only ${n} static pages carry <!--SITE-LOGO--> (floor 27)`); process.exit(1); }
-  console.log(`  ✅ Site chrome: ${vars.length} tokens + 1 logo injected into ${n} static pages.`);
+  console.log(`  ✅ Site chrome: ${TOKEN_COUNT} tokens + 1 logo injected into ${n} static pages.`);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -832,6 +850,7 @@ const blogFileMap: Record<string, string> = {
   "installatorregisteret.html": files.BLOGG_INSTALLATORREGISTERET_HTML,
   "installatorindeksen-2026-09.html": files.BLOGG_INSTALLATORINDEKSEN_2026_09_HTML,
   "installatorindeksen-2026-10.html": files.BLOGG_INSTALLATORINDEKSEN_2026_10_HTML,
+  "ai-barometer-solceller-batteri-2026-10.html": files.BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML,
 };
 // Self-check the gate's own vocabulary before trusting it. If a price is
 // renamed in render-audit-cta.ts and LIVE_PRICE_ANCHORS is not updated, every
@@ -868,9 +887,11 @@ for (const fname of allBlogFiles) {
   // /api/lead-capture forms so abandonment-recovery email gets customer_email.
   if (!rendered.includes(LEAD_CAPTURE_PATH) && !rendered.includes(CHECKOUT_HREF_PREFIX))
     ctaViolations.push(`  blogg/${fname}: missing checkout entry (expected "${LEAD_CAPTURE_PATH}" or "${CHECKOUT_HREF_PREFIX}")`);
-  // Mailto fallback: low-trust visitors still need a non-card path.
-  if (!rendered.includes(MAILTO_PREFIX))
-    ctaViolations.push(`  blogg/${fname}: missing mailto fallback "${MAILTO_PREFIX}"`);
+  // No prefilled mailto CTA; the free-measurement form is the non-card path.
+  if (rendered.includes(MAILTO_PREFIX + "?"))
+    ctaViolations.push(`  blogg/${fname}: prefilled mailto CTA "${MAILTO_PREFIX}?…" — the CTA is the /gratis-maaling form now`);
+  if (!rendered.includes(`href="${GRATIS_PATH}?src=`))
+    ctaViolations.push(`  blogg/${fname}: missing free-measurement form link "${GRATIS_PATH}"`);
   if (rendered.includes(MID_MARKER) || rendered.includes(BOTTOM_MARKER))
     ctaViolations.push(`  blogg/${fname}: AUDIT-CTA marker survived into rendered HTML`);
 }
@@ -2092,6 +2113,7 @@ import { handleBevisRequest } from "./bevis-handler";
 import { handleBrregSearch } from "./brreg-handler";
 import { handleLiteCheckout, handleLeadCapture, handleStripeWebhook, handleTakkPage } from "./checkout-handler";
 import { handleFakturaSubmit } from "./faktura-handler";
+import { handleMaalingSubmit, renderMaalingForm } from "./maaling-handler";
 
 const INDEX_HTML = \`${escape(files.INDEX_HTML)}\`;
 
@@ -2245,11 +2267,13 @@ const BLOGG_INSTALLATORREGISTERET_HTML = \`${escape(files.BLOGG_INSTALLATORREGIS
 
 const BLOGG_INSTALLATORINDEKSEN_2026_09_HTML = \`${escape(files.BLOGG_INSTALLATORINDEKSEN_2026_09_HTML)}\`;
 const BLOGG_INSTALLATORINDEKSEN_2026_10_HTML = \`${escape(files.BLOGG_INSTALLATORINDEKSEN_2026_10_HTML)}\`;
+const BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML = \`${escape(files.BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML)}\`;
 
 const LEADERBOARD_HTML = \`${escape(files.LEADERBOARD_HTML)}\`;
 
 const LEADERBOARD_JSON = \`${escape(files.LEADERBOARD_JSON)}\`;
 const AEO_BYRA_RAADATA_JSON = \`${escape(files.AEO_BYRA_RAADATA_JSON)}\`;
+const AI_BAROMETER_SOLCELLER_JSON = \`${escape(files.AI_BAROMETER_SOLCELLER_JSON)}\`;
 
 const CONTEXT_MD = \`${escape(files.CONTEXT_MD)}\`;
 
@@ -2376,11 +2400,14 @@ ${verticalRoutes}
   "/blogg/installatorindeksen-2026-09.html": { body: BLOGG_INSTALLATORINDEKSEN_2026_09_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/installatorindeksen-2026-10": { body: BLOGG_INSTALLATORINDEKSEN_2026_10_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/installatorindeksen-2026-10.html": { body: BLOGG_INSTALLATORINDEKSEN_2026_10_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/ai-barometer-solceller-batteri-2026-10": { body: BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/ai-barometer-solceller-batteri-2026-10.html": { body: BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard/": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard.html": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard.json": { body: LEADERBOARD_JSON, contentType: "application/json; charset=utf-8" },
   "/data/aeo-byra-norge-raadata-2026-10.json": { body: AEO_BYRA_RAADATA_JSON, contentType: "application/json; charset=utf-8" },
+  "/data/ai-barometer-solceller-batteri-2026-10.json": { body: AI_BAROMETER_SOLCELLER_JSON, contentType: "application/json; charset=utf-8" },
   "/context.md": { body: CONTEXT_MD, contentType: "text/markdown; charset=utf-8" },
   "/priser.md": { body: PRISER_MD, contentType: "text/markdown; charset=utf-8" },
   // Agent-readiness well-known endpoints (Cloudflare Agent Readiness Score Level 3+).
@@ -2931,6 +2958,11 @@ export default {
     // Verifies signature, persists order to KV, fires Telegram notification.
     if (pathname === "/api/stripe-webhook" && request.method === "POST") {
       return handleStripeWebhook(request, env);
+    }
+
+    // Free-measurement intake (replaces CTA mailtos, task c094dde82a6f79ef). Source: maaling-handler.ts.
+    if (pathname === "/gratis-maaling" || pathname === "/gratis-maaling/") {
+      return request.method === "POST" ? handleMaalingSubmit(request, env) : renderMaalingForm(url);
     }
 
     // Faktura form submit: POST /faktura
