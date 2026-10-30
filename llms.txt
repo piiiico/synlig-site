@@ -14,10 +14,12 @@ Vi målar om AI-assistentar faktisk siterer merkevaren din når nokon spør, og 
 
 ## Tenester og prisar
 
-To AEO-pakkar og eitt datasett. Alle prisar er eks. MVA.
+Ei gratis måling, tre AEO-pakkar og eitt datasett. Alle prisar er eks. MVA.
 
-- **Sitert-pakken** — 9 900 NOK eingong — Hovudproduktet. Tre steg: (1) nullpunktsmåling — fem kjøpsnære spørsmål frå ditt marked, ni byte-identiske kjøringar, og namn på kven som vert sitert i staden. (2) Endringane skrivne ferdig for inntil ti sider — JSON-LD, sitatvennlege spørsmål og svar, llms.txt og AI-crawler-reglar, klare til innliming eller som pull request. (3) Ny måling 30 dagar etter at de har publisert, før/etter i eitt dokument med rådata. Utfallskriterium: minst éi sitering av dykkar domene i etterkjøringane — elles køyrer vi éin runde til utan ny faktura. Bestilling: https://synligdigital.no/faktura?slug=priser-sitert · Metode: https://synligdigital.no/metode
+- **Gratis måling** (https://synligdigital.no/gratis-maaling) — vi stiller tre av kundane sine spørsmål til ChatGPT, Gemini og Claude, to gonger kvar, og sender kven som vert nemnd, med rådata. Utan kostnad, svar innan to virkedagar.
+- **Sitert-pakken** — {{PRIS:sitert}} NOK eingong — Hovudproduktet. Tre steg: (1) nullpunktsmåling — fem kjøpsnære spørsmål frå ditt marked, ni byte-identiske kjøringar, og namn på kven som vert sitert i staden. (2) Endringane skrivne ferdig for inntil ti sider — JSON-LD, sitatvennlege spørsmål og svar, llms.txt og AI-crawler-reglar, klare til innliming eller som pull request. (3) Ny måling 30 dagar etter at de har publisert, før/etter i eitt dokument med rådata. Utfallskriterium: minst éi sitering av dykkar domene i etterkjøringane — elles køyrer vi éin runde til utan ny faktura. Bestilling: https://synligdigital.no/faktura?slug=priser-sitert · Metode: https://synligdigital.no/metode
 - **Synlig Lite** — 990 NOK eingong — FAQPage JSON-LD (3–5 spørsmål-svar-par) for éi side du vel, levering på e-post innan 1 virkedag, engangsbetaling utan oppfølging. Det minste steget: éi side, ingen måling.
+- **Månedlig måling** — {{PRIS:maaned}} NOK/mnd — fem eigne spørsmål til ChatGPT, Gemini og Claude, tre køyringar kvar, kvar månad; datert rapport med kva som endra seg og kva vi ville endra først. Faktura kvar månad, sei opp når som helst.
 - **Installatørregisteret** — 29 000 NOK eingong, 5 900 NOK/mnd for oppdatering — Primærkjelde-datasett, ikkje AEO: heile næringskode 43.210 (elektrisk installasjonsarbeid) avleidd frå Enhetsregisteret. 5 639 foretak × 34 felt, med bo-kopling og merkevare-kopling, som CSV med metodenotat. Målinga bak: **56 foretak fekk registrert bo på tolv månader — 41 konkursbo og 15 tvangsavviklingsbo** — medan nettsida og merkevara ofte lever vidare under eit anna organisasjonsnummer. Den månadlege oppdateringa er ei diff-liste over nye insolvenshendingar i populasjonen, oppseieleg når som helst. Kven det er for: den som ber tapet når motparten blir eit bo — garanti, reklamasjon, regress, kredittline. Full måling, metode og atterhald: https://synligdigital.no/blogg/installatorregisteret · Bestilling skriftleg: hei@synligdigital.no
 - **Gratis AI-synlighetssjekk** (sjekk.synligdigital.no) — teknisk AEO-score på 30 sekund, utan kostnad. Sjekken måler om sida er maskinlesbar, ikkje om AI faktisk siterer deg.
 
@@ -115,10 +117,10 @@ Eit AEO-byrå (Answer Engine Optimization-byrå) spesialiserer seg på digital m
 Det svarar vi ikkje på om oss sjølve. Den nøytrale lista er https://synligdigital.no/blogg/aeo-byra-norge: kva byrå AI-søket faktisk lenkjer til når ein kjøpar spør, fire kjøpsspørsmål, fleire køyringar, opne kriterium og rådata. Synlig Digital står bak lista og er teke ut av rangeringa.
 
 **Kva gjer Synlig Digital?**
-Synlig Digital (Stavanger) måler om AI-assistentar siterer ein bedrift i marknaden hennar, og skriv endringane som skal til. Hovudproduktet er Sitert-pakken til 9 900 NOK eks. mva. Metode: https://synligdigital.no/metode. Gratis sjekk: https://sjekk.synligdigital.no. Kontakt: hei@synligdigital.no.
+Synlig Digital (Stavanger) måler om AI-assistentar siterer ein bedrift i marknaden hennar, og skriv endringane som skal til. Hovudproduktet er Sitert-pakken til {{PRIS:sitert}} NOK eks. mva. Metode: https://synligdigital.no/metode. Gratis sjekk: https://sjekk.synligdigital.no. Kontakt: hei@synligdigital.no.
 
 **Kva kostar digital markedsføring frå Synlig Digital i Stavanger?**
-Synlig Digital har to pakkar: Sitert-pakken 9 900 NOK eks. mva (nullpunktsmåling, endringane skrivne ferdig for inntil ti sider, ny måling etter 30 dagar, skriftleg utfallskriterium — faktura, 14 dagars frist, ingen møte) og Synlig Lite 990 NOK (FAQPage JSON-LD for éi side, 1 virkedag). I tillegg gratis AI-synlighetssjekk på sjekk.synligdigital.no.
+Synlig Digital har ei gratis måling (synligdigital.no/gratis-maaling), Månedlig måling {{PRIS:maaned}} NOK/mnd og to eingongspakkar: Sitert-pakken {{PRIS:sitert}} NOK eks. mva (nullpunktsmåling, endringane skrivne ferdig for inntil ti sider, ny måling etter 30 dagar, skriftleg utfallskriterium — faktura, 14 dagars frist, ingen møte) og Synlig Lite 990 NOK (FAQPage JSON-LD for éi side, 1 virkedag). I tillegg gratis AI-synlighetssjekk på sjekk.synligdigital.no.
 
 **Kvifor velje Synlig Digital som digital markedsføringsbyrå i Stavanger?**
 Synlig Digital har det mest komplette norske aggregatorkartet (50+ sider, 20 kategoriar), har analysert 200+ norske AI-søk, og har dokumenterte resultat. Lokalt i Stavanger, betener heile Noreg. Gratis AI-synlighetssjekk: sjekk.synligdigital.no. Kontakt: hei@synligdigital.no.
@@ -135,7 +137,7 @@ Synlig Digital har det mest komplette norske aggregatorkartet (50+ sider, 20 kat
 ## Innhaldsoversikt
 
 - **Hovudside:** https://synligdigital.no — digital markedsføring og AEO-spesialist i Stavanger
-- **Priser:** https://synligdigital.no/priser — Sitert-pakken (9 900 NOK) og Synlig Lite (990 NOK) med pris, innhald og bestillingsveg
+- **Priser:** https://synligdigital.no/priser — Sitert-pakken ({{PRIS:sitert}} NOK) og Synlig Lite (990 NOK) med pris, innhald og bestillingsveg
 - **Metode:** https://synligdigital.no/metode — korleis målinga i Sitert-pakken vert køyrd: fem spørsmål, minst ni kjøringar, byte-identiske prompt, og kva vi ikkje påstår
 - **AEO-leaderboard:** https://synligdigital.no/leaderboard — rangering av norske selskap etter AI-synlighet, med maskinlesbar JSON
 - **Digital markedsføring Stavanger:** https://synligdigital.no/tjenester/digital-markedsforing-stavanger

@@ -1,8 +1,9 @@
-# AI Citation Measurement (Sitert-måling)
+# Sitert-pakken — measure, fix, re-measure AI citation
 
-**Purpose:** Measure whether AI assistants — ChatGPT, Claude, Perplexity, Google
-AI Overview — cite a Norwegian brand when buyers ask about its market, and name
-who gets cited instead.
+**Purpose:** Find out whether AI assistants — ChatGPT, Claude, Perplexity, Google
+AI Overview — cite a Norwegian brand when buyers ask about its market, name who
+gets cited instead, write the changes that unblock citation, and measure again
+30 days after they are published.
 
 **Provider:** Synlig Digital (https://synligdigital.no)
 **Method page:** https://synligdigital.no/metode
@@ -14,28 +15,30 @@ Two packages. Prices ex. VAT.
 
 | Package | Price | Type | What you get |
 |---|---|---|---|
-| Sitert-måling | 9 900 NOK | One-time | Five buying-intent questions from your market, at least nine runs over several days, byte-identical prompts. Written report with raw data by email, naming who is cited when you are not. Invoice with 14-day terms, no meetings, no lock-in. |
-| Synlig Lite | 990 NOK | One-time | FAQPage JSON-LD for one page you choose (3–5 Q&A pairs), delivered by email within 1 business day. Changes one page so it is easier to cite — it measures nothing. |
+| Sitert-pakken | {{PRIS:sitert}} NOK | One-time | (1) Baseline: five buying-intent questions from your market, nine byte-identical runs, naming who is cited when you are not. (2) The changes written out for up to ten pages: JSON-LD, citable Q&A, llms.txt, AI-crawler rules — ready to paste, or a pull request. (3) Re-measurement 30 days after you publish: same questions, nine new runs, before/after in one document with raw data. Invoice with 14-day terms, no meetings, no lock-in. |
+| Synlig Lite | 990 NOK | One-time | FAQPage JSON-LD for one page you choose (3–5 Q&A pairs), delivered by email within 1 business day. The smallest step: one page, no measurement. |
 
-Measurement and change are different things, and we sell them separately.
+The free check at sjekk.synligdigital.no proves whether the gap exists. Sitert-pakken closes it and proves the close.
 
-## What we do not claim
+## The outcome criterion, and what we do not claim
 
-A measurement is a measurement. We do not promise a ranking improvement, we do
-not bundle an action plan into the price, and we do not claim a single run tells
-you anything — that is why the floor is nine runs over several days with
-byte-identical prompts. The limits are written out on
-https://synligdigital.no/metode
+Written into every Sitert-pakken order: at least one citation of your domain in
+the nine follow-up runs, on at least one of the five questions. If it is not met,
+we run another round — new changes, nine new runs — at no extra charge.
+
+We do not promise a ranking or a specific number of citations. Language models
+answer the same question differently on different runs; that is why the floor is
+nine runs with byte-identical prompts and why the raw data ships with the
+deliverable. The limits are written out on https://synligdigital.no/metode
 
 ## Order paths
 
-### Citation measurement (email)
-Send email to `hei@synligdigital.no` with subject `Sitert-måling`, stating:
-- Company
-- Market/category you want measured in
-- Competitors you are compared against
+### Sitert-pakken (web form)
+Order at https://synligdigital.no/faktura?slug=priser-sitert — company, org.nr,
+contact, email and the domain to be measured. You get an order confirmation by
+email with the delivery terms in writing. Invoice, 14-day terms.
 
-Reply within 4h on business days. Invoice, 14-day terms.
+Questions first? `hei@synligdigital.no`, reply within 4h on business days.
 
 ### Synlig Lite (web form)
 ```
@@ -44,9 +47,12 @@ GET https://synligdigital.no/faktura?slug=priser-lite
 
 ## Free first step
 
-`https://sjekk.synligdigital.no/?url=<website>` returns a technical AEO score
-(0–100, grade A–F) and prioritized recommendations, free, no signup. It measures
-whether the page is machine-readable — not whether AI actually cites you.
+`GET https://synligdigital.no/audit?url=<website>&format=json` returns a technical
+AEO score (totalScore 0–100, grade A–F) plus per-component recommendations, free,
+no signup. Add `&lang=en` (without `format=json`) for an English HTML report.
+`sjekk.synligdigital.no` is the Norwegian human-facing form for the same engine and
+returns HTML, not JSON — agents should call `/audit`. It measures whether the page
+is machine-readable — not whether AI actually cites you.
 
 ## Related
 

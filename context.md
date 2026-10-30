@@ -21,14 +21,18 @@ AEO er optimalisering for AI-genererte svar — ikkje berre søkemotorrangeringa
 
 ## Tenester
 
-To pakkar. Alle prisar er eks. MVA.
+To AEO-pakkar og eitt datasett. Alle prisar er eks. MVA.
 
 | Teneste | Pris | Type | Levering |
 |---------|------|------|----------|
-| Sitert-pakken (måling, endringane, ny måling etter 30 dagar) | 9 900 NOK | Eingong | Endringar + før/etter-dokument på e-post |
+| Sitert-pakken (måling, endringane, ny måling etter 30 dagar) | {{PRIS:sitert}} NOK | Eingong | Endringar + før/etter-dokument på e-post |
 | Synlig Lite (FAQPage for éi side) | 990 NOK | Eingong | 1 virkedag |
+| Installatørregisteret (heile næringskode 43.210 som CSV + metodenotat) | 29 000 NOK | Eingong | CSV + metodenotat på e-post |
+| Installatørregisteret — månadleg oppdatering | 5 900 NOK | Per månad | Diff-liste over nye insolvenshendingar, oppseieleg når som helst |
 
 Sitert-pakken er hovudleveransen: (1) nullpunktsmåling — fem kjøpsnære spørsmål, ni byte-identiske kjøringar, og namn på kven AI siterer i staden; (2) endringane skrivne ferdig for inntil ti sider (JSON-LD, sitatvennlege spørsmål og svar, llms.txt, AI-crawler-reglar), klare til innliming; (3) ny måling 30 dagar etter at kunden har publisert, før/etter i eitt dokument med rådata. Utfallskriterium: minst éi sitering av kunden sitt domene i etterkjøringane, elles éin ny runde utan ny faktura. Faktura med 14 dagars frist, ingen møte. Bestilling: https://synligdigital.no/faktura?slug=priser-sitert. Synlig Lite er det minste steget — éi side, utan måling.
+
+Installatørregisteret er ikkje ei AEO-teneste, men eit primærkjelde-datasett: heile næringskode 43.210 (elektrisk installasjonsarbeid) avleidd frå Enhetsregisteret — 5 639 foretak × 34 felt, med bo-kopling og merkevare-kopling. Målinga bak er publisert i sin heilskap: **56 foretak fekk registrert bo på tolv månader — 41 konkursbo og 15 tvangsavviklingsbo** — medan nettsida og merkevara ofte lever vidare under eit anna organisasjonsnummer, så namnet på sida ikkje lenger identifiserer motparten. Det er relevant for den som ber tapet når motparten blir eit bo: garanti, reklamasjon, regress, kredittline. Måling, metode og atterhald: https://synligdigital.no/blogg/installatorregisteret · Bestilling skriftleg til hei@synligdigital.no
 
 Metode og grenser: https://synligdigital.no/metode
 
@@ -42,8 +46,8 @@ Begge publiserte case studies under er **nærstående part**-implementeringar (i
 
 **Nordic Lithium (nærstående metode-case, 2026):**
 - Eierskapsopplysning: Felles eigarskap med Synlig (Håkon Åmdal)
-- AEO-score frå 67/100 til 85/100 (F → B)
-- Citation rate frå 0/8 til 5/8 AI-spørsmål
+- AEO-score frå 67/100 (C) til 85/100 (A)
+- Merk: AEO-score måler kor lesbar sida er for AI-assistentar, ikkje siteringar eller førespurnader. Oppføringa hadde tidlegare siteringstal og karakterar utan bevart måling bak seg; dei er fjerna 6. september 2026.
 - Full case study + eierskapsopplysning: https://synligdigital.no/case/nordic-lithium
 
 **Pierstop.com (nærstående metode-case, 2026):**

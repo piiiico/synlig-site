@@ -331,7 +331,8 @@
             <label for="pakke" id="pakke-label">Pakke <span class="hint" id="pakke-hint">(velg den du vil bestille)</span></label>
             <select id="pakke" name="pakke" required>
               <option value="" id="pakke-opt-empty">— Velg pakke —</option>
-              <option value="priser-sitert" id="pakke-opt-sitert">Sitert-pakken — 9 900 kr (måling, endringene, ny måling etter 30 dager)</option>
+              <option value="priser-sitert" id="pakke-opt-sitert">Sitert-pakken — {{PRIS:sitert}} kr (måling, endringene, ny måling etter 30 dager)</option>
+              <option value="priser-maaned" id="pakke-opt-maaned">Månedlig måling — {{PRIS:maaned}} kr/mnd (fem spørsmål, tre motorer, datert rapport)</option>
               <option value="priser-lite" id="pakke-opt-lite">Synlig Lite — 990 kr (FAQPage for én side, 1 virkedag)</option>
               <option value="aeo-for-advokater">AEO for advokater — vertikalpakke</option>
               <option value="aeo-for-saas-bedrifter" id="pakke-opt-saas">AEO for B2B SaaS — vertikalpakke</option>
@@ -451,8 +452,9 @@
         "pakke-label":         "Package",
         "pakke-hint":          "(pick what you want to order)",
         "pakke-opt-empty":     "— Select package —",
-        "pakke-opt-sitert":    "The Cited package — USD 1,100 (measurement, the changes written out, re-measurement after 30 days)",
+        "pakke-opt-sitert":    "The Cited package — USD 330 (measurement, the changes written out, re-measurement after 30 days)",
         "pakke-opt-lite":      "Synlig Lite — USD 92 (FAQPage for one page, 1 business day)",
+        "pakke-opt-maaned":    "Monthly measurement (five of your questions, three engines, a dated report each month)",
         "pakke-opt-saas":      "AEO for B2B SaaS — vertical package",
         "firmanavn-label":     "Company name",
         "firmanavn-hint":      "",
@@ -481,10 +483,11 @@
       // EN package summary (mirrors PACKAGE_DISPLAY below in NO).
       var EN_PACKAGE_DISPLAY = {
         "priser-lite":             { label: "Synlig Lite — FAQPage AEO",   price: "USD 92 excl. VAT (one-time)", sla: "Delivered 1 business day after signed invoice: FAQPage JSON-LD for one page of your choice, sent by email ready to paste into <head> or via tag manager." },
-        "priser-sitert":           { label: "The Cited package",           price: "USD 1,100 (one-off; Norwegian list price NOK 9,900 excl. VAT — no Norwegian VAT is charged on services exported out of Norway)", sla: "Three steps: (1) baseline measurement — five buying-intent questions from your market, nine byte-identical runs, naming who gets cited instead. (2) The changes written out for up to ten pages — JSON-LD, citable questions and answers, llms.txt and AI-crawler rules, ready to paste or as a pull request. (3) Re-measurement 30 days after you publish, before/after in one document with the raw data. Outcome criterion: at least one citation of your domain in the follow-up runs — if not met, we run another round at no extra charge." },
-        "priser-analyse":          { label: "AI visibility analysis (discontinued)", price: "Discontinued product — we will reply with the citation measurement, USD 1,100", sla: "We contact you before any invoice is sent." },
-        "priser-fundament":        { label: "AI visibility foundation (discontinued)", price: "Discontinued product — we will reply with the citation measurement, USD 1,100", sla: "We contact you before any invoice is sent." },
-        "priser-lopende":          { label: "Ongoing monitoring (discontinued)", price: "Discontinued product — we will reply with the citation measurement, USD 1,100", sla: "We contact you before any invoice is sent." },
+        "priser-sitert":           { label: "The Cited package",           price: "USD 330 (one-off; Norwegian list price NOK 2,900 excl. VAT — no Norwegian VAT is charged on services exported out of Norway)", sla: "Three steps: (1) baseline measurement — five buying-intent questions from your market, nine byte-identical runs, naming who gets cited instead. (2) The changes written out for up to ten pages — JSON-LD, citable questions and answers, llms.txt and AI-crawler rules, ready to paste or as a pull request. (3) Re-measurement 30 days after you publish, before/after in one document with the raw data. Outcome criterion: at least one citation of your domain in the follow-up runs — if not met, we run another round at no extra charge." },
+        "priser-maaned":           { label: "Monthly measurement",         price: "Invoiced monthly; the amount is confirmed by email before the first invoice. Cancel any time.", sla: "First report within a week after you approve the five questions, then one dated report every month." },
+        "priser-analyse":          { label: "AI visibility analysis (discontinued)", price: "Discontinued product — we will reply with the citation measurement, USD 330", sla: "We contact you before any invoice is sent." },
+        "priser-fundament":        { label: "AI visibility foundation (discontinued)", price: "Discontinued product — we will reply with the citation measurement, USD 330", sla: "We contact you before any invoice is sent." },
+        "priser-lopende":          { label: "Ongoing monitoring (discontinued)", price: "Discontinued product — we will reply with the citation measurement, USD 330", sla: "We contact you before any invoice is sent." },
         "aeo-for-advokater":       { label: "AEO for law firms",           price: "Quote agreed in writing before invoicing — scope sets the price", sla: "Delivered within 2–4 weeks after signed invoice." },
         "aeo-for-saas-bedrifter":  { label: "AEO for B2B SaaS",            price: "Quote agreed in writing before invoicing — scope sets the price", sla: "Delivered within 2–4 weeks after signed invoice." },
         "aeo-for-tannleger":       { label: "AEO for dental clinics",      price: "Quote agreed in writing before invoicing — scope sets the price", sla: "Delivered within 2–4 weeks after signed invoice." },
@@ -525,11 +528,11 @@
           // 2026-08-13: "pakke-opt-sitert" was MISSING from this list while
           // three ids for tiers retired 2026-08-08 were still in it. Net effect
           // for an English buyer: the flagship option kept its Norwegian label
-          // ("Sitert-pakken — 9 900 kr (måling, endringene, ...)") on an
+          // ("Sitert-pakken — {{PRIS:sitert}} kr (måling, endringene, ...)") on an
           // otherwise fully English form, and EN_STRINGS["pakke-opt-sitert"]
           // was dead code that had never once been applied. A localization list
           // is a registry — it goes stale the same way a gate's file list does.
-          "pakke-opt-empty","pakke-opt-sitert","pakke-opt-lite","pakke-opt-saas",
+          "pakke-opt-empty","pakke-opt-sitert","pakke-opt-lite","pakke-opt-maaned","pakke-opt-saas",
           "firmanavn-label","firmanavn-hint",
           "orgnr-label","orgnr-hint",
           "kontaktperson-label","epost-label",
@@ -747,12 +750,13 @@
       // ──────────────────────────────────────────────────────────────────────
       var PACKAGE_DISPLAY = {
         "priser-lite":             { label: "Synlig Lite — FAQPage AEO",   price: "990 kr eks. mva (engangsbetaling)", sla: "Leveranse 1 virkedag etter signert faktura: FAQPage JSON-LD for én side du velger, levert på e-post klar til innliming i <head> eller via tag-manager." },
-        "priser-sitert":           { label: "Sitert-pakken",               price: "9 900 kr eks. mva (engangs)", sla: "Tre steg: (1) nullpunktsmåling — fem kjøpsnære spørsmål fra ditt marked, ni byte-identiske kjøringer, navn på hvem som siteres i stedet. (2) Endringene skrevet ferdig for inntil ti sider — JSON-LD, sitatvennlige spørsmål og svar, llms.txt og AI-crawler-regler, klare til innliming eller som pull request. (3) Ny måling 30 dager etter at dere har publisert, før/etter i ett dokument med rådata. Utfallskriterium: minst én sitering av deres domene i etterkjøringene — innfris det ikke, kjører vi én runde til uten ny faktura." },
+        "priser-maaned":           { label: "Månedlig måling",             price: "{{PRIS:maaned}} kr/mnd eks. mva, faktura hver måned, si opp når som helst", sla: "Første rapport innen en uke etter at dere har godkjent de fem spørsmålene, deretter én datert rapport hver måned." },
+        "priser-sitert":           { label: "Sitert-pakken",               price: "{{PRIS:sitert}} kr eks. mva (engangs)", sla: "Tre steg: (1) nullpunktsmåling — fem kjøpsnære spørsmål fra ditt marked, ni byte-identiske kjøringer, navn på hvem som siteres i stedet. (2) Endringene skrevet ferdig for inntil ti sider — JSON-LD, sitatvennlige spørsmål og svar, llms.txt og AI-crawler-regler, klare til innliming eller som pull request. (3) Ny måling 30 dager etter at dere har publisert, før/etter i ett dokument med rådata. Utfallskriterium: minst én sitering av deres domene i etterkjøringene — innfris det ikke, kjører vi én runde til uten ny faktura." },
         // Utgått 2026-08-08. Nøklene blir stående fordi gamle lenker og
         // recovery-slugger fortsatt peker hit; de står IKKE i <select>.
-        "priser-analyse":          { label: "Utgått pakke", price: "Utgått produkt — vi svarer med sitert-måling, 9 900 kr eks. mva", sla: "Vi kontakter deg før faktura sendes." },
-        "priser-fundament":        { label: "Utgått pakke", price: "Utgått produkt — vi svarer med sitert-måling, 9 900 kr eks. mva", sla: "Vi kontakter deg før faktura sendes." },
-        "priser-lopende":          { label: "Utgått pakke", price: "Utgått produkt — vi svarer med sitert-måling, 9 900 kr eks. mva", sla: "Vi kontakter deg før faktura sendes." },
+        "priser-analyse":          { label: "Utgått pakke", price: "Utgått produkt — vi svarer med sitert-måling, {{PRIS:sitert}} kr eks. mva", sla: "Vi kontakter deg før faktura sendes." },
+        "priser-fundament":        { label: "Utgått pakke", price: "Utgått produkt — vi svarer med sitert-måling, {{PRIS:sitert}} kr eks. mva", sla: "Vi kontakter deg før faktura sendes." },
+        "priser-lopende":          { label: "Utgått pakke", price: "Utgått produkt — vi svarer med sitert-måling, {{PRIS:sitert}} kr eks. mva", sla: "Vi kontakter deg før faktura sendes." },
         "aeo-for-advokater":       { label: "AEO for advokater",           price: "Pris avtales skriftlig før faktura — omfang bestemmer prisen", sla: "Leveranse innen 2–4 uker etter signert faktura." },
         "aeo-for-saas-bedrifter":  { label: "AEO for B2B SaaS",            price: "Pris avtales skriftlig før faktura — omfang bestemmer prisen", sla: "Leveranse innen 2–4 uker etter signert faktura." },
         "aeo-for-tannleger":       { label: "AEO for tannleger",           price: "Pris avtales skriftlig før faktura — omfang bestemmer prisen", sla: "Leveranse innen 2–4 uker etter signert faktura." },

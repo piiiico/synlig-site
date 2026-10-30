@@ -222,3 +222,86 @@ export function loadMetodeMeasurements(): MetodeMeasurements {
     perRunMax: Math.max(...perRunLinked),
   };
 }
+
+/**
+ * 2026-09-06 — SKÅR MOT SITERING, POPULASJONSVERSJONEN.
+ *
+ * notClaims på /metode har siden 08-08 hatt ett anekdotisk motbevis mot vår
+ * egen skår (proshop 40/D lenket 9 av 9, power 34/E lenket null). Det holdt til
+ * å si «skåren svarer ikke på siteringsspørsmålet», men ikke til å svare
+ * post@stavangerterapihus.no, som 2026-06-02 spurte hva 76 → 90+ konkret gir.
+ * Denne kjøringen er samme spørsmål på 124 nettsteder i seks kategoripaneler.
+ *
+ * Tallene REGNES IKKE her: bootstrap-en er kjørt én gang med fast frø av
+ * money/aeo/summarize-causal-link.ts og ligger i `summary` i JSON-en. Denne
+ * funksjonen leser den. Skriv aldri et av tallene inn for hånd — samme regel
+ * som resten av filen, og av samme grunn.
+ */
+export const CAUSAL_PATH =
+  "/workspace/money/aeo/causal-link-test-2026-09-06.json";
+
+export type CausalLink = {
+  scoredSites: number;
+  attempted: number;
+  panels: number;
+  citedN: number;
+  citedMean: number;
+  brandN: number;
+  brandMean: number;
+  delta: number;
+  ciLo: number;
+  ciHi: number;
+  crossesZero: boolean;
+  unscorableCited: number;
+  selfScore: number;
+  selfCited: number;
+  selfQuestions: number;
+  /** Høyest skårende målte merke, og hvor mange spørsmål det ble sitert på. */
+  topBrand: { brand: string; score: number; grade: string; citedQ: number; totalQ: number };
+  /** Merket som ble sitert på flest spørsmål — samme felt. */
+  mostCited: { brand: string; score: number; grade: string; citedQ: number; totalQ: number };
+};
+
+export function loadCausalLink(path: string = CAUSAL_PATH): CausalLink {
+  const doc = JSON.parse(readFileSync(path, "utf-8"));
+  const s = doc?.summary;
+  if (!s) {
+    throw new Error(
+      `[metode-measurements] ${CAUSAL_PATH} mangler summary — kjør money/aeo/summarize-causal-link.ts før bygg.`,
+    );
+  }
+  const brands = [...s.measuredBrands.rows].sort((a: any, b: any) => b.score - a.score);
+  if (brands.length < 2 || s.scoredSites < 50) {
+    throw new Error(
+      `[metode-measurements] for tynt datasett (${s.scoredSites} skårede, ${brands.length} merker) — seksjonen skal ikke publiseres på dette.`,
+    );
+  }
+  const mostCited = [...brands].sort((a: any, b: any) => b.citedQ - a.citedQ)[0];
+  // Poenget i avsnittet er at det HØYEST SKÅRENDE merket ikke er det mest
+  // siterte. Går dataene en dag den andre veien, skal setningen skrives om —
+  // ikke stå igjen og lyve. Derfor feiler byggingen her i stedet.
+  if (mostCited.host === brands[0].host) {
+    throw new Error(
+      "[metode-measurements] høyest skårende merke er nå også mest sitert — /metode-avsnittet «skår mot sitering» stemmer ikke lenger og må skrives om mot nye data.",
+    );
+  }
+  return {
+    scoredSites: s.scoredSites,
+    attempted: s.attemptedSites,
+    panels: s.panels,
+    citedN: s.citedNonMedia.n,
+    citedMean: s.citedNonMedia.meanScore,
+    brandN: s.measuredBrands.n,
+    brandMean: s.measuredBrands.meanScore,
+    delta: s.deltaMeanScore,
+    ciLo: s.ci95[0],
+    ciHi: s.ci95[1],
+    crossesZero: s.crossesZero,
+    unscorableCited: s.citedButUnscorable.n,
+    selfScore: s.selfProperty.score,
+    selfCited: s.selfPanel.cited,
+    selfQuestions: s.selfPanel.questions,
+    topBrand: brands[0],
+    mostCited,
+  };
+}

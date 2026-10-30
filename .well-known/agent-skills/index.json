@@ -16,9 +16,9 @@
       "endpoints": [
         {
           "type": "https",
-          "url": "https://sjekk.synligdigital.no/",
+          "url": "https://synligdigital.no/audit",
           "method": "GET",
-          "description": "GET ?url=<website> returns JSON {score, grade, recommendations[]}"
+          "description": "GET ?url=<website>&format=json returns JSON {totalScore, maxScore, grade, schema{...recommendations[]}, meta, content, technical, aiSignals, agentVisibility}. Add &lang=en (without format=json) for an English HTML report. sjekk.synligdigital.no is the Norwegian human-facing form and returns HTML, not JSON."
         },
         {
           "type": "mcp",
@@ -31,16 +31,16 @@
     },
     {
       "id": "aeo-implementation",
-      "name": "AI Citation Measurement (Sitert-måling)",
-      "description": "Measures whether AI assistants cite a Norwegian brand in its own market, and names who gets cited instead. Five buying-intent questions, at least nine runs over several days, byte-identical prompts, written report with raw data by email. Pricing (two packages, ex. VAT): Sitert-måling 9 900 NOK one-time (invoice, 14-day terms, no meetings) and Synlig Lite 990 NOK one-time (FAQPage JSON-LD for one page, 1 business day). A measurement is a measurement — no ranking promise. Method and limits: https://synligdigital.no/metode",
+      "name": "AI Citation Implementation (Sitert-pakken)",
+      "description": "Three steps for a Norwegian brand that AI assistants do not cite: (1) baseline measurement — five buying-intent questions from your market, nine byte-identical runs, and the names of who gets cited instead; (2) the changes written out for up to ten pages — JSON-LD, quotable Q&A, llms.txt and AI-crawler rules, ready to paste or delivered as a pull request; (3) a re-measurement 30 days after you publish, before/after in one document with raw data. Written outcome criterion: at least one citation of your domain in the after-runs — if it is not met, we run another round at no extra invoice. Pricing (two packages, ex. VAT): Sitert-pakken {{PRIS:sitert}} NOK one-time (invoice, 14-day terms, no meetings) and Synlig Lite 990 NOK one-time (FAQPage JSON-LD for one page, 1 business day). No ranking promise — citation in a stated, repeatable method. Method and limits: https://synligdigital.no/metode",
       "url": "https://synligdigital.no/.well-known/agent-skills/aeo-implementation/SKILL.md",
       "tags": ["aeo", "ai-citation", "measurement", "schema.org", "norwegian", "brand-visibility"],
       "endpoints": [
         {
           "type": "https",
-          "url": "https://synligdigital.no/faktura?slug=priser-lite",
+          "url": "https://synligdigital.no/faktura?slug=priser-sitert",
           "method": "GET",
-          "description": "Order form for Synlig Lite. The citation measurement is ordered by email to hei@synligdigital.no with subject 'Sitert-måling'."
+          "description": "Order form for Sitert-pakken ({{PRIS:sitert}} NOK, invoice, 14-day terms). Synlig Lite is ordered at the same form with slug=priser-lite."
         }
       ]
     }

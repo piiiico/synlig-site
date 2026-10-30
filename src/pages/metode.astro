@@ -28,6 +28,8 @@
  * Prisen står som prosa med samme tall som forsiden.
  */
 import Base from "../layouts/Base.astro";
+import { PRICES_NOK, kr } from "../../../synlig-worker/prices";
+const SITERT = kr(PRICES_NOK.sitert);
 import { TIERS } from "../../../bin/cross-border-invoice";
 import {
   loadMetodeMeasurements,
@@ -44,8 +46,7 @@ const heldRows = M.rows.filter((r) => r.held);
 /** Spørsmålet der en kjøring feilet — nevnes eksplisitt, ellers ser Y-en gal ut. */
 const failedRow = M.rows.find((r) => r.runs < M.totalRuns);
 
-const MAILTO =
-  "mailto:hei@synligdigital.no?subject=Sitert-m%C3%A5ling&body=Selskap%3A%20%0AMarked%2Fkategori%20vi%20vil%20m%C3%A5les%20i%3A%20%0AKonkurrenter%20vi%20sammenlignes%20med%3A%20";
+const MAILTO = "/gratis-maaling?src=metode";
 
 const TITLE = "Slik måler vi — og hva vi ikke påstår | Synlig";
 const DESCRIPTION =
@@ -121,8 +122,8 @@ const faqs = [
     a: "Send oss motmålingen, så kjører vi på nytt og publiserer rettingen på samme URL. Det har skjedd: vi publiserte i februar 2026 at Komplett var usynlig for AI, Komplett bestred det, vi målte på nytt i august, og de hadde delvis rett. Siden står i dag med begge målingene og med rettingene våre — vi sletter dem ikke.",
   },
   {
-    q: "Hva koster en sitert-måling?",
-    a: "9 900 kr eks. mva, engangs. Faktura fra AS Åmdal Invest med 14 dagers frist. Levering på e-post, ingen møter, ingen abonnement.",
+    q: "Hva koster det?",
+    a: `Den første målingen er gratis: tre av deres spørsmål, tre motorer, to kjøringer hver. Sitert-pakken (måling, endringene og ny måling etter 30 dager) koster ${SITERT} kr eks. mva, engangs, med faktura fra AS Åmdal Invest og 14 dagers frist. Månedlig måling koster ${PRICES_NOK.maaned} kr/mnd.`,
   },
 ];
 
@@ -427,7 +428,7 @@ const JSONLD = [
               ikke påstår. Rådataene ligger ved.
             </p>
             <p>
-              <strong>9 900 kr eks. mva</strong>, engangs. Faktura fra AS Åmdal
+              <strong>{SITERT} kr eks. mva</strong>, engangs. Faktura fra AS Åmdal
               Invest (Stavanger) med 14 dagers frist. Kjøringene går over flere
               dager, og dokumentet kommer på e-post når alle er inne — normalt
               innen en uke fra dere har godkjent spørsmålene.
@@ -457,7 +458,7 @@ const JSONLD = [
                  knapp før; forsiden bruker det bare til rader. -->
             <div class="px-5 pb-5">
               <a href={MAILTO} class="hero-cta block w-full text-center"
-                >Be om en sitert-måling →</a
+                >Bestill gratis måling →</a
               >
             </div>
           </aside>

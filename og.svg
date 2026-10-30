@@ -7,10 +7,10 @@
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
   <text x="80" y="200" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="64" font-weight="700" fill="#ffffff" letter-spacing="-1">Synlig</text>
-  <text x="80" y="280" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="32" fill="#48bb78" font-weight="600">Answer Engine Optimization</text>
+  <text x="80" y="280" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="32" fill="#48bb78" font-weight="600">Sitert-måling for merkevarer</text>
   <line x1="80" y1="320" x2="320" y2="320" stroke="#48bb78" stroke-width="3" opacity="0.6"/>
-  <text x="80" y="380" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="26" fill="rgba(255,255,255,0.8)">Er bedriften din usynlig for AI?</text>
-  <text x="80" y="430" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="22" fill="rgba(255,255,255,0.5)">Vi hjelper norske bedrifter med å bli synlige i</text>
-  <text x="80" y="465" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="22" fill="rgba(255,255,255,0.5)">ChatGPT, Perplexity og Google AI Overview.</text>
+  <text x="80" y="385" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="34" font-weight="600" fill="rgba(255,255,255,0.95)">Blir merkevaren din sitert når AI svarer?</text>
+  <text x="80" y="440" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="22" fill="rgba(255,255,255,0.5)">Fem kjøpsnære spørsmål fra ditt marked, stilt minst ni</text>
+  <text x="80" y="475" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="22" fill="rgba(255,255,255,0.5)">ganger over flere dager. Fra 2 900 kr eks. mva.</text>
   <text x="80" y="560" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="18" fill="rgba(255,255,255,0.35)">synligdigital.no · Stavanger, Norge</text>
 </svg>

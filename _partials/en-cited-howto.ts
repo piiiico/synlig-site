@@ -43,23 +43,56 @@ const STEP_URL = "https://synligdigital.no/en/";
 /** minor units → bare JSON-LD figure, e.g. 110000 → "1100" */
 const bare = (minor: number): string => String(minor / 100);
 
+/**
+ * `text` er maskinlaget (HowTo-noden). `lead`/`bullet` er NØYAKTIG samme steg
+ * skrevet for øyet, og er kilden til <ul>-en under «How we work» på /en/.
+ *
+ * HVORFOR TO FELT OG ÉN KILDE (2026-08-15): da JSON-LD-en var migrert, sto det
+ * nedlagte programmet igjen i den synlige <ul>-en — «Monthly monitoring …
+ * quarterly review», rett over sidens eget kortcheckout. Vi lovet en
+ * kvartalsvis gjennomgang vi verken har pris for eller kan levere, mens vår
+ * egen blogg-FAQ på samme domene sa «there is no retainer». Det er FEMTE gang
+ * samme rotform: produktpåstanden fantes flere steder, hvert sted håndskrevet,
+ * og laget ingen leser med øynene (eller omvendt) ble ikke migrert med.
+ * Derfor er den synlige lista nå en SERIALISERING av stegene under, ikke en
+ * andre mening om dem: endrer du produktet, endrer du denne fila, og porten
+ * feiler bygget på hvert avvik i BEGGE lagene.
+ */
 export const CITED_STEPS = [
   {
     name: "Baseline measurement",
     text:
       "Five buying-intent questions from your market, written the way a buyer types them. You approve or replace them before anything runs. Each question is then run at least nine times over several days with byte-identical prompts — one run is not a measurement, because the same model answers the same question differently. You get how often your domain was cited with a link, and the names of who was cited instead.",
+    lead: "Baseline measurement",
+    bullet:
+      "Five buying-intent questions from your market, each run at least nine times over several days with byte-identical prompts. You approve the questions first. You get how often your domain was cited with a link, and the names of who was cited instead.",
   },
   {
     name: "The changes, written out for up to ten pages",
     text:
       "JSON-LD, citable questions and answers, llms.txt and AI-crawler rules — written out for up to ten pages, ready to paste or delivered as a pull request, within five business days of question approval. You publish them, and they stay in your own pages afterwards.",
+    lead: "The changes, written out",
+    bullet:
+      "JSON-LD, citable questions and answers, llms.txt and AI-crawler rules for up to ten pages — ready to paste, or delivered as a pull request, within five business days. You publish them, and they stay in your own pages afterwards.",
   },
   {
     name: "Re-measurement 30 days after you publish",
     text:
       "The same five questions, nine new runs, before and after in one document with the raw data: question, model, timestamp per run, who was cited with a link and who was only mentioned. Written outcome criterion — at least one citation of your domain in the follow-up runs. If it is not met, we run another round at no extra charge.",
+    lead: "Re-measurement 30 days after you publish",
+    bullet:
+      "The same five questions, nine new runs, before and after in one document with the raw data. Written outcome criterion: at least one citation of your domain. If it is not met, we run another round at no extra charge.",
   },
 ] as const;
+
+/** De eksakte bytene <ul>-en under «How we work» opptar i en.html. */
+export function renderCitedStepsList(): string {
+  return (
+    "<ul>\n" +
+    CITED_STEPS.map(s => `    <li><strong>${s.lead}.</strong> ${s.bullet}</li>`).join("\n") +
+    "\n  </ul>"
+  );
+}
 
 export function citedHowToNode() {
   return {
@@ -242,6 +275,108 @@ export function checkEnCitedHowTo(html: string, label = "en.html"): string[] {
             `surviving in a node nobody reads with their eyes.`,
         );
       }
+    }
+  }
+
+  return v;
+}
+
+/** Laget øynene leser: uten JSON-LD/script/style, og uten kommentarer (som ikke serveres). */
+export function visibleBody(html: string): string {
+  return html
+    .replace(/<!--[\s\S]*?-->/g, " ")
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ");
+}
+
+/**
+ * PROSA-VOKABULAR — samme påstand, ett LAG unna.
+ *
+ * RETAINER_VOCAB over leser KUN JSON-LD. Modulens egen begrunnelse sa at den
+ * skulle fange «det nedlagte programmet som overlever i en node ingen leser med
+ * øynene» — og var dermed per konstruksjon blind for laget øynene FAKTISK
+ * leser. Der sto «Monthly monitoring … quarterly review» i seks dager etter at
+ * maskinlaget var rettet.
+ *
+ * BASISRATE MÅLT FØR PORTEN BLE SKREVET (2026-08-15, hele en*.html-korpuset med
+ * JSON-LD/script/kommentarer fjernet, 12 kandidatord): FIRE treff totalt over
+ * åtte filer. Tre av dem er den ene defekte <li>-en på en.html («monthly
+ * monitoring», «monthly», «quarterly» — samme linje). Det fjerde er
+ * en-blog-aeo-agency-norway.html: «We do not sell a retainer» — altså en
+ * KORREKT setning som en naiv ordliste ville blokkert.
+ *
+ * Det målte funnet er derfor ikke bare hvilke ord som gjelder, men at
+ * NEKTELSER er husets stil på nettopp dette temaet: /en/ selger på at det ikke
+ * finnes abonnement. Porten er nektelsesbevisst, og vinduet stopper ved
+ * setningsgrensen — ellers ville «We do not sell implementation. Monthly
+ * monitoring is included.» sluppet gjennom på et «not» fra forrige setning.
+ * Scopet er /en/ (flata med kortcheckout), som JSON-LD-armen.
+ */
+const PROSE_RETAINER_VOCAB = [
+  "monthly monitoring",
+  "monthly measurement",
+  "monthly report",
+  "continuous monitoring",
+  "continuous adjustment",
+  "ongoing monitoring",
+  "quarterly review",
+  "retainer",
+  "subscription",
+  "per month",
+  "each month",
+  "every month",
+  "/mo",
+];
+
+const NEGATOR = /\b(no|not|never|without|neither|nor|non)\b/i;
+const MIN_VISIBLE_BYTES = 4_000;
+
+/** Setningen treffet står i: fra siste grense (.!?>\n) fram til treffet. */
+function clauseBefore(text: string, hit: number): string {
+  let start = hit;
+  while (start > 0 && !".!?>\n".includes(text[start - 1]!)) start--;
+  return text.slice(start, hit);
+}
+
+/**
+ * Den synlige kroppen på /en/: selger den et abonnement, og er stegene fortsatt
+ * de samme som maskinlaget lover? GULV FØRST — en tom kropp er en ødelagt
+ * leser, ikke en ren flate.
+ */
+export function checkVisibleBody(html: string, label = "en.html"): string[] {
+  const v: string[] = [];
+  const body = visibleBody(html);
+  if (body.length < MIN_VISIBLE_BYTES) {
+    return [
+      `${label}: FLOOR — synlig kropp er ${body.length} byte (gulv ${MIN_VISIBLE_BYTES}). ` +
+        `Tom inngang er en ødelagt leser, ikke en ren flate.`,
+    ];
+  }
+
+  const collapse = (s: string) => s.replace(/\s+/g, " ").trim();
+  if (!collapse(body).includes(collapse(renderCitedStepsList()))) {
+    const missing = CITED_STEPS.filter(s => !collapse(body).includes(collapse(s.bullet)))
+      .map(s => `«${s.lead}»`);
+    v.push(
+      `${label}: «How we work»-lista har gaflet seg fra CITED_STEPS` +
+        (missing.length ? ` → ${missing.join(", ")} mangler eller er omskrevet` : ` (rekkefølge eller ekstra punkt)`) +
+        `. Den synlige lista er en serialisering av stegene, ikke en andre mening om dem.`,
+    );
+  }
+
+  const lower = body.toLowerCase();
+  for (const dead of PROSE_RETAINER_VOCAB) {
+    let i = lower.indexOf(dead);
+    while (i !== -1) {
+      if (!NEGATOR.test(clauseBefore(lower, i))) {
+        v.push(
+          `${label}: synlig kropp selger et abonnement ("${dead}") — «…${collapse(
+            body.slice(Math.max(0, i - 70), i + dead.length + 40),
+          )}…». TIERS har to engangs-tiers og ingen abonnementspris: vi kan verken ` +
+            `fakturere eller levere dette, og det står over et kortcheckout.`,
+        );
+      }
+      i = lower.indexOf(dead, i + 1);
     }
   }
   return v;

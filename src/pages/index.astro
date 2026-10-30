@@ -13,6 +13,8 @@
  * Bytter du dem, bytter du gaten i samme commit — ikke etterpå.
  */
 import Base from "../layouts/Base.astro";
+import { PRICES_NOK, kr } from "../../../synlig-worker/prices";
+const SITERT = kr(PRICES_NOK.sitert);
 import { HOMEPAGE_JSONLD } from "../data/homepage-jsonld";
 import { getCollection } from "astro:content";
 import { ENGINE_HEADLINE, ENGINE_ROWS, ENGINE_PANEL, ENGINE_CAVEAT, ENGINE_SIGN } from "../../_partials/naming-proof";
@@ -58,7 +60,7 @@ const BESTILL = "/faktura?slug=priser-sitert";
 
 const TITLE = "Synlig Digital | Blir merkevaren din sitert når AI svarer?";
 const DESCRIPTION =
-  "Vi måler om AI-svar siterer merkevaren din, skriver endringene som skal til, og måler på nytt 30 dager etter. Skriftlig utfallskriterium. Sitert-pakken 9 900 kr.";
+  `Vi måler om AI-svar siterer merkevaren din, skriver endringene som skal til, og måler på nytt 30 dager etter. Skriftlig utfallskriterium. Gratis måling, Sitert-pakken ${SITERT} kr.`;
 
 /**
  * Heroen leser motorpanelet 2026-10-27 (GPT/Claude/Gemini med websøk) fra
@@ -112,7 +114,7 @@ const faqs = [
     // Prisene her MÅ matche JSON-LD Offer.price — build.ts pricing-parity-gaten
     // leser nøyaktig denne .faq-answer-inner-blokka og feiler bygget ellers.
     q: "Hva koster det?",
-    a: "Sitert-pakken koster 9&nbsp;900&nbsp;kr eks. mva (engangs): nullpunktsmåling med fem kjøpsnære spørsmål kjørt ni ganger, endringene skrevet ferdig for inntil ti sider, og en ny måling 30 dager etter at dere har publisert dem. Utfallskriteriet står skriftlig &mdash; minst én sitering av domenet deres i etterkjøringene, ellers kjører vi én runde til uten ny faktura. Faktura med 14 dagers frist, levering på e-post, ingen møter. Vil du bare ha én side i stand, starter Synlig Lite &mdash; FAQPage AEO på 990&nbsp;kr (engangs, levering innen 1 virkedag). AI-synlighetssjekken på sjekk.synligdigital.no er gratis.",
+    a: `Start med en gratis måling: tre av spørsmålene kundene deres stiller, kjørt to ganger hver i ChatGPT, Gemini og Claude, svar på e-post (<a href="/gratis-maaling?src=faq">bestill her</a>). Sitert-pakken koster ${SITERT}&nbsp;kr eks. mva (engangs): nullpunktsmåling med fem kjøpsnære spørsmål kjørt ni ganger, endringene skrevet ferdig for inntil ti sider, og en ny måling 30 dager etter at dere har publisert dem. Utfallskriteriet står skriftlig &mdash; minst én sitering av domenet deres i etterkjøringene, ellers kjører vi én runde til uten ny faktura. Vil du bare ha én side i stand, starter Synlig Lite &mdash; FAQPage AEO på ${kr(PRICES_NOK.lite)}&nbsp;kr (engangs, levering innen 1 virkedag). Månedlig måling koster ${kr(PRICES_NOK.maaned)}&nbsp;kr/mnd og kan sies opp når som helst. Faktura med 14 dagers frist, levering på e-post, ingen møter.`,
   },
 ];
 ---
@@ -484,7 +486,7 @@ const faqs = [
                kortet, som var instansen og ikke invarianten). -->
           <div class="service-card featured" id="sitert-maaling">
             <div class="service-name">Sitert-pakken</div>
-            <div class="service-price">9 900 kr</div>
+            <div class="service-price">{SITERT} kr</div>
             <div class="service-price-note">
               Engangs, eks. mva · faktura med 14 dagers frist
             </div>

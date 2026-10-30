@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pris: Sitert-pakken 9 900 kr — endringene, og beviset på at de virket</title>
-  <meta name="description" content="Sitert-pakken 9 900 kr: nullpunktsmåling, endringene skrevet ferdig for inntil ti sider, og ny måling 30 dager etter — med skriftlig utfallskriterium. Synlig Lite fra 990 kr. Priser eks. mva.">
+  <title>Pris: Sitert-pakken {{PRIS:sitert}} kr — endringene, og beviset på at de virket</title>
+  <meta name="description" content="Sitert-pakken {{PRIS:sitert}} kr: nullpunktsmåling, endringene skrevet ferdig for inntil ti sider, og ny måling 30 dager etter — med skriftlig utfallskriterium. Synlig Lite fra 990 kr. Priser eks. mva.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://synligdigital.no/priser">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Sitert-pakken 9 900 kr — vi gjør endringene og måler om AI begynte å sitere dere">
-  <meta property="og:description" content="Sitert-pakken 9 900 kr: nullpunktsmåling, endringene skrevet ferdig for inntil ti sider, og ny måling 30 dager etter — med skriftlig utfallskriterium. Synlig Lite fra 990 kr. Priser eks. mva.">
+  <meta property="og:title" content="Sitert-pakken {{PRIS:sitert}} kr — vi gjør endringene og måler om AI begynte å sitere dere">
+  <meta property="og:description" content="Sitert-pakken {{PRIS:sitert}} kr: nullpunktsmåling, endringene skrevet ferdig for inntil ti sider, og ny måling 30 dager etter — med skriftlig utfallskriterium. Synlig Lite fra 990 kr. Priser eks. mva.">
   <meta property="og:url" content="https://synligdigital.no/priser">
   <meta property="og:site_name" content="Synlig">
   <meta property="og:locale" content="nb_NO">
@@ -26,7 +26,7 @@
     "@id": "https://synligdigital.no/priser#webpage",
     "url": "https://synligdigital.no/priser",
     "name": "Priser for AI-synlighet (AEO) — Synlig Digital",
-    "description": "To pakker for AEO. Sitert-pakken 9 900 NOK (måling, endringer, ny måling, skriftlig utfallskriterium) og Synlig Lite fra 990 NOK.",
+    "description": "To pakker for AEO. Sitert-pakken {{PRIS:sitert}} NOK (måling, endringer, ny måling, skriftlig utfallskriterium) og Synlig Lite fra 990 NOK.",
     "inLanguage": "nb",
     "isPartOf": { "@id": "https://synligdigital.no/#website" },
     "about": { "@id": "https://synligdigital.no/#organization" },
@@ -38,7 +38,7 @@
           "@type": "Offer",
           "name": "Sitert-pakken",
           "description": "Nullpunktsmåling (fem kjøpsnære spørsmål, ni byte-identiske kjøringer, navn på hvem som siteres i stedet), deretter endringene skrevet ferdig for inntil ti sider — JSON-LD, sitatvennlige spørsmål og svar, llms.txt og AI-crawler-regler — og en ny måling 30 dager etter at endringene er publisert. Skriftlig utfallskriterium: minst én sitering av deres domene i etterkjøringene. Innfris det ikke, kjøres én ny runde uten ny faktura.",
-          "price": "9900",
+          "price": "{{PRIS:sitert:bare}}",
           "priceCurrency": "NOK",
           "url": "https://synligdigital.no/priser",
           "itemOffered": {
@@ -87,7 +87,7 @@
         "name": "Hva er forskjellen på Sitert-pakken og Lite?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Sitert-pakken (9 900 kr) tar hele veien: vi måler nullpunktet, skriver endringene ferdig for inntil ti sider, og måler på nytt 30 dager etter at dere har publisert dem. Utfallskriteriet står skriftlig i bestillingen. Lite (990 kr) er det minste steget: FAQPage-JSON-LD for én side du velger, uten måling."
+          "text": "Sitert-pakken ({{PRIS:sitert}} kr) tar hele veien: vi måler nullpunktet, skriver endringene ferdig for inntil ti sider, og måler på nytt 30 dager etter at dere har publisert dem. Utfallskriteriet står skriftlig i bestillingen. Lite (990 kr) er det minste steget: FAQPage-JSON-LD for én side du velger, uten måling."
         }
       },
       {
@@ -127,7 +127,7 @@
         "name": "Kan jeg betale med faktura?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Ja. Sitert-pakken faktureres alltid — 9 900 kr eks. mva med 14 dagers frist, fra AS Åmdal Invest. På Lite kan du velge kort via Stripe eller faktura."
+          "text": "Ja. Sitert-pakken faktureres alltid — {{PRIS:sitert}} kr eks. mva med 14 dagers frist, fra AS Åmdal Invest. På Lite kan du velge kort via Stripe eller faktura."
         }
       }
     ]
@@ -718,15 +718,15 @@
     <p id="cold-report-banner-body">Rapporten dere fikk viser hva som mangler. Den retter ingenting. Sitert-pakken under gjør endringene, og måler etterpå om AI begynte å sitere dere. Vil dere bare rette den ene siden rapporten flagget, er Synlig Lite (990 kr) det minste steget.</p>
     <div class="cold-report-cta-row">
       <a id="cold-report-analyse-link" href="/faktura?slug=priser-lite" class="cold-report-cta cold-report-cta-primary">Bestill Synlig Lite (990 kr)</a>
-      <a id="cold-report-mail-link" href="mailto:hei@synligdigital.no?subject=Sp%C3%B8rsm%C3%A5l%20etter%20AEO-rapporten&amp;body=Hei%20Synlig%2C%0A%0AVi%20fikk%20AEO-rapporten%20og%20har%20et%20sp%C3%B8rsm%C3%A5l%20f%C3%B8r%20vi%20bestiller%3A%0A%0A" class="cold-report-cta cold-report-cta-secondary">Spør først på e-post</a>
+      <a id="cold-report-mail-link" href="/gratis-maaling?src=priser-cold-report" class="cold-report-cta cold-report-cta-secondary">Få en gratis måling først</a>
     </div>
   </section>
 
   <main>
     <section class="hero">
       <div class="container">
-        <h1>Diagnosen er gratis. Du betaler for endringene — og for beviset.</h1>
-        <p>Sitert-pakken: <strong>9 900 kr</strong>, engangs, eks. mva. Vi måler nullpunktet, skriver endringene ferdig for inntil ti sider, og måler på nytt 30 dager etter at dere har publisert dem. Ingen møter, ingen abonnement, ingen bindingstid.</p>
+        <h1>Målingen er gratis. Du betaler for endringene — og for beviset.</h1>
+        <p><a href="/gratis-maaling?src=priser-hero">Gratis måling</a>: tre av kundenes spørsmål til ChatGPT, Gemini og Claude, to ganger hver. Sitert-pakken: <strong>{{PRIS:sitert}} kr</strong>, engangs, eks. mva. Vi måler nullpunktet, skriver endringene ferdig for inntil ti sider, og måler på nytt 30 dager etter at dere har publisert dem. Månedlig måling: {{PRIS:maaned}} kr/mnd, si opp når som helst. Ingen møter, ingen bindingstid.</p>
         <div class="trust-strip">Synlig Digital — uavhengig AEO-konsulent i Stavanger. Utfallskriteriet står skriftlig i bestillingen.</div>
         <!-- 2026-08-14 BEVISBYTTE I HEROEN, samme begrunnelse som forsiden fikk
              samme morgen: Cloudflare-badgen (5/5 Agent-Native) er en skåre på
@@ -751,7 +751,7 @@
          ~800px inn, altså FØR kjøperen hadde sett tilbudet: vi tilbød utgangen
          før pitchen. De to lenkene ligger nå rett etter sammenligningstabellen,
          der de hører hjemme — for den som HAR lest tilbudet og ikke er klar.
-         Denne posisjonen får i stedet det en kjøper på 9 900 trenger før
+         Denne posisjonen får i stedet det en kjøper på {{PRIS:sitert}} trenger før
          prisen: hvem dette er for, hvem det ikke er for, og hva det koster dem
          internt. Absorberer den gamle bransje-linja (egen seksjon, 0.88rem) —
          to seksjoner ble til én, og blokka gjenbruker .results-grid/.results-card
@@ -772,12 +772,11 @@
             <div class="results-company" style="margin-bottom: 2px;">Nei, hvis</div>
             <ul style="margin: 0; padding-left: 18px; font-size: 0.9rem; line-height: 1.6; color: var(--gray-700);">
               <li>dere vil ha garantert rangering eller et bestemt antall siteringer &mdash; det finnes ikke, og vi lover det ikke</li>
-              <li>dere vil ha noen som drifter dette månedlig; vi selger ikke retainer</li>
-              <li>dere trenger at vi logger inn og publiserer for dere</li>
-            </ul>
+              <li>dere vil at vi skal publisere endringene for dere; vi skriver dem, dere legger dem inn</li>
+                          </ul>
           </div>
         </div>
-        <p style="max-width: 760px; margin: 14px auto 0; font-size: 0.9rem; line-height: 1.65; color: var(--gray-600); text-align: center;">Vi jobber primært med <a href="/tjenester/aeo-for-saas-bedrifter" style="color: var(--blue-700); text-decoration: none;">B2B SaaS</a> og merkevarer som har en digitalansvarlig internt. <strong style="color: var(--gray-900); font-weight: 600;">Regnestykket:</strong> 9 900 kr engangs, ingen abonnement &mdash; og endringene blir liggende i deres egne sider etterpå (JSON-LD, spørsmål og svar, llms.txt, crawler-regler). Rådataene fra begge målingene følger med, så dere kan kjøre den samme målingen om igjen selv, uten oss.</p>
+        <p style="max-width: 760px; margin: 14px auto 0; font-size: 0.9rem; line-height: 1.65; color: var(--gray-600); text-align: center;">Vi jobber primært med <a href="/tjenester/aeo-for-saas-bedrifter" style="color: var(--blue-700); text-decoration: none;">B2B SaaS</a> og merkevarer som har en digitalansvarlig internt. <strong style="color: var(--gray-900); font-weight: 600;">Regnestykket:</strong> {{PRIS:sitert}} kr engangs, ingen abonnement &mdash; og endringene blir liggende i deres egne sider etterpå (JSON-LD, spørsmål og svar, llms.txt, crawler-regler). Rådataene fra begge målingene følger med, så dere kan kjøre den samme målingen om igjen selv, uten oss.</p>
       </div>
     </section>
 
@@ -819,17 +818,17 @@
                implementeringen"). 14 dagers trakt: 195 mennesker leste denne
                siden, 0 kjøpte. Nå selges UTFALLET: nullpunktsmåling, endringene
                skrevet ferdig, ny måling etter 30 dager, og et skriftlig
-               utfallskriterium med én gratis ekstrarunde som remedie. Prisen
-               står stille (9 900) — det er innholdet som flyttes, ikke tallet,
-               nettopp for at ingen søsken-flate skal arve et dødt beløp.
-               Skinnen er byttet fra mailto: til /faktura?slug=priser-sitert,
+               utfallskriterium med én gratis ekstrarunde som remedie. Prisen sto
+               stille (9 900) til 2026-10-30; da ble den satt ned (Håkon 10-28:
+               «altfor dyrt»). Tallet kommer nå fra synlig-worker/prices.ts.
+               Skinnen er byttet fra e-postlenke til /faktura?slug=priser-sitert,
                som er strukturell (KV-lagret, admin-varsel, kjøperkvittering) og
                dermed MÅLBAR — en mailto er usynlig for trakten.
                id-en beholdes (#sitert-maaling) fordi 193 rapportsider og flere
                tjenestesider lenker hit. -->
           <div class="service-card featured" id="sitert-maaling">
             <div class="service-name">Sitert-pakken</div>
-            <div class="service-price">9 900 kr</div>
+            <div class="service-price">{{PRIS:sitert}} kr</div>
             <div class="service-price-note">Engangs, eks. mva &middot; faktura med 14 dagers frist</div>
             <ul class="service-list">
               <li><strong>Nullpunkt:</strong> fem kjøpsnære spørsmål fra ditt marked, ni byte-identiske kjøringer &mdash; hvem siteres i dag?</li>
@@ -866,6 +865,18 @@
             </form>
             <a href="/faktura?slug=priser-lite" class="service-cta service-cta-faktura faktura-link" data-email-input="lead-email-lite">Få faktura — 14 dagers betalingsfrist &rarr;</a>
             <a href="/blogg/aeo-lite-faqpage-990-kr" class="service-cta-secondary">Les mer om Lite-pakken &rarr;</a>
+          </div>
+          <div class="service-card" id="maanedlig-maaling">
+            <div class="service-name">Månedlig måling</div>
+            <div class="service-price">{{PRIS:maaned}} kr/mnd</div>
+            <div class="service-price-note">Eks. mva &middot; faktura hver måned &middot; si opp når som helst</div>
+            <ul class="service-list">
+              <li>Fem spørsmål kundene deres stiller, på norsk, valgt sammen med dere</li>
+              <li>Stilt til ChatGPT, Gemini og Claude tre ganger hver, hver måned</li>
+              <li>En datert rapport: hvem som blir nevnt, hva som endret seg siden sist, og hvilken endring vi ville gjort først</li>
+              <li>Rådataene følger med</li>
+            </ul>
+            <a href="/faktura?slug=priser-maaned" class="service-cta service-cta-fill">Bestill Månedlig måling &rarr;</a>
           </div>
 
         </div>
@@ -922,12 +933,12 @@
             </tr>
             <tr>
               <td>Pris eks. mva</td>
-              <td><strong>9 900 kr</strong></td>
+              <td><strong>{{PRIS:sitert}} kr</strong></td>
               <td><strong>fra 990 kr</strong></td>
             </tr>
           </tbody>
         </table>
-        <p class="compare-note">Månedlig oppfølging og retainer selger vi ikke. Vi målte to prisnivåer på selvbetjent SMB-AEO i 76 og 64 dager med null konverteringer og la dem ned 2026-08-08. Det vi solgte etterpå &mdash; selve målingen &mdash; var det samme vi gir bort gratis i sjekken, så fra 2026-08-13 selger vi endringene og beviset i stedet.</p>
+        <p class="compare-note">Fram til oktober 2026 solgte vi ikke månedlig oppfølging, og Sitert-pakken kostet 9 900 kr. Ingen kjøpte til den prisen. Nå er første steg en gratis måling, pakken koster {{PRIS:sitert}} kr, og den som vil følge med over tid kan ta Månedlig måling til {{PRIS:maaned}} kr/mnd. Alle prisene er nye, og vi justerer dem etter hva folk faktisk kjøper.</p>
       </div>
     </section>
 
@@ -943,7 +954,7 @@
       <div class="container" style="text-align: center;">
         <div style="display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 10px 16px; align-items: baseline; max-width: 720px; font-size: 0.95rem; color: var(--gray-700); padding: 14px 22px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px;">
           <strong style="color: var(--gray-900); font-weight: 600;">Ikke klar for å bestille enda?</strong>
-          <a href="mailto:hei@synligdigital.no?subject=Sp%C3%B8rsm%C3%A5l%20om%20AEO-pakker&amp;body=Hei%20Synlig%2C%0A%0AJeg%20vurderer%20[bytt%20ut%20med%20pakke%20eller%20la%20st%C3%A5]%20og%20lurer%20p%C3%A5%3A%0A%0A" style="color: var(--blue-700); text-decoration: none; font-weight: 500;">Send oss en kort melding &rarr;</a>
+          <a href="/gratis-maaling?src=priser-soft" style="color: var(--blue-700); text-decoration: none; font-weight: 500;">Bestill en gratis måling &rarr;</a>
           <span style="color: var(--color-muted);">·</span>
           <a href="https://sjekk.synligdigital.no/?ref=priser-soft" style="color: var(--blue-700); text-decoration: none; font-weight: 500;">Ta en gratis AI-synlighetssjekk &rarr;</a>
         </div>
@@ -959,7 +970,7 @@
         </details>
         <details class="faq-item">
           <summary class="faq-q">Hva er forskjellen på Sitert-pakken og Lite?</summary>
-          <div class="faq-a">Sitert-pakken (9 900 kr) tar hele veien: vi måler nullpunktet, skriver endringene ferdig for inntil ti sider, og måler på nytt 30 dager etter at dere har publisert dem. Utfallskriteriet står skriftlig i bestillingen. Lite (990 kr) er det minste steget: FAQPage-JSON-LD for én side du velger, uten måling.</div>
+          <div class="faq-a">Sitert-pakken ({{PRIS:sitert}} kr) tar hele veien: vi måler nullpunktet, skriver endringene ferdig for inntil ti sider, og måler på nytt 30 dager etter at dere har publisert dem. Utfallskriteriet står skriftlig i bestillingen. Lite (990 kr) er det minste steget: FAQPage-JSON-LD for én side du velger, uten måling.</div>
         </details>
         <details class="faq-item">
           <summary class="faq-q">Hva er utfallskriteriet, og hva skjer hvis det ikke innfris?</summary>
@@ -979,7 +990,7 @@
         </details>
         <details class="faq-item">
           <summary class="faq-q">Kan jeg betale med faktura?</summary>
-          <div class="faq-a">Ja. Sitert-pakken faktureres alltid — 9 900 kr eks. mva med 14 dagers frist, fra AS Åmdal Invest. På Lite kan du velge kort via Stripe eller faktura.</div>
+          <div class="faq-a">Ja. Sitert-pakken faktureres alltid — {{PRIS:sitert}} kr eks. mva med 14 dagers frist, fra AS Åmdal Invest. På Lite kan du velge kort via Stripe eller faktura.</div>
         </details>
       </div>
     </section>
@@ -1098,27 +1109,6 @@
               if (coldSlug) fakturaQs += "&slug=outreach-" + encodeURIComponent(coldSlug);
               if (validColdEmail) fakturaQs += "&email=" + encodeURIComponent(coldEmail);
               analyseLink.href = "/faktura?" + fakturaQs;
-            }
-
-            var mailLink = document.getElementById("cold-report-mail-link");
-            if (mailLink && validColdEmail) {
-              /* Domain → company name guess: gmail/outlook/etc filtered out.
-                 If we have a corporate domain we can include the host in the
-                 mailto subject so hei@synligdigital.no gets context without
-                 the visitor having to type it. */
-              var domain = coldEmail.split("@")[1] || "";
-              var freeMail = /^(gmail|outlook|hotmail|yahoo|icloud|live|me|protonmail)\./;
-              if (domain && !freeMail.test(domain)) {
-                var company = domain.replace(/\.(no|com|se|dk|fi|io|app|dev|net|org|ai)$/i, "");
-                if (company && company.length <= 40) {
-                  var subj = encodeURIComponent("Spørsmål etter AEO-rapporten — " + company);
-                  var bodyPart =
-                    "Hei Synlig%2C%0A%0AVi%20fikk%20AEO-rapporten%20for%20" +
-                    encodeURIComponent(company) +
-                    "%20og%20har%20et%20sp%C3%B8rsm%C3%A5l%20f%C3%B8r%20vi%20bestiller%3A%0A%0A";
-                  mailLink.href = "mailto:hei@synligdigital.no?subject=" + subj + "&body=" + bodyPart;
-                }
-              }
             }
 
             coldBanner.classList.add("show");

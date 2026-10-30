@@ -14,7 +14,7 @@
 export const CORE_PAGES = [
   "/", "/leaderboard", "/metode", "/priser", "/faktura",
   "/blogg/aeo-byra-norge", "/tjenester/", "/tjenester/aeo",
-  "/tjenester/aeo-for-advokater", "/tjenester/digital-markedsforing-stavanger",
+  "/tjenester/aeo-for-advokater", "/tjenester/digital-markedsforing-stavanger", "/audit",
 ];
 export const LIMITS = { colors: 12, logos: 1, fonts: 2 };
 

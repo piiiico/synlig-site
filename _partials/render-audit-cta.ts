@@ -17,46 +17,26 @@ export type Position = "mid" | "bottom";
 
 const FREE_AUDIT_HEADLINE = "Hvor synlig er din bedrift i AI-søk?";
 const FREE_AUDIT_SUB =
-  "Få gratis AEO-score på 2–5 sekunder. Sjekk om AI-crawlere kan lese nettsiden din, og om Perplexity nevner bedriften din når kunder spør.";
+  "Få gratis AEO-score på 2–5 sekunder. Sjekk om AI-crawlere kan lese nettsiden din, og om Perplexity nevner bedriften din når kunder spør. " +
+  `Vil du vite hva ${FREE_MEASUREMENT.engines.join(", ").replace(/, ([^,]*)$/, " og $1")} svarer på kundenes egne spørsmål? <a href="/gratis-maaling?src=blog-audit-box">Bestill en gratis måling</a>.`;
 const FREE_AUDIT_BTN = "Kjør gratis sjekk &rarr;";
 const FREE_AUDIT_TRUST = "Ingen registrering nødvendig. Gratis rapport.";
 
-// 2026-08-12: the live offer set is exactly two, and this renderer is the
-// single writer of both on 33 blog posts:
-//   Sitert-måling 9 900 kr — flagship, invoiced, mailto rail (same as / and
-//     /leaderboard). No card rail: /api/lead-capture needs an email address
-//     that a mailto click cannot supply.
-//   Synlig Lite 990 NOK — orderable floor, Stripe tier rail or faktura.
-// Three older tiers were discontinued 2026-08-08 on measured zeros, and this
-// renderer kept taking card payment for one of them for four days after.
+// 2026-10-30 ladder (task c094dde82a6f79ef, Håkon 10-28 «altfor dyrt» + «mailto: er
+// også noe dritt»): free measurement via the on-site form /gratis-maaling →
+// Lite → Sitert-pakken → Månedlig måling. Prices come from synlig-worker/prices.ts;
+// no CTA here is a mailto any more (a mailto drops everyone without a mail client).
 // Never reintroduce a tier /priser does not sell; blog-cta-dual-tier.test.ts
 // bans them by name, comments included.
-const PRICING_HEADLINE = "Sitert-måling, 9 900 kr";
+import { PRICES_NOK, kr, FREE_MEASUREMENT } from "../../synlig-worker/prices";
+const SITERT = `${kr(PRICES_NOK.sitert)} kr`;
+const LITE = `${PRICES_NOK.lite} NOK`;
+const PRICING_HEADLINE = "Gratis måling: blir dere nevnt?";
 const PRICING_SUB =
-  "Fem kjøpsnære spørsmål fra ditt marked, kjørt minst ni ganger over flere dager med byte-identiske prompt. Du får skriftlig svar på om AI siterer dere, og navn på hvem som blir sitert i stedet. Rådataene følger med, så dere kan kjøre målingen om igjen selv.";
-const PRICING_BTN = "Be om en sitert-måling — 9 900 kr &rarr;";
-
-// Sitert-måling has no self-serve rail by design: it is invoiced (14 dagers
-// frist, AS Åmdal Invest), never charged by card, and the five questions are
-// agreed first. The inbox IS its funnel instrument — synlig-redesign-plan.md §7.
-function mailtoForSitert(slug: string): string {
-  const subject = `Sitert-måling — ${slug}`;
-  const body =
-    `Hei,\n\nJeg leste «${slug}» på synligdigital.no og vil be om en sitert-måling (9 900 kr eks. mva, engangs).\n\nKan dere svare skriftlig på e-post med forslag til de fem spørsmålene og når målingen kan kjøres?\n\nVennlig hilsen,\n`;
-  // mailto requires URL-encoded subject + body. Async by design — non-negotiable #1.
-  return `mailto:hei@synligdigital.no?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
-
-// Lite-flavored mailto for awareness/consideration footers where Lite is the
-// primary CTA. The pre-2026-06-06 footer regressed Lite-curious readers into a
-// Handlingsplan-shaped email — breaking tier continuity from button click to
-// reply. This restores intent-shaped email path for the impulse-buy floor.
-function mailtoForLite(slug: string): string {
-  const subject = `Synlig Lite — ${slug}`;
-  const body =
-    `Hei,\n\nJeg leste blogginnlegget «${slug}» på synligdigital.no og er interessert i Synlig Lite (990 NOK FAQPage for én side, levert på 1 virkedag).\n\nKan dere svare skriftlig på e-post med konkrete neste steg?\n\nVennlig hilsen,\n`;
-  return `mailto:hei@synligdigital.no?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
+  "Skriv inn tre spørsmål kundene deres stiller. Vi stiller dem til ChatGPT, Gemini og Claude, to ganger hver, og sender dere hvem som blir nevnt, med rådataene. Vil dere ha endringene gjort etterpå, koster Sitert-pakken " + SITERT + " eks. mva.";
+const PRICING_BTN = "Bestill gratis måling &rarr;";
+const gratisHref = (slug: string) => `/gratis-maaling?src=blog-${encodeURIComponent(slug)}`;
+const sitertHref = (slug: string) => `/faktura?slug=blog-${encodeURIComponent(slug)}&amp;pakke=priser-sitert`;
 
 // Canonical Lite product page — gives cautious readers a no-email-required
 // discovery path. Closes the asymmetric internal-link state for 32 blog
@@ -100,21 +80,21 @@ function pricingBlock(slug: string): string {
   return `<div class="audit-cta__pricing-link">
       ${ENGINE_PROOF}
       <span class="audit-cta__pricing-label">Vil du vite om AI siterer dere? To nivåer:</span>
-      <a class="audit-cta__btn audit-cta__btn--wide audit-cta__btn--mailto" href="${mailtoForSitert(slug)}">Sitert-måling — 9 900 kr <span class="audit-cta__btn-detail">(fem spørsmål, minst ni kjøringer)</span> &rarr;</a>
+      <a class="audit-cta__btn audit-cta__btn--wide audit-cta__btn--gratis" href="${gratisHref(slug)}">Gratis måling <span class="audit-cta__btn-detail">(tre av deres spørsmål, tre AI-motorer)</span> &rarr;</a>
       <form method="POST" action="/api/lead-capture" class="lead-form lead-form--dual">
         <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email">
         <input type="hidden" name="slug" value="blog-${slug}">
-        <button type="submit" name="tier" value="lite" class="audit-cta__btn audit-cta__btn--secondary">Synlig Lite — 990 NOK <span class="audit-cta__btn-detail">(FAQPage for én side, 1 virkedag)</span> &rarr;</button>
+        <button type="submit" name="tier" value="lite" class="audit-cta__btn audit-cta__btn--secondary">Synlig Lite — ${LITE} <span class="audit-cta__btn-detail">(FAQPage for én side, 1 virkedag)</span> &rarr;</button>
       </form>
       <a class="audit-cta__pricing-learn" href="${LITE_PRODUCT_PAGE}">Usikker på Lite? Les hva 990 kr kjøper deg &rarr;</a>
-      <a class="audit-cta__pricing-mail" href="${mailtoForLite(slug)}">Eller spør om Lite på e-post</a>
+      <a class="audit-cta__pricing-learn" href="${sitertHref(slug)}">Eller bestill endringene gjort: Sitert-pakken, ${SITERT} &rarr;</a>
     </div>`;
 }
 
 // Dual-tier primary block (decision stage).
 //
-// Reader is buyer-shape — already evaluating spend, so sitert-måling (9 900 kr)
-// leads the card. Lite (990 NOK) is the "test først" secondary and keeps the
+// Reader is buyer-shape — the free measurement leads the card (it is the
+// on-ramp to Sitert-pakken). Lite (990 NOK) is the "test først" secondary and keeps the
 // self-serve rail. Nothing here may charge a card for sitert-måling: it is
 // invoiced only.
 //
@@ -122,13 +102,13 @@ function pricingBlock(slug: string): string {
 function pricingPrimary(slug: string): string {
   return `<h3 class="audit-cta__headline">${PRICING_HEADLINE}</h3>
   <p class="audit-cta__sub">${PRICING_SUB}</p>
-  <p class="audit-cta__primary-row"><a class="audit-cta__btn audit-cta__btn--wide audit-cta__btn--mailto" href="${mailtoForSitert(slug)}">${PRICING_BTN}</a></p>
+  <p class="audit-cta__primary-row"><a class="audit-cta__btn audit-cta__btn--wide audit-cta__btn--gratis" href="${gratisHref(slug)}">${PRICING_BTN}</a></p>
   <form method="POST" action="/api/lead-capture" class="lead-form lead-form--dual">
     <input type="email" name="email" class="lead-form-input" placeholder="din@firma.no" required autocomplete="email">
     <input type="hidden" name="slug" value="blog-${slug}">
-    <button type="submit" name="tier" value="lite" class="audit-cta__btn audit-cta__btn--secondary">Test først: Synlig Lite — 990 NOK <span class="audit-cta__btn-detail">(FAQPage, 1 virkedag)</span> &rarr;</button>
+    <button type="submit" name="tier" value="lite" class="audit-cta__btn audit-cta__btn--secondary">Test først: Synlig Lite — ${LITE} <span class="audit-cta__btn-detail">(FAQPage, 1 virkedag)</span> &rarr;</button>
   </form>
-  <p class="audit-cta__trust">Sitert-måling faktureres med 14 dagers frist — ingen møter, ingen bindingstid. Synlig Lite betales med kort via Stripe eller faktura, levering 1 virkedag.</p>
+  <p class="audit-cta__trust">Målingen er gratis. <a href="${sitertHref(slug)}" class="audit-cta__pricing-learn">Sitert-pakken (${SITERT} eks. mva)</a> faktureres med 14 dagers frist, ingen bindingstid. Synlig Lite betales med kort eller faktura, levering 1 virkedag.</p>
   <p class="audit-cta__trust audit-cta__trust--lite-learn"><a href="${LITE_PRODUCT_PAGE}" class="audit-cta__mailto-fallback">Vil du teste først? Les om Synlig Lite (990 NOK, 1 virkedag) &rarr;</a></p>
   ${ENGINE_PROOF}`;
 }
@@ -155,12 +135,12 @@ function secondaryAudit(slug: string, suffix: string): string {
 // relying on email-client instrumentation (which bypasses the server entirely).
 const MAILTO_TRACKING_SCRIPT = `<script>
 (function(){
-  document.querySelectorAll('a.audit-cta__pricing-mail,a.audit-cta__mailto-fallback,a.audit-cta__btn--mailto').forEach(function(link){
+  document.querySelectorAll('a.audit-cta__btn--gratis').forEach(function(link){
     link.addEventListener('click',function(){
       var cta=link.closest('.audit-cta');
       var raw=cta?cta.getAttribute('data-slug'):'unknown';
       var slug=raw?raw.replace(/-end$/,''):'unknown';
-      navigator.sendBeacon('/api/track-click?src=blog-'+encodeURIComponent(slug)+'&type=mailto');
+      navigator.sendBeacon('/api/track-click?src=blog-'+encodeURIComponent(slug)+'&type=gratis');
     });
   });
   document.querySelectorAll('a.audit-cta__pricing-learn').forEach(function(link){
@@ -405,13 +385,13 @@ export const MID_MARKER = "<!-- AUDIT-CTA:mid -->";
 export const BOTTOM_MARKER = "<!-- AUDIT-CTA:bottom -->";
 
 // Exports for build-time invariants: every rendered blog post must carry
-// BOTH a /api/lead-capture entry point AND a mailto:hei@synligdigital.no
-// fallback. Card rail = lead-capture form → Stripe (Synlig Lite only);
-// mailto = the sitert-måling order path AND the low-trust fallback.
+// BOTH a /api/lead-capture entry point AND the /gratis-maaling form link, and
+// NO mailto (2026-10-30: the on-site form replaced every CTA mailto).
 // CHECKOUT_HREF_PREFIX kept as tombstone in case any page still has a direct checkout link.
 export const LEAD_CAPTURE_PATH = "/api/lead-capture";
 export const CHECKOUT_HREF_PREFIX = "/api/handlingsplan-checkout?slug=";
 export const MAILTO_PREFIX = "mailto:hei@synligdigital.no";
+export const GRATIS_PATH = "/gratis-maaling";
 
 // The paid-offer anchors this renderer writes. build.ts asserts every blog
 // post surfaces at least one. That is the real invariant behind the check
@@ -425,7 +405,7 @@ export const MAILTO_PREFIX = "mailto:hei@synligdigital.no";
 // price without updating this list fails the build loudly instead of leaving
 // the gate quietly matching nothing.
 export const LIVE_PRICE_ANCHORS: Array<[RegExp, string]> = [
-  [/9[  ]900\s*kr/, "Sitert-måling 9 900 kr"],
+  [/Gratis måling/, "Gratis måling (/gratis-maaling)"],
   [/990\s*NOK/, "Synlig Lite 990 NOK"],
 ];
 

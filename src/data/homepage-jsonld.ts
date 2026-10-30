@@ -36,6 +36,8 @@ export const ORG_ID = "https://synligdigital.no/#organization";
  * kunden faktisk får: TIERS i bin/cross-border-invoice.ts (mindre enheter).
  */
 const nok = (minor: number): string => String(minor / 100);
+const SITERT = kr(PRICES_NOK.sitert).replace("\u00a0", " ");
+import { PRICES_NOK, kr } from "../../../synlig-worker/prices";
 
 // ── Block 1: Organization / LocalBusiness / MarketingAgency ───────────────
 const organization = {
@@ -262,7 +264,7 @@ const faqPage = {
       name: "Hvem er Synlig Digital og hva gjør dere?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Synlig Digital er et AEO-selskap i Stavanger. Hovedleveransen er sitert-måling (9 900 NOK): vi kjører fem kjøpsnære spørsmål fra kundens marked minst ni ganger over flere dager og dokumenterer om AI-svarene siterer merkevaren — og hvem som blir sitert i stedet. Kundene er primært B2B SaaS direkte og merkevareportefølje / e-handel via byråpartnerar med 70/30 co-delivery-split. Mindre bedrifter kan bestille Synlig Lite — FAQPage AEO (990 NOK) selvbetjent, eller kjøre en gratis AI-synlighetssjekk på sjekk.synligdigital.no.",
+        text: `Synlig Digital er et AEO-selskap i Stavanger. Første steg er en gratis måling (tre av kundens spørsmål, ChatGPT, Gemini og Claude, to kjøringer hver). Hovedleveransen er Sitert-pakken (${SITERT} NOK): vi kjører fem kjøpsnære spørsmål fra kundens marked minst ni ganger over flere dager og dokumenterer om AI-svarene siterer merkevaren — og hvem som blir sitert i stedet. Kundene er primært B2B SaaS direkte og merkevareportefølje / e-handel via byråpartnerar med 70/30 co-delivery-split. Mindre bedrifter kan bestille Synlig Lite — FAQPage AEO (990 NOK) selvbetjent, eller kjøre en gratis AI-synlighetssjekk på sjekk.synligdigital.no.`,
       },
     },
     {
@@ -286,7 +288,7 @@ const faqPage = {
       name: "Hva koster AEO-tjenester fra Synlig Digital?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Sitert-pakken koster 9 900 NOK eks. mva (engangsbetaling, faktura med 14 dagers frist, levering på e-post uten møter): nullpunktsmåling, endringene skrevet ferdig for inntil ti sider, og ny måling 30 dager etter publisering, med skriftlig utfallskriterium. Synlig Lite — FAQPage AEO koster 990 NOK (engangsbetaling, levering innen 1 virkedag) og er det laveste bestillbare inngangspunktet. AI-synlighetssjekken på sjekk.synligdigital.no er gratis. Bestilling: https://synligdigital.no/faktura?slug=priser-sitert",
+        text: `Gratis måling på synligdigital.no/gratis-maaling. Sitert-pakken koster ${SITERT} NOK eks. mva (engangsbetaling, faktura med 14 dagers frist, levering på e-post uten møter): nullpunktsmåling, endringene skrevet ferdig for inntil ti sider, og ny måling 30 dager etter publisering, med skriftlig utfallskriterium. Synlig Lite — FAQPage AEO koster 990 NOK (engangsbetaling, levering innen 1 virkedag) og er det laveste bestillbare inngangspunktet. AI-synlighetssjekken på sjekk.synligdigital.no er gratis. Bestilling: https://synligdigital.no/faktura?slug=priser-sitert`,
       },
     },
     {
@@ -330,7 +332,7 @@ const webPage = {
   url: "https://synligdigital.no",
   name: "Synlig Digital — blir merkevaren din sitert når AI svarer?",
   description:
-    "Synlig Digital måler om AI-assistenter siterer merkevaren din, og hvem som blir sitert i stedet. Fem kjøpsnære spørsmål, minst ni kjøringer, fra 9 900 kr.",
+    `Synlig Digital måler om AI-assistenter siterer merkevaren din, og hvem som blir sitert i stedet. Fem kjøpsnære spørsmål, minst ni kjøringer. Gratis første måling, Sitert-pakken ${SITERT} kr.`,
   inLanguage: "nb",
   isPartOf: { "@id": "https://synligdigital.no/#website" },
   about: { "@id": ORG_ID },
