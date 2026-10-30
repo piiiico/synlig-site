@@ -17,7 +17,7 @@ export type Position = "mid" | "bottom";
 
 const FREE_AUDIT_HEADLINE = "Hvor synlig er din bedrift i AI-søk?";
 const FREE_AUDIT_SUB =
-  "Få gratis AEO-score på 2–5 sekunder. Sjekk hva ChatGPT, Perplexity og Google AI faktisk vet om bedriften din.";
+  "Få gratis AEO-score på 2–5 sekunder. Sjekk om AI-crawlere kan lese nettsiden din, og om Perplexity nevner bedriften din når kunder spør.";
 const FREE_AUDIT_BTN = "Kjør gratis sjekk &rarr;";
 const FREE_AUDIT_TRUST = "Ingen registrering nødvendig. Gratis rapport.";
 
