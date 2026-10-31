@@ -10,7 +10,7 @@ import { readdirSync, readFileSync, statSync, existsSync } from "fs";
 import { join, basename, resolve } from "path";
 import { LOGO_HTML } from "./_partials/site-logo";
 import { SITE_CHROME_STYLE, TOKEN_COUNT } from "./_partials/site-chrome";
-import { PRICES_NOK, kr } from "../synlig-worker/prices";
+import { fillPriceTokens } from "../synlig-worker/prices";
 import { applyMarkers, MID_MARKER, BOTTOM_MARKER, LEAD_CAPTURE_PATH, CHECKOUT_HREF_PREFIX, MAILTO_PREFIX, GRATIS_PATH, LIVE_PRICE_ANCHORS, type Stage } from "./_partials/render-audit-cta";
 import { runFactSourceGate } from "./_partials/fact-source-gate";
 import { runMetodeMeasureGate } from "./_partials/metode-measure-gate";
@@ -255,11 +255,7 @@ const files = {
   NORDIC_LITHIUM_CASE_HTML: await Bun.file("/workspace/synlig-site/dist/case/nordic-lithium/index.html").text(),
   EN_CASE_NORDIC_LITHIUM_HTML: await Bun.file("/workspace/synlig-site/en-case-nordic-lithium.html").text(),
   EN_BLOG_HTML: await Bun.file("/workspace/synlig-site/en-blog.html").text(),
-  EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML: await Bun.file("/workspace/synlig-site/en-blog-llm-smell-check-benchmark.html").text(),
-  EN_BLOG_AEO_DIGITAL_ASSETS_HTML: await Bun.file("/workspace/synlig-site/en-blog-aeo-digital-assets.html").text(),
   EN_BLOG_AEO_AGENCY_NORWAY_HTML: await Bun.file("/workspace/synlig-site/en-blog-aeo-agency-norway.html").text(),
-  EN_BLOG_VISIBILITY_PARADOX_HTML: await Bun.file("/workspace/synlig-site/en-blog-visibility-paradox.html").text(),
-  EN_BLOG_AGENTJACKING_AI_TRUST_HTML: await Bun.file("/workspace/synlig-site/en-blog-agentjacking-and-ai-trust.html").text(),
   PIERSTOP_CASE_HTML: await Bun.file("/workspace/synlig-site/dist/case/pierstop/index.html").text(),
   PICO_PAGE_HTML: await Bun.file("/workspace/synlig-site/pico.html").text(),
   PERSONVERN_HTML: await Bun.file("/workspace/synlig-site/personvern.html").text(),
@@ -304,22 +300,10 @@ const files = {
 // ONE price source (task c094dde82a6f79ef): static pages write {{PRIS:sitert}}
 // («2 900») or {{PRIS:sitert:bare}} («2900», JSON-LD) and get the number from
 // synlig-worker/prices.ts here. An unknown tier fails the build.
-for (const k of Object.keys(files) as Array<keyof typeof files>) {
-  files[k] = files[k].replace(/\{\{PRIS:([a-z]+)(:bare)?\}\}/g, (m, tier: string, bare?: string) => {
-    const n = (PRICES_NOK as Record<string, number>)[tier];
-    if (!n) { console.error(`[BUILD FAIL] unknown price token ${m} in ${k}`); process.exit(1); }
-    return bare ? String(n) : kr(n).replace("\u00a0", " ");
-  });
-}
+for (const k of Object.keys(files) as Array<keyof typeof files>) files[k] = fillPriceTokens(files[k], k);
 // Vertical landings (/tjenester/aeo-for-*) live in verticalFiles, not files[] —
 // same tokens, same source, so a 9 900-era literal cannot survive there either.
-for (const k of Object.keys(verticalFiles)) {
-  verticalFiles[k] = verticalFiles[k].replace(/\{\{PRIS:([a-z]+)(:bare)?\}\}/g, (m, tier: string, bare?: string) => {
-    const n = (PRICES_NOK as Record<string, number>)[tier];
-    if (!n) { console.error(`[BUILD FAIL] unknown price token ${m} in ${k}`); process.exit(1); }
-    return bare ? String(n) : kr(n).replace("\u00a0", " ");
-  });
-}
+for (const k of Object.keys(verticalFiles)) verticalFiles[k] = fillPriceTokens(verticalFiles[k], k);
 
 // SITE CHROME for static pages (Vegvisning 2026-10-28). A page opts in with the
 // <!--SITE-LOGO--> marker; it then gets THE logo and SITE_CHROME_STYLE
@@ -335,7 +319,7 @@ for (const k of Object.keys(verticalFiles)) {
       n++;
     }
   }
-  if (n < 27) { console.error(`[BUILD FAIL] site chrome: only ${n} static pages carry <!--SITE-LOGO--> (floor 27)`); process.exit(1); }
+  if (n < 23) { console.error(`[BUILD FAIL] site chrome: only ${n} static pages carry <!--SITE-LOGO--> (floor 23; 27 before the EN prune 10-31)`); process.exit(1); }
   console.log(`  ✅ Site chrome: ${TOKEN_COUNT} tokens + 1 logo injected into ${n} static pages.`);
 }
 
@@ -481,22 +465,14 @@ const EN_PAGES: EnPage[] = [
     aliases: ["/en/case/nordic-lithium/", "/en/case/nordic-lithium.html"], changefreq: "never", priority: "0.8" },
   { path: "/en/blog", key: "EN_BLOG_HTML", file: "en-blog.html",
     aliases: ["/en/blog/", "/en/blog/index.html"], changefreq: "weekly", priority: "0.8" },
-  { path: "/en/blog/llm-smell-check-benchmark", key: "EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML", file: "en-blog-llm-smell-check-benchmark.html",
-    aliases: ["/en/blog/llm-smell-check-benchmark/", "/en/blog/llm-smell-check-benchmark.html"], changefreq: "monthly", priority: "0.9" },
-  { path: "/en/blog/aeo-for-digital-asset-companies", key: "EN_BLOG_AEO_DIGITAL_ASSETS_HTML", file: "en-blog-aeo-digital-assets.html",
-    aliases: ["/en/blog/aeo-for-digital-asset-companies/", "/en/blog/aeo-for-digital-asset-companies.html"], changefreq: "monthly", priority: "0.9" },
   { path: "/en/blog/aeo-agency-norway", key: "EN_BLOG_AEO_AGENCY_NORWAY_HTML", file: "en-blog-aeo-agency-norway.html",
     aliases: ["/en/blog/aeo-agency-norway/", "/en/blog/aeo-agency-norway.html"], changefreq: "monthly", priority: "0.9" },
-  { path: "/en/blog/visibility-paradox-b2b-saas", key: "EN_BLOG_VISIBILITY_PARADOX_HTML", file: "en-blog-visibility-paradox.html",
-    aliases: ["/en/blog/visibility-paradox-b2b-saas/", "/en/blog/visibility-paradox-b2b-saas.html"], changefreq: "monthly", priority: "0.9" },
-  { path: "/en/blog/agentjacking-and-ai-trust", key: "EN_BLOG_AGENTJACKING_AI_TRUST_HTML", file: "en-blog-agentjacking-and-ai-trust.html",
-    aliases: ["/en/blog/agentjacking-and-ai-trust/", "/en/blog/agentjacking-and-ai-trust.html"], changefreq: "monthly", priority: "0.9" },
 ];
 
 // Gulv: en tom/avkortet tabell gjør ALLE fire konsumentene og porten blinde i
-// stedet for røde. 8 er dagens sannhet, målt mot rutetabellen 2026-08-14.
-if (EN_PAGES.length < 8) {
-  console.error(`\n[BUILD FAIL] EN_PAGES har ${EN_PAGES.length} rader, gulvet er 8.`);
+// stedet for røde. 4 etter EN-prunen 2026-10-31 (4 poster 301 til /en/blog).
+if (EN_PAGES.length < 4) {
+  console.error(`\n[BUILD FAIL] EN_PAGES har ${EN_PAGES.length} rader, gulvet er 4.`);
   console.error(`En krympet tabell fjerner sider fra llms.txt/sitemap/ruter uten å si fra.`);
   process.exit(1);
 }
@@ -1446,8 +1422,7 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
   // fact-source gate hit the same day. Floors are the count at the time of the
   // fase-3 port minus nothing: these dirs only grow.
   const PRICING_DIR_FLOOR: Record<string, number> = {
-    // Root: 15 root-level HTML files measured 2026-09-09.
-    "/workspace/synlig-site": 15,
+    "/workspace/synlig-site": 11, // EN prune 2026-10-31: 15 → 11
     "/workspace/synlig-site/src/content/blogg": 10, // prune 2026-10-28: 40 → 10
     "/workspace/synlig-site/src/content/case": 3,
     "/workspace/synlig-site/tjenester": 11,
@@ -1626,8 +1601,8 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
   {
     const EN_ROOT = "/workspace/synlig-site";
     const enFiles = readdirSync(EN_ROOT).filter((f) => /^en.*\.html$/.test(f));
-    if (enFiles.length < 6) {
-      console.error(`\n[BUILD FAIL] dead-tier gate: ${enFiles.length} en*.html at root, floor is 6.`);
+    if (enFiles.length < 4) {
+      console.error(`\n[BUILD FAIL] dead-tier gate: ${enFiles.length} en*.html at root, floor is 4.`);
       console.error(`Enten er sider slettet, eller så gikk porten nettopp blind.`);
       process.exit(1);
     }
@@ -2186,15 +2161,7 @@ const EN_CASE_NORDIC_LITHIUM_HTML = \`${escape(files.EN_CASE_NORDIC_LITHIUM_HTML
 
 const EN_BLOG_HTML = \`${escape(files.EN_BLOG_HTML)}\`;
 
-const EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML = \`${escape(files.EN_BLOG_LLM_SMELL_CHECK_BENCHMARK_HTML)}\`;
-
-const EN_BLOG_AEO_DIGITAL_ASSETS_HTML = \`${escape(files.EN_BLOG_AEO_DIGITAL_ASSETS_HTML)}\`;
-
 const EN_BLOG_AEO_AGENCY_NORWAY_HTML = \`${escape(files.EN_BLOG_AEO_AGENCY_NORWAY_HTML)}\`;
-
-const EN_BLOG_VISIBILITY_PARADOX_HTML = \`${escape(files.EN_BLOG_VISIBILITY_PARADOX_HTML)}\`;
-
-const EN_BLOG_AGENTJACKING_AI_TRUST_HTML = \`${escape(files.EN_BLOG_AGENTJACKING_AI_TRUST_HTML)}\`;
 
 const PIERSTOP_CASE_HTML = \`${escape(files.PIERSTOP_CASE_HTML)}\`;
 
@@ -2235,6 +2202,11 @@ const PRUNED_BLOG_301: Record<string, string> = {
   "stavanger-agent-beredskap-april-2026": "/blogg",
   "stavanger-klinikk-aeo-analyse": "/blogg",
   "vibesec-ai-generert-kode-sikkerhet": "/blogg",
+  // EN prune 2026-10-31: only aeo-agency-norway is AI-cited (9 in the 10-27 panel).
+  "en/llm-smell-check-benchmark": "/en/blog",
+  "en/aeo-for-digital-asset-companies": "/en/blog",
+  "en/visibility-paradox-b2b-saas": "/en/blog",
+  "en/agentjacking-and-ai-trust": "/en/blog",
 };
 
 const BLOGG_INDEX_HTML = \`${escape(files.BLOGG_INDEX_HTML)}\`;
@@ -3039,8 +3011,8 @@ export default {
     // 30 of 40 /blogg posts removed (news pegs, off-topic English pieces, stale April
     // snapshots, duplicates); each 301s to the page that now carries its subject.
     // Decision table: /workspace/memory/knowledge/synlig-content-prune-2026-10.md.
-    if (pathname.startsWith("/blogg/")) {
-      let slug = pathname.slice(7);
+    if (pathname.startsWith("/blogg/") || pathname.startsWith("/en/blog/")) {
+      let slug = pathname.startsWith("/en/") ? "en/" + pathname.slice(9) : pathname.slice(7);
       if (slug.endsWith("/")) slug = slug.slice(0, -1);
       if (slug.endsWith(".html")) slug = slug.slice(0, -5);
       const to = PRUNED_BLOG_301[slug];
