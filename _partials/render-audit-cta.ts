@@ -17,7 +17,7 @@ export type Position = "mid" | "bottom";
 
 const FREE_AUDIT_HEADLINE = "Hvor synlig er din bedrift i AI-søk?";
 const FREE_AUDIT_SUB =
-  "Få gratis AEO-score på 2–5 sekunder. Sjekk om AI-crawlere kan lese nettsiden din, og om Perplexity nevner bedriften din når kunder spør. " +
+  "Få gratis AEO-score på 2–5 sekunder. Sjekk om AI-crawlere kan lese nettsiden din. " +
   `Vil du vite hva ${FREE_MEASUREMENT.engines.join(", ").replace(/, ([^,]*)$/, " og $1")} svarer på kundenes egne spørsmål? <a href="/gratis-maaling?src=blog-audit-box">Bestill en gratis måling</a>.`;
 const FREE_AUDIT_BTN = "Kjør gratis sjekk &rarr;";
 const FREE_AUDIT_TRUST = "Ingen registrering nødvendig. Gratis rapport.";
