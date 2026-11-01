@@ -277,10 +277,12 @@ const files = {
   BLOGG_INSTALLATORINDEKSEN_2026_09_HTML: await applyBlogCta("installatorindeksen-2026-09"),
   BLOGG_INSTALLATORINDEKSEN_2026_10_HTML: await applyBlogCta("installatorindeksen-2026-10"),
   BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML: await applyBlogCta("ai-barometer-solceller-batteri-2026-10"),
+  BLOGG_AI_BAROMETER_OLJE_2026_11_HTML: await applyBlogCta("ai-barometer-olje-gass-stavanger-2026-11"),
   LEADERBOARD_HTML: await Bun.file("/workspace/synlig-site/leaderboard.html").text(),
   LEADERBOARD_JSON: await Bun.file("/workspace/synlig-site/leaderboard.json").text(),
   AEO_BYRA_RAADATA_JSON: await Bun.file("/workspace/synlig-site/data/aeo-byra-norge-raadata-2026-10.json").text(),
   AI_BAROMETER_SOLCELLER_JSON: await Bun.file("/workspace/synlig-site/data/ai-barometer-solceller-batteri-2026-10.json").text(),
+  AI_BAROMETER_OLJE_JSON: await Bun.file("/workspace/synlig-site/data/ai-barometer-olje-gass-stavanger-2026-11.json").text(),
   CONTEXT_MD: await Bun.file("/workspace/synlig-site/context.md").text(),
   PRISER_MD: await Bun.file("/workspace/synlig-site/priser.md").text(),
   // Cloudflare Agent Readiness Score — Level 3+ ("Agent-Readable") well-known endpoints.
@@ -827,6 +829,7 @@ const blogFileMap: Record<string, string> = {
   "installatorindeksen-2026-09.html": files.BLOGG_INSTALLATORINDEKSEN_2026_09_HTML,
   "installatorindeksen-2026-10.html": files.BLOGG_INSTALLATORINDEKSEN_2026_10_HTML,
   "ai-barometer-solceller-batteri-2026-10.html": files.BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML,
+  "ai-barometer-olje-gass-stavanger-2026-11.html": files.BLOGG_AI_BAROMETER_OLJE_2026_11_HTML,
 };
 // Self-check the gate's own vocabulary before trusting it. If a price is
 // renamed in render-audit-cta.ts and LIVE_PRICE_ANCHORS is not updated, every
@@ -1621,6 +1624,41 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
     }
     scanned += enFiles.length;
   }
+  // WORKER-HTML, 2026-11-01 — sixth escape of the scope class. The handlers in
+  // synlig-worker/ are hand-authored TS that render HTML inline, and no gate
+  // above reads them: /audit sold «fra 4 900 NOK» until 10-29, and
+  // /bevis/agent-readiness (the homepage hero's «Verifiser →») still sold
+  // «Synlighetsrapporten 4 900 kr» with an order link to the retired
+  // priser-analyse on the day this was added. Fileset is DISCOVERED (every
+  // *-handler.ts), so a new handler is gated with ratchet 0 by default. Comments
+  // are stripped by Bun's transpiler (they record history; literals ship).
+  // checkout-handler's 3: getProductLabel names for retired Stripe sources —
+  // only reachable by a pre-08-08 session, never by a live checkout.
+  {
+    const W = "/workspace/synlig-worker";
+    const HANDLER_RATCHET: Record<string, number> = { "checkout-handler.ts": 3 };
+    const files = readdirSync(W).filter((f) => /-handler\.ts$/.test(f));
+    if (files.length < 6) {
+      console.error(`\n[BUILD FAIL] dead-tier gate: ${files.length} *-handler.ts in ${W}, floor is 6.`);
+      process.exit(1);
+    }
+    const tx = new Bun.Transpiler({ loader: "ts" });
+    const bad: string[] = [];
+    for (const f of files) {
+      const lines = tx.transformSync(readFileSync(join(W, f), "utf-8")).split("\n");
+      const hits = lines.filter((l) => DEAD_TIER_PATTERNS.some(([re]) => re.test(l)));
+      if (hits.length > (HANDLER_RATCHET[f] ?? 0)) {
+        bad.push(`${f}: ${hits.length} line(s), ratchet ${HANDLER_RATCHET[f] ?? 0}\n      ${hits.map((l) => l.trim().slice(0, 140)).join("\n      ")}`);
+      }
+    }
+    if (bad.length > 0) {
+      console.error(`\n[BUILD FAIL] dead-tier gate (worker-HTML, ${bad.length} handler(s)):`);
+      for (const b of bad) console.error(`  - ${b}`);
+      console.error(`\nPrice from synlig-worker/prices.ts (PRICES_NOK + kr()), never a literal.`);
+      process.exit(1);
+    }
+    scanned += files.length;
+  }
 
   const ratchetLine = Object.entries(ratchetCounts)
     .map(([d, n]) => `${d.split("/").pop()}=${n}`)
@@ -2240,12 +2278,14 @@ const BLOGG_INSTALLATORREGISTERET_HTML = \`${escape(files.BLOGG_INSTALLATORREGIS
 const BLOGG_INSTALLATORINDEKSEN_2026_09_HTML = \`${escape(files.BLOGG_INSTALLATORINDEKSEN_2026_09_HTML)}\`;
 const BLOGG_INSTALLATORINDEKSEN_2026_10_HTML = \`${escape(files.BLOGG_INSTALLATORINDEKSEN_2026_10_HTML)}\`;
 const BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML = \`${escape(files.BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML)}\`;
+const BLOGG_AI_BAROMETER_OLJE_2026_11_HTML = \`${escape(files.BLOGG_AI_BAROMETER_OLJE_2026_11_HTML)}\`;
 
 const LEADERBOARD_HTML = \`${escape(files.LEADERBOARD_HTML)}\`;
 
 const LEADERBOARD_JSON = \`${escape(files.LEADERBOARD_JSON)}\`;
 const AEO_BYRA_RAADATA_JSON = \`${escape(files.AEO_BYRA_RAADATA_JSON)}\`;
 const AI_BAROMETER_SOLCELLER_JSON = \`${escape(files.AI_BAROMETER_SOLCELLER_JSON)}\`;
+const AI_BAROMETER_OLJE_JSON = \`${escape(files.AI_BAROMETER_OLJE_JSON)}\`;
 
 const CONTEXT_MD = \`${escape(files.CONTEXT_MD)}\`;
 
@@ -2374,12 +2414,15 @@ ${verticalRoutes}
   "/blogg/installatorindeksen-2026-10.html": { body: BLOGG_INSTALLATORINDEKSEN_2026_10_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/ai-barometer-solceller-batteri-2026-10": { body: BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/ai-barometer-solceller-batteri-2026-10.html": { body: BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/ai-barometer-olje-gass-stavanger-2026-11": { body: BLOGG_AI_BAROMETER_OLJE_2026_11_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/ai-barometer-olje-gass-stavanger-2026-11.html": { body: BLOGG_AI_BAROMETER_OLJE_2026_11_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard/": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard.html": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard.json": { body: LEADERBOARD_JSON, contentType: "application/json; charset=utf-8" },
   "/data/aeo-byra-norge-raadata-2026-10.json": { body: AEO_BYRA_RAADATA_JSON, contentType: "application/json; charset=utf-8" },
   "/data/ai-barometer-solceller-batteri-2026-10.json": { body: AI_BAROMETER_SOLCELLER_JSON, contentType: "application/json; charset=utf-8" },
+  "/data/ai-barometer-olje-gass-stavanger-2026-11.json": { body: AI_BAROMETER_OLJE_JSON, contentType: "application/json; charset=utf-8" },
   "/context.md": { body: CONTEXT_MD, contentType: "text/markdown; charset=utf-8" },
   "/priser.md": { body: PRISER_MD, contentType: "text/markdown; charset=utf-8" },
   // Agent-readiness well-known endpoints (Cloudflare Agent Readiness Score Level 3+).
