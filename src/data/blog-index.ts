@@ -31,7 +31,7 @@ export const BLOG_INDEX_JSONLD: unknown[] = [
 /** route -> section. Order within a section is the order it shipped in. */
 export const BLOG_INDEX_SECTIONS: ReadonlyArray<{ title: string; routes: readonly string[] }> = [
   { "title": "Målinger", "routes": ["/blogg/ai-barometer-olje-gass-stavanger-2026-11", "/blogg/ai-barometer-solceller-batteri-2026-10", "/blogg/aeo-byra-norge", "/blogg/aeo-i-norge-2026"] },
-  { "title": "Guider", "routes": ["/blogg/hva-er-aeo", "/blogg/slik-blir-du-synlig-i-chatgpt", "/blogg/ga4-ai-assistant-2026", "/blogg/aeo-lite-faqpage-990-kr", "/blogg/ki-vannmerking-norge-artikkel-50"] },
+  { "title": "Guider", "routes": ["/blogg/hva-er-aeo", "/blogg/slik-blir-du-synlig-i-chatgpt", "/blogg/ga4-ai-assistant-2026", "/blogg/aeo-lite-faqpage-990-kr", "/blogg/ki-vannmerking-norge-artikkel-50", "/blogg/slik-velger-du-solcelleinstallator"] },
   { "title": "Installatørregisteret", "routes": ["/blogg/installatorindeksen-2026-10", "/blogg/installatorindeksen-2026-09", "/blogg/installatorregisteret"] },
   { "title": "Case", "routes": ["/case/pierstop", "/case/nordic-lithium", "/analyse/komplett-aeo"] }
 ];

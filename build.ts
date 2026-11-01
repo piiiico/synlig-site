@@ -278,6 +278,7 @@ const files = {
   BLOGG_INSTALLATORINDEKSEN_2026_10_HTML: await applyBlogCta("installatorindeksen-2026-10"),
   BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML: await applyBlogCta("ai-barometer-solceller-batteri-2026-10"),
   BLOGG_AI_BAROMETER_OLJE_2026_11_HTML: await applyBlogCta("ai-barometer-olje-gass-stavanger-2026-11"),
+  BLOGG_SLIK_VELGER_SOLCELLEINSTALLATOR_HTML: await applyBlogCta("slik-velger-du-solcelleinstallator"),
   LEADERBOARD_HTML: await Bun.file("/workspace/synlig-site/leaderboard.html").text(),
   LEADERBOARD_JSON: await Bun.file("/workspace/synlig-site/leaderboard.json").text(),
   AEO_BYRA_RAADATA_JSON: await Bun.file("/workspace/synlig-site/data/aeo-byra-norge-raadata-2026-10.json").text(),
@@ -830,6 +831,7 @@ const blogFileMap: Record<string, string> = {
   "installatorindeksen-2026-10.html": files.BLOGG_INSTALLATORINDEKSEN_2026_10_HTML,
   "ai-barometer-solceller-batteri-2026-10.html": files.BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML,
   "ai-barometer-olje-gass-stavanger-2026-11.html": files.BLOGG_AI_BAROMETER_OLJE_2026_11_HTML,
+  "slik-velger-du-solcelleinstallator.html": files.BLOGG_SLIK_VELGER_SOLCELLEINSTALLATOR_HTML,
 };
 // Self-check the gate's own vocabulary before trusting it. If a price is
 // renamed in render-audit-cta.ts and LIVE_PRICE_ANCHORS is not updated, every
@@ -2279,6 +2281,7 @@ const BLOGG_INSTALLATORINDEKSEN_2026_09_HTML = \`${escape(files.BLOGG_INSTALLATO
 const BLOGG_INSTALLATORINDEKSEN_2026_10_HTML = \`${escape(files.BLOGG_INSTALLATORINDEKSEN_2026_10_HTML)}\`;
 const BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML = \`${escape(files.BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML)}\`;
 const BLOGG_AI_BAROMETER_OLJE_2026_11_HTML = \`${escape(files.BLOGG_AI_BAROMETER_OLJE_2026_11_HTML)}\`;
+const BLOGG_SLIK_VELGER_SOLCELLEINSTALLATOR_HTML = \`${escape(files.BLOGG_SLIK_VELGER_SOLCELLEINSTALLATOR_HTML)}\`;
 
 const LEADERBOARD_HTML = \`${escape(files.LEADERBOARD_HTML)}\`;
 
@@ -2416,6 +2419,8 @@ ${verticalRoutes}
   "/blogg/ai-barometer-solceller-batteri-2026-10.html": { body: BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/ai-barometer-olje-gass-stavanger-2026-11": { body: BLOGG_AI_BAROMETER_OLJE_2026_11_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/ai-barometer-olje-gass-stavanger-2026-11.html": { body: BLOGG_AI_BAROMETER_OLJE_2026_11_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/slik-velger-du-solcelleinstallator": { body: BLOGG_SLIK_VELGER_SOLCELLEINSTALLATOR_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/slik-velger-du-solcelleinstallator.html": { body: BLOGG_SLIK_VELGER_SOLCELLEINSTALLATOR_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard/": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard.html": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
