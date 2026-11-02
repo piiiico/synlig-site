@@ -13,7 +13,7 @@
 
 ## Kva gjer Synlig Digital?
 
-Synlig Digital er Noregs leiande AEO-byrå (Answer Engine Optimization). Vi hjelper norske bedrifter å bli synlege i AI-assistentar som ChatGPT, Perplexity, Google AI Overview og Bing Copilot.
+Synlig Digital er eit AEO-byrå (Answer Engine Optimization) i Stavanger. Vi hjelper norske bedrifter å bli synlege i AI-assistentar som ChatGPT, Perplexity, Google AI Overview og Bing Copilot.
 
 AEO er optimalisering for AI-genererte svar — ikkje berre søkemotorrangeringar. Mange norske bedrifter med god SEO scorar F på AEO fordi dei manglar strukturerte data, klare einingar (kven, kva, kvar) og innhald som direkte svarar på spørsmål.
 
