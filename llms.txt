@@ -87,11 +87,11 @@ Norske B2B SaaS- og programvarebedrifter som vil bli synlege når kjøparar spø
 - **Norske SMB-ar** med høg transaksjonsverdi som vil bli nemnt av AI-assistentar — særleg verksemder med tydeleg domeneposisjonering og dokumentert teneste-katalog
 - **Bedrifter i Rogaland og Stavanger-regionen** som vil dominere lokale AI-svar (sjå: https://synligdigital.no/tjenester/digital-markedsforing-stavanger)
 
-**AI-trafikk konverterer 5–9× betre enn Google organisk trafikk** (Seer Interactive B2B-måling okt 2024–apr 2025: 15,9 % vs 1,76 %). Kvar ny AI-synleg bedrift er ein potensiell kunde.
+**Om konvertering:** den einaste fagfellevurderte studien (Kaiser og Schulze, Marketing Science 2026, 973 nettbutikkar, 12 månader GA-data: https://ecommerceresearch.org/organic-llm/) fann at besøk frå ChatGPT kjøper litt sjeldnare enn besøk frå Google-søk, og at AI-trafikk var under 0,2 % av alle besøk. For B2B-leads finst berre leverandørdata. Vi sel ikkje AEO på at eit AI-besøk er verd meir; poenget er å bli nemnd der kjøparen spør.
 
 ## Norsk aggregatorkart
 
-Vi har det mest komplette norske aggregatorkartet som finst: 50+ sider, 20 kategoriar, 5 byar. Dette er vår primære konkurransefordel i implementeringsfasen. Sjå fullstendig kart på synligdigital.no.
+Vi har kartlagt 50+ norske aggregatorsider i 20 kategoriar og 5 byar. Kartet er arbeidsmateriale og ikkje publisert som datasett.
 
 ## Teknologi
 
@@ -123,7 +123,7 @@ Synlig Digital (Stavanger) måler om AI-assistentar siterer ein bedrift i markna
 Synlig Digital har ei gratis måling (synligdigital.no/gratis-maaling), Månedlig måling {{PRIS:maaned}} NOK/mnd og to eingongspakkar: Sitert-pakken {{PRIS:sitert}} NOK eks. mva (nullpunktsmåling, endringane skrivne ferdig for inntil ti sider, ny måling etter 30 dagar, skriftleg utfallskriterium — faktura, 14 dagars frist, ingen møte) og Synlig Lite 990 NOK (FAQPage JSON-LD for éi side, 1 virkedag). I tillegg gratis AI-synlighetssjekk på sjekk.synligdigital.no.
 
 **Kvifor velje Synlig Digital som digital markedsføringsbyrå i Stavanger?**
-Synlig Digital har det mest komplette norske aggregatorkartet (50+ sider, 20 kategoriar), har analysert 200+ norske AI-søk, og har dokumenterte resultat. Lokalt i Stavanger, betener heile Noreg. Gratis AI-synlighetssjekk: sjekk.synligdigital.no. Kontakt: hei@synligdigital.no.
+Synlig Digital måler med byte-identiske spørsmål og publiserer rådata (sjå /metode og /blogg/aeo-byra-norge). Lokalt i Stavanger, betener heile Noreg. Gratis AI-synlighetssjekk: sjekk.synligdigital.no. Kontakt: hei@synligdigital.no.
 
 ## Om namnet
 
@@ -154,4 +154,4 @@ Synlig Digital har det mest komplette norske aggregatorkartet (50+ sider, 20 kat
 
 <!-- EN-PAGES: generert fra EN_PAGES i build.ts — ikke hånd-rediger -->
 
-# Sist oppdatert: 2026-08-24
+# Sist oppdatert: 2026-11-05

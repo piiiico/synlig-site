@@ -272,7 +272,7 @@ const faqPage = {
       name: "Hvilke bedrifter har mest å vinne på AEO?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "To segmenter primært. (1) Norske B2B SaaS — regnskaps-SaaS, HR-SaaS, fintech, marketing-SaaS — direkte. AI-assistenter er det første kjøparen spør når de vurderer ny SaaS ('beste norske regnskaps-SaaS for byrå'), og hos én Seer Interactive-klient konverterte ChatGPT-trafikk 9× bedre enn Google organisk (15,9% vs 1,76%, Seer 2025, ett datasett). (2) Merkevareportefølje og e-handel — sportsutstyr, lifestyle, retail — typisk levert via byråpartnerar med 70/30 co-delivery-split. Felles for begge: snittscore er 43–55 av 100 på AI-synlighet og maskinlesbare signal (schema.org, FAQPage, alternative-to- eller Product-data, llms.txt) manglar hos 80%+ av bedriftene vi har skannet.",
+        text: "To segmenter primært. (1) Norske B2B SaaS — regnskaps-SaaS, HR-SaaS, fintech, marketing-SaaS — direkte. AI-assistenter er det første kjøparen spør når de vurderer ny SaaS ('beste norske regnskaps-SaaS for byrå'), og svaret nevner to-tre navn. (2) Merkevareportefølje og e-handel — sportsutstyr, lifestyle, retail — typisk levert via byråpartnerar med 70/30 co-delivery-split. Felles for begge: snittscore er 43–55 av 100 på AI-synlighet og maskinlesbare signal (schema.org, FAQPage, alternative-to- eller Product-data, llms.txt) manglar hos 80%+ av bedriftene vi har skannet.",
       },
     },
     {
