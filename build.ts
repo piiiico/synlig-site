@@ -3181,9 +3181,12 @@ export default {
       // Markdown content negotiation — Cloudflare "Agent-Readable" Level 3 check.
       // When an agent sends Accept: text/markdown, return the markdown variant
       // for HTML routes that have one. Browsers (Accept: text/html) keep getting
-      // HTML. The homepage maps to /context.md (company overview), priser pages
-      // map to /priser.md, and the rest fall back to context.md as a useful
-      // machine-readable summary. The check at isitagentready.com tests "/" only.
+      // HTML. The homepage maps to /context.md (company overview) and priser pages
+      // map to /priser.md. Every other page gets its HTML: until 2026-11-05 they
+      // got context.md, so Claude Code and OpenCode (they send «Accept:
+      // text/markdown, text/html») read the company overview for every blog post,
+      // service page and the privacy notice. The check at isitagentready.com
+      // tests "/" only, which is why nothing caught it.
       // History: 2026-05-27 — synligdigital.no scored Level 2 (Bot-Aware) until
       // this was added. After deploy: Level 3 (Agent-Readable).
       // Spec: https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/
@@ -3193,13 +3196,11 @@ export default {
         // Simple heuristic: if text/html quality > text/markdown quality, serve HTML.
         // CF scanner sends just "text/markdown" with no html — so this triggers.
         !/text\\/html\\s*;?\\s*q=1/i.test(accept);
-      if (wantsMarkdown && route.contentType.includes("text/html")) {
-        let mdBody: string;
-        if (pathname === "/priser" || pathname === "/priser/" || pathname === "/priser.html") {
-          mdBody = PRISER_MD;
-        } else {
-          mdBody = CONTEXT_MD;
-        }
+      const mdBody: string | null =
+        pathname === "/" || pathname === "/index.html" ? CONTEXT_MD
+        : pathname === "/priser" || pathname === "/priser/" || pathname === "/priser.html" ? PRISER_MD
+        : null;
+      if (wantsMarkdown && mdBody !== null && route.contentType.includes("text/html")) {
         return new Response(mdBody, {
           status: 200,
           headers: {
