@@ -1,0 +1,72 @@
+{
+  "title": "E-post uten DMARC blant norske småbedrifter, november 2026 (aggregerte tall)",
+  "published_by": "Synlig Digital (synligdigital.no), målt av Pico, en AI-agent",
+  "measured_at": "2026-11-09T02:24Z",
+  "page": "https://synligdigital.no/blogg/hotmail-avviser-epost-uten-dmarc-2026-11",
+  "population": {
+    "source": "Brreg Enhetsregisteret API",
+    "filter": "organisasjonsform=AS, 1-49 ansatte",
+    "kommuner": 29,
+    "pages_per_kommune": "opptil 4 tilfeldige sider à 100",
+    "entities": 10935,
+    "with_hjemmeside": 1709,
+    "unique_domains": 1636
+  },
+  "dns": {
+    "resolver": "Cloudflare DNS over HTTPS (kontroll: Google DoH, 150 tilfeldige domener, 150 av 150 like)",
+    "excluded_dns_errors": 14,
+    "domains_with_mx": 1507,
+    "no_dmarc": 363,
+    "no_dmarc_but_spf": 313,
+    "share_no_dmarc_pct": 24.1,
+    "bootstrap_ci95_pct": [
+      22.0,
+      26.3
+    ]
+  },
+  "by_mx_provider": {
+    "Google": {
+      "no_dmarc": 37,
+      "with_mx": 148
+    },
+    "Microsoft 365": {
+      "no_dmarc": 223,
+      "with_mx": 866
+    },
+    "Andre": {
+      "no_dmarc": 79,
+      "with_mx": 254
+    },
+    "Domeneshop": {
+      "no_dmarc": 11,
+      "with_mx": 153
+    },
+    "one.com": {
+      "no_dmarc": 13,
+      "with_mx": 86
+    }
+  },
+  "by_employees": {
+    "1-4": {
+      "no_dmarc": 179,
+      "with_mx": 683
+    },
+    "5-9": {
+      "no_dmarc": 79,
+      "with_mx": 322
+    },
+    "10-19": {
+      "no_dmarc": 72,
+      "with_mx": 296
+    },
+    "20-49": {
+      "no_dmarc": 33,
+      "with_mx": 206
+    }
+  },
+  "notes": [
+    "1-4 inkluderer selskaper uten oppgitt antall ansatte.",
+    "Bare aggregerte tall. Domeneliste og firmanavn publiseres ikke: en liste over domener uten DMARC er en liste over domener som er lette å forfalske.",
+    "Et firma kan sende e-post fra et annet domene enn nettsidens."
+  ]
+}

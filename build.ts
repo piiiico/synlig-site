@@ -278,12 +278,14 @@ const files = {
   BLOGG_INSTALLATORINDEKSEN_2026_10_HTML: await applyBlogCta("installatorindeksen-2026-10"),
   BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML: await applyBlogCta("ai-barometer-solceller-batteri-2026-10"),
   BLOGG_AI_BAROMETER_OLJE_2026_11_HTML: await applyBlogCta("ai-barometer-olje-gass-stavanger-2026-11"),
+  BLOGG_DMARC_HOTMAIL_2026_11_HTML: await applyBlogCta("hotmail-avviser-epost-uten-dmarc-2026-11"),
   BLOGG_SLIK_VELGER_SOLCELLEINSTALLATOR_HTML: await applyBlogCta("slik-velger-du-solcelleinstallator"),
   LEADERBOARD_HTML: await Bun.file("/workspace/synlig-site/leaderboard.html").text(),
   LEADERBOARD_JSON: await Bun.file("/workspace/synlig-site/leaderboard.json").text(),
   AEO_BYRA_RAADATA_JSON: await Bun.file("/workspace/synlig-site/data/aeo-byra-norge-raadata-2026-10.json").text(),
   AI_BAROMETER_SOLCELLER_JSON: await Bun.file("/workspace/synlig-site/data/ai-barometer-solceller-batteri-2026-10.json").text(),
   AI_BAROMETER_OLJE_JSON: await Bun.file("/workspace/synlig-site/data/ai-barometer-olje-gass-stavanger-2026-11.json").text(),
+  EPOST_DMARC_SMB_JSON: await Bun.file("/workspace/synlig-site/data/epost-dmarc-smb-2026-11.json").text(),
   CONTEXT_MD: await Bun.file("/workspace/synlig-site/context.md").text(),
   PRISER_MD: await Bun.file("/workspace/synlig-site/priser.md").text(),
   // Cloudflare Agent Readiness Score — Level 3+ ("Agent-Readable") well-known endpoints.
@@ -831,6 +833,7 @@ const blogFileMap: Record<string, string> = {
   "installatorindeksen-2026-10.html": files.BLOGG_INSTALLATORINDEKSEN_2026_10_HTML,
   "ai-barometer-solceller-batteri-2026-10.html": files.BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML,
   "ai-barometer-olje-gass-stavanger-2026-11.html": files.BLOGG_AI_BAROMETER_OLJE_2026_11_HTML,
+  "hotmail-avviser-epost-uten-dmarc-2026-11.html": files.BLOGG_DMARC_HOTMAIL_2026_11_HTML,
   "slik-velger-du-solcelleinstallator.html": files.BLOGG_SLIK_VELGER_SOLCELLEINSTALLATOR_HTML,
 };
 // Self-check the gate's own vocabulary before trusting it. If a price is
@@ -2281,6 +2284,7 @@ const BLOGG_INSTALLATORINDEKSEN_2026_09_HTML = \`${escape(files.BLOGG_INSTALLATO
 const BLOGG_INSTALLATORINDEKSEN_2026_10_HTML = \`${escape(files.BLOGG_INSTALLATORINDEKSEN_2026_10_HTML)}\`;
 const BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML = \`${escape(files.BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML)}\`;
 const BLOGG_AI_BAROMETER_OLJE_2026_11_HTML = \`${escape(files.BLOGG_AI_BAROMETER_OLJE_2026_11_HTML)}\`;
+const BLOGG_DMARC_HOTMAIL_2026_11_HTML = \`${escape(files.BLOGG_DMARC_HOTMAIL_2026_11_HTML)}\`;
 const BLOGG_SLIK_VELGER_SOLCELLEINSTALLATOR_HTML = \`${escape(files.BLOGG_SLIK_VELGER_SOLCELLEINSTALLATOR_HTML)}\`;
 
 const LEADERBOARD_HTML = \`${escape(files.LEADERBOARD_HTML)}\`;
@@ -2289,6 +2293,7 @@ const LEADERBOARD_JSON = \`${escape(files.LEADERBOARD_JSON)}\`;
 const AEO_BYRA_RAADATA_JSON = \`${escape(files.AEO_BYRA_RAADATA_JSON)}\`;
 const AI_BAROMETER_SOLCELLER_JSON = \`${escape(files.AI_BAROMETER_SOLCELLER_JSON)}\`;
 const AI_BAROMETER_OLJE_JSON = \`${escape(files.AI_BAROMETER_OLJE_JSON)}\`;
+const EPOST_DMARC_SMB_JSON = \`${escape(files.EPOST_DMARC_SMB_JSON)}\`;
 
 const CONTEXT_MD = \`${escape(files.CONTEXT_MD)}\`;
 
@@ -2323,6 +2328,8 @@ const SECURITY_HEADERS = {
   "Referrer-Policy": "strict-origin-when-cross-origin",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
   "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+  // connect-src also allows cloudflare-dns.com: the DMARC checker on
+  // /blogg/hotmail-avviser-epost-uten-dmarc-2026-11 queries DoH from the browser (2026-11-09).
   // connect-src includes poc-backend.amdal-dev.workers.dev so the first-party
   // visit beacon (POST /api/v1/visit, injected site-wide by build.ts) is
   // actually able to reach the backend. Without it, the beacon JS runs but
@@ -2330,7 +2337,7 @@ const SECURITY_HEADERS = {
   // "operator can't diagnose what they can't see" failure that the CF Web
   // Analytics replacement was supposed to end. (Caught 2026-06-10 13:30Z
   // during dogfood verification after initial deploy.)
-  "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://poc-backend.amdal-dev.workers.dev; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:",
+  "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://poc-backend.amdal-dev.workers.dev https://cloudflare-dns.com; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:",
 };
 
 const CACHE_HEADERS = {
@@ -2419,6 +2426,8 @@ ${verticalRoutes}
   "/blogg/ai-barometer-solceller-batteri-2026-10.html": { body: BLOGG_AI_BAROMETER_SOLCELLER_2026_10_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/ai-barometer-olje-gass-stavanger-2026-11": { body: BLOGG_AI_BAROMETER_OLJE_2026_11_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/ai-barometer-olje-gass-stavanger-2026-11.html": { body: BLOGG_AI_BAROMETER_OLJE_2026_11_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/hotmail-avviser-epost-uten-dmarc-2026-11": { body: BLOGG_DMARC_HOTMAIL_2026_11_HTML, contentType: "text/html; charset=utf-8" },
+  "/blogg/hotmail-avviser-epost-uten-dmarc-2026-11.html": { body: BLOGG_DMARC_HOTMAIL_2026_11_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/slik-velger-du-solcelleinstallator": { body: BLOGG_SLIK_VELGER_SOLCELLEINSTALLATOR_HTML, contentType: "text/html; charset=utf-8" },
   "/blogg/slik-velger-du-solcelleinstallator.html": { body: BLOGG_SLIK_VELGER_SOLCELLEINSTALLATOR_HTML, contentType: "text/html; charset=utf-8" },
   "/leaderboard": { body: LEADERBOARD_HTML, contentType: "text/html; charset=utf-8" },
@@ -2428,6 +2437,7 @@ ${verticalRoutes}
   "/data/aeo-byra-norge-raadata-2026-10.json": { body: AEO_BYRA_RAADATA_JSON, contentType: "application/json; charset=utf-8" },
   "/data/ai-barometer-solceller-batteri-2026-10.json": { body: AI_BAROMETER_SOLCELLER_JSON, contentType: "application/json; charset=utf-8" },
   "/data/ai-barometer-olje-gass-stavanger-2026-11.json": { body: AI_BAROMETER_OLJE_JSON, contentType: "application/json; charset=utf-8" },
+  "/data/epost-dmarc-smb-2026-11.json": { body: EPOST_DMARC_SMB_JSON, contentType: "application/json; charset=utf-8" },
   "/context.md": { body: CONTEXT_MD, contentType: "text/markdown; charset=utf-8" },
   "/priser.md": { body: PRISER_MD, contentType: "text/markdown; charset=utf-8" },
   // Agent-readiness well-known endpoints (Cloudflare Agent Readiness Score Level 3+).
