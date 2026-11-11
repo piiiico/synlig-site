@@ -1,0 +1,43 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://synligdigital.no",
+      "service-desc": [
+        {
+          "href": "https://synligdigital.no/.well-known/agent-card.json",
+          "type": "application/json",
+          "title": "A2A Agent Card — Synlig AEO Service"
+        },
+        {
+          "href": "https://synligdigital.no/.well-known/mcp.json",
+          "type": "application/json",
+          "title": "MCP Server Card — AEO Audit"
+        },
+        {
+          "href": "https://synligdigital.no/.well-known/agent-skills/index.json",
+          "type": "application/json",
+          "title": "Agent Skills Index — Synlig Digital"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://synligdigital.no/context.md",
+          "type": "text/markdown",
+          "title": "Selskapsoversikt (markdown)"
+        },
+        {
+          "href": "https://synligdigital.no/priser.md",
+          "type": "text/markdown",
+          "title": "Prisar (markdown)"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://synligdigital.no/audit",
+          "rel": "https://synligdigital.no/rel/aeo-audit",
+          "title": "Free AEO audit endpoint — GET ?url=<website>&format=json (add &lang=en for an English HTML report)"
+        }
+      ]
+    }
+  ]
+}

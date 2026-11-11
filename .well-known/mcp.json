@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "no.synligdigital/aeo-audit",
+  "title": "AEO Audit",
+  "description": "AEO (Answer Engine Optimization) audit server by Synlig Digital. Audits any website for AI visibility in ChatGPT, Claude, Perplexity, and Google AI Overview. Returns a 0-100 score, grade A-F, and prioritized recommendations. Free, no signup.",
+  "repository": {
+    "url": "https://github.com/piiiico/aeo-mcp-server",
+    "source": "github"
+  },
+  "version": "1.0.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://synligdigital.no/mcp"
+    },
+    {
+      "type": "streamable-http",
+      "url": "https://aeo-mcp-server.amdal-dev.workers.dev/mcp"
+    }
+  ],
+  "provider": {
+    "organization": "Synlig Digital",
+    "url": "https://synligdigital.no",
+    "email": "hei@synligdigital.no"
+  }
+}
