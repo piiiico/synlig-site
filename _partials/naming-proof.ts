@@ -88,8 +88,14 @@ if (!(gemini.mementor > gemini.us && claude.mementor > claude.us)) {
 const mem = gemini.mementor === claude.mementor
   ? `${gemini.mementor} av ${gemini.total} hos begge`
   : `${gemini.mementor} og ${claude.mementor} av ${gemini.total}`;
+// 2026-11-16: GPT målt på nytt (samme 7 spørsmål × 3, kun GPT — budsjett). Siste
+// måling leder; den eldre står ved siden av så fallet er synlig, ikke gjemt.
+const GPT_NEW: Array<{ text: string; error?: string }> =
+  JSON.parse(readFileSync(join(SITE_DIR, "data/engine-panel-gpt-2026-11-16.json"), "utf-8")).filter((r: any) => !r.error);
+if (GPT_NEW.length < 21) throw new Error(`GPT-ommåling: ${GPT_NEW.length}/21 svar`);
+const gptNew = GPT_NEW.filter((r) => /\bSynlig\s+Digital\b/i.test(r.text)).length;
 export const ENGINE_HEADLINE =
-  `${gpt.name} navngir Synlig Digital i ${gpt.us} av ${gpt.total} svar, ${claude.name} i ${claude.us} og ${gemini.name} i ${gemini.us}. ` +
+  `${gpt.name} navngir Synlig Digital i ${gptNew} av ${GPT_NEW.length} svar 16. november (${gpt.us} av ${gpt.total} den 27. oktober), ${claude.name} i ${claude.us} og ${gemini.name} i ${gemini.us} av ${gemini.total} (27. oktober). ` +
   `Hos ${gemini.name} og ${claude.name} er Mementor nevnt oftere enn oss (${mem}).`;
 /** Per spørsmål: hvor mange av tre kjøringer hver motor navnga oss. */
 export const ENGINE_ROWS = [...new Set(PANEL_ROWS.map((r) => r.q))].map((q) => ({

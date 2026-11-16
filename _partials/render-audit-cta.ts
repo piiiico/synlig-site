@@ -62,7 +62,7 @@ function auditForm(slug: string, suffix: string): string {
 
 // Proof line: motorpanelet fra _partials/naming-proof.ts (tallene og forbeholdet
 // interpoleres, kan ikke gafle seg). Perplexity-raden er historisk siden 2026-10-27.
-const ENGINE_PROOF = `<p class="audit-cta__proof-line">${ENGINE_HEADLINE} (${ENGINE_PANEL.measuredAt}: ${ENGINE_CAVEAT.charAt(0).toLowerCase()}${ENGINE_CAVEAT.slice(1, -1)}). <a href="https://synligdigital.no${NAMING_PROOF.docPath}" class="audit-cta__proof-link">Se dokumentasjon →</a></p>`;
+const ENGINE_PROOF = `<p class="audit-cta__proof-line">${ENGINE_HEADLINE} (${ENGINE_CAVEAT.charAt(0).toLowerCase()}${ENGINE_CAVEAT.slice(1, -1)}). <a href="https://synligdigital.no${NAMING_PROOF.docPath}" class="audit-cta__proof-link">Se dokumentasjon →</a></p>`;
 
 // Dual-tier secondary block (awareness + consideration stages).
 //
