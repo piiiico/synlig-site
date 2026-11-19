@@ -3047,7 +3047,7 @@ export default {
     // Retired 2026-11-19: the Nordic Lithium case carried stale claims (Squarespace,
     // elbil-tilbehør, «usynlig for Perplexity», own-score 67/C→90/A headline) and no
     // held engine delta (memory/knowledge/elling-pact/verdict.md). Both twins 301.
-    if (/^\/(en\/)?case\/nordic-lithium(\/|\.html)?$/.test(pathname)) {
+    if (["/case/nordic-lithium", "/case/nordic-lithium/", "/case/nordic-lithium.html", "/en/case/nordic-lithium", "/en/case/nordic-lithium/", "/en/case/nordic-lithium.html"].includes(pathname)) {
       return new Response(null, {
         status: 301,
         headers: { "Location": "https://synligdigital.no" + (pathname.startsWith("/en/") ? "/en/" : "/metode") + url.search, "Cache-Control": "public, max-age=86400" },
