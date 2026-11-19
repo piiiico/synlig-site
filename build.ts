@@ -154,34 +154,14 @@ async function applyBlogCta(slug: string): Promise<string> {
 // are auto-derived. Root cause: 2026-05-20 CF 10021 on aeo-for-tannleger —
 // const decl was the silent 5th place, caught only by post-deploy live-route gate.
 //
-// `deprecated: true` opts out of the sitemap-consistency gate (page stays
-// live + routed for residual organic/direct traffic, but is NOT promoted via
-// sitemap.xml — Google de-indexes as it re-crawls). Authoritative source for
-// the deprecated set: /workspace/bin/check-vertical.ts DEPRECATED_VERTICAL_KEYWORDS.
-// Added 2026-05-23 as part of the agent-facing-positioning sweep
-// (llms.txt + context.md + sitemap.xml) — 0/309 conversion across Feb–Apr 2026
-// was a concluded experiment, not an open hypothesis.
+// RETIRED_VERTICALS: the seven micro-SMB verticals (0/309 Feb–Apr 2026, 0 Norwegian
+// human visits 11-12→18) carried unsupported AEO claims; since 2026-11-19 they 301
+// to /tjenester/aeo. Still listed in the sitemap-parity gate as must-NOT-be-listed.
 // ─────────────────────────────────────────────────────────────────────────────
-const VERTICAL_LANDINGS: Array<{ slug: string; file: string; sitemapPriority: number; deprecated?: boolean }> = [
-  { slug: 'aeo-for-advokater',         file: 'tjenester/aeo-for-advokater.html',         sitemapPriority: 0.9, deprecated: true },
+const VERTICAL_LANDINGS: Array<{ slug: string; file: string; sitemapPriority: number }> = [
   { slug: 'aeo-for-saas-bedrifter',    file: 'tjenester/aeo-for-saas-bedrifter.html',    sitemapPriority: 0.9 },
-  { slug: 'aeo-for-tannleger',         file: 'tjenester/aeo-for-tannleger.html',         sitemapPriority: 0.9, deprecated: true },
-  { slug: 'aeo-for-eiendomsmeglere',   file: 'tjenester/aeo-for-eiendomsmeglere.html',   sitemapPriority: 0.9, deprecated: true },
-  { slug: 'aeo-for-regnskap',          file: 'tjenester/aeo-for-regnskap.html',          sitemapPriority: 0.9, deprecated: true },
-  { slug: 'aeo-for-kiropraktor',       file: 'tjenester/aeo-for-kiropraktor.html',       sitemapPriority: 0.9, deprecated: true },
-  // Added 2026-06-06: psykolog vertical to back active outreach pipeline
-  // (Stavanger Psykologhus E1 2026-06-02, Dialog Psykologsenter E1 2026-06-02,
-  // E2s scheduled 2026-06-09). deprecated: true follows the verticals-are-
-  // poor-organic-converters finding (0/309 Feb–Apr 2026) — page is routed for
-  // inbound outreach replies but NOT sitemap-promoted.
-  { slug: 'aeo-for-psykolog',          file: 'tjenester/aeo-for-psykolog.html',          sitemapPriority: 0.9, deprecated: true },
-  // Added 2026-06-06: tanntekniker vertical for imminent E2s
-  // (Din Tanntekniker AS E1 2026-06-02 score 56, E2 scheduled 2026-06-08 08:00;
-  // Nano Tannteknikk E1 2026-06-02 score 42, E2 scheduled 2026-06-09 08:00).
-  // deprecated: true same pattern — page routes for outreach reply destination,
-  // not for organic search promotion.
-  { slug: 'aeo-for-tanntekniker',      file: 'tjenester/aeo-for-tanntekniker.html',      sitemapPriority: 0.9, deprecated: true },
 ];
+const RETIRED_VERTICALS = ['advokater', 'tannleger', 'eiendomsmeglere', 'regnskap', 'kiropraktor', 'psykolog', 'tanntekniker'].map(v => `aeo-for-${v}`);
 
 // Derive worker constant name from slug: aeo-for-advokater -> TJENESTER_AEO_FOR_ADVOKATER_HTML
 function verticalConstName(slug: string): string {
@@ -324,7 +304,7 @@ for (const k of Object.keys(verticalFiles)) verticalFiles[k] = fillPriceTokens(v
       n++;
     }
   }
-  if (n < 23) { console.error(`[BUILD FAIL] site chrome: only ${n} static pages carry <!--SITE-LOGO--> (floor 23; 27 before the EN prune 10-31)`); process.exit(1); }
+  if (n < 16) { console.error(`[BUILD FAIL] site chrome: only ${n} static pages carry <!--SITE-LOGO--> (floor 16 after 7 verticals retired 11-19)`); process.exit(1); }
   console.log(`  ✅ Site chrome: ${TOKEN_COUNT} tokens + 1 logo injected into ${n} static pages.`);
 }
 
@@ -779,17 +759,16 @@ console.log(`[build] EN_PAGES: ${EN_PAGES.length} sider → llms.txt-seksjon (${
 }
 
 // Sitemap-paritet for verticals — begge veier: en aktiv slug MÅ stå der, en
-// deprecated slug må IKKE (de holdes live for resttrafikk, ikke for søk).
+// pensjonert slug (RETIRED_VERTICALS, 301) må IKKE.
 // Delt implementasjon: _partials/sitemap-parity.ts (samme port som blogg og EN).
 {
   const v = sitemapParity({
     label: "VERTICAL_LANDINGS",
     sitemap: files.SITEMAP_XML,
-    entries: VERTICAL_LANDINGS.map(x => ({
-      url: `https://synligdigital.no/tjenester/${x.slug}`,
-      listed: !x.deprecated,
-      name: x.slug,
-    })),
+    entries: [
+      ...VERTICAL_LANDINGS.map(x => ({ url: `https://synligdigital.no/tjenester/${x.slug}`, listed: true, name: x.slug })),
+      ...RETIRED_VERTICALS.map(slug => ({ url: `https://synligdigital.no/tjenester/${slug}`, listed: false, name: slug })),
+    ],
     minEntries: 8,
   });
   if (v.length > 0) {
@@ -1202,11 +1181,7 @@ const TIER_SURFACE_REGISTRY: Record<string, TierSurface> = {
       "/workspace/synlig-site/dist/case/nordic-lithium/index.html",
       "/workspace/synlig-site/dist/case/pierstop/index.html",
       "/workspace/synlig-site/en-case-nordic-lithium.html",
-      "/workspace/synlig-site/tjenester/aeo-for-tannleger.html",
       "/workspace/synlig-site/tjenester/aeo-for-saas-bedrifter.html",
-      "/workspace/synlig-site/tjenester/aeo-for-eiendomsmeglere.html",
-      "/workspace/synlig-site/tjenester/aeo-for-regnskap.html",
-      "/workspace/synlig-site/tjenester/aeo-for-kiropraktor.html",
       // /audit report is generated by report-html.ts; tier surfaces inlined
       // at request time. Covered by audit-self-audit-cta.test.ts contract tests,
       // not by static file scan.
@@ -1433,7 +1408,7 @@ if (!process.env.BUILD_GATE_NEGATIVE_TEST) {
     "/workspace/synlig-site": 11, // EN prune 2026-10-31: 15 → 11
     "/workspace/synlig-site/src/content/blogg": 10, // prune 2026-10-28: 40 → 10
     "/workspace/synlig-site/src/content/case": 3,
-    "/workspace/synlig-site/tjenester": 11,
+    "/workspace/synlig-site/tjenester": 4, // 7 verticals retired 2026-11-19: 11 → 4
     "/workspace/synlig-site/rapport": 7,
     // 193 reports exist today; floor at 180 leaves room for deliberate pruning
     // while still failing loudly if the dir is emptied or the path rots.
@@ -3078,6 +3053,18 @@ export default {
         return new Response(null, {
           status: 301,
           headers: { "Location": "https://synligdigital.no" + to + url.search, "Cache-Control": "public, max-age=86400" },
+        });
+      }
+    }
+    // Retired verticals (2026-11-19): see RETIRED_VERTICALS in build.ts.
+    if (pathname.startsWith("/tjenester/aeo-for-")) {
+      let slug = pathname.slice(11);
+      if (slug.endsWith("/")) slug = slug.slice(0, -1);
+      if (slug.endsWith(".html")) slug = slug.slice(0, -5);
+      if (${JSON.stringify(RETIRED_VERTICALS)}.includes(slug)) {
+        return new Response(null, {
+          status: 301,
+          headers: { "Location": "https://synligdigital.no/tjenester/aeo" + url.search, "Cache-Control": "public, max-age=86400" },
         });
       }
     }
