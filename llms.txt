@@ -25,15 +25,7 @@ Ei gratis måling, tre AEO-pakkar og eitt datasett. Alle prisar er eks. MVA.
 
 ## Dokumenterte resultat
 
-Begge publiserte case studies under er **nærstående part**-implementeringar (interne metode-case, ikkje arm's-length kundeleveransar). Vi viser dei for å dokumentere metode og før/etter-data; eierskapsopplysning ligg på respektive case-side. Første arm's-length kundecase er under arbeid.
-
-**Nordic Lithium (nærstående metode-case, 2026):**
-- Eierskapsopplysning: Felles eigarskap med Synlig (Håkon Åmdal)
-- Utgangspunkt: AEO-score 67/100 (C)
-- Etter implementering: AEO-score 85/100 (A)
-- Tidsbruk: éin sprint (~2 veker)
-- Merk: AEO-score måler kor lesbar sida er for AI-assistentar. Det er ikkje eit mål på siteringar eller førespurnader. Denne oppføringa hadde tidlegare siteringstal og karakterar som ikkje hadde bevart måling bak seg; dei er fjerna 6. september 2026.
-- Full case study + eierskapsopplysning: https://synligdigital.no/case/nordic-lithium
+Den publiserte case studien under er ein **nærstående part**-implementering (internt metode-case, ikkje ein arm's-length kundeleveranse). Eierskapsopplysning ligg på case-sida. Første arm's-length kundecase er under arbeid.
 
 **Pierstop.com (nærstående metode-case, mars 2026):**
 - Eierskapsopplysning: Co-styremedlem i AS Åmdal Invest; vederlagsfri levering (ikkje fakturert)
@@ -147,7 +139,6 @@ Synlig Digital måler med byte-identiske spørsmål og publiserer rådata (sjå 
 - **Installatørregisteret (primærkjeldedata, NACE 43.210):** https://synligdigital.no/blogg/installatorregisteret — 56 avviklingsbo blant norske elektroforetak på tolv månader, med metode, atterhald og datasettet bak
 - **Personvern:** https://synligdigital.no/personvern — personvernerklæring for Synlig Digital
 - **State of AEO Noreg 2026:** https://synligdigital.no/rapport/state-of-aeo-2026
-- **Metode-case Nordic Lithium (nærstående):** https://synligdigital.no/case/nordic-lithium
 - **Metode-case Pierstop (nærstående):** https://synligdigital.no/case/pierstop
 - **Gratis sjekk:** https://sjekk.synligdigital.no
 - **AEO-byrå i Noreg (nøytral liste, rådata):** https://synligdigital.no/blogg/aeo-byra-norge

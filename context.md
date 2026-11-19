@@ -42,13 +42,7 @@ Full prisinformasjon: https://synligdigital.no/priser.md
 
 ## Dokumenterte resultat
 
-Begge publiserte case studies under er **nærstående part**-implementeringar (interne metode-case, ikkje arm's-length kundeleveransar). Eierskapsopplysning ligg på respektive case-side. Første arm's-length kundecase er under arbeid.
-
-**Nordic Lithium (nærstående metode-case, 2026):**
-- Eierskapsopplysning: Felles eigarskap med Synlig (Håkon Åmdal)
-- AEO-score frå 67/100 (C) til 85/100 (A)
-- Merk: AEO-score måler kor lesbar sida er for AI-assistentar, ikkje siteringar eller førespurnader. Oppføringa hadde tidlegare siteringstal og karakterar utan bevart måling bak seg; dei er fjerna 6. september 2026.
-- Full case study + eierskapsopplysning: https://synligdigital.no/case/nordic-lithium
+Den publiserte case studien under er ein **nærstående part**-implementering (internt metode-case, ikkje ein arm's-length kundeleveranse). Eierskapsopplysning ligg på case-sida. Første arm's-length kundecase er under arbeid.
 
 **Pierstop.com (nærstående metode-case, 2026):**
 - Eierskapsopplysning: Co-styremedlem AS Åmdal Invest; vederlagsfri levering

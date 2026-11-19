@@ -280,7 +280,7 @@ const faqPage = {
       name: "Har Synlig Digital dokumenterte resultater?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Ja, dokumentert som metode-case. Nordic Lithium gikk fra AEO-score 67/C til 85/A på to uker etter implementering av schema.org, Google Business Profile og fjerning av AI-crawler-blokkering — uten plattformbytte. Pierstop gikk fra 52/D til 76/B på samme prosess. Begge er nærstående part (Nordic Lithium: felles eierskap; Pierstop: co-styremedlem i AS Åmdal Invest, vederlagsfri levering) — dokumentert med metode og før/etter på /case/nordic-lithium og /case/pierstop, ikke arm's-length kundereferanser. Første arm's-length kundecase er under arbeid.",
+        text: "Ett metode-case: Pierstop gikk fra AEO-score 52/D til 76/B etter en schema.org-sprint. Det er nærstående part (co-styremedlem i AS Åmdal Invest, vederlagsfri levering) og dokumentert på /case/pierstop, ikke en arm's-length kundereferanse. AEO-score måler hvor lesbar siden er for AI-assistenter, ikke om den blir sitert. Første arm's-length kundecase er under arbeid.",
       },
     },
     {
@@ -372,32 +372,11 @@ const caseStudies = {
   name: "Dokumenterte AEO-resultater — Synlig Digital",
   description:
     "Dokumenterte case studies som viser effekten av Answer Engine Optimization for norske bedrifter.",
-  numberOfItems: 2,
+  numberOfItems: 1,
   itemListElement: [
     {
       "@type": "ListItem",
       position: 1,
-      item: {
-        "@type": "Article",
-        "@id": "https://synligdigital.no/case/nordic-lithium",
-        headline:
-          "Nordic Lithium: Fra 67/C til 85/A på to uker — nærstående metode-case",
-        url: "https://synligdigital.no/case/nordic-lithium",
-        description:
-          "Nordic Lithium (nærstående part — felles eierskap med Synlig) gikk fra AEO-score 67/C til 85/A på to uker etter intern implementering av schema.org, Google Business Profile og fjerning av AI-crawler-blokkering — uten plattformbytte. Eierskapsopplysning på /case/nordic-lithium.",
-        datePublished: "2026-03",
-        author: { "@id": ORG_ID },
-        publisher: { "@id": ORG_ID },
-        about: {
-          "@type": "Thing",
-          name: "Answer Engine Optimization",
-          description: "AEO-implementering for norsk bedrift i gruvesektoren",
-        },
-      },
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
       item: {
         "@type": "Article",
         "@id": "https://synligdigital.no/case/pierstop",

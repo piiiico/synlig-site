@@ -111,7 +111,7 @@ export function enSurfaceParity(opts: {
     worker, llms, sitemap, enBody, pages,
     origin = "https://synligdigital.no",
     minLlmsBytes = 8000,
-    minPages = 4, // EN prune 2026-10-31: 8 → 4
+    minPages = 3, // EN prune 2026-10-31: 8 → 4; EN NL case retired 2026-11-19: → 3
   } = opts;
   const v: string[] = [];
 
