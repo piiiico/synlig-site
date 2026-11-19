@@ -30,7 +30,8 @@ Den publiserte case studien under er ein **nærstående part**-implementering (i
 **Pierstop.com (nærstående metode-case, mars 2026):**
 - Eierskapsopplysning: Co-styremedlem i AS Åmdal Invest; vederlagsfri levering (ikkje fakturert)
 - Utgangspunkt: AEO-score 52/D — perfekt teknisk infrastruktur, null schema-signaler
-- Problem: 176 destinasjonssider, llms.txt og Cloudflare CDN — men AI visste ikkje kven dei var
+- Problem: 176 destinasjonssider, llms.txt og Cloudflare CDN — men ingen schema
+- Scoren er vår eigen sjekk av nettsida (rapportar datert 1. mars 2026); AI-svara vart ikkje målte
 - Etter schema-sprint: AEO-score 76/B — auke på 24 poeng
 - Mål etter full implementering: 92+/A
 - Full case study + eierskapsopplysning: https://synligdigital.no/case/pierstop
